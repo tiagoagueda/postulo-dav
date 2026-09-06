@@ -1,0 +1,92 @@
+# Portuguese (Portugal) translations for postulo-dav.
+# This file is distributed under the same license as the postulo-dav package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: postulo-dav 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "(no company)"
+msgstr "(sem empresa)"
+
+msgid "Cancelled on the calendar."
+msgstr "Cancelado no calendário."
+
+msgid "CardDAV and CalDAV"
+msgstr "CardDAV e CalDAV"
+
+msgid "Server address"
+msgstr "Endereço do servidor"
+
+msgid ""
+"The server's root, e.g. https://cloud.example.org. Postulo finds the address book "
+"and calendar homes from there."
+msgstr ""
+"A raiz do servidor, p. ex. https://cloud.example.org. O Postulo descobre a partir "
+"daí onde ficam o livro de endereços e o calendário."
+
+msgid "Username"
+msgstr "Nome de utilizador"
+
+msgid "Password or app password"
+msgstr "Palavra-passe ou palavra-passe de aplicação"
+
+msgid "An app password where the server offers one. Stored encrypted."
+msgstr "Uma palavra-passe de aplicação se o servidor a oferecer. Guardada cifrada."
+
+msgid "Address book"
+msgstr "Livro de endereços"
+
+msgid "Created on the server if missing. Only this address book is touched."
+msgstr "Criado no servidor se faltar. Só este livro de endereços é tocado."
+
+msgid "Calendar"
+msgstr "Calendário"
+
+msgid "Created on the server if missing. Only this calendar is touched."
+msgstr "Criado no servidor se faltar. Só este calendário é tocado."
+
+msgid "Read only"
+msgstr "Só leitura"
+
+msgid "Never write to the server: contacts and interviews still come in, nothing goes out."
+msgstr ""
+"Nunca escrever no servidor: os contactos e as entrevistas continuam a chegar, nada sai."
+
+msgid "read only"
+msgstr "só leitura"
+
+msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
+msgstr "Encontrados o livro de endereços «%(book)s» e o calendário «%(calendar)s»."
+
+msgid "“%(name)s” was removed from the address book; kept here."
+msgstr "«%(name)s» foi removido do livro de endereços; mantido aqui."
+
+msgid "Changed on the phone on %(when)s: %(text)s"
+msgstr "Alterado no telemóvel em %(when)s: %(text)s"
+
+msgid "Changed here on %(when)s: %(text)s"
+msgstr "Alterado aqui em %(when)s: %(text)s"
+
+msgid "“%(name)s” changed on both sides at once; next run decides."
+msgstr "«%(name)s» mudou dos dois lados ao mesmo tempo; a próxima execução decide."
+
+msgid "%(kind)s removed from the calendar on another device; kept here."
+msgstr "%(kind)s removida do calendário noutro dispositivo; mantida aqui."
+
+msgid "Changed on the phone, but changed here later; kept ours."
+msgstr "Alterado no telemóvel, mas alterado aqui mais tarde; ficou a nossa versão."
+
+msgid "Changed here, but changed on the phone later; took theirs."
+msgstr "Alterado aqui, mas alterado no telemóvel mais tarde; ficou a deles."
+
+msgid "An interview changed on both sides at once; next run decides."
+msgstr "Uma entrevista mudou dos dois lados ao mesmo tempo; a próxima execução decide."
+
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
+msgstr "%(count)d eventos do calendário não vêm do Postulo e ficaram como estavam."

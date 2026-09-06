@@ -1,0 +1,60 @@
+[project]
+name = "postulo-dav"
+version = "0.1.0"
+description = "Company contacts in a CardDAV address book and interviews in a CalDAV calendar, in both directions: Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud and any server that speaks the standards."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "AGPL-3.0-or-later"
+authors = [{ name = "Tiago Agueda" }]
+keywords = ["postulo", "plugin", "carddav", "caldav", "webdav", "vcard", "icalendar"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Django",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Groupware",
+]
+# httpx carries the requests, through Postulo's own client; defusedxml reads the
+# server's multistatus answers without the entity tricks the standard parser allows.
+# vCard and iCalendar are written and read by hand — the handful of properties a
+# contact and a meeting need fit in a page, and a library would bring the rest of two
+# large standards along for nothing. Postulo itself is not declared: a plugin runs inside
+# Postulo's environment, and Postulo is not on PyPI.
+dependencies = ["httpx>=0.28", "defusedxml>=0.7"]
+
+[project.urls]
+Homepage = "https://source.tiagoagueda.com/postulo/postulo-dav"
+"Postulo" = "https://source.tiagoagueda.com/postulo/postulo"
+"Writing a plugin" = "https://source.tiagoagueda.com/postulo/postulo/src/branch/main/docs/PLUGINS.md"
+
+[project.entry-points."postulo.syncs"]
+dav = "postulo_dav.sync:DavSync"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/postulo_dav"]
+
+[dependency-groups]
+dev = [
+    "postulo @ git+https://source.tiagoagueda.com/postulo/postulo.git",
+    "pytest>=8.3",
+    "pytest-django>=4.14",
+    "ruff>=0.16",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = ["."]
+testpaths = ["tests"]
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
