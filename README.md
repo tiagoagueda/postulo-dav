@@ -68,8 +68,10 @@ takes its twin with it.
 ## Translations
 
 French and Portuguese ship with the package, in `src/postulo_dav/locale/`. Postulo never
-translates a plugin's strings; to add a language, copy a catalogue, translate it, and run
-`python scripts/compile_messages.py`.
+translates a plugin's strings; a catalogue for every language Postulo offers is in place; fill one and run
+`uv run postulo-messages compile`. `uv run postulo-messages extract` refreshes them from
+the source, and `uv run pytest -m release` holds the twenty-four European Union
+catalogues complete before a release.
 
 ## Develop
 

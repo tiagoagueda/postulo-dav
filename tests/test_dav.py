@@ -206,14 +206,17 @@ def company(user):
 
 @pytest.fixture
 def recruiter(user, company):
-    return Contact.objects.create(
+    from postulo.core import phone_numbers
+
+    contact = Contact.objects.create(
         owner=user,
         company=company,
         name="Cave Johnson",
         role="CEO",
         email="cave@aperture.test",
-        phone="+1 555 0100",
     )
+    phone_numbers.save_only_number(contact, user, "+1 555 0100")
+    return contact
 
 
 @pytest.fixture
@@ -365,7 +368,9 @@ def test_a_change_on_the_phone_is_pulled(server, connection, recruiter):
     report = DavSync().sync(connection, connection.full_config)
     assert report.pulled == 1
     recruiter.refresh_from_db()
-    assert recruiter.phone == "+1 555 0111"
+    from postulo.core import phone_numbers
+
+    assert phone_numbers.primary_for(recruiter).number == "+1 555 0111"
     assert recruiter.company.name == "Aperture Labs", (
         "a new ORG becomes a company of the person's own"
     )

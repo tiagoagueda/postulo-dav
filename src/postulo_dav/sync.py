@@ -39,6 +39,7 @@ from postulo.applications.services import (
     reschedule_interview,
     settle_interview,
 )
+from postulo.core import phone_numbers, web_links
 from postulo.jobs.models import Contact
 from postulo.plugins.base import FieldSpec, SyncReport, TestResult
 from postulo.plugins.models import SyncLink
@@ -62,14 +63,19 @@ def digest(source: str) -> str:
 
 
 def card_for(contact: Contact) -> text.Card:
+    # A card carries one number and one address on the web; a contact holds several of
+    # each since Postulo 0.3, with one of each kind marked as the one to use. The card
+    # gets the primaries, which is what "the number" and "the LinkedIn" mean there now.
+    number = phone_numbers.primary_for(contact)
+    profile = web_links.primary_for(contact, web_links.Kind.SOCIAL)
     return text.Card(
         uid=f"contact-{contact.pk}-{contact.owner_id}@postulo",
         name=contact.name,
         org=contact.company.name if contact.company_id else "",
         title=contact.role,
         email=contact.email,
-        phone=contact.phone,
-        url=contact.linkedin_url,
+        phone=number.number if number else "",
+        url=profile.url if profile else "",
         note=contact.notes,
     )
 
@@ -78,12 +84,21 @@ def apply_card(contact: Contact, card: text.Card) -> None:
     contact.name = card.name or contact.name
     contact.role = card.title[:200]
     contact.email = card.email[:254]
-    contact.phone = card.phone[:40]
-    contact.linkedin_url = card.url[:200]
     contact.notes = card.note
     if card.org and (not contact.company_id or contact.company.name.lower() != card.org.lower()):
         contact.company = get_or_create_company(contact.owner, card.org)
     contact.save()
+    # The number and the profile are rows of their own, written once the contact has a
+    # key to hang them on. Only the primary of each is touched: the rest of what the
+    # person keeps here is not the card's to lose. A number some other row on the instance
+    # already holds is left alone rather than failing the sync over one field of a card.
+    number = card.phone[:40].strip()
+    primary = phone_numbers.primary_for(contact)
+    if not number or not phone_numbers.taken_elsewhere(
+        number, exclude_pk=primary.pk if primary else None
+    ):
+        phone_numbers.save_only_number(contact, contact.owner, number)
+    web_links.save_only_link(contact, contact.owner, web_links.Kind.SOCIAL, card.url[:500])
 
 
 # ---------------------------------------------------------------- interviews

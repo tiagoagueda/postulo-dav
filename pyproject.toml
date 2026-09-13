@@ -1,6 +1,6 @@
 [project]
 name = "postulo-dav"
-version = "0.1.0"
+version = "0.3.0"
 description = "Company contacts in a CardDAV address book and interviews in a CalDAV calendar, in both directions: Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud and any server that speaks the standards."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -50,6 +50,13 @@ DJANGO_SETTINGS_MODULE = "tests.settings"
 pythonpath = ["."]
 testpaths = ["tests"]
 filterwarnings = ["error"]
+# The release gate: the twenty-four European Union catalogues complete, run before a tag
+# with `uv run pytest -m release`. Postulo's own gate cannot see a plugin's catalogues,
+# so each plugin holds its own (postulo/postulo#187).
+addopts = "--strict-markers -m 'not release'"
+markers = [
+    "release: a promise that must hold in a published version, not in every commit",
+]
 
 [tool.ruff]
 line-length = 100
