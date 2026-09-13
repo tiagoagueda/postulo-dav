@@ -17,111 +17,132 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "%(count)d notikumi kalendārā nav no Postulo un tika atstāti neskarti."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s noņemta no kalendāra citā ierīcē; šeit paturēta."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(bez uzņēmuma)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Adrešu grāmata"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Lietotnes parole, ja serveris tādu piedāvā. Glabāta šifrēti."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Intervija mainīta abās pusēs vienlaikus; izšķirs nākamā palaišana."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendārs"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Atcelta kalendārā."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV un CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Mainīts šeit %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Mainīts šeit, bet vēlāk mainīts telefonā; ņemta viņu versija."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Mainīts telefonā %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Mainīts telefonā, bet vēlāk mainīts šeit; paturēta mūsu versija."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
 msgstr ""
+"Tiek izveidota serverī, ja tādas nav. Tiek skarta tikai šī adrešu grāmata."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
-msgstr ""
+msgstr "Tiek izveidots serverī, ja tāda nav. Tiek skarts tikai šis kalendārs."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Atrasta adrešu grāmata “%(book)s” un kalendārs “%(calendar)s”."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Nekad nerakstīt serverī: kontakti un intervijas joprojām ienāk, nekas neiziet."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Parole vai lietotnes parole"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Tikai lasīt"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "tikai lasīt"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Servera adrese"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"Servera sakne, piem., https://cloud.example.org. No turienes Postulo atrod adrešu grāmatas un kalendāra mājvietas."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Lietotājvārds"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "“%(name)s” mainīts abās pusēs vienlaikus; izšķirs nākamā palaišana."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "“%(name)s” tika noņemts no adrešu grāmatas; šeit paturēts."

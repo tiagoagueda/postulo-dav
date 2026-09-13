@@ -17,111 +17,140 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
+"%(count)d Termine im Kalender stammen nicht von Postulo und wurden nicht angerührt."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr ""
+"%(kind)s auf einem anderen Gerät aus dem Kalender entfernt; hier behalten."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(kein Unternehmen)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Adressbuch"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr ""
+"Ein App-Passwort, wo der Server eines anbietet. Wird verschlüsselt gespeichert."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
 msgstr ""
+"Ein Gespräch wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Kalender"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Im Kalender abgesagt."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV und CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Hier geändert am %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr ""
+"Hier geändert, aber später auf dem Telefon geändert; deren Fassung übernommen."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Auf dem Telefon geändert am %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr ""
+"Auf dem Telefon geändert, aber später hier geändert; unsere Fassung behalten."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
 msgstr ""
+"Wird auf dem Server angelegt, falls es fehlt. Nur dieses Adressbuch wird angerührt."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
 msgstr ""
+"Wird auf dem Server angelegt, falls er fehlt. Nur dieser Kalender wird angerührt."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Adressbuch „%(book)s“ und Kalender „%(calendar)s“ gefunden."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Nie auf den Server schreiben: Kontakte und Gespräche kommen weiterhin herein, nichts geht hinaus."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Passwort oder App-Passwort"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Nur lesen"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "nur lesen"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Serveradresse"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"Die Wurzel des Servers, z. B. https://cloud.example.org. Von dort aus findet Postulo die Adressbuch- und Kalenderverzeichnisse."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
+"„%(name)s“ wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "„%(name)s“ wurde aus dem Adressbuch entfernt; hier behalten."

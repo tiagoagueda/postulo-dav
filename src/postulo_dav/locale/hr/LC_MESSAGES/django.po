@@ -17,111 +17,135 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
+"%(count)d događaja u kalendaru nije stvorio Postulo pa su ostavljeni netaknuti."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s uklonjen iz kalendara na drugom uređaju; ovdje zadržan."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(bez tvrtke)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Adresar"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Lozinka aplikacije gdje je poslužitelj nudi. Sprema se šifrirano."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
 msgstr ""
+"Razgovor je promijenjen na obje strane istodobno; sljedeći prolaz odlučuje."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendar"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Otkazano u kalendaru."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV i CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Promijenjeno ovdje %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr ""
+"Promijenjeno ovdje, ali kasnije i na telefonu; preuzeta je njihova verzija."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Promijenjeno na telefonu %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Promijenjeno na telefonu, ali kasnije i ovdje; zadržana je naša verzija."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
-msgstr ""
+msgstr "Stvara se na poslužitelju ako ne postoji. Dira se samo ovaj adresar."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
-msgstr ""
+msgstr "Stvara se na poslužitelju ako ne postoji. Dira se samo ovaj kalendar."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Pronađen je adresar „%(book)s” i kalendar „%(calendar)s”."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Nikada ne piši na poslužitelj: kontakti i razgovori i dalje stižu, ništa ne izlazi."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Lozinka ili lozinka aplikacije"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Samo za čitanje"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "samo za čitanje"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Adresa poslužitelja"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"Korijen poslužitelja, npr. https://cloud.example.org. Postulo odatle pronalazi početne lokacije adresara i kalendara."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Korisničko ime"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
+"„%(name)s” promijenjen na obje strane istodobno; sljedeći prolaz odlučuje."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "„%(name)s” uklonjen je iz adresara; ovdje zadržan."

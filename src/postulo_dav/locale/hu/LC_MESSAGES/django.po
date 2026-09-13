@@ -17,111 +17,133 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
+"%(count)d naptáresemény nem a Postulo alkalmazásból származik, és érintetlen maradt."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s eltávolítva a naptárból egy másik eszközön; itt megtartva."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(nincs cég)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Címjegyzék"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Alkalmazásjelszó, ahol a szerver kínál ilyet. Titkosítva tárolva."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Egy interjú mindkét oldalon egyszerre változott; a következő futás dönt."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Naptár"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Lemondva a naptárban."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV és CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Itt módosítva (%(when)s): %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Itt módosult, de később a telefonon is; az övék maradt."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "A telefonon módosítva (%(when)s): %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "A telefonon módosult, de később itt is; a miénk maradt."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
-msgstr ""
+msgstr "Létrejön a szerveren, ha hiányzik. Csak ezt a címjegyzéket érinti."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
-msgstr ""
+msgstr "Létrejön a szerveren, ha hiányzik. Csak ezt a naptárat érinti."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr ""
+"Megtaláltuk a(z) „%(book)s” címjegyzéket és a(z) „%(calendar)s” naptárat."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Soha nem ír a szerverre: a kapcsolattartók és interjúk továbbra is bejönnek, semmi nem megy ki."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Jelszó vagy alkalmazásjelszó"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Csak olvasható"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "csak olvasható"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Szervercím"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"A szerver gyökere, pl. https://cloud.example.org. A Postulo innen találja meg a címjegyzék és a naptár helyét."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Felhasználónév"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "„%(name)s” mindkét oldalon egyszerre változott; a következő futás dönt."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "„%(name)s” el lett távolítva a címjegyzékből; itt megtartva."

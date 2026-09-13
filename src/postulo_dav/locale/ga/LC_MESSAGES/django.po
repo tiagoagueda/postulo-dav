@@ -17,111 +17,139 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
+"Ní ó Postulo %(count)d imeacht ar an bhféilire agus fágadh gan athrú iad."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "Baineadh %(kind)s den fhéilire ar ghléas eile; coinnithe anseo."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(gan chuideachta)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Leabhar seoltaí"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr ""
+"Pasfhocal aipe má thairgeann an freastalaí ceann. Stóráilte go criptithe."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
 msgstr ""
+"Athraíodh agallamh ar an dá thaobh ag an am céanna; socróidh an chéad rith eile é."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Féilire"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Curtha ar ceal ar an bhféilire."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV agus CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Athraithe anseo ar %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr ""
+"Athraithe anseo, ach athraithe ar an bhfón níos déanaí; glacadh lena leagan siúd."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Athraithe ar an bhfón ar %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr ""
+"Athraithe ar an bhfón, ach athraithe anseo níos déanaí; coinníodh ár leagan féin."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
 msgstr ""
+"Cruthaítear ar an bhfreastalaí é mura bhfuil sé ann. Ní bhaintear ach leis an leabhar seoltaí seo."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
 msgstr ""
+"Cruthaítear ar an bhfreastalaí é mura bhfuil sé ann. Ní bhaintear ach leis an bhféilire seo."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Aimsíodh an leabhar seoltaí “%(book)s” agus an féilire “%(calendar)s”."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Ná scríobh chuig an bhfreastalaí go deo: tagann teagmhálaithe agus agallaimh isteach fós, ní théann aon rud amach."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Pasfhocal nó pasfhocal aipe"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Inléite amháin"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "inléite amháin"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Seoladh an fhreastalaí"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"Fréamh an fhreastalaí, m.sh. https://cloud.example.org. Aimsíonn Postulo an leabhar seoltaí agus an féilire as sin."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Ainm úsáideora"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
+"Athraíodh “%(name)s” ar an dá thaobh ag an am céanna; socróidh an chéad rith eile é."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "Baineadh “%(name)s” den leabhar seoltaí; coinnithe anseo."

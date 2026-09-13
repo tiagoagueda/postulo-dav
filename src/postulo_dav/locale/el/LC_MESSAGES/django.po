@@ -17,111 +17,140 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py:521
-#, python-format
+#, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
+"%(count)d συμβάντα στο ημερολόγιο δεν προέρχονται από το Postulo και έμειναν ως έχουν."
 
 #: src/postulo_dav/sync.py:446
-#, python-format
+#, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s αφαιρέθηκε από το ημερολόγιο σε άλλη συσκευή· διατηρήθηκε εδώ."
 
 #: src/postulo_dav/sync.py:55
+#, draft
 msgid "(no company)"
-msgstr ""
+msgstr "(χωρίς εταιρεία)"
 
 #: src/postulo_dav/sync.py:195
+#, draft
 msgid "Address book"
-msgstr ""
+msgstr "Βιβλίο διευθύνσεων"
 
 #: src/postulo_dav/sync.py:191
+#, draft
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr ""
+"Κωδικός εφαρμογής όπου ο διακομιστής προσφέρει έναν. Αποθηκεύεται κρυπτογραφημένος."
 
 #: src/postulo_dav/sync.py:500
+#, draft
 msgid "An interview changed on both sides at once; next run decides."
 msgstr ""
+"Μια συνέντευξη άλλαξε και στις δύο πλευρές ταυτόχρονα· η επόμενη εκτέλεση αποφασίζει."
 
 #: src/postulo_dav/sync.py:202
+#, draft
 msgid "Calendar"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #: src/postulo_dav/sync.py:158
+#, draft
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Ακυρώθηκε στο ημερολόγιο."
 
 #: src/postulo_dav/sync.py:170
+#, draft
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV και CalDAV"
 
 #: src/postulo_dav/sync.py:339
-#, python-format
+#, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Άλλαξε εδώ στις %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:474
+#, draft
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr ""
+"Άλλαξε εδώ, αλλά άλλαξε αργότερα στο τηλέφωνο· κρατήθηκε η δική τους εκδοχή."
 
 #: src/postulo_dav/sync.py:325
-#, python-format
+#, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Άλλαξε στο τηλέφωνο στις %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py:464
+#, draft
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr ""
+"Άλλαξε στο τηλέφωνο, αλλά άλλαξε αργότερα εδώ· κρατήθηκε η δική μας εκδοχή."
 
 #: src/postulo_dav/sync.py:198
+#, draft
 msgid "Created on the server if missing. Only this address book is touched."
 msgstr ""
+"Δημιουργείται στον διακομιστή αν λείπει. Μόνο αυτό το βιβλίο διευθύνσεων επηρεάζεται."
 
 #: src/postulo_dav/sync.py:205
+#, draft
 msgid "Created on the server if missing. Only this calendar is touched."
 msgstr ""
+"Δημιουργείται στον διακομιστή αν λείπει. Μόνο αυτό το ημερολόγιο επηρεάζεται."
 
 #: src/postulo_dav/sync.py:243
-#, python-format
+#, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr ""
+"Βρέθηκαν το βιβλίο διευθύνσεων «%(book)s» και το ημερολόγιο «%(calendar)s»."
 
 #: src/postulo_dav/sync.py:214
+#, draft
 msgid ""
 "Never write to the server: contacts and interviews still come in, nothing goes out."
 msgstr ""
+"Ποτέ εγγραφή στον διακομιστή: επαφές και συνεντεύξεις εξακολουθούν να έρχονται, τίποτα δεν φεύγει."
 
 #: src/postulo_dav/sync.py:188
+#, draft
 msgid "Password or app password"
-msgstr ""
+msgstr "Κωδικός πρόσβασης ή κωδικός εφαρμογής"
 
 #: src/postulo_dav/sync.py:209
+#, draft
 msgid "Read only"
-msgstr ""
+msgstr "Μόνο ανάγνωση"
 
 #: src/postulo_dav/sync.py:228
+#, draft
 msgid "read only"
-msgstr ""
+msgstr "μόνο ανάγνωση"
 
 #: src/postulo_dav/sync.py:176
+#, draft
 msgid "Server address"
-msgstr ""
+msgstr "Διεύθυνση διακομιστή"
 
 #: src/postulo_dav/sync.py:179
+#, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
+"Η ρίζα του διακομιστή, π.χ. https://cloud.example.org. Από εκεί το Postulo βρίσκει τις αρχικές τοποθεσίες βιβλίου διευθύνσεων και ημερολογίου."
 
 #: src/postulo_dav/sync.py:185
+#, draft
 msgid "Username"
-msgstr ""
+msgstr "Όνομα χρήστη"
 
 #: src/postulo_dav/sync.py:361
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
+"«%(name)s» άλλαξε και στις δύο πλευρές ταυτόχρονα· η επόμενη εκτέλεση αποφασίζει."
 
 #: src/postulo_dav/sync.py:313
-#, python-format
+#, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "«%(name)s» αφαιρέθηκε από το βιβλίο διευθύνσεων· διατηρήθηκε εδώ."
