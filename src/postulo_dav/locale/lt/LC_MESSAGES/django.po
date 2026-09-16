@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Postulo\n"
 "Report-Msgid-Bugs-To: https://source.tiagoagueda.com/postulo/postulo/issues\n"
-"POT-Creation-Date: 2026-09-13 04:05+0000\n"
+"POT-Creation-Date: 2026-09-16 08:41+0000\n"
 "PO-Revision-Date: 2026-09-13 04:03+0000\n"
 "Last-Translator: Postulo contributors\n"
 "Language-Team: lietuvių\n"
@@ -16,134 +16,172 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && (n%100<11 || n%100>19) ? 0 : n%10>=2 && n%10<=9 && (n%100<11 || n%100>19) ? 1 : 2);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
-#: src/postulo_dav/sync.py:521
+#: src/postulo_dav/sync.py:674
 #, python-format, draft
 msgid ""
 "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
 "%(count)d kalendoriaus įvykių nėra iš Postulo ir buvo palikti nepaliesti."
 
-#: src/postulo_dav/sync.py:446
+#: src/postulo_dav/sync.py:599
 #, python-format, draft
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s pašalinta iš kalendoriaus kitame įrenginyje; čia palikta."
 
-#: src/postulo_dav/sync.py:55
+#: src/postulo_dav/sync.py:76
 #, draft
 msgid "(no company)"
 msgstr "(be įmonės)"
 
-#: src/postulo_dav/sync.py:195
+#: src/postulo_dav/sync.py:91
+msgid ""
+"A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+msgstr ""
+
+#: src/postulo_dav/sync.py:255
 #, draft
 msgid "Address book"
 msgstr "Adresų knyga"
 
-#: src/postulo_dav/sync.py:191
+#: src/postulo_dav/sync.py:251
 #, draft
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Programos slaptažodis, kai serveris jį siūlo. Saugomas užšifruotas."
 
-#: src/postulo_dav/sync.py:500
+#: src/postulo_dav/sync.py:653
 #, draft
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Pokalbis pakeistas abiejose pusėse vienu metu; nuspręs kitas paleidimas."
 
-#: src/postulo_dav/sync.py:202
+#: src/postulo_dav/sync.py:96
+msgid ""
+"An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py:267
 #, draft
 msgid "Calendar"
 msgstr "Kalendorius"
 
-#: src/postulo_dav/sync.py:158
+#: src/postulo_dav/sync.py:218
 #, draft
 msgid "Cancelled on the calendar."
 msgstr "Atšaukta kalendoriuje."
 
-#: src/postulo_dav/sync.py:170
+#: src/postulo_dav/sync.py:230
 #, draft
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV ir CalDAV"
 
-#: src/postulo_dav/sync.py:339
+#: src/postulo_dav/sync.py:492
 #, python-format, draft
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Pakeista čia %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:474
+#: src/postulo_dav/sync.py:627
 #, draft
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Pakeista čia, bet vėliau pakeista telefone; paimta jų versija."
 
-#: src/postulo_dav/sync.py:325
+#: src/postulo_dav/sync.py:478
 #, python-format, draft
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Pakeista telefone %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:464
+#: src/postulo_dav/sync.py:617
 #, draft
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Pakeista telefone, bet vėliau pakeista čia; palikta mūsų versija."
 
-#: src/postulo_dav/sync.py:198
-#, draft
-msgid "Created on the server if missing. Only this address book is touched."
-msgstr "Sukuriama serveryje, jei jos nėra. Liečiama tik ši adresų knyga."
-
-#: src/postulo_dav/sync.py:205
-#, draft
-msgid "Created on the server if missing. Only this calendar is touched."
-msgstr "Sukuriamas serveryje, jei jo nėra. Liečiamas tik šis kalendorius."
-
-#: src/postulo_dav/sync.py:243
+#: src/postulo_dav/sync.py:363
 #, python-format, draft
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Rasta adresų knyga „%(book)s“ ir kalendorius „%(calendar)s“."
 
-#: src/postulo_dav/sync.py:214
-#, draft
+#: src/postulo_dav/sync.py:259
 msgid ""
-"Never write to the server: contacts and interviews still come in, nothing goes out."
+"Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr ""
-"Niekada nerašyti į serverį: kontaktai ir pokalbiai vis tiek gaunami, niekas neišsiunčiama."
 
-#: src/postulo_dav/sync.py:188
+#: src/postulo_dav/sync.py:271
+msgid ""
+"Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+msgstr ""
+
+#: src/postulo_dav/sync.py:284
+msgid ""
+"Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+msgstr ""
+
+#: src/postulo_dav/sync.py:330
+#, python-format
+msgid ""
+"Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgstr ""
+
+#: src/postulo_dav/sync.py:248
 #, draft
 msgid "Password or app password"
 msgstr "Slaptažodis arba programos slaptažodis"
 
-#: src/postulo_dav/sync.py:209
+#: src/postulo_dav/sync.py:279
 #, draft
 msgid "Read only"
 msgstr "Tik skaityti"
 
-#: src/postulo_dav/sync.py:228
+#: src/postulo_dav/sync.py:298
 #, draft
 msgid "read only"
 msgstr "tik skaityti"
 
-#: src/postulo_dav/sync.py:176
+#: src/postulo_dav/sync.py:80
+msgid ""
+"Read only is on, so nothing is made: create it on the server, or name one that is already there."
+msgstr ""
+
+#: src/postulo_dav/sync.py:236
 #, draft
 msgid "Server address"
 msgstr "Serverio adresas"
 
-#: src/postulo_dav/sync.py:179
+#: src/postulo_dav/sync.py:381
+#, python-format
+msgid "The address book “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py:322
+#, python-format
+msgid "The address must start with https:// — for example %(example)s."
+msgstr ""
+
+#: src/postulo_dav/sync.py:382
+#, python-format
+msgid "The calendar “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py:78
+msgid "The first sync will make what is missing."
+msgstr ""
+
+#: src/postulo_dav/sync.py:239
 #, draft
 msgid ""
 "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
 "Serverio šaknis, pvz., https://cloud.example.org. Iš ten Postulo randa adresų knygos ir kalendoriaus vietas."
 
-#: src/postulo_dav/sync.py:185
+#: src/postulo_dav/sync.py:245
 #, draft
 msgid "Username"
 msgstr "Naudotojo vardas"
 
-#: src/postulo_dav/sync.py:361
+#: src/postulo_dav/sync.py:514
 #, python-format, draft
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
 "„%(name)s“ pakeista abiejose pusėse vienu metu; nuspręs kitas paleidimas."
 
-#: src/postulo_dav/sync.py:313
+#: src/postulo_dav/sync.py:466
 #, python-format, draft
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s“ pašalinta iš adresų knygos; čia palikta."

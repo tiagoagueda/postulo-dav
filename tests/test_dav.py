@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import ast
 import datetime as dt
 import re
+from importlib import metadata
+from pathlib import Path
 from urllib.parse import urlsplit
 
 import httpx
@@ -25,7 +28,7 @@ from postulo.plugins.models import Connection, SyncLink
 from postulo_dav import dav as dav_module
 from postulo_dav import text
 from postulo_dav.dav import ADDRESSBOOK, CALENDAR, Conflict, Server
-from postulo_dav.sync import DavSync, card_for, event_text
+from postulo_dav.sync import PRODID, DavSync, card_for, event_text
 
 pytestmark = pytest.mark.django_db
 
@@ -51,6 +54,8 @@ class FakeDav:
         self.resources: dict[str, tuple[str, str]] = {}  # href → (text, etag)
         self.counter = 0
         self.log: list[tuple[str, str]] = []
+        #: The ``If-Match`` of every DELETE, so a test can see that one was conditional.
+        self.delete_conditions: list[str | None] = []
 
     def _etag(self) -> str:
         self.counter += 1
@@ -141,7 +146,13 @@ class FakeDav:
             return httpx.Response(201 if current is None else 204, headers={"ETag": etag})
 
         if method == "DELETE":
-            self.resources.pop(path, None)
+            self.delete_conditions.append(request.headers.get("If-Match"))
+            current = self.resources.get(path)
+            if current is None:
+                return httpx.Response(404)
+            if "If-Match" in request.headers and current[1] != request.headers["If-Match"]:
+                return httpx.Response(412)
+            del self.resources[path]
             return httpx.Response(204)
 
         return httpx.Response(405)
@@ -174,8 +185,22 @@ def server(monkeypatch):
         kwargs.setdefault("follow_redirects", True)
         return httpx.Client(transport=httpx.MockTransport(fake.handler), **kwargs)
 
-    monkeypatch.setattr(dav_module.http, "client", fake_client)
+    monkeypatch.setattr(dav_module.api, "client", fake_client)
     return fake
+
+
+@pytest.fixture
+def made(server):
+    """The two Postulo collections already on the server, as a first sync would leave them."""
+    server.collections["/dav/addressbooks/ana/postulo-contacts/"] = {
+        "name": "Postulo",
+        "kind": ADDRESSBOOK,
+    }
+    server.collections["/dav/calendars/ana/postulo-interviews/"] = {
+        "name": "Postulo",
+        "kind": CALENDAR,
+    }
+    return server
 
 
 @pytest.fixture
@@ -303,18 +328,51 @@ def test_long_lines_fold_and_unfold():
 # ------------------------------------------------------------------- discovery
 
 
-def test_discovery_finds_the_homes_and_creates_the_collections(server):
+def test_test_looks_and_never_makes_a_collection(server):
     plugin = DavSync()
     assert isinstance(plugin, SyncPlugin)
+    before = dict(server.collections)
     result = plugin.test(CONFIG)
-    assert result.ok and "“Postulo”" in result.message
-    assert "/dav/addressbooks/ana/postulo-contacts/" in server.collections
-    assert "/dav/calendars/ana/postulo-interviews/" in server.collections
+    assert result.ok, "signing in and discovery worked, which is what Test asks"
+    assert "The address book “Postulo” is not on the server." in result.message
+    assert "The calendar “Postulo” is not on the server." in result.message
+    assert "first sync" in result.message
+    assert server.collections == before, "pressing Test creates nothing on somebody's server"
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+
+
+def test_test_in_read_only_says_nothing_will_be_made(server):
+    result = DavSync().test({**CONFIG, "read_only": True})
+    assert not result.ok, "read only cannot make what is missing, so the sync cannot run"
+    assert "Read only is on" in result.message
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+
+
+def test_test_finds_the_collections_once_they_are_there(made):
+    result = DavSync().test(CONFIG)
+    assert result.ok
+    assert result.message == "Found the address book “Postulo” and the calendar “Postulo”."
+
+
+def test_the_first_sync_makes_the_collections_and_the_second_does_not(server, connection):
+    DavSync().sync(connection, connection.full_config)
     assert server.collections["/dav/addressbooks/ana/postulo-contacts/"]["name"] == "Postulo"
-    result = plugin.test(CONFIG)
-    assert (
-        result.ok and len([c for c in server.collections.values() if c["name"] == "Postulo"]) == 2
-    )
+    assert server.collections["/dav/calendars/ana/postulo-interviews/"]["name"] == "Postulo"
+    made = [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+    DavSync().sync(connection, connection.full_config)
+    assert [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")] == made
+
+
+def test_read_only_reports_a_missing_collection_rather_than_making_it(
+    server, connection, recruiter
+):
+    connection.config["read_only"] = True
+    connection.save()
+    report = DavSync().sync(connection, connection.full_config)
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR", "PUT")]
+    assert "The address book “Postulo” is not on the server." in report.summary()
+    assert "The calendar “Postulo” is not on the server." in report.summary()
+    assert "Read only is on" in report.summary()
 
 
 def test_a_wrong_password_is_a_sentence(server):
@@ -424,9 +482,66 @@ def test_a_deletion_on_the_phone_never_deletes_here(server, connection, recruite
 
 def test_a_deletion_here_takes_the_twin_with_it(server, connection, recruiter):
     DavSync().sync(connection, connection.full_config)
+    (href,) = cards(server)
+    etag = server.resources[href][1]
     recruiter.delete()
     report = DavSync().sync(connection, connection.full_config)
     assert report.removed == 1 and cards(server) == {} and SyncLink.objects.count() == 0
+    assert server.delete_conditions == [etag], "the DELETE named the version it was destroying"
+
+
+def test_a_card_changed_on_the_phone_survives_a_deletion_here(server, connection, recruiter):
+    DavSync().sync(connection, connection.full_config)
+    (href,) = cards(server)
+    body, _etag = server.resources[href]
+    # Edited on the phone after the last sync: a new ETag the connection has never seen.
+    server.resources[href] = (body.replace("TITLE:CEO", "TITLE:Janitor"), '"phone-1"')
+    recruiter.delete()
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.removed == 0, "412, so nothing was destroyed"
+    assert "left in the address book" in report.summary()
+    assert "TITLE:Janitor" in server.resources[href][0]
+    assert SyncLink.objects.count() == 0, "the link named a contact that no longer exists"
+
+    # The card is unlinked and still there, so the next run adopts it, visibly.
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.pulled == 1
+    assert Contact.objects.get(name="Cave Johnson").role == "Janitor"
+
+
+def test_an_event_changed_on_the_phone_survives_a_deletion_here(server, connection, application):
+    interview = schedule_interview(application, kind="panel", starts_at=next_week())
+    DavSync().sync(connection, connection.full_config)
+    (href,) = events(server)
+    body, _etag = server.resources[href]
+    server.resources[href] = (body, '"phone-9"')
+    interview.delete()
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.removed == 0 and "left on the calendar" in report.summary()
+    assert href in server.resources, "an interview deleted here does not erase somebody's edit"
+    assert SyncLink.objects.count() == 0
+
+    # Nothing adopts a foreign event, so from now on it is simply left alone.
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.skipped == 1 and "not from Postulo" in report.summary()
+
+
+def test_a_password_will_not_go_over_plain_http(settings):
+    plugin = DavSync()
+    assert plugin.validate({**CONFIG, "url": "https://cloud.example.org"}) == {}
+    assert (
+        "in the clear" in plugin.validate({**CONFIG, "url": "http://cloud.example.org"})["url"][0]
+    )
+    assert plugin.validate({**CONFIG, "url": "ftp://cloud.example.org"})["url"]
+    assert plugin.validate({**CONFIG, "url": ""}) == {}
+
+    # The machine down the hall, where the operator has allowed private destinations.
+    settings.POSTULO_CONNECTIONS_ALLOW_PRIVATE = True
+    assert plugin.validate({**CONFIG, "url": "http://192.168.1.4:8080"}) == {}
+    assert plugin.validate({**CONFIG, "url": "http://nextcloud/"}) == {}
+    assert plugin.validate({**CONFIG, "url": "http://cloud.home.arpa"}) == {}
+    settings.POSTULO_CONNECTIONS_ALLOW_PRIVATE = False
+    assert plugin.validate({**CONFIG, "url": "http://192.168.1.4:8080"})["url"]
 
 
 def test_a_card_created_on_the_phone_is_adopted(server, connection, user):
@@ -543,13 +658,14 @@ def test_events_from_elsewhere_and_recurring_ones_are_left_alone(server, connect
     assert Interview.objects.count() == 0
 
 
-def test_read_only_pulls_but_never_writes(server, connection, recruiter, application):
+def test_read_only_pulls_but_never_writes(made, connection, recruiter, application):
+    server = made
     schedule_interview(application, kind="video", starts_at=next_week())
     connection.config["read_only"] = True
     connection.save()
     report = DavSync().sync(connection, connection.full_config)
     assert report.pushed == 0 and report.skipped == 2
-    assert not [m for m, _p in server.log if m in ("PUT", "DELETE")]
+    assert not [m for m, _p in server.log if m in ("PUT", "DELETE", "MKCOL", "MKCALENDAR")]
     server.add(
         "/dav/addressbooks/ana/postulo-contacts/phone.vcf",
         "BEGIN:VCARD\r\nFN:Alyx Vance\r\nEND:VCARD\r\n",
@@ -582,3 +698,60 @@ def test_the_plugin_speaks_french_and_portuguese_by_itself():
         assert str(plugin.label) == "CardDAV e CalDAV"
     with translation.override("en-gb"):
         assert str(plugin.label) == "CardDAV and CalDAV"
+
+
+def test_the_version_is_the_one_the_package_was_built_with():
+    import postulo_dav
+
+    assert postulo_dav.__version__ == metadata.version("postulo-dav")
+    assert DavSync().version == postulo_dav.__version__
+    assert PRODID.endswith(f"postulo-dav {postulo_dav.__version__}//EN")
+
+
+# ----------------------------------------------------------------- the surface
+
+#: `postulo.plugins.api` is the promise; every name under it may be imported freely.
+SURFACE = "postulo.plugins.api"
+#: And these are the names reached past it, each one a way a core refactor can break this
+#: plugin. postulo/postulo#229 is the work that empties this list; until then it stays
+#: countable, and a new reach has to be added here on purpose rather than by habit.
+PAST_THE_SURFACE = frozenset(
+    {
+        "postulo.applications.ical",
+        "postulo.applications.models.Interview",
+        "postulo.applications.models.InterviewOutcome",
+        "postulo.applications.services.get_or_create_company",
+        "postulo.applications.services.record_event",
+        "postulo.applications.services.reschedule_interview",
+        "postulo.applications.services.settle_interview",
+        "postulo.core.phone_numbers",
+        "postulo.core.web_links",
+        "postulo.jobs.models.Contact",
+        "postulo.plugins.models.SyncLink",
+    }
+)
+
+
+def postulo_names_imported() -> set[str]:
+    """Every name this package takes from Postulo, read off the source rather than run."""
+    package = Path(dav_module.__file__).parent
+    found: set[str] = set()
+    for path in sorted(package.glob("*.py")):
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.Import):
+                found |= {a.name for a in node.names if a.name.split(".")[0] == "postulo"}
+            elif isinstance(node, ast.ImportFrom):
+                if node.level or not (node.module or "").split(".")[0] == "postulo":
+                    continue
+                found |= {f"{node.module}.{a.name}" for a in node.names}
+    return found
+
+
+def test_what_the_plugin_reaches_for_in_postulo_is_the_surface_and_a_counted_list():
+    imported = postulo_names_imported()
+    past = {name for name in imported if not name.startswith(SURFACE)}
+    assert past == set(PAST_THE_SURFACE), (
+        "a plugin may import postulo.plugins.api freely; anything else is a bet on core "
+        "internals and belongs in PAST_THE_SURFACE with a #229 marker at the import"
+    )
+    assert imported - past, "the surface itself is imported, not worked around"

@@ -11,14 +11,19 @@ One run does, for each of the two collections:
    Interview times move through Postulo's own service, so the timeline says so.
 4. **Notice deletions**. A twin that vanished from the collection is *unlinked and
    flagged* — the local record stays, and the report says what happened. A record
-   deleted here takes its twin with it.
+   deleted here takes its twin with it, but only the twin it was told about: the DELETE
+   carries ``If-Match``, so a card or an event edited on the phone since the last sync
+   survives the deletion and becomes a note instead (#2).
 5. **Adopt** what appeared in the collection from elsewhere: a contact created on the
    phone becomes a contact here, under the company its ORG names or a holding company.
    An event created on the phone is left alone with a note: nothing links it to an
    application, and a job tracker must not invent one.
 
 Recurring events are ignored: interviews do not recur. Attendees are informational; no
-invitation is ever sent. Read-only mode does steps 1, 3, 4 and 5 and never writes.
+invitation is ever sent. Read-only mode does steps 1, 3, 4 and 5 and never writes — and
+*never writes* includes the collections themselves: a person who asked for read only, and
+a person who merely pressed *Test*, gets no address book and no calendar made for them on
+their server. Both look the collections up and report what is not there (#2).
 """
 
 from __future__ import annotations
@@ -26,23 +31,39 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import uuid
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
-from postulo.applications import ical
-from postulo.applications.models import Interview, InterviewOutcome
-from postulo.applications.services import (
+
+# What this plugin imports from Postulo, and what that costs.
+#
+# `postulo.plugins.api` is the surface: those names are a promise kept across a minor
+# release. Everything marked #229 below is past it — reached on purpose, because a two-way
+# sync of records needs the records themselves, the services that move them so the timeline
+# says so, and the link table that remembers which twin is whose, and none of that is on
+# the surface yet. postulo/postulo#229 proposes `SyncLink` plus a small sync facade; when it
+# lands these move to `postulo.plugins.api` and the markers go with them. Until then this is
+# what the plugin risks on a core refactor, counted here rather than buried in the file.
+from postulo.applications import ical  # #229
+from postulo.applications.models import Interview, InterviewOutcome  # #229
+from postulo.applications.services import (  # #229
     get_or_create_company,
     record_event,
     reschedule_interview,
     settle_interview,
 )
-from postulo.core import phone_numbers, web_links
-from postulo.jobs.models import Contact
-from postulo.plugins.base import FieldSpec, SyncReport, TestResult
-from postulo.plugins.models import SyncLink
+from postulo.core import phone_numbers, web_links  # #229
+from postulo.jobs.models import Contact  # #229
+from postulo.plugins.api import (
+    DestinationRefused,
+    FieldSpec,
+    SyncReport,
+    TestResult,
+    check_destination,
+)
+from postulo.plugins.models import SyncLink  # #229 — SyncLink is the whole point of it
 
 from . import __version__, dav, text
 from .dav import ADDRESSBOOK, CALENDAR, Conflict, DavError, Server
@@ -53,10 +74,49 @@ ACTOR = "dav"
 HISTORY = dt.timedelta(days=90)
 #: The name of the company a contact created on the phone lands on when its card has no ORG.
 HOLDING_COMPANY = gettext_lazy("(no company)")
+#: What follows "the address book X is not on the server" when writing is allowed.
+FIRST_SYNC_TAIL = gettext_lazy("The first sync will make what is missing.")
+#: ...and when it is not. Read only means read only, collections included (#2).
+READ_ONLY_TAIL = gettext_lazy(
+    "Read only is on, so nothing is made: create it on the server, or name one that is "
+    "already there."
+)
 
 
 def digest(source: str) -> str:
     return hashlib.sha256(source.encode("utf-8")).hexdigest()
+
+
+#: A card whose twin was deleted here, but which somebody had edited in the meantime.
+CARD_KEPT = gettext_lazy(
+    "A contact deleted here had been changed on the phone since the last sync. The card was "
+    "left in the address book, and comes back as a contact on the next run."
+)
+#: The same for an event. Nothing adopts a foreign event, so this one simply stays put.
+EVENT_KEPT = gettext_lazy(
+    "An interview deleted here had been changed on the phone since the last sync. The event "
+    "was left on the calendar."
+)
+
+
+def drop_twin(server: Server, link, report: SyncReport, kept: str) -> bool:
+    """Delete the twin of a record deleted here. ``True`` if the server actually dropped it.
+
+    The DELETE carries ``If-Match`` with the ETag this connection last saw, so it only ever
+    destroys the version it was told about. A `412` means the card or the event was edited
+    on the phone after that: somebody's writing, which a deletion on this side is not
+    entitled to throw away. The resource is left where it is and the run says so (#2).
+
+    Either way the link goes: it named a record that no longer exists. A card left behind is
+    adopted as a contact on the next run — the deletion is undone, visibly, in the direction
+    that loses nothing — and an event left behind is foreign from then on, like any other.
+    """
+    try:
+        server.delete(link.remote_href, etag=link.etag)
+    except Conflict:
+        report.notes.append(str(kept))
+        return False
+    return True
 
 
 # ------------------------------------------------------------------ contacts
@@ -195,14 +255,24 @@ class DavSync:
                 str(_("Address book")),
                 type="text",
                 default="Postulo",
-                help=str(_("Created on the server if missing. Only this address book is touched.")),
+                help=str(
+                    _(
+                        "Made on the server by the first sync if it is not there, unless read "
+                        "only is on. Only this address book is touched."
+                    )
+                ),
             ),
             FieldSpec(
                 "calendar",
                 str(_("Calendar")),
                 type="text",
                 default="Postulo",
-                help=str(_("Created on the server if missing. Only this calendar is touched.")),
+                help=str(
+                    _(
+                        "Made on the server by the first sync if it is not there, unless read "
+                        "only is on. Only this calendar is touched."
+                    )
+                ),
             ),
             FieldSpec(
                 "read_only",
@@ -212,8 +282,8 @@ class DavSync:
                 default=False,
                 help=str(
                     _(
-                        "Never write to the server: contacts and interviews still come in, "
-                        "nothing goes out."
+                        "Never write to the server — not even to make the address book or the "
+                        "calendar. Contacts and interviews still come in; nothing goes out."
                     )
                 ),
             ),
@@ -230,26 +300,99 @@ class DavSync:
 
     # -------------------------------------------------------------- test
 
+    def validate(self, config: dict) -> dict[str, list[str]]:
+        """Look at what was typed before anything is saved. No password over plain http.
+
+        Basic authentication puts the password on the wire; over ``http://`` it is on the
+        wire in the clear, and a job hunt's address book is not the thing to learn that on.
+        The exception is the machine down the hall — a bare name, a ``.local``, a private
+        address — where there is no network in between and the operator has said such
+        addresses may be reached at all. Everything else must be ``https://``.
+        """
+        url = str(config.get("url", "")).strip()
+        if not url:
+            return {}
+        parts = urlsplit(url)
+        scheme, host = parts.scheme.lower(), parts.hostname or ""
+        if scheme == "https":
+            return {}
+        if scheme != "http":
+            return {
+                "url": [
+                    str(_("The address must start with https:// — for example %(example)s."))
+                    % {"example": "https://cloud.example.org"}
+                ]
+            }
+        if not dav.is_private_host(host):
+            return {
+                "url": [
+                    str(
+                        _(
+                            "Over http:// the password goes across the network in the clear, and "
+                            "“%(host)s” is not an address on your own network. Use https://."
+                        )
+                    )
+                    % {"host": host}
+                ]
+            }
+        # A machine on the person's own network, over http, is a decision the *operator*
+        # made once. Asking here is also the cheapest way to ask it: where private
+        # destinations are allowed the answer comes back without resolving anything.
+        try:
+            check_destination(url)
+        except DestinationRefused as refused:
+            return {"url": [str(refused)]}
+        return {}
+
     def test(self, config: dict) -> TestResult:
+        """Sign in and look. *Test* reads: it never makes a collection (#2)."""
+        read_only = bool(config.get("read_only"))
         try:
             client, server = dav.connect(config)
             with client:
-                book = self._collection(server, config, ADDRESSBOOK)
-                calendar = self._collection(server, config, CALENDAR)
+                found = {
+                    kind: self._collection(server, config, kind, create=False)
+                    for kind in (ADDRESSBOOK, CALENDAR)
+                }
         except (DavError, Exception) as error:  # noqa: BLE001 - the sentence is the point
             return TestResult(False, f"{type(error).__name__}: {error}")
-        return TestResult(
-            True,
-            str(_("Found the address book “%(book)s” and the calendar “%(calendar)s”."))
-            % {"book": book.name, "calendar": calendar.name},
-        )
+        missing = [kind for kind, collection in found.items() if collection is None]
+        if not missing:
+            return TestResult(
+                True,
+                str(_("Found the address book “%(book)s” and the calendar “%(calendar)s”."))
+                % {
+                    "book": found[ADDRESSBOOK].name,
+                    "calendar": found[CALENDAR].name,
+                },
+            )
+        sentences = [self._missing_sentence(config, kind) for kind in missing]
+        # Signing in worked, which is what *Test* is for; what is missing is only a
+        # problem the sync cannot solve when it is forbidden to write.
+        sentences.append(str(READ_ONLY_TAIL if read_only else FIRST_SYNC_TAIL))
+        return TestResult(not read_only, " ".join(sentences))
 
-    def _collection(self, server: Server, config: dict, kind: str) -> dav.Collection:
+    def _name(self, config: dict, kind: str) -> str:
+        return str(config.get("addressbook" if kind == ADDRESSBOOK else "calendar") or "Postulo")
+
+    def _missing_sentence(self, config: dict, kind: str) -> str:
+        name = self._name(config, kind)
+        if kind == ADDRESSBOOK:
+            return str(_("The address book “%(name)s” is not on the server.")) % {"name": name}
+        return str(_("The calendar “%(name)s” is not on the server.")) % {"name": name}
+
+    def _collection(
+        self, server: Server, config: dict, kind: str, *, create: bool
+    ) -> dav.Collection | None:
+        """The collection to work in. ``create=False`` looks, and never makes one."""
         well_known = "carddav" if kind == ADDRESSBOOK else "caldav"
         principal = server.principal(well_known)
         home = server.home(principal, kind)
-        name = str(config.get("addressbook" if kind == ADDRESSBOOK else "calendar") or "Postulo")
-        return server.ensure_collection(home, name, kind)
+        name = self._name(config, kind)
+        found = server.find_collection(home, name, kind)
+        if found is not None or not create:
+            return found
+        return server.create_collection(home, name, kind)
 
     # -------------------------------------------------------------- sync
 
@@ -258,10 +401,20 @@ class DavSync:
         read_only = bool(config.get("read_only"))
         client, server = dav.connect(config)
         with client:
-            book = self._collection(server, config, ADDRESSBOOK)
-            self._sync_contacts(server, book, connection, report, read_only=read_only)
-            calendar = self._collection(server, config, CALENDAR)
-            self._sync_interviews(server, calendar, connection, report, read_only=read_only)
+            # In read-only mode a missing collection is reported, not made: half a sync
+            # still runs, and the person is told which half did not.
+            book = self._collection(server, config, ADDRESSBOOK, create=not read_only)
+            if book is None:
+                report.notes.append(
+                    f"{self._missing_sentence(config, ADDRESSBOOK)} {READ_ONLY_TAIL}"
+                )
+            else:
+                self._sync_contacts(server, book, connection, report, read_only=read_only)
+            calendar = self._collection(server, config, CALENDAR, create=not read_only)
+            if calendar is None:
+                report.notes.append(f"{self._missing_sentence(config, CALENDAR)} {READ_ONLY_TAIL}")
+            else:
+                self._sync_interviews(server, calendar, connection, report, read_only=read_only)
         return report
 
     # ---------------------------------------------------------- contacts
@@ -366,12 +519,12 @@ class DavSync:
                 link.save()
                 report.pushed += 1
 
-        # Links whose contact is gone here: take the twin with it.
+        # Links whose contact is gone here: take the twin with it — unless the twin moved.
         for link in list(links.values()):
             if link.object_id not in contacts:
                 if not read_only and link.remote_href in remote:
-                    server.delete(link.remote_href)
-                    report.removed += 1
+                    if drop_twin(server, link, report, CARD_KEPT):
+                        report.removed += 1
                 link.delete()
 
         # Cards that appeared on the other side: adopt them.
@@ -510,8 +663,8 @@ class DavSync:
                 if still_exists:
                     continue  # merely too old for the window; leave the calendar alone
                 if not read_only and link.remote_href in remote:
-                    server.delete(link.remote_href)
-                    report.removed += 1
+                    if drop_twin(server, link, report, EVENT_KEPT):
+                        report.removed += 1
                 link.delete()
 
         foreign = [href for href in remote if href not in linked_hrefs]

@@ -3,22 +3,28 @@
 CardDAV (RFC 6352) and CalDAV (RFC 4791) are WebDAV with two collection types and a few
 properties. What this needs is: find the person's principal from ``/.well-known/carddav``
 and ``/.well-known/caldav`` (RFC 6764), from it the address-book home and the calendar
-home, list the collections there, create one when it is missing, and then the four verbs
-on a collection — list with ETags, GET, PUT with ``If-Match``, DELETE. Nothing else.
+home, list the collections there, and then the four verbs on a collection — list with
+ETags, GET, PUT with ``If-Match``, DELETE with ``If-Match``. Nothing else.
 
-Every request goes through ``postulo.plugins.http.client()``, so the instance's
+Looking a collection up and creating one are two methods on purpose, never one:
+:meth:`Server.find_collection` reads, :meth:`Server.create_collection` writes, and the
+caller says which it is doing. *Test* and read-only mode only ever read, so pressing a
+button labelled *Test* cannot leave an address book behind on somebody's server (#2).
+
+Every request goes through ``postulo.plugins.api.client()``, so the instance's
 destination policy, timeouts and user agent apply; a server on the LAN needs the
 operator's ``POSTULO_CONNECTIONS_ALLOW_PRIVATE``.
 """
 
 from __future__ import annotations
 
+import ipaddress
 from dataclasses import dataclass
 from urllib.parse import unquote, urljoin, urlsplit
 
 import httpx
 from defusedxml import ElementTree
-from postulo.plugins import http
+from postulo.plugins import api
 
 DAV = "DAV:"
 CARD = "urn:ietf:params:xml:ns:carddav"
@@ -164,11 +170,15 @@ class Server:
             found.append(Collection(self.absolute(href_node.text.strip()), name, kind))
         return found
 
-    def ensure_collection(self, home: str, name: str, kind: str) -> Collection:
-        """The collection called ``name`` under ``home``, created when missing."""
+    def find_collection(self, home: str, name: str, kind: str) -> Collection | None:
+        """The collection called ``name`` under ``home``, or ``None``. Reads only."""
         for collection in self.collections(home):
-            if collection.name.strip().lower() == name.strip().lower():
+            if collection.kind == kind and collection.name.strip().lower() == name.strip().lower():
                 return collection
+        return None
+
+    def create_collection(self, home: str, name: str, kind: str) -> Collection:
+        """Make the collection called ``name`` under ``home``. Writes to the server."""
         slug = "postulo-" + ("contacts" if kind == ADDRESSBOOK else "interviews")
         href = urljoin(home.rstrip("/") + "/", slug + "/")
         if kind == ADDRESSBOOK:
@@ -244,9 +254,36 @@ def _xml(text: str) -> str:
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+#: Names that only ever mean a machine on the person's own network.
+LOCAL_SUFFIXES = (".local", ".localhost", ".internal", ".lan", ".intranet", ".home.arpa")
+
+
+def is_private_host(host: str) -> bool:
+    """A guess, made without asking the network, at whether ``host`` is somebody's own.
+
+    Deliberately syntactic. It is asked one question only — *may a password go over plain
+    http to this?* — and the answer has to be no for anything that looks like it is out on
+    the internet. A name that looks public but resolves to a box in the hallway is refused;
+    the address or the local name of that box is not. ``check_destination`` remains the
+    authority on whether the instance may dial an address at all.
+    """
+    host = (host or "").strip().lower().rstrip(".")
+    if not host:
+        return False
+    try:
+        address = ipaddress.ip_address(host.strip("[]"))
+    except ValueError:
+        pass
+    else:
+        return bool(address.is_private or address.is_loopback or address.is_link_local)
+    if host == "localhost" or host.endswith(LOCAL_SUFFIXES):
+        return True
+    return "." not in host  # a bare name: a Compose service, a machine on the LAN
+
+
 def connect(config: dict) -> tuple[httpx.Client, Server]:
     """An HTTP client under Postulo's policy, and the server on top of it."""
-    client = http.client()
+    client = api.client()
     server = Server(
         str(config.get("url", "")),
         str(config.get("username", "")),

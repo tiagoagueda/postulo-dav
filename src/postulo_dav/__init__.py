@@ -15,4 +15,13 @@ Every string a person reads is translated by this package itself, from ``locale/
 this file; Postulo never carries a plugin's words.
 """
 
-__version__ = "0.1.0"
+from importlib import metadata
+
+#: One version, kept in `pyproject.toml` and read back from the installed distribution.
+#: Written twice it drifts, and it had: `0.1.0` here against `0.3.0` there, which the
+#: connections page, the `PRODID` of every card and event, and the plugin registry all
+#: repeated (#2). The fallback is for a source tree that was never installed.
+try:
+    __version__ = metadata.version("postulo-dav")
+except metadata.PackageNotFoundError:  # pragma: no cover - only outside an installation
+    __version__ = "0.0.0+unknown"

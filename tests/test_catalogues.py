@@ -12,9 +12,11 @@ from pathlib import Path
 
 import pytest
 
-messages_tool = pytest.importorskip(
-    "postulo.core.messages_tool", reason="the catalogue tool arrived with Postulo 0.3"
-)
+# Imported, not `importorskip`ed. The tool arrived with Postulo 0.3 and the dev group now
+# pins the 0.3 core, so a machine where this import fails has the wrong Postulo — which is
+# the thing to be told about. Skipping said "no catalogue problems" on a green run that had
+# never opened a catalogue (#2).
+from postulo.core import messages_tool
 
 REPO = Path(__file__).resolve().parents[1]
 
