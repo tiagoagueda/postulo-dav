@@ -37,33 +37,37 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-# What this plugin imports from Postulo, and what that costs.
-#
-# `postulo.plugins.api` is the surface: those names are a promise kept across a minor
-# release. Everything marked #229 below is past it — reached on purpose, because a two-way
-# sync of records needs the records themselves, the services that move them so the timeline
-# says so, and the link table that remembers which twin is whose, and none of that is on
-# the surface yet. postulo/postulo#229 proposes `SyncLink` plus a small sync facade; when it
-# lands these move to `postulo.plugins.api` and the markers go with them. Until then this is
-# what the plugin risks on a core refactor, counted here rather than buried in the file.
-from postulo.applications import ical  # #229
-from postulo.applications.models import Interview, InterviewOutcome  # #229
-from postulo.applications.services import (  # #229
-    get_or_create_company,
-    record_event,
-    reschedule_interview,
-    settle_interview,
-)
-from postulo.core import phone_numbers, web_links  # #229
-from postulo.jobs.models import Contact  # #229
+# One import, and it is a promise. Everything this plugin needs from Postulo is on
+# `postulo.plugins.api` and stays working across a minor release; anything else in
+# `postulo` is this month's internals. That was not true when this file was written — a
+# two-way sync needs the records themselves, the calls that move them so the timeline says
+# so, and the link table that remembers which twin is whose, and none of it was on the
+# surface — so the block below carried nine imports and a paragraph counting what they
+# risked. postulo/postulo#229 put them on it, and `tests/test_surface.py` holds this file
+# to the line.
 from postulo.plugins.api import (
+    Contact,
     DestinationRefused,
     FieldSpec,
+    Interview,
+    InterviewOutcome,
+    LinkKind,
+    SyncLink,
     SyncReport,
     TestResult,
+    calendar_status,
     check_destination,
+    event_lines,
+    get_or_create_company,
+    phone_number_is_taken,
+    primary_phone_number,
+    primary_web_link,
+    record_event,
+    reschedule_interview,
+    save_phone_number,
+    save_web_link,
+    settle_interview,
 )
-from postulo.plugins.models import SyncLink  # #229 — SyncLink is the whole point of it
 
 from . import __version__, dav, text
 from .dav import ADDRESSBOOK, CALENDAR, Conflict, DavError, Server
@@ -126,8 +130,8 @@ def card_for(contact: Contact) -> text.Card:
     # A card carries one number and one address on the web; a contact holds several of
     # each since Postulo 0.3, with one of each kind marked as the one to use. The card
     # gets the primaries, which is what "the number" and "the LinkedIn" mean there now.
-    number = phone_numbers.primary_for(contact)
-    profile = web_links.primary_for(contact, web_links.Kind.SOCIAL)
+    number = primary_phone_number(contact)
+    profile = primary_web_link(contact, LinkKind.SOCIAL)
     return text.Card(
         uid=f"contact-{contact.pk}-{contact.owner_id}@postulo",
         name=contact.name,
@@ -153,33 +157,26 @@ def apply_card(contact: Contact, card: text.Card) -> None:
     # person keeps here is not the card's to lose. A number some other row on the instance
     # already holds is left alone rather than failing the sync over one field of a card.
     number = card.phone[:40].strip()
-    primary = phone_numbers.primary_for(contact)
-    if not number or not phone_numbers.taken_elsewhere(
-        number, exclude_pk=primary.pk if primary else None
-    ):
-        phone_numbers.save_only_number(contact, contact.owner, number)
-    web_links.save_only_link(contact, contact.owner, web_links.Kind.SOCIAL, card.url[:500])
+    primary = primary_phone_number(contact)
+    if not number or not phone_number_is_taken(number, exclude_pk=primary.pk if primary else None):
+        save_phone_number(contact, contact.owner, number)
+    save_web_link(contact, contact.owner, LinkKind.SOCIAL, card.url[:500])
 
 
 # ---------------------------------------------------------------- interviews
 
 
 def event_text(interview: Interview) -> str:
+    """The whole iCalendar document for one interview, alarm included.
+
+    `alarm=True` is what writing into somebody's *own* calendar means: the reminder is
+    theirs and they set it in Postulo, so their phone should ring for it. The feed Postulo
+    serves carries no alarm, because a subscription that rings is a decision for whoever
+    subscribes. Assembling the VALARM here was this plugin's job until the core took it
+    (postulo/postulo#229).
+    """
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", f"PRODID:{PRODID}", "CALSCALE:GREGORIAN"]
-    event = ical.event_lines(interview)
-    reminder = interview.reminder
-    if reminder is not None and not reminder.is_done and reminder.due_at < interview.starts_at:
-        lead = interview.starts_at - reminder.due_at
-        minutes = int(lead.total_seconds() // 60)
-        event = event[:-1] + [
-            "BEGIN:VALARM",
-            "ACTION:DISPLAY",
-            f"DESCRIPTION:{ical.escape(reminder.summary)}",
-            f"TRIGGER:-PT{minutes}M",
-            "END:VALARM",
-            "END:VEVENT",
-        ]
-    return text.render(lines + event + ["END:VCALENDAR"])
+    return text.render(lines + event_lines(interview, alarm=True) + ["END:VCALENDAR"])
 
 
 def interview_source(interview: Interview) -> str:
@@ -189,7 +186,7 @@ def interview_source(interview: Interview) -> str:
         ends_at=interview.ends_at,
         location=interview.location,
         description=interview.notes,
-        status=ical.STATUS_OF[interview.outcome],
+        status=calendar_status(interview),
     ).digest_source()
 
 

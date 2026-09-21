@@ -44,7 +44,7 @@ dev = [
     # goes green here and breaks on the instance it ships to (#2). A commit and not `v0.3.0`
     # only because 0.3.0 is not tagged yet — the day it is, this becomes `@v0.3.0`, and a
     # plugin release moves the ref rather than letting it drift.
-    "postulo @ git+https://source.tiagoagueda.com/postulo/postulo.git@5ee31c66aa278f5d189acf7e59031d3f56188b68",
+    "postulo @ git+https://source.tiagoagueda.com/postulo/postulo.git@1d6cdd7e0",
     "pytest>=8.3",
     "pytest-django>=4.14",
     "ruff>=0.16",

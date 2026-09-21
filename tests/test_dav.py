@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import ast
 import datetime as dt
 import re
 from importlib import metadata
-from pathlib import Path
 from urllib.parse import urlsplit
 
 import httpx
@@ -185,7 +183,7 @@ def server(monkeypatch):
         kwargs.setdefault("follow_redirects", True)
         return httpx.Client(transport=httpx.MockTransport(fake.handler), **kwargs)
 
-    monkeypatch.setattr(dav_module.api, "client", fake_client)
+    monkeypatch.setattr(dav_module, "postulo_client", fake_client)
     return fake
 
 
@@ -706,52 +704,3 @@ def test_the_version_is_the_one_the_package_was_built_with():
     assert postulo_dav.__version__ == metadata.version("postulo-dav")
     assert DavSync().version == postulo_dav.__version__
     assert PRODID.endswith(f"postulo-dav {postulo_dav.__version__}//EN")
-
-
-# ----------------------------------------------------------------- the surface
-
-#: `postulo.plugins.api` is the promise; every name under it may be imported freely.
-SURFACE = "postulo.plugins.api"
-#: And these are the names reached past it, each one a way a core refactor can break this
-#: plugin. postulo/postulo#229 is the work that empties this list; until then it stays
-#: countable, and a new reach has to be added here on purpose rather than by habit.
-PAST_THE_SURFACE = frozenset(
-    {
-        "postulo.applications.ical",
-        "postulo.applications.models.Interview",
-        "postulo.applications.models.InterviewOutcome",
-        "postulo.applications.services.get_or_create_company",
-        "postulo.applications.services.record_event",
-        "postulo.applications.services.reschedule_interview",
-        "postulo.applications.services.settle_interview",
-        "postulo.core.phone_numbers",
-        "postulo.core.web_links",
-        "postulo.jobs.models.Contact",
-        "postulo.plugins.models.SyncLink",
-    }
-)
-
-
-def postulo_names_imported() -> set[str]:
-    """Every name this package takes from Postulo, read off the source rather than run."""
-    package = Path(dav_module.__file__).parent
-    found: set[str] = set()
-    for path in sorted(package.glob("*.py")):
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-            if isinstance(node, ast.Import):
-                found |= {a.name for a in node.names if a.name.split(".")[0] == "postulo"}
-            elif isinstance(node, ast.ImportFrom):
-                if node.level or not (node.module or "").split(".")[0] == "postulo":
-                    continue
-                found |= {f"{node.module}.{a.name}" for a in node.names}
-    return found
-
-
-def test_what_the_plugin_reaches_for_in_postulo_is_the_surface_and_a_counted_list():
-    imported = postulo_names_imported()
-    past = {name for name in imported if not name.startswith(SURFACE)}
-    assert past == set(PAST_THE_SURFACE), (
-        "a plugin may import postulo.plugins.api freely; anything else is a bet on core "
-        "internals and belongs in PAST_THE_SURFACE with a #229 marker at the import"
-    )
-    assert imported - past, "the surface itself is imported, not worked around"

@@ -24,7 +24,7 @@ from urllib.parse import unquote, urljoin, urlsplit
 
 import httpx
 from defusedxml import ElementTree
-from postulo.plugins import api
+from postulo.plugins.api import client as postulo_client
 
 DAV = "DAV:"
 CARD = "urn:ietf:params:xml:ns:carddav"
@@ -283,7 +283,7 @@ def is_private_host(host: str) -> bool:
 
 def connect(config: dict) -> tuple[httpx.Client, Server]:
     """An HTTP client under Postulo's policy, and the server on top of it."""
-    client = api.client()
+    client = postulo_client()
     server = Server(
         str(config.get("url", "")),
         str(config.get("username", "")),
