@@ -80,6 +80,16 @@ compile`. `uv run postulo-messages extract` refreshes them from the source, and 
 pytest -m release` holds the twenty-four European Union catalogues complete before a
 release — a gate the tag job in CI runs, and every other run skips.
 
+A language code here is a BCP 47 tag in its canonical form, as everywhere in Postulo: the
+language in lower case, a script with a capital, a region in capitals (`fr-FR`, `pt-BR`,
+`sr-Cyrl`). The directories under `locale/` are the one exception: `fr_FR` and `sr_Cyrl`
+are gettext's names for a catalogue, not codes, and `postulo-messages` derives them from
+the tags, so nobody types one. Nothing this plugin writes on a card or an event names a
+language today. Where one is written it is such a tag, which is what the `LANGUAGE`
+parameter of a vCard (RFC 6350 §5.1) and of a calendar entry (RFC 5545 §3.2.10) takes.
+The `EN` at the end of the product identifier is not one: it belongs to the identifier's
+own format and stays as it is.
+
 ## Develop
 
 ```sh

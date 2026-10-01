@@ -689,12 +689,12 @@ def test_the_plugin_speaks_french_and_portuguese_by_itself():
 
     registry.plugins("sync", refresh=True)
     plugin = registry.find_plugin("sync", "dav")
-    with translation.override("fr-fr"):
+    with translation.override("fr-FR"):
         assert str(plugin.label) == "CardDAV et CalDAV"
         assert plugin.config_fields()[3].label == "Carnet d'adresses"
-    with translation.override("pt-pt"):
+    with translation.override("pt-PT"):
         assert str(plugin.label) == "CardDAV e CalDAV"
-    with translation.override("en-gb"):
+    with translation.override("en-GB"):
         assert str(plugin.label) == "CardDAV and CalDAV"
 
 

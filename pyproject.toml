@@ -3,7 +3,7 @@ name = "postulo-dav"
 version = "0.3.0"
 description = "Company contacts in a CardDAV address book and interviews in a CalDAV calendar, in both directions: Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud and any server that speaks the standards."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12.4"
 license = "AGPL-3.0-or-later"
 authors = [{ name = "Tiago Agueda" }]
 keywords = ["postulo", "plugin", "carddav", "caldav", "webdav", "vcard", "icalendar"]
@@ -44,7 +44,7 @@ dev = [
     # goes green here and breaks on the instance it ships to (#2). A commit and not `v0.3.0`
     # only because 0.3.0 is not tagged yet — the day it is, this becomes `@v0.3.0`, and a
     # plugin release moves the ref rather than letting it drift.
-    "postulo @ git+https://source.tiagoagueda.com/postulo/postulo.git@1d6cdd7e0",
+    "postulo @ git+https://source.tiagoagueda.com/postulo/postulo.git@a6363a397",
     "pytest>=8.3",
     "pytest-django>=4.14",
     "ruff>=0.16",

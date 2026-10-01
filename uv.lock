@@ -1,6 +1,6 @@
 version = 1
 revision = 3
-requires-python = ">=3.12"
+requires-python = ">=3.12.4"
 resolution-markers = [
     "python_full_version >= '3.13'",
     "python_full_version < '3.13'",
@@ -746,9 +746,10 @@ wheels = [
 [[package]]
 name = "postulo"
 version = "0.3.0"
-source = { git = "https://source.tiagoagueda.com/postulo/postulo.git?rev=1d6cdd7e0#1d6cdd7e0b0f6d2a0b27262dfd00546c0a1f4b1c" }
+source = { git = "https://source.tiagoagueda.com/postulo/postulo.git?rev=a6363a397#a6363a3970ee2a23db8c05ae26dbcafca24b1b8f" }
 dependencies = [
     { name = "cryptography" },
+    { name = "defusedxml" },
     { name = "django" },
     { name = "django-allauth", extra = ["mfa", "socialaccount"] },
     { name = "django-cotton" },
@@ -756,6 +757,7 @@ dependencies = [
     { name = "django-htmx" },
     { name = "django-ninja" },
     { name = "django-tasks-db" },
+    { name = "httpcore" },
     { name = "httpx" },
     { name = "packaging" },
     { name = "weasyprint" },
@@ -787,7 +789,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "postulo", git = "https://source.tiagoagueda.com/postulo/postulo.git?rev=1d6cdd7e0" },
+    { name = "postulo", git = "https://source.tiagoagueda.com/postulo/postulo.git?rev=a6363a397" },
     { name = "pytest", specifier = ">=8.3" },
     { name = "pytest-django", specifier = ">=4.14" },
     { name = "ruff", specifier = ">=0.16" },
