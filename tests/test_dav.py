@@ -581,8 +581,10 @@ def test_interviews_are_pushed_as_events_with_an_alarm(server, connection, appli
         f"UID:{interview.uid}" in body
         and "SUMMARY:Video call: Test Engineer at Aperture Science" in body
     )
-    assert "ATTENDEE;CN=Cave Johnson;ROLE=REQ-PARTICIPANT:mailto:cave@aperture.test" in body
-    assert "BEGIN:VALARM" in body and "TRIGGER:-PT1440M" in body
+    # Postulo writes events with the icalendar library since postulo/postulo 022b8747f, which
+    # quotes a name with a space in it and says a day as -P1D; both mean what they did.
+    assert 'ATTENDEE;CN="Cave Johnson";ROLE=REQ-PARTICIPANT:mailto:cave@aperture.test' in body
+    assert "BEGIN:VALARM" in body and "TRIGGER:-P1D" in body
     assert body == event_text(interview)
     assert SyncLink.for_record(connection, interview).remote_href.endswith(
         f"/postulo-interviews/{interview.uid}.ics"

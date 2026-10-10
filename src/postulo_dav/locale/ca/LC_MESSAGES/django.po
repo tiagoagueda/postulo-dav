@@ -1,11 +1,9 @@
 # català translation of postulo-dav.
-# This file is distributed under the same license as Postulo (AGPL-3.0-or-later).
+# This file is distributed under the same license as the postulo-dav package (AGPL-3.0-or-later).
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Postulo\n"
-"Report-Msgid-Bugs-To: https://source.tiagoagueda.com/postulo/postulo/issues\n"
-"POT-Creation-Date: 2026-09-21 15:23+0000\n"
+"Project-Id-Version: postulo-dav\n"
 "PO-Revision-Date: 2026-09-13 04:03+0000\n"
 "Last-Translator: Postulo contributors\n"
 "Language-Team: català\n"
@@ -16,154 +14,145 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
-#: src/postulo_dav/sync.py:671
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"%(count)d events on the calendar are not from Postulo and were left alone."
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr ""
 
-#: src/postulo_dav/sync.py:596
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr ""
 
-#: src/postulo_dav/sync.py:80
+#: src/postulo_dav/sync.py
 msgid "(no company)"
 msgstr ""
 
-#: src/postulo_dav/sync.py:95
-msgid ""
-"A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+#: src/postulo_dav/sync.py
+msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr ""
 
-#: src/postulo_dav/sync.py:252
+#: src/postulo_dav/sync.py
 msgid "Address book"
 msgstr ""
 
-#: src/postulo_dav/sync.py:248
+#: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr ""
 
-#: src/postulo_dav/sync.py:650
+#: src/postulo_dav/sync.py
 msgid "An interview changed on both sides at once; next run decides."
 msgstr ""
 
-#: src/postulo_dav/sync.py:100
-msgid ""
-"An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+#: src/postulo_dav/sync.py
+msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
 msgstr ""
 
-#: src/postulo_dav/sync.py:264
+#: src/postulo_dav/sync.py
 msgid "Calendar"
 msgstr ""
 
-#: src/postulo_dav/sync.py:215
+#: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
 msgstr ""
 
-#: src/postulo_dav/sync.py:227
+#: src/postulo_dav/sync.py
 msgid "CardDAV and CalDAV"
 msgstr ""
 
-#: src/postulo_dav/sync.py:489
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr ""
 
-#: src/postulo_dav/sync.py:624
+#: src/postulo_dav/sync.py
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr ""
 
-#: src/postulo_dav/sync.py:475
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr ""
 
-#: src/postulo_dav/sync.py:614
+#: src/postulo_dav/sync.py
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr ""
 
-#: src/postulo_dav/sync.py:360
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr ""
 
-#: src/postulo_dav/sync.py:256
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:268
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:281
-msgid ""
-"Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+#: src/postulo_dav/sync.py
+msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
 msgstr ""
 
-#: src/postulo_dav/sync.py:327
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr ""
 
-#: src/postulo_dav/sync.py:245
+#: src/postulo_dav/sync.py
 msgid "Password or app password"
 msgstr ""
 
-#: src/postulo_dav/sync.py:276
+#: src/postulo_dav/sync.py
 msgid "Read only"
 msgstr ""
 
-#: src/postulo_dav/sync.py:295
+#: src/postulo_dav/sync.py
 msgid "read only"
 msgstr ""
 
-#: src/postulo_dav/sync.py:84
-msgid ""
-"Read only is on, so nothing is made: create it on the server, or name one that is already there."
+#: src/postulo_dav/sync.py
+msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr ""
 
-#: src/postulo_dav/sync.py:233
+#: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr ""
 
-#: src/postulo_dav/sync.py:378
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:319
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr ""
 
-#: src/postulo_dav/sync.py:379
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:82
+#: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
 msgstr ""
 
-#: src/postulo_dav/sync.py:236
-msgid ""
-"The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
+#: src/postulo_dav/sync.py
+msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
 msgstr ""
 
-#: src/postulo_dav/sync.py:242
+#: src/postulo_dav/sync.py
 msgid "Username"
 msgstr ""
 
-#: src/postulo_dav/sync.py:511
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr ""
 
-#: src/postulo_dav/sync.py:463
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr ""

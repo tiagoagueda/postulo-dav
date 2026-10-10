@@ -1,11 +1,9 @@
 # français (France) translation of postulo-dav.
-# This file is distributed under the same license as Postulo (AGPL-3.0-or-later).
+# This file is distributed under the same license as the postulo-dav package (AGPL-3.0-or-later).
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Postulo\n"
-"Report-Msgid-Bugs-To: https://source.tiagoagueda.com/postulo/postulo/issues\n"
-"POT-Creation-Date: 2026-09-21 15:23+0000\n"
+"Project-Id-Version: postulo-dav\n"
 "PO-Revision-Date: 2026-09-13 04:03+0000\n"
 "Last-Translator: Postulo contributors\n"
 "Language-Team: français (France)\n"
@@ -16,168 +14,145 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
-#: src/postulo_dav/sync.py:671
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
-"%(count)d évènements du calendrier ne viennent pas de Postulo et n'ont pas été touchés."
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
+msgstr "%(count)d évènements du calendrier ne viennent pas de Postulo et n'ont pas été touchés."
 
-#: src/postulo_dav/sync.py:596
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s retiré du calendrier sur un autre appareil ; conservé ici."
 
-#: src/postulo_dav/sync.py:80
+#: src/postulo_dav/sync.py
 msgid "(no company)"
 msgstr "(sans entreprise)"
 
-#: src/postulo_dav/sync.py:95
-msgid ""
-"A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
-"Un contact supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. La fiche a été laissée dans le carnet d'adresses, et reviendra comme contact à la prochaine exécution."
+#: src/postulo_dav/sync.py
+msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+msgstr "Un contact supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. La fiche a été laissée dans le carnet d'adresses, et reviendra comme contact à la prochaine exécution."
 
-#: src/postulo_dav/sync.py:252
+#: src/postulo_dav/sync.py
 msgid "Address book"
 msgstr "Carnet d'adresses"
 
-#: src/postulo_dav/sync.py:248
+#: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
-"Un mot de passe d'application si le serveur en propose. Conservé chiffré."
+msgstr "Un mot de passe d'application si le serveur en propose. Conservé chiffré."
 
-#: src/postulo_dav/sync.py:650
+#: src/postulo_dav/sync.py
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
-"Un entretien a changé des deux côtés en même temps ; la prochaine exécution tranchera."
+msgstr "Un entretien a changé des deux côtés en même temps ; la prochaine exécution tranchera."
 
-#: src/postulo_dav/sync.py:100
-msgid ""
-"An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
-"Un entretien supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. L'évènement a été laissé sur le calendrier."
+#: src/postulo_dav/sync.py
+msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+msgstr "Un entretien supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. L'évènement a été laissé sur le calendrier."
 
-#: src/postulo_dav/sync.py:264
+#: src/postulo_dav/sync.py
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: src/postulo_dav/sync.py:215
+#: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
 msgstr "Annulé depuis le calendrier."
 
-#: src/postulo_dav/sync.py:227
+#: src/postulo_dav/sync.py
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV et CalDAV"
 
-#: src/postulo_dav/sync.py:489
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Modifié ici le %(when)s : %(text)s"
 
-#: src/postulo_dav/sync.py:624
+#: src/postulo_dav/sync.py
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
-"Modifié ici, mais modifié sur le téléphone plus tard ; leur version est prise."
+msgstr "Modifié ici, mais modifié sur le téléphone plus tard ; leur version est prise."
 
-#: src/postulo_dav/sync.py:475
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Modifié sur le téléphone le %(when)s : %(text)s"
 
-#: src/postulo_dav/sync.py:614
+#: src/postulo_dav/sync.py
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
-"Modifié sur le téléphone, mais modifié ici plus tard ; notre version est gardée."
+msgstr "Modifié sur le téléphone, mais modifié ici plus tard ; notre version est gardée."
 
-#: src/postulo_dav/sync.py:360
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Carnet d'adresses « %(book)s » et calendrier « %(calendar)s » trouvés."
 
-#: src/postulo_dav/sync.py:256
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
-"Créé sur le serveur par la première synchronisation s'il n'y est pas, sauf en lecture seule. Seul ce carnet d'adresses est touché."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
+msgstr "Créé sur le serveur par la première synchronisation s'il n'y est pas, sauf en lecture seule. Seul ce carnet d'adresses est touché."
 
-#: src/postulo_dav/sync.py:268
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
-"Créé sur le serveur par la première synchronisation s'il n'y est pas, sauf en lecture seule. Seul ce calendrier est touché."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+msgstr "Créé sur le serveur par la première synchronisation s'il n'y est pas, sauf en lecture seule. Seul ce calendrier est touché."
 
-#: src/postulo_dav/sync.py:281
-msgid ""
-"Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
-"N'écrit jamais sur le serveur — pas même pour créer le carnet d'adresses ou le calendrier. Les contacts et les entretiens arrivent toujours ; rien ne sort."
+#: src/postulo_dav/sync.py
+msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+msgstr "N'écrit jamais sur le serveur — pas même pour créer le carnet d'adresses ou le calendrier. Les contacts et les entretiens arrivent toujours ; rien ne sort."
 
-#: src/postulo_dav/sync.py:327
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
-"En http://, le mot de passe circule en clair sur le réseau, et « %(host)s » n'est pas une adresse de votre propre réseau. Utilisez https://."
+msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgstr "En http://, le mot de passe circule en clair sur le réseau, et « %(host)s » n'est pas une adresse de votre propre réseau. Utilisez https://."
 
-#: src/postulo_dav/sync.py:245
+#: src/postulo_dav/sync.py
 msgid "Password or app password"
 msgstr "Mot de passe ou mot de passe d'application"
 
-#: src/postulo_dav/sync.py:276
+#: src/postulo_dav/sync.py
 msgid "Read only"
 msgstr "Lecture seule"
 
-#: src/postulo_dav/sync.py:295
+#: src/postulo_dav/sync.py
 msgid "read only"
 msgstr "lecture seule"
 
-#: src/postulo_dav/sync.py:84
-msgid ""
-"Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
-"La lecture seule est active, donc rien n'est créé : créez-le sur le serveur, ou indiquez-en un qui existe déjà."
+#: src/postulo_dav/sync.py
+msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
+msgstr "La lecture seule est active, donc rien n'est créé : créez-le sur le serveur, ou indiquez-en un qui existe déjà."
 
-#: src/postulo_dav/sync.py:233
+#: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr "Adresse du serveur"
 
-#: src/postulo_dav/sync.py:378
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Le carnet d'adresses « %(name)s » n'est pas sur le serveur."
 
-#: src/postulo_dav/sync.py:319
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "L'adresse doit commencer par https:// — par exemple %(example)s."
 
-#: src/postulo_dav/sync.py:379
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "Le calendrier « %(name)s » n'est pas sur le serveur."
 
-#: src/postulo_dav/sync.py:82
+#: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
 msgstr "La première synchronisation créera ce qui manque."
 
-#: src/postulo_dav/sync.py:236
-msgid ""
-"The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
-"La racine du serveur, par ex. https://cloud.example.org. Postulo y trouve les emplacements du carnet d'adresses et du calendrier."
+#: src/postulo_dav/sync.py
+msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
+msgstr "La racine du serveur, par ex. https://cloud.example.org. Postulo y trouve les emplacements du carnet d'adresses et du calendrier."
 
-#: src/postulo_dav/sync.py:242
+#: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: src/postulo_dav/sync.py:511
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
-"« %(name)s » a changé des deux côtés en même temps ; la prochaine exécution tranchera."
+msgstr "« %(name)s » a changé des deux côtés en même temps ; la prochaine exécution tranchera."
 
-#: src/postulo_dav/sync.py:463
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "« %(name)s » a été retiré du carnet d'adresses ; conservé ici."

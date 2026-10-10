@@ -1,11 +1,9 @@
 # Deutsch translation of postulo-dav.
-# This file is distributed under the same license as Postulo (AGPL-3.0-or-later).
+# This file is distributed under the same license as the postulo-dav package (AGPL-3.0-or-later).
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Postulo\n"
-"Report-Msgid-Bugs-To: https://source.tiagoagueda.com/postulo/postulo/issues\n"
-"POT-Creation-Date: 2026-09-21 15:23+0000\n"
+"Project-Id-Version: postulo-dav\n"
 "PO-Revision-Date: 2026-09-13 04:03+0000\n"
 "Last-Translator: Postulo contributors\n"
 "Language-Team: Deutsch\n"
@@ -16,177 +14,160 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
-#: src/postulo_dav/sync.py:671
-#, python-format, draft
-msgid ""
-"%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
-"%(count)d Termine im Kalender stammen nicht von Postulo und wurden nicht angerührt."
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
+msgstr "%(count)d Termine im Kalender stammen nicht von Postulo und wurden nicht angerührt."
 
-#: src/postulo_dav/sync.py:596
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
-"%(kind)s auf einem anderen Gerät aus dem Kalender entfernt; hier behalten."
+msgstr "%(kind)s auf einem anderen Gerät aus dem Kalender entfernt; hier behalten."
 
-#: src/postulo_dav/sync.py:80
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
 msgstr "(kein Unternehmen)"
 
-#: src/postulo_dav/sync.py:95
-msgid ""
-"A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+#: src/postulo_dav/sync.py
+msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr ""
 
-#: src/postulo_dav/sync.py:252
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
 msgstr "Adressbuch"
 
-#: src/postulo_dav/sync.py:248
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
-"Ein App-Passwort, wo der Server eines anbietet. Wird verschlüsselt gespeichert."
+msgstr "Ein App-Passwort, wo der Server eines anbietet. Wird verschlüsselt gespeichert."
 
-#: src/postulo_dav/sync.py:650
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
-"Ein Gespräch wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
+msgstr "Ein Gespräch wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
 
-#: src/postulo_dav/sync.py:100
-msgid ""
-"An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+#: src/postulo_dav/sync.py
+msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
 msgstr ""
 
-#: src/postulo_dav/sync.py:264
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
 msgstr "Kalender"
 
-#: src/postulo_dav/sync.py:215
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Im Kalender abgesagt."
 
-#: src/postulo_dav/sync.py:227
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV und CalDAV"
 
-#: src/postulo_dav/sync.py:489
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Hier geändert am %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:624
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
-"Hier geändert, aber später auf dem Telefon geändert; deren Fassung übernommen."
+msgstr "Hier geändert, aber später auf dem Telefon geändert; deren Fassung übernommen."
 
-#: src/postulo_dav/sync.py:475
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Auf dem Telefon geändert am %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:614
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
-"Auf dem Telefon geändert, aber später hier geändert; unsere Fassung behalten."
+msgstr "Auf dem Telefon geändert, aber später hier geändert; unsere Fassung behalten."
 
-#: src/postulo_dav/sync.py:360
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Adressbuch „%(book)s“ und Kalender „%(calendar)s“ gefunden."
 
-#: src/postulo_dav/sync.py:256
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:268
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:281
-msgid ""
-"Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+#: src/postulo_dav/sync.py
+msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
 msgstr ""
 
-#: src/postulo_dav/sync.py:327
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr ""
 
-#: src/postulo_dav/sync.py:245
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
 msgstr "Passwort oder App-Passwort"
 
-#: src/postulo_dav/sync.py:276
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
 msgstr "Nur lesen"
 
-#: src/postulo_dav/sync.py:295
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
 msgstr "nur lesen"
 
-#: src/postulo_dav/sync.py:84
-msgid ""
-"Read only is on, so nothing is made: create it on the server, or name one that is already there."
+#: src/postulo_dav/sync.py
+msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr ""
 
-#: src/postulo_dav/sync.py:233
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
 msgstr "Serveradresse"
 
-#: src/postulo_dav/sync.py:378
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:319
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr ""
 
-#: src/postulo_dav/sync.py:379
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:82
+#: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
 msgstr ""
 
-#: src/postulo_dav/sync.py:236
-#, draft
-msgid ""
-"The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
-"Die Wurzel des Servers, z. B. https://cloud.example.org. Von dort aus findet Postulo die Adressbuch- und Kalenderverzeichnisse."
+#: src/postulo_dav/sync.py
+#, fuzzy
+msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
+msgstr "Die Wurzel des Servers, z. B. https://cloud.example.org. Von dort aus findet Postulo die Adressbuch- und Kalenderverzeichnisse."
 
-#: src/postulo_dav/sync.py:242
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
 msgstr "Benutzername"
 
-#: src/postulo_dav/sync.py:511
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
-"„%(name)s“ wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
+msgstr "„%(name)s“ wurde auf beiden Seiten zugleich geändert; der nächste Lauf entscheidet."
 
-#: src/postulo_dav/sync.py:463
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s“ wurde aus dem Adressbuch entfernt; hier behalten."

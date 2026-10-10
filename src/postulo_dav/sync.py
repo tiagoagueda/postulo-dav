@@ -158,7 +158,9 @@ def apply_card(contact: Contact, card: text.Card) -> None:
     # already holds is left alone rather than failing the sync over one field of a card.
     number = card.phone[:40].strip()
     primary = primary_phone_number(contact)
-    if not number or not phone_number_is_taken(number, exclude_pk=primary.pk if primary else None):
+    if not number or not phone_number_is_taken(
+        number, exclude_pk=primary.pk if primary else None, asked_by=contact.owner
+    ):
         save_phone_number(contact, contact.owner, number)
     save_web_link(contact, contact.owner, LinkKind.SOCIAL, card.url[:500])
 

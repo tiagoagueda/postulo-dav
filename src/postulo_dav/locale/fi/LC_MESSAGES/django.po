@@ -1,11 +1,9 @@
 # suomi translation of postulo-dav.
-# This file is distributed under the same license as Postulo (AGPL-3.0-or-later).
+# This file is distributed under the same license as the postulo-dav package (AGPL-3.0-or-later).
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Postulo\n"
-"Report-Msgid-Bugs-To: https://source.tiagoagueda.com/postulo/postulo/issues\n"
-"POT-Creation-Date: 2026-09-21 15:23+0000\n"
+"Project-Id-Version: postulo-dav\n"
 "PO-Revision-Date: 2026-09-13 04:03+0000\n"
 "Last-Translator: Postulo contributors\n"
 "Language-Team: suomi\n"
@@ -16,175 +14,160 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
-#: src/postulo_dav/sync.py:671
-#, python-format, draft
-msgid ""
-"%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
-"%(count)d kalenterin tapahtumaa ei ole Postulosta, ja ne jätettiin rauhaan."
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
+msgstr "%(count)d kalenterin tapahtumaa ei ole Postulosta, ja ne jätettiin rauhaan."
 
-#: src/postulo_dav/sync.py:596
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
-"%(kind)s poistettiin kalenterista toisella laitteella; säilytetty täällä."
+msgstr "%(kind)s poistettiin kalenterista toisella laitteella; säilytetty täällä."
 
-#: src/postulo_dav/sync.py:80
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
 msgstr "(ei yritystä)"
 
-#: src/postulo_dav/sync.py:95
-msgid ""
-"A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+#: src/postulo_dav/sync.py
+msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr ""
 
-#: src/postulo_dav/sync.py:252
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
 msgstr "Osoitekirja"
 
-#: src/postulo_dav/sync.py:248
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
-"Sovellussalasana, jos palvelin sellaisen tarjoaa. Tallennetaan salattuna."
+msgstr "Sovellussalasana, jos palvelin sellaisen tarjoaa. Tallennetaan salattuna."
 
-#: src/postulo_dav/sync.py:650
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
-"Haastattelu muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
+msgstr "Haastattelu muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
 
-#: src/postulo_dav/sync.py:100
-msgid ""
-"An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+#: src/postulo_dav/sync.py
+msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
 msgstr ""
 
-#: src/postulo_dav/sync.py:264
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
 msgstr "Kalenteri"
 
-#: src/postulo_dav/sync.py:215
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Peruttu kalenterissa."
 
-#: src/postulo_dav/sync.py:227
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV ja CalDAV"
 
-#: src/postulo_dav/sync.py:489
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Muutettu täällä %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:624
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Muutettu täällä, mutta myöhemmin puhelimessa; otettiin puhelimen versio."
 
-#: src/postulo_dav/sync.py:475
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Muutettu puhelimessa %(when)s: %(text)s"
 
-#: src/postulo_dav/sync.py:614
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Muutettu puhelimessa, mutta myöhemmin täällä; säilytettiin oma versio."
 
-#: src/postulo_dav/sync.py:360
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Löydettiin osoitekirja ”%(book)s” ja kalenteri ”%(calendar)s”."
 
-#: src/postulo_dav/sync.py:256
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:268
-msgid ""
-"Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
 msgstr ""
 
-#: src/postulo_dav/sync.py:281
-msgid ""
-"Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+#: src/postulo_dav/sync.py
+msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
 msgstr ""
 
-#: src/postulo_dav/sync.py:327
+#: src/postulo_dav/sync.py
 #, python-format
-msgid ""
-"Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr ""
 
-#: src/postulo_dav/sync.py:245
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
 msgstr "Salasana tai sovellussalasana"
 
-#: src/postulo_dav/sync.py:276
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
 msgstr "Vain luku"
 
-#: src/postulo_dav/sync.py:295
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
 msgstr "vain luku"
 
-#: src/postulo_dav/sync.py:84
-msgid ""
-"Read only is on, so nothing is made: create it on the server, or name one that is already there."
+#: src/postulo_dav/sync.py
+msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr ""
 
-#: src/postulo_dav/sync.py:233
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
 msgstr "Palvelimen osoite"
 
-#: src/postulo_dav/sync.py:378
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:319
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr ""
 
-#: src/postulo_dav/sync.py:379
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr ""
 
-#: src/postulo_dav/sync.py:82
+#: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
 msgstr ""
 
-#: src/postulo_dav/sync.py:236
-#, draft
-msgid ""
-"The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
-"Palvelimen juuri, esim. https://cloud.example.org. Postulo löytää sieltä osoitekirjan ja kalenterin sijainnit."
+#: src/postulo_dav/sync.py
+#, fuzzy
+msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
+msgstr "Palvelimen juuri, esim. https://cloud.example.org. Postulo löytää sieltä osoitekirjan ja kalenterin sijainnit."
 
-#: src/postulo_dav/sync.py:242
-#, draft
+#: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
 msgstr "Käyttäjänimi"
 
-#: src/postulo_dav/sync.py:511
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
-"”%(name)s” muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
+msgstr "”%(name)s” muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
 
-#: src/postulo_dav/sync.py:463
-#, python-format, draft
+#: src/postulo_dav/sync.py
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "”%(name)s” poistettiin osoitekirjasta; säilytetty täällä."
