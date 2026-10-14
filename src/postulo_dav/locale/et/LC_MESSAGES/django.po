@@ -4,14 +4,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: eesti\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Estonian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
@@ -30,8 +30,9 @@ msgid "(no company)"
 msgstr "(ettevõte puudub)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Siin kustutatud kontakt oli telefonis pärast viimast sünkroonimist muudetud. Kaart jäeti aadressiraamatusse ja tuleb järgmisel jooksul kontaktina tagasi."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -49,8 +50,9 @@ msgid "An interview changed on both sides at once; next run decides."
 msgstr "Intervjuu muutus korraga mõlemal poolel; järgmine käivitus otsustab."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Siin kustutatud intervjuu oli telefonis pärast viimast sünkroonimist muudetud. Üritus jäeti kalendrisse."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -93,21 +95,24 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Leiti aadressiraamat „%(book)s“ ja kalender „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Tehtud serveris esimese sünkroonimise teel, kui seda ei ole, välja arvatud juhul, kui ainult lugemine on sisse lülitatud. Ainult seda aadressiraamatut puudutatakse."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Tehtud serveris esimese sünkroonimise teel, kui seda ei ole, välja arvatud juhul, kui ainult lugemine on sisse lülitatud. Ainult seda kalendrit puudutatakse."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Ärge kunagi kirjutage serverile - isegi mitte aadressiraamatu või kalendri tegemiseks. Kontaktid ja intervjuud tulevad ikka, midagi ei lähe välja."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Üle http:// parool läheb üle võrgu selge ja “%(host)s” ei ole aadress oma võrku. Kasuta https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -125,8 +130,9 @@ msgid "read only"
 msgstr "kirjutuskaitstud"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Ainult lugemine on sisse lülitatud, nii et midagi ei tehta: looge see serveris või nimetage üks, mis on juba olemas."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -134,23 +140,24 @@ msgid "Server address"
 msgstr "Serveri aadress"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Aadressiraamatut „%(name)s serveris ei ole."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Aadress peab algama https:// – näiteks %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Kalender \"%(name)s\" ei ole serveris."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Esimene sünkroonimine teeb selle, mis on puudu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy

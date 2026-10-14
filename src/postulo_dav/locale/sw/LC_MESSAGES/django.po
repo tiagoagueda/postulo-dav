@@ -4,155 +4,177 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: Kiswahili\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Swahili <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "Na katika kipindi hicho mambo hayakwenda sawa na wakati wake."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "[TD=\"width: 456\"] [FONT=&](2)[/FONT][FONT=&]Bila kuathiri masharti ya kifungu kidogo (1) cha kifungu hiki, Tume itakuwa na mamlaka ya kuajiri mtaalamu yeyote kwa ajili ya shughuli maalumu au kwa muda mfupi.[/FONT]."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
-msgstr ""
+msgstr "(hakuna kampuni ya mwenyeji)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Mawasiliano yaliyofutwa hapa yalibadilishwa kwenye simu tangu sync ya mwisho. Kadi iliachwa katika kitabu cha anwani, na inarudi kama mawasiliano kwenye kukimbia ijayo."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
-msgstr ""
+msgstr "Mwongozo wa Kitabu"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Neno la siri la programu ambapo seva hutoa moja. Hifadhi ya encrypted."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Mahojiano yalibadilishwa kwa pande zote mbili mara moja; mzunguko unaofuata unaamua."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Mahojiano yaliyofutwa hapa yalibadilishwa kwenye simu tangu toleo la mwisho. Tukio hilo liliachwa kwenye kalenda."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
-msgstr ""
+msgstr "Kalenda ya Kalenda"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Kuondolewa kwenye kalenda."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "KadidaV na CaldaV"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Picha zote na Wizara ya Mambo ya Ndani ya Nchi. ..................................................................."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Ilibadilika, lakini ilibadilishwa kwenye simu baadaye."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Picha zote na Wizara ya Mambo ya Ndani ya Nchi. ..................................................................."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Ilibadilishwa kwenye simu, lakini ilibadilika baadaye; ilihifadhi yetu."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Kitabu hiki kiliandikwa kwa mkono wa kuume na kwa mkono wa kuume."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Imetengenezwa kwenye seva na sync ya kwanza ikiwa haipo, isipokuwa kusoma tu. Kitabu hiki cha anwani tu kimechapishwa."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Imetengenezwa kwenye seva na sync ya kwanza ikiwa haipo, isipokuwa kusoma tu. Ni wakati huu tu ndio utaratibu unafuatwa."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Kamwe kuandika kwa seva - si hata kufanya kitabu cha anwani au kalenda. Mawasiliano na mahojiano bado huja; hakuna kitu kinachoendelea."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Zaidi ya nenosiri linazunguka mtandao wazi, na \"X69X\") sio anwani kwenye mtandao wako mwenyewe. Matumizi ya https://."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
-msgstr ""
+msgstr "Password au Password ya App"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
-msgstr ""
+msgstr "Kusoma tu"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
-msgstr ""
+msgstr "kusoma tu"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Kusoma tu ni juu, hivyo hakuna kitu ni alifanya: kujenga kwenye server, au jina moja kwamba tayari huko."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
-msgstr ""
+msgstr "Anwani ya Server"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Kitabu cha anwani (X18X) sio kwenye seva."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Anwani lazima kuanza na https:// - kwa mfano %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "\"X14X\" haipo kwenye seva."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Hatua ya kwanza ni kufanya kile kilichopotea."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Mizizi ya seva, kwa mfano https://cloud.example.org. Postulo hupata kitabu cha anwani na nyumba za kalenda kutoka hapo."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Jina la mtumiaji"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "\"X1\" ilibadilisha pande zote mbili kwa wakati mmoja, na hatua inayofuata huamua."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "Kitabu hiki kimetayarishwa kwa kuzingatia yafuatayo:-."

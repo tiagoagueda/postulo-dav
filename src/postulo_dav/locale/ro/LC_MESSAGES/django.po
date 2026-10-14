@@ -4,14 +4,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: română\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Romanian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
@@ -30,8 +30,9 @@ msgid "(no company)"
 msgstr "(fără companie)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Un contact şters aici a fost schimbat la telefon de la ultima sincronizare. Cartea a fost lăsată în agenda de adrese, și se întoarce ca un contact pe următoarea cursă."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -49,8 +50,9 @@ msgid "An interview changed on both sides at once; next run decides."
 msgstr "Un interviu s-a schimbat pe ambele părți deodată; următoarea rulare decide."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Un interviu şters aici a fost schimbat la telefon de la ultima sincronizare. Evenimentul a fost lăsat în calendar."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -93,21 +95,24 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "S-au găsit agenda de contacte „%(book)s” și calendarul „%(calendar)s”."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Made on the server by the first sync if it is not there, exceptly read only is on. Numai această carte de adrese este atins."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Made on the server by the first sync if it is not there, exceptly read only is on. Numai acest calendar este atins."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Nu scrieți niciodată serverului nici măcar pentru a face cartea de adrese sau calendarul. Contactele și interviurile încă vin; nimic nu iese."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Peste http:// parola trece prin rețea în clar, și  Utilizarea https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -125,8 +130,9 @@ msgid "read only"
 msgstr "doar citire"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Citit numai este pe, astfel încât nimic nu se face: creați-l pe server, sau nume unul care este deja acolo."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -134,23 +140,24 @@ msgid "Server address"
 msgstr "Adresa serverului"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Cartea de adrese ."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Adresa trebuie să înceapă cu: %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Calendarul nu este pe server."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Prima sincronizare va face ceea ce lipseşte."
 
 #: src/postulo_dav/sync.py
 #, fuzzy

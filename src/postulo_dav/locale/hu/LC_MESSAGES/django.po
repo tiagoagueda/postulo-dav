@@ -4,170 +4,155 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: magyar\n"
+"PO-Revision-Date: 2026-10-13 12:44+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Hungarian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "%(count)d naptáresemény nem a Postulo alkalmazásból származik, és érintetlen maradt."
+msgstr "%(count)d naptáresemény nem a Postulóból származik, ezért érintetlen maradt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s eltávolítva a naptárból egy másik eszközön; itt megtartva."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(nincs cég)"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Az itt törölt kapcsolattartót a legutóbbi szinkronizálás óta módosították a telefonon. A névjegy a címjegyzékben maradt, és a következő futáskor kapcsolattartóként visszatér."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Címjegyzék"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr "Alkalmazásjelszó, ahol a szerver kínál ilyet. Titkosítva tárolva."
+msgstr "Alkalmazásjelszó, ha a kiszolgáló kínál ilyet. Titkosítva tárolva."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Egy interjú mindkét oldalon egyszerre változott; a következő futás dönt."
 
 #: src/postulo_dav/sync.py
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Az itt törölt interjút a legutóbbi szinkronizálás óta módosították a telefonon. Az esemény a naptárban maradt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Naptár"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Lemondva a naptárban."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV és CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Itt módosítva (%(when)s): %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Itt módosult, de később a telefonon is; az övék maradt."
+msgstr "Itt módosult, de később a telefonon is módosították; a telefonos változat maradt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "A telefonon módosítva (%(when)s): %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr "A telefonon módosult, de később itt is; a miénk maradt."
+msgstr "A telefonon módosult, de később itt is módosították; az itteni változat maradt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Megtaláltuk a(z) „%(book)s” címjegyzéket és a(z) „%(calendar)s” naptárat."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Ha nem létezik, az első szinkronizálás létrehozza a kiszolgálón, kivéve, ha a csak olvasható mód be van kapcsolva. Csak ehhez a címjegyzékhez nyúl."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Ha nem létezik, az első szinkronizálás létrehozza a kiszolgálón, kivéve, ha a csak olvasható mód be van kapcsolva. Csak ehhez a naptárhoz nyúl."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Soha nem ír a kiszolgálóra — még a címjegyzék vagy a naptár létrehozásához sem. A kapcsolattartók és az interjúk továbbra is beérkeznek; semmi sem megy ki."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "http:// használatakor a jelszó titkosítatlanul halad át a hálózaton, és ez a cím nem a saját hálózatán van: „%(host)s”. Használjon https:// címet."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Jelszó vagy alkalmazásjelszó"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Csak olvasható"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "csak olvasható"
 
 #: src/postulo_dav/sync.py
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "A csak olvasható mód be van kapcsolva, így semmi sem jön létre: hozza létre a kiszolgálón, vagy adjon meg egy már ott lévőt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
-msgstr "Szervercím"
+msgstr "Kiszolgáló címe"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "A(z) „%(name)s” címjegyzék nem található a kiszolgálón."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "A címnek a https:// előtaggal kell kezdődnie — például: %(example)s."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "A(z) „%(name)s” naptár nem található a kiszolgálón."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Az első szinkronizálás azt hozza létre, ami hiányzik."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr "A szerver gyökere, pl. https://cloud.example.org. A Postulo innen találja meg a címjegyzék és a naptár helyét."
+msgstr "A kiszolgáló gyökércíme, pl. https://cloud.example.org. A Postulo innen találja meg a címjegyzék és a naptár helyét."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Felhasználónév"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s” mindkét oldalon egyszerre változott; a következő futás dönt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "„%(name)s” el lett távolítva a címjegyzékből; itt megtartva."
+msgstr "„%(name)s” eltávolítva a címjegyzékből; itt megtartva."

@@ -4,170 +4,155 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: lietuvių\n"
+"PO-Revision-Date: 2026-10-13 18:44+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Lithuanian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && (n%100<11 || n%100>19) ? 0 : n%10>=2 && n%10<=9 && (n%100<11 || n%100>19) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > 19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? 1 : 2);\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "%(count)d kalendoriaus įvykių nėra iš Postulo ir buvo palikti nepaliesti."
+msgstr "Kalendoriaus įvykių, kurie ne iš Postulo, palikta nepaliestų: %(count)d."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "%(kind)s pašalinta iš kalendoriaus kitame įrenginyje; čia palikta."
+msgstr "%(kind)s: pašalinta iš kalendoriaus kitame įrenginyje; čia palikta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(be įmonės)"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Čia ištrintas kontaktas nuo paskutinio sinchronizavimo buvo pakeistas telefone. Kortelė palikta adresų knygoje ir per kitą vykdymą grįš kaip kontaktas."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Adresų knyga"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr "Programos slaptažodis, kai serveris jį siūlo. Saugomas užšifruotas."
+msgstr "Programos slaptažodis, jei serveris jį siūlo. Saugomas užšifruotas."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr "Pokalbis pakeistas abiejose pusėse vienu metu; nuspręs kitas paleidimas."
+msgstr "Pokalbis vienu metu pakeistas abiejose pusėse; nuspręs kitas vykdymas."
 
 #: src/postulo_dav/sync.py
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Čia ištrintas pokalbis nuo paskutinio sinchronizavimo buvo pakeistas telefone. Įvykis paliktas kalendoriuje."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalendorius"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Atšaukta kalendoriuje."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV ir CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Pakeista čia %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Pakeista čia, bet vėliau pakeista telefone; paimta jų versija."
+msgstr "Pakeista čia, bet vėliau pakeista telefone; pritaikyta telefono versija."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Pakeista telefone %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Pakeista telefone, bet vėliau pakeista čia; palikta mūsų versija."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Rasta adresų knyga „%(book)s“ ir kalendorius „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Pirmojo sinchronizavimo metu sukuriama serveryje, jei jos ten nėra, nebent įjungta parinktis „Tik skaityti“. Keičiama tik ši adresų knyga."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Pirmojo sinchronizavimo metu sukuriamas serveryje, jei jo ten nėra, nebent įjungta parinktis „Tik skaityti“. Keičiamas tik šis kalendorius."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Niekada nerašyti į serverį – net norint sukurti adresų knygą ar kalendorių. Kontaktai ir pokalbiai vis tiek gaunami; niekas neišsiunčiama."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Naudojant http:// slaptažodis tinklu perduodamas nešifruotas, o „%(host)s“ nėra jūsų vietinio tinklo adresas. Naudokite https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Slaptažodis arba programos slaptažodis"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Tik skaityti"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "tik skaityti"
 
 #: src/postulo_dav/sync.py
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Įjungta parinktis „Tik skaityti“, todėl niekas nesukuriama: sukurkite serveryje patys arba nurodykite jau esamą."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Serverio adresas"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Adresų knygos „%(name)s“ serveryje nėra."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Adresas turi prasidėti https://, pavyzdžiui, %(example)s."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Kalendoriaus „%(name)s“ serveryje nėra."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Pirmasis sinchronizavimas sukurs tai, ko trūksta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr "Serverio šaknis, pvz., https://cloud.example.org. Iš ten Postulo randa adresų knygos ir kalendoriaus vietas."
+msgstr "Serverio šakninis adresas, pvz., https://cloud.example.org. Iš jo Postulo suranda adresų knygų ir kalendorių vietas."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Naudotojo vardas"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "„%(name)s“ pakeista abiejose pusėse vienu metu; nuspręs kitas paleidimas."
+msgstr "„%(name)s“: vienu metu pakeista abiejose pusėse; nuspręs kitas vykdymas."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "„%(name)s“ pašalinta iš adresų knygos; čia palikta."
+msgstr "„%(name)s“: pašalinta iš adresų knygos; čia palikta."

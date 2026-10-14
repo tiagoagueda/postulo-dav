@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-10 10:46+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: Bahasa Indonesia\n"
+"PO-Revision-Date: 2026-10-13 12:44+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Indonesian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,142 +17,142 @@ msgstr ""
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "%(count)d acara di kalender bukan dari Postulo dan dibiarkan apa adanya."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s dihapus dari kalender di perangkat lain; tetap disimpan di sini."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
-msgstr ""
+msgstr "(tidak ada perusahaan)"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Kontak yang dihapus di sini telah diubah di ponsel sejak sinkronisasi terakhir. Kartunya dibiarkan di buku alamat, dan akan kembali sebagai kontak pada proses berikutnya."
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
-msgstr ""
+msgstr "Buku alamat"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Kata sandi aplikasi, jika server menyediakannya. Disimpan terenkripsi."
 
 #: src/postulo_dav/sync.py
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Sebuah wawancara diubah di kedua sisi sekaligus; proses berikutnya yang memutuskan."
 
 #: src/postulo_dav/sync.py
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Wawancara yang dihapus di sini telah diubah di ponsel sejak sinkronisasi terakhir. Acaranya dibiarkan di kalender."
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
-msgstr ""
+msgstr "Kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Dibatalkan di kalender."
 
 #: src/postulo_dav/sync.py
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV dan CalDAV"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Diubah di sini pada %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Diubah di sini, tetapi kemudian diubah di ponsel; versi ponsel yang diambil."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Diubah di ponsel pada %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Diubah di ponsel, tetapi kemudian diubah di sini; versi kami yang dipertahankan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Buku alamat “%(book)s” dan kalender “%(calendar)s” ditemukan."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Dibuat di server oleh sinkronisasi pertama jika belum ada, kecuali mode hanya baca aktif. Hanya buku alamat ini yang disentuh."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Dibuat di server oleh sinkronisasi pertama jika belum ada, kecuali mode hanya baca aktif. Hanya kalender ini yang disentuh."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Jangan pernah menulis ke server — bahkan untuk membuat buku alamat atau kalender. Kontak dan wawancara tetap masuk; tidak ada yang keluar."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Melalui http://, kata sandi dikirim lewat jaringan tanpa enkripsi, dan “%(host)s” bukan alamat di jaringan Anda sendiri. Gunakan https://."
 
 #: src/postulo_dav/sync.py
 msgid "Password or app password"
-msgstr ""
+msgstr "Kata sandi atau kata sandi aplikasi"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
-msgstr ""
+msgstr "Hanya baca"
 
 #: src/postulo_dav/sync.py
 msgid "read only"
-msgstr ""
+msgstr "hanya baca"
 
 #: src/postulo_dav/sync.py
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Mode hanya baca aktif, jadi tidak ada yang dibuat: buatlah di server, atau sebutkan yang sudah ada di sana."
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
-msgstr ""
+msgstr "Alamat server"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Buku alamat “%(name)s” tidak ada di server."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Alamat harus diawali dengan https:// — misalnya %(example)s."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Kalender “%(name)s” tidak ada di server."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Sinkronisasi pertama akan membuat yang belum ada."
 
 #: src/postulo_dav/sync.py
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Akar server, misalnya https://cloud.example.org. Postulo menemukan lokasi buku alamat dan kalender dari sana."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
-msgstr ""
+msgstr "Nama pengguna"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "“%(name)s” diubah di kedua sisi sekaligus; proses berikutnya yang memutuskan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "“%(name)s” dihapus dari buku alamat; tetap disimpan di sini."

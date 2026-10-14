@@ -4,155 +4,155 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: galego\n"
+"PO-Revision-Date: 2026-10-13 12:44+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Galician <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "%(count)d eventos do calendario non son do Postulo e deixáronse como estaban."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s: quitouse do calendario noutro dispositivo; consérvase aquí."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
-msgstr ""
+msgstr "(sen empresa)"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Un contacto eliminado aquí cambiárase no teléfono desde a última sincronización. A tarxeta deixouse no caderno de enderezos e volve como contacto na próxima execución."
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
-msgstr ""
+msgstr "Caderno de enderezos"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Un contrasinal de aplicación, se o servidor o ofrece. Almacénase cifrado."
 
 #: src/postulo_dav/sync.py
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Unha entrevista cambiou nos dous lados á vez; a próxima execución decide."
 
 #: src/postulo_dav/sync.py
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Unha entrevista eliminada aquí cambiárase no teléfono desde a última sincronización. O evento deixouse no calendario."
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
-msgstr ""
+msgstr "Calendario"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Cancelada no calendario."
 
 #: src/postulo_dav/sync.py
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV e CalDAV"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Cambiado aquí o %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Cambiado aquí, pero despois cambiouse no teléfono; quedou a versión do teléfono."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Cambiado no teléfono o %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Cambiado no teléfono, pero despois cambiouse aquí; conservouse a nosa."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Atopáronse o caderno de enderezos «%(book)s» e o calendario «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "A primeira sincronización créao no servidor se non existe, salvo que estea activado «Só lectura». Só se toca este caderno de enderezos."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "A primeira sincronización créao no servidor se non existe, salvo que estea activado «Só lectura». Só se toca este calendario."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Non escribir nunca no servidor — nin sequera para crear o caderno de enderezos ou o calendario. Os contactos e as entrevistas seguen entrando; non sae nada."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Por http:// o contrasinal viaxa pola rede sen cifrar, e «%(host)s» non é un enderezo da túa propia rede. Usa https://."
 
 #: src/postulo_dav/sync.py
 msgid "Password or app password"
-msgstr ""
+msgstr "Contrasinal ou contrasinal de aplicación"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
-msgstr ""
+msgstr "Só lectura"
 
 #: src/postulo_dav/sync.py
 msgid "read only"
-msgstr ""
+msgstr "só lectura"
 
 #: src/postulo_dav/sync.py
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "«Só lectura» está activado, así que non se crea nada: créao no servidor ou indica un que xa exista."
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
-msgstr ""
+msgstr "Enderezo do servidor"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "O caderno de enderezos «%(name)s» non está no servidor."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "O enderezo debe comezar por https:// — por exemplo, %(example)s."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "O calendario «%(name)s» non está no servidor."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "A primeira sincronización creará o que falte."
 
 #: src/postulo_dav/sync.py
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "A raíz do servidor, por exemplo https://cloud.example.org. Desde aí, o Postulo atopa onde están o caderno de enderezos e o calendario."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
-msgstr ""
+msgstr "Nome de usuario"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "«%(name)s» cambiou nos dous lados á vez; a próxima execución decide."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "«%(name)s» quitouse do caderno de enderezos; consérvase aquí."

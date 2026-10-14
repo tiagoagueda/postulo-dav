@@ -4,14 +4,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: Gaeilge\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Irish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4);\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
@@ -30,8 +30,9 @@ msgid "(no company)"
 msgstr "(gan chuideachta)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Bhí athrú ar theagmháil a scriosadh anseo ar an bhfón ó shin an sync deireanach. Fágadh an cárta sa leabhar seoltaí, agus tagann sé ar ais mar theagmháil ar an chéad reáchtáil eile."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -49,8 +50,9 @@ msgid "An interview changed on both sides at once; next run decides."
 msgstr "Athraíodh agallamh ar an dá thaobh ag an am céanna; socróidh an chéad rith eile é."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Bhí agallamh a scriosadh anseo athraithe ar an teileafón ó shin an sync deireanach. Fágadh an ócáid ar an bhféilire."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -93,21 +95,24 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Aimsíodh an leabhar seoltaí “%(book)s” agus an féilire “%(calendar)s”."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Déanta ar an bhfreastalaí ag an chéad sync mura bhfuil sé ann, ach amháin má tá a léamh ach amháin ar. Níl ach an leabhar seoltaí i dteagmháil léi."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Déanta ar an bhfreastalaí ag an chéad sync mura bhfuil sé ann, ach amháin má tá a léamh ach amháin ar. Níl ach an féilire i dteagmháil léi."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Ná scríobh chuig an bhfreastalaí - ní fiú a dhéanamh ar an leabhar seoladh nó an féilire. Teagmhálacha agus agallaimh a thagann fós i; rud ar bith a théann amach."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Cóipeáil nasc leis an tweet Leabaigh an Tweet http://www. Úsáid https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -125,8 +130,9 @@ msgid "read only"
 msgstr "inléite amháin"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Léigh ach ar, mar sin níl aon rud a dhéanamh: é a chruthú ar an bhfreastalaí, nó ainm amháin atá ann cheana féin."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -134,23 +140,24 @@ msgid "Server address"
 msgstr "Seoladh an fhreastalaí"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Níl an leabhar seoltaí \"%(name)s\" ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Cóipeáil nasc leis an tweet Leabaigh an Tweet https://www."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Níl an féilire \"%(name)s\" ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Beidh an chéad sync a dhéanamh cad atá ar iarraidh."
 
 #: src/postulo_dav/sync.py
 #, fuzzy

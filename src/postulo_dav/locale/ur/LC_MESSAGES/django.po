@@ -4,155 +4,177 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-10 10:46+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: اردو\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Urdu <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ur/>\n"
 "Language: ur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo-messages\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "%(count)d کیلنڈر پر واقع واقعات پوسٹولو سے نہیں ہیں اور اکیلے رہ گئے تھے۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s ایک اور اوزار پر کیلنڈر سے دور ؛."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
-msgstr ""
+msgstr "(کوئی کمپنی نہیں)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "پچھلے سنک سے یہاں فون پر ایک رابطہ حذف کر دیا گیا تھا۔ پتہ کتاب میں کارڈ چھوڑ دیا گیا اور اگلے رن پر رابطہ کے طور پر واپس آتا ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
-msgstr ""
+msgstr "پتہ"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "ایک ایپ پاس ورڈ جہاں سرور ایک پیش کرتا ہے۔ محفوظ کیا گیا."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "ایک مرتبہ دونوں طرف سے ایک انٹرویو تبدیل ہو گیا؛ اگلے حصے میں فیصلہ ہوتا ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "آخری سنک سے یہاں ایک انٹرویو حذف کر دیا گیا تھا۔ یہ واقعہ کیلنڈر پر چھوڑ دیا گیا۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
-msgstr ""
+msgstr "کیلنڈر"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "کیلنڈر پر پابندی لگا سکتی ہے ۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "کارڈڈ اور کیل‌ڈی کے بچے"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "%(when)s پر یہاں تبدیلی: %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "یہاں تبدیلی آئی لیکن بعد میں فون پر تبدیلی آئی؛."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "%(when)s پر فون پر تبدیلی"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "فون پر تبدیلی آئی لیکن بعد میں یہاں تبدیلی آئی؛."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "%(book)s اور کیلنڈر %(calendar)s کے عنوان سے پتہ چلتا ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "سرور پر پہلی صنف کی طرف سے بنایا گیا اگر وہاں موجود نہ ہو تو صرف پڑھیے بغیر۔ صرف یہ پتہ کتاب چھوتی ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "سرور پر پہلی صنف کی طرف سے بنایا گیا اگر وہاں موجود نہ ہو تو صرف پڑھیے بغیر۔ صرف اس کیلنڈر کو چھو لیا جاتا ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "کبھی بھی سرور کو نہ لکھیں ۔ رابطہ اور انٹرویو ابھی تک آتے ہیں ؛ کچھ نہیں نکلتا ۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Http://d لفظ نیٹ ورک سے آگے بڑھ رہا ہے. اور %(host)s] آپ کے اپنے نیٹ ورک پر کوئی پتہ نہیں ہے. ایس ."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
-msgstr ""
+msgstr "پاس ورڈ یا کوئی آلہ"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
-msgstr ""
+msgstr "صرف پڑھیے"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
-msgstr ""
+msgstr "صرف پڑھیے"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "صرف پڑھنا ہی اس پر ہے، اس لیے کچھ بھی بنایا گیا ہے: اسے سرور پر بنایا گیا ہے یا اسم جو پہلے ہی وہاں موجود ہو۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
-msgstr ""
+msgstr "سرور پتہ"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "عنوان کتاب (X18X) سرور پر نہیں ہے۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "پتے کا آغاز https://s:// — مثال کے طور پر %(example)s سے ہوتا ہے ۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "کیلنڈر (X14X) سرور پر نہیں ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "سب سے پہلے سنک وہ چیز بنا دے گی جو گم ہو جاتی ہے۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "سرور کی جڑیں، مثلاً https://serview.expal.org. اخذ شدہ بتاریخ 22 جولا ئی 2014. تحقق من التاريخ في: پوسٹلو وہاں سے پتہ چلتا ہے کہ کتاب اور کیلنڈر گھروں کو ملتا ہے ۔."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "پرنٹ"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "\"X1X [XXX]\" ایک ہی وقت میں دونوں اطراف میں تبدیل کر دیا گیا؛ اگلے دور میں فیصلہ ہوتا ہے۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "\"X1X [XXX]\" کو پتہ کتاب سے ہٹا دیا گیا، یہیں رکھا گیا۔."
