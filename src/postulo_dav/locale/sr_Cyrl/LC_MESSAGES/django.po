@@ -4,155 +4,177 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: српски\n"
+"PO-Revision-Date: 2026-10-14 08:04+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Serbian (Cyrillic script) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sr_Cyrl/>\n"
 "Language: sr_Cyrl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "Догађаји у календару који нису из апликације Postulo остављени су нетакнути: %(count)d."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s: уклоњено из календара на другом уређају; задржано овде."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
-msgstr ""
+msgstr "(без компаније)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Контакт који је овде обрисан био је измењен на телефону после последње синхронизације. Картица је остављена у адресару и при следећем покретању враћа се као контакт."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
-msgstr ""
+msgstr "Адресар"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Лозинка за апликацију, ако је сервер нуди. Чува се шифровано."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Интервју је истовремено измењен на обе стране; одлучиће следеће покретање."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Интервју који је овде обрисан био је измењен на телефону после последње синхронизације. Догађај је остављен у календару."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
-msgstr ""
+msgstr "Календар"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Отказано у календару."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV и CalDAV"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Измењено овде %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Измењено овде, али касније измењено на телефону; задржана је верзија са телефона."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Измењено на телефону %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Измењено на телефону, али касније измењено овде; задржана је наша верзија."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Пронађени су адресар „%(book)s“ и календар „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Прва синхронизација га прави на серверу ако не постоји, осим ако је укључено „Само за читање“. Дира се само овај адресар."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Прва синхронизација га прави на серверу ако не постоји, осим ако је укључено „Само за читање“. Дира се само овај календар."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Ништа се не уписује на сервер — чак ни да би се направили адресар или календар. Контакти и интервјуи и даље стижу; ништа не одлази."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Преко http:// лозинка путује мрежом као обичан текст, а „%(host)s“ није адреса на вашој мрежи. Користите https://."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
-msgstr ""
+msgstr "Лозинка или лозинка за апликацију"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
-msgstr ""
+msgstr "Само за читање"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
-msgstr ""
+msgstr "само за читање"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Укључено је „Само за читање“, па се ништа не прави: направите га на серверу или наведите неки који већ постоји."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
-msgstr ""
+msgstr "Адреса сервера"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Адресар „%(name)s“ не постоји на серверу."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Адреса мора почињати са https:// — на пример %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Календар „%(name)s“ не постоји на серверу."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Прва синхронизација ће направити оно што недостаје."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Корен сервера, нпр. https://cloud.example.org. Postulo одатле проналази где се налазе адресари и календари."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Корисничко име"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Ставка „%(name)s“ је истовремено измењена на обе стране; одлучиће следеће покретање."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "Контакт „%(name)s“ је уклоњен из адресара; задржан је овде."

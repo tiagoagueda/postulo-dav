@@ -4,155 +4,177 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: հայերեն\n"
+"PO-Revision-Date: 2026-10-14 08:04+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: Armenian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hy/>\n"
 "Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "Օրացույցում կա %(count)d իրադարձություն, որոնք Postulo-ից չեն․ դրանք չեն փոփոխվել։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "Հարցազրույցը (%(kind)s) հեռացվել է օրացույցից մեկ այլ սարքում․ այստեղ այն պահվեց։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
-msgstr ""
+msgstr "(առանց ընկերության)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Այստեղ ջնջված կոնտակտը վերջին համաժամեցումից հետո փոփոխվել էր հեռախոսում։ Քարտը թողնվեց հասցեագրքում և հաջորդ գործարկման ժամանակ կվերադառնա որպես կոնտակտ։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
-msgstr ""
+msgstr "Հասցեագիրք"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Հավելվածի գաղտնաբառ, եթե սերվերն այն առաջարկում է։ Պահվում է գաղտնագրված։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Հարցազրույցը միաժամանակ փոփոխվել է երկու կողմում․ կորոշի հաջորդ գործարկումը։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Այստեղ ջնջված հարցազրույցը վերջին համաժամեցումից հետո փոփոխվել էր հեռախոսում։ Իրադարձությունը թողնվեց օրացույցում։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
-msgstr ""
+msgstr "Օրացույց"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Չեղարկվել է օրացույցում։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV և CalDAV"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Փոփոխվել է այստեղ %(when)s՝ %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Փոփոխվել է այստեղ, բայց ավելի ուշ փոփոխվել է հեռախոսում․ ընդունվեց հեռախոսի տարբերակը։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Փոփոխվել է հեռախոսում %(when)s՝ %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Փոփոխվել է հեռախոսում, բայց ավելի ուշ փոփոխվել է այստեղ․ պահվեց մեր տարբերակը։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Գտնվեցին «%(book)s» հասցեագիրքը և «%(calendar)s» օրացույցը։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Առաջին համաժամեցումն այն ստեղծում է սերվերում, եթե այն չկա, բացառությամբ երբ «Միայն կարդալու» ռեժիմը միացված է։ Փոփոխվում է միայն այս հասցեագիրքը։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Առաջին համաժամեցումն այն ստեղծում է սերվերում, եթե այն չկա, բացառությամբ երբ «Միայն կարդալու» ռեժիմը միացված է։ Փոփոխվում է միայն այս օրացույցը։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Երբեք չգրել սերվերում — նույնիսկ հասցեագիրքը կամ օրացույցը ստեղծելու համար։ Կոնտակտներն ու հարցազրույցները շարունակում են ներս գալ, ոչինչ դուրս չի գնում։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Եթե հասցեն սկսվում է http:// նախածանցով, գաղտնաբառը ցանցով անցնում է բաց տեսքով, իսկ «%(host)s» հասցեն ձեր սեփական ցանցում չէ։ Օգտագործեք https://։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
-msgstr ""
+msgstr "Գաղտնաբառ կամ հավելվածի գաղտնաբառ"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
-msgstr ""
+msgstr "Միայն կարդալու"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
-msgstr ""
+msgstr "միայն կարդալու"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "«Միայն կարդալու» ռեժիմը միացված է, ուստի ոչինչ չի ստեղծվում․ ստեղծեք այն սերվերում կամ նշեք արդեն գոյություն ունեցողը։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
-msgstr ""
+msgstr "Սերվերի հասցե"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "«%(name)s» հասցեագիրքը սերվերում չկա։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Հասցեն պետք է սկսվի https:// նախածանցով — օրինակ՝ %(example)s։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "«%(name)s» օրացույցը սերվերում չկա։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Առաջին համաժամեցումը կստեղծի այն, ինչ պակասում է։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Սերվերի արմատային հասցեն, օր.՝ https://cloud.example.org։ Postulo-ն այնտեղից է գտնում հասցեագրքի և օրացույցի հիմնական թղթապանակները։"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Օգտանուն"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "«%(name)s» — միաժամանակ փոփոխվել է երկու կողմում․ կորոշի հաջորդ գործարկումը։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "«%(name)s» կոնտակտը հեռացվել է հասցեագրքից․ այստեղ այն պահվեց։"

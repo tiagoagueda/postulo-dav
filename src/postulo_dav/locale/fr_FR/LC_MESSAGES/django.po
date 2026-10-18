@@ -4,25 +4,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: français (France)\n"
+"PO-Revision-Date: 2026-10-13 12:44+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"Language-Team: French <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "%(count)d évènements du calendrier ne viennent pas de Postulo et n'ont pas été touchés."
+msgstr "%(count)d événements du calendrier ne viennent pas de Postulo et n'ont pas été touchés."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "%(kind)s retiré du calendrier sur un autre appareil ; conservé ici."
+msgstr "%(kind)s retiré du calendrier sur un autre appareil ; conservé ici."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -42,11 +42,11 @@ msgstr "Un mot de passe d'application si le serveur en propose. Conservé chiffr
 
 #: src/postulo_dav/sync.py
 msgid "An interview changed on both sides at once; next run decides."
-msgstr "Un entretien a changé des deux côtés en même temps ; la prochaine exécution tranchera."
+msgstr "Un entretien a changé des deux côtés en même temps ; la prochaine exécution tranchera."
 
 #: src/postulo_dav/sync.py
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Un entretien supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. L'évènement a été laissé sur le calendrier."
+msgstr "Un entretien supprimé ici avait été modifié sur le téléphone depuis la dernière synchronisation. L'événement a été laissé sur le calendrier."
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -63,25 +63,25 @@ msgstr "CardDAV et CalDAV"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr "Modifié ici le %(when)s : %(text)s"
+msgstr "Modifié ici le %(when)s : %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Modifié ici, mais modifié sur le téléphone plus tard ; leur version est prise."
+msgstr "Modifié ici, mais modifié sur le téléphone plus tard ; leur version est prise."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr "Modifié sur le téléphone le %(when)s : %(text)s"
+msgstr "Modifié sur le téléphone le %(when)s : %(text)s"
 
 #: src/postulo_dav/sync.py
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr "Modifié sur le téléphone, mais modifié ici plus tard ; notre version est gardée."
+msgstr "Modifié sur le téléphone, mais modifié ici plus tard ; notre version est conservée."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr "Carnet d'adresses « %(book)s » et calendrier « %(calendar)s » trouvés."
+msgstr "Carnet d'adresses « %(book)s » et calendrier « %(calendar)s » trouvés."
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
@@ -93,7 +93,7 @@ msgstr "Créé sur le serveur par la première synchronisation s'il n'y est pas,
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "N'écrit jamais sur le serveur — pas même pour créer le carnet d'adresses ou le calendrier. Les contacts et les entretiens arrivent toujours ; rien ne sort."
+msgstr "N'écrit jamais sur le serveur — pas même pour créer le carnet d'adresses ou le calendrier. Les contacts et les entretiens arrivent toujours ; rien ne sort."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -150,9 +150,9 @@ msgstr "Nom d'utilisateur"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "« %(name)s » a changé des deux côtés en même temps ; la prochaine exécution tranchera."
+msgstr "« %(name)s » a changé des deux côtés en même temps ; la prochaine exécution tranchera."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "« %(name)s » a été retiré du carnet d'adresses ; conservé ici."
+msgstr "« %(name)s » a été retiré du carnet d'adresses ; conservé ici."

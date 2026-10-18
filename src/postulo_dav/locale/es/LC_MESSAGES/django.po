@@ -4,14 +4,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: español\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Spanish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
@@ -30,8 +30,9 @@ msgid "(no company)"
 msgstr "(sin empresa)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Un contacto borrado aquí había sido cambiado en el teléfono desde la última sincronización. La tarjeta se quedó en el libro de direcciones, y vuelve como un contacto en la siguiente carrera."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -49,8 +50,9 @@ msgid "An interview changed on both sides at once; next run decides."
 msgstr "Una entrevista cambió en ambos lados a la vez; la próxima ejecución decide."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Una entrevista borrada aquí había sido cambiada por teléfono desde la última sincronización. El evento quedó en el calendario."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -93,21 +95,24 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Se encontraron la libreta de direcciones «%(book)s» y el calendario «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Hecho en el servidor por la primera sincronización si no está allí, a menos que se lea solamente. Sólo este libro de direcciones está tocado."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Hecho en el servidor por la primera sincronización si no está allí, a menos que se lea solamente. Sólo este calendario está tocado."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Nunca escriba al servidor — ni siquiera para hacer el libro de direcciones o el calendario. Los contactos y entrevistas siguen entrando; nada sale."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Sobre http:// la contraseña va a través de la red en la clara, y “%(host)s” no es una dirección en su propia red. Use https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -125,8 +130,9 @@ msgid "read only"
 msgstr "solo lectura"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Leer sólo está encendido, por lo que no se hace nada: crearlo en el servidor, o nombrar uno que ya está allí."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -134,23 +140,24 @@ msgid "Server address"
 msgstr "Dirección del servidor"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "El libro de direcciones “%(name)s” no está en el servidor."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "La dirección debe comenzar con https://, por ejemplo %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "El calendario “%(name)s” no está en el servidor."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "La primera sincronización hará lo que falta."
 
 #: src/postulo_dav/sync.py
 #, fuzzy

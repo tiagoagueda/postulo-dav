@@ -4,14 +4,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-09-13 04:03+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: slovenščina\n"
+"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"Language-Team: Slovenian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
@@ -30,8 +30,9 @@ msgid "(no company)"
 msgstr "(brez podjetja)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Kontakt izbrisan tukaj je bil spremenjen po telefonu od zadnje sinhronizacije. Kartica je ostala v adresarju, in se vrne kot stik v naslednjem teku."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -49,8 +50,9 @@ msgid "An interview changed on both sides at once; next run decides."
 msgstr "Razgovor se je spremenil na obeh straneh hkrati; odloči naslednji zagon."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Intervju zbrisan tukaj je bil spremenjen po telefonu od zadnje sinhronizacije. Dogodek je ostal na koledarju."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -93,21 +95,24 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Najden imenik „%(book)s“ in koledar „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Narejeno na strežniku s prvo sinhronizacijo, če je ni, razen če je samo branje vključeno. Samo ta adresar je ganjen."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Narejeno na strežniku s prvo sinhronizacijo, če je ni, razen če je samo branje vključeno. Samo ta koledar je ganjen."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Nikoli ne pišite strežniku – niti zato, da bi naredili adresarja ali koledar. Kontakti in intervjuji še vedno prihajajo, nič ne gre ven."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Nad http:// geslo gre preko omrežja v čistem, in »%(host)s« ni naslov na vašem lastnem omrežju. Uporabi https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -125,8 +130,9 @@ msgid "read only"
 msgstr "samo za branje"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Branje je samo na, tako da ni nič narejeno: ustvarite ga na strežniku, ali pa ime tistega, ki je že tam."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -134,23 +140,24 @@ msgid "Server address"
 msgstr "Naslov strežnika"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Adresar »%(name)s« ni na strežniku."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Naslov se mora začeti s https:// — na primer %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Koledar »%(name)s« ni na strežniku."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Prva uskladitev bo naredila, kar manjka."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
