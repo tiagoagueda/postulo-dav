@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"PO-Revision-Date: 2026-10-19 11:15+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Urdu <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ur/>\n"
 "Language: ur\n"
@@ -260,14 +260,14 @@ msgid "“%(name)s” changed on both sides, and the card from the phone gives n
 msgstr ""
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "\"X1X [XX]\" صرف پڑھنے کے لیے آپ کے ساتھ مشترک ہے؛ فون پر ہونے والی تبدیلی کا اطلاق نہیں کیا گیا۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "\"X1X [XX]\" سرور پر ایک اور پتا منتقل ہوا؛ پھر بھی جوڑے."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -275,26 +275,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "\"X1X [XXX]\" کو پتہ کتاب سے ہٹا دیا گیا، یہیں رکھا گیا۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "\"X1X %(name)s\" تھا: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "\"X1X [XX]\": کارڈ پر موجود نمبر ایک اور ریکارڈ پہلے ہی سے یہاں رکھا جاتا ہے، اس لیے اسے نہیں لیا گیا۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "%(name)s\": کارڈ پر موجود نمبر نہیں لیا گیا۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "\"X1X [XXX]\": کارڈ پر ویب سائٹ کوئی ویب سائٹ نہیں ہے، اس لیے اسے نہیں لیا گیا۔."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "\"X1X [XXX]\": کارڈ پر ویب سائٹ نہیں لی گئی۔."

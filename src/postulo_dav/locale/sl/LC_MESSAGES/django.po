@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"PO-Revision-Date: 2026-10-19 11:15+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Slovenian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sl/>\n"
 "Language: sl\n"
@@ -260,14 +260,14 @@ msgid "“%(name)s” changed on both sides, and the card from the phone gives n
 msgstr ""
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "“%(name)s” se deli z vami samo za branje; sprememba na telefonu ni bila uporabljena."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "“%(name)s” preselil na drug naslov na strežniku; še vedno v paru."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -275,26 +275,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s“ je bil odstranjen iz imenika; tukaj ohranjen."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "‚%(name)s‘ je bil izpuščen: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "“%(name)s”: številko na kartici ima že drug zapis tukaj, zato ni bila posneta."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "‚%(name)s‘: številka na kartici ni bila odvzeta."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "‚%(name)s‘: spletni naslov na kartici ni spletni naslov, zato ni bil posnet."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "‚%(name)s‘: spletni naslov na kartici ni bil vzet."
