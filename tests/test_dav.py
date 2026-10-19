@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import re
 from importlib import metadata
-from urllib.parse import urlsplit
+from urllib.parse import quote, unquote, urlsplit
 
 import httpx
 import pytest
@@ -20,6 +20,7 @@ from postulo.applications.models import (
 from postulo.applications.services import schedule_interview
 from postulo.jobs.models import Company, Contact, JobPosting
 from postulo.plugins import registry, syncing
+from postulo.plugins.api import LinkKind
 from postulo.plugins.base import SyncPlugin
 from postulo.plugins.models import Connection, SyncLink
 
@@ -54,6 +55,19 @@ class FakeDav:
         self.log: list[tuple[str, str]] = []
         #: The ``If-Match`` of every DELETE, so a test can see that one was conditional.
         self.delete_conditions: list[str | None] = []
+        #: Radicale lists a resource with its reserved characters escaped (``@`` as ``%40``).
+        self.quote_listing = False
+        #: RFC 4791 §5.3.2.1 and RFC 6352 §6.3.2.1: a PUT that changes a resource's UID, or
+        #: reuses one already in the collection, is refused.
+        self.enforce_uid = False
+        #: The host of every request, so a test can see where the credentials went.
+        self.hosts: list[str] = []
+        #: Where ``/.well-known/…`` points; a hostile server points it somewhere else.
+        self.well_known_location = f"{BASE}/dav/"
+        #: Rows a hostile listing adds to the contacts collection: other hosts, other paths.
+        self.foreign_hrefs: list[str] = []
+        #: A server that refuses a calendar object carrying a METHOD (RFC 4791 §4.1).
+        self.reject_method = False
 
     def _etag(self) -> str:
         self.counter += 1
@@ -65,9 +79,26 @@ class FakeDav:
         return etag
 
     def handler(self, request: httpx.Request) -> httpx.Response:
-        path = urlsplit(str(request.url)).path
+        response = self._handle(request)
+        if self.quote_listing and response.status_code == 207:
+            body = re.sub(
+                r"<d:href>(.*?)</d:href>",
+                lambda m: "<d:href>" + quote(unquote(m.group(1)), safe="/") + "</d:href>",
+                response.text,
+            )
+            response = httpx.Response(207, content=body.encode(), headers=response.headers)
+        return response
+
+    @staticmethod
+    def _uid(body: str) -> str:
+        found = re.search(r"^UID:([^\r\n]*)", body, re.MULTILINE)
+        return found.group(1) if found else ""
+
+    def _handle(self, request: httpx.Request) -> httpx.Response:
+        path = unquote(urlsplit(str(request.url)).path)
         method = request.method
         self.log.append((method, path))
+        self.hosts.append(request.url.host)
         if request.headers.get("Authorization") != httpx.BasicAuth("ana", "app-pw")._auth_header:
             return httpx.Response(401)
         body = request.content.decode()
@@ -75,7 +106,7 @@ class FakeDav:
         if method == "PROPFIND":
             depth = request.headers.get("Depth", "0")
             if path in ("/.well-known/carddav", "/.well-known/caldav"):
-                return httpx.Response(301, headers={"Location": f"{BASE}/dav/"})
+                return httpx.Response(301, headers={"Location": self.well_known_location})
             if path == "/dav/" and "current-user-principal" in body:
                 return _multistatus(
                     [
@@ -114,6 +145,10 @@ class FakeDav:
                 for href, (_text, etag) in self.resources.items():
                     if href.startswith(path):
                         rows.append((href, f"<d:getetag>{etag}</d:getetag><d:resourcetype/>"))
+                rows += [
+                    (href, '<d:getetag>"foreign"</d:getetag><d:resourcetype/>')
+                    for href in self.foreign_hrefs
+                ]
                 return _multistatus(rows)
             return httpx.Response(404)
 
@@ -139,6 +174,18 @@ class FakeDav:
                 current is None or current[1] != request.headers["If-Match"]
             ):
                 return httpx.Response(412)
+            if self.reject_method and "\nMETHOD:" in body.replace("\r\n", "\n"):
+                return httpx.Response(403)
+            if self.enforce_uid:
+                uid = self._uid(body)
+                folder = path.rsplit("/", 1)[0] + "/"
+                if current is not None and self._uid(current[0]) != uid:
+                    return httpx.Response(403)  # no-uid-conflict: the UID may not change
+                if any(
+                    other != path and other.startswith(folder) and self._uid(text_) == uid
+                    for other, (text_, _etag) in self.resources.items()
+                ):
+                    return httpx.Response(409)  # no-uid-conflict: the UID is already there
             etag = self._etag()
             self.resources[path] = (body, etag)
             return httpx.Response(201 if current is None else 204, headers={"ETag": etag})
@@ -179,6 +226,7 @@ def server(monkeypatch):
 
     def fake_client(**kwargs):
         kwargs.pop("event_hooks", None)
+        kwargs.pop("total", None)
         kwargs.setdefault("timeout", 10)
         kwargs.setdefault("follow_redirects", True)
         return httpx.Client(transport=httpx.MockTransport(fake.handler), **kwargs)
@@ -313,7 +361,8 @@ def test_an_event_is_read_with_its_zone_and_recurrence_noticed():
     assert event.ends_at == dt.datetime(2026, 9, 10, 13, 0, tzinfo=dt.UTC)
     assert event.location == "Room 4" and event.recurring and event.last_modified is not None
     (all_day,) = text.text_to_events("BEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20260910\r\nEND:VEVENT")
-    assert all_day.starts_at == dt.datetime(2026, 9, 10, tzinfo=dt.UTC)
+    # A whole day is not an instant: it is not read as midnight UTC, which moved interviews (#24).
+    assert all_day.starts_at is None and all_day.problem == "date"
 
 
 def test_long_lines_fold_and_unfold():
@@ -373,9 +422,15 @@ def test_read_only_reports_a_missing_collection_rather_than_making_it(
     assert "Read only is on" in report.summary()
 
 
-def test_a_wrong_password_is_a_sentence(server):
+def test_a_wrong_password_is_a_sentence(server, user):
     result = DavSync().test({**CONFIG, "password": "no"})
-    assert not result.ok and "principal" in result.message
+    assert not result.ok
+    assert result.message == "The server refused the user name or password."
+    assert "principal" not in result.message and "DavError" not in result.message
+    # ...and a sync says the same, in a report of its own, so the core adds no class name.
+    connection = Connection(owner=user, kind="sync", plugin="dav", label="Cloud", config={})
+    report = DavSync().sync(connection, {**CONFIG, "password": "no"})
+    assert report.error == "The server refused the user name or password."
 
 
 def test_the_server_helper_writes_conditionally(server):
@@ -446,7 +501,8 @@ def test_when_both_changed_the_later_wins_and_the_loser_is_a_note(server, connec
     report = DavSync().sync(connection, connection.full_config)
     recruiter.refresh_from_db()
     assert recruiter.role == "Chairman", "ours is later"
-    assert "Changed on the phone on 2020-01-01" in recruiter.notes and "Janitor" in recruiter.notes
+    note = recruiter.note_for(recruiter.owner)
+    assert "Changed on the phone on 2020-01-01" in note and "Janitor" in note
     assert report.pushed == 1
     assert "TITLE:Chairman" in server.resources[href][0]
 
@@ -464,7 +520,8 @@ def test_when_both_changed_the_later_wins_and_the_loser_is_a_note(server, connec
     report = DavSync().sync(connection, connection.full_config)
     recruiter.refresh_from_db()
     assert recruiter.role == "Emeritus" and report.pulled == 1
-    assert "Changed here on" in recruiter.notes and "Boss" in recruiter.notes
+    note = recruiter.note_for(recruiter.owner)
+    assert "Changed here on" in note and "Boss" in note
 
 
 def test_a_deletion_on_the_phone_never_deletes_here(server, connection, recruiter):
@@ -581,13 +638,21 @@ def test_interviews_are_pushed_as_events_with_an_alarm(server, connection, appli
         f"UID:{interview.uid}" in body
         and "SUMMARY:Video call: Test Engineer at Aperture Science" in body
     )
-    # Postulo writes events with the icalendar library since postulo/postulo 022b8747f, which
-    # quotes a name with a space in it and says a day as -P1D; both mean what they did.
-    assert 'ATTENDEE;CN="Cave Johnson";ROLE=REQ-PARTICIPANT:mailto:cave@aperture.test' in body
+    # Since postulo/postulo#963 an event names nobody as an ATTENDEE (a calendar program may
+    # offer to mail an attendee), so the people met are text in the description; and the
+    # document says it is published, not an invitation.
+    assert "ATTENDEE" not in body and "mailto:" not in body
+    assert "METHOD:PUBLISH" in body
+    assert "With: Cave Johnson (CEO)" in body
     assert "BEGIN:VALARM" in body and "TRIGGER:-P1D" in body
-    assert body == event_text(interview)
+
+    # DTSTAMP is the moment of writing, so it is the one line two renderings may disagree on.
+    def without_stamp(document: str) -> str:
+        return re.sub(r"DTSTAMP:\S+", "", document)
+
+    assert without_stamp(body) == without_stamp(event_text(interview))
     assert SyncLink.for_record(connection, interview).remote_href.endswith(
-        f"/postulo-interviews/{interview.uid}.ics"
+        f"/postulo-interviews/{interview.uid.split('@')[0]}.ics"
     )
 
 
@@ -706,3 +771,802 @@ def test_the_version_is_the_one_the_package_was_built_with():
     assert postulo_dav.__version__ == metadata.version("postulo-dav")
     assert DavSync().version == postulo_dav.__version__
     assert PRODID.endswith(f"postulo-dav {postulo_dav.__version__}//EN")
+
+
+# =============================================================================
+# The review of 2026-09-29 and the security review of 2026-10-16
+# =============================================================================
+
+BOOK = "/dav/addressbooks/ana/postulo-contacts/"
+CALENDAR_PATH = "/dav/calendars/ana/postulo-interviews/"
+
+
+def vcard(uid: str, name: str, **properties: str) -> str:
+    lines = ["BEGIN:VCARD", "VERSION:3.0", f"UID:{uid}", f"FN:{name}"]
+    lines += [f"{key.replace('_', '-')}:{value}" for key, value in properties.items()]
+    return "\r\n".join([*lines, "END:VCARD"]) + "\r\n"
+
+
+def new_connection(user, label="Again") -> Connection:
+    connection = Connection(
+        owner=user,
+        kind="sync",
+        plugin="dav",
+        label=label,
+        config={k: v for k, v in CONFIG.items() if k != "password"},
+    )
+    connection.secrets = {"password": "app-pw"}
+    connection.save()
+    return connection
+
+
+def sync(connection):
+    return DavSync().sync(connection, connection.full_config)
+
+
+# ------------------------------------------------------------------ the writer (#27)
+
+
+def test_a_card_is_written_with_no_property_nobody_set():
+    card = text.Card(
+        uid="u1",
+        name="Ana\rORG:Injected",
+        org="Co\r\nTITLE:Boss",
+        title="x\ry",
+        email="a@b.test\nTITLE:Injected",
+        phone="1\r2",
+        url="https://x.test/\nNOTE:Injected",
+        note="first\rTITLE:Injected\r\nmore\x00end\x7f",
+    )
+    rendered = text.card_to_text(card, prodid="p", rev=dt.datetime(2026, 9, 6, 10, tzinfo=dt.UTC))
+    assert "\r" not in rendered.replace("\r\n", ""), "no lone carriage return is left"
+    names = sorted(prop.name for prop in text.properties(rendered))
+    assert names == sorted(
+        "BEGIN VERSION PRODID UID FN N ORG TITLE EMAIL TEL URL NOTE REV END".split()
+    ), "every property is one somebody set"
+    back = text.text_to_card(rendered)
+    assert back.name == "Ana\nORG:Injected" and back.org == "Co\nTITLE:Boss"
+    assert back.title == "x\ny" and back.phone == "1\n2"
+    assert back.email == "a@b.testTITLE:Injected" and back.url == "https://x.test/NOTE:Injected"
+    assert back.note == "first\nTITLE:Injected\nmoreend"
+
+
+def test_the_writers_rule_is_the_one_postulos_own_writer_keeps():
+    from postulo.applications import ical
+
+    for sample in ("a\rb", "a\r\nb", "a\nb", "a\x00b\x1fc\x7fd", "plain", "tab\there"):
+        assert text.clean(sample) == ical.clean(sample)
+        assert text.without_controls(sample) == ical.without_controls(sample)
+    assert text.CONTROLS == ical.CONTROLS
+
+
+# ------------------------------------------------------------ the readers (#25 #24 #34 #11)
+
+
+def test_a_rev_is_read_in_every_form_a_vcard_gives_it():
+    ten = dt.datetime(2026, 9, 6, 10, tzinfo=dt.UTC)
+    for value in (
+        "20260906T100000Z",
+        "2026-09-06T10:00:00Z",
+        "2026-09-06T12:00:00+02:00",
+        "20260906T120000+0200",
+        "2026-09-06T10:00:00.250Z",
+    ):
+        assert text.parse_stamp(value) == ten, value
+    for bad in ("", "garbage", "2026-09-06", "20261301T000000Z", "20260906T250000Z"):
+        assert text.parse_stamp(bad) is None, bad
+
+
+def test_an_older_extended_rev_loses_to_a_later_edit_here(server, connection, recruiter):
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    server.resources[href] = (
+        re.sub(r"REV:\S+", "REV:2020-01-01T00:00:00Z", body).replace("TITLE:CEO", "TITLE:Janitor"),
+        '"phone-2"',
+    )
+    recruiter.role = "Chairman"
+    recruiter.save()
+    sync(connection)
+    recruiter.refresh_from_db()
+    assert recruiter.role == "Chairman", "the phone's change is the older, and loses"
+
+
+def test_a_card_that_gives_no_time_wins_and_says_it_was_chosen_blind(server, connection, recruiter):
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    server.resources[href] = (
+        re.sub(r"REV:\S+", "REV:garbage", body).replace("TITLE:CEO", "TITLE:Janitor"),
+        '"phone-2"',
+    )
+    recruiter.role = "Chairman"
+    recruiter.save()
+    report = sync(connection)
+    recruiter.refresh_from_db()
+    assert recruiter.role == "Janitor"
+    assert "gives no time" in report.summary()
+
+
+def test_a_windows_zone_name_resolves_to_the_right_instant():
+    summer = text.Property("DTSTART", "20260910T140000", {"TZID": "W. Europe Standard Time"})
+    assert text.parse_moment(summer) == dt.datetime(2026, 9, 10, 12, tzinfo=dt.UTC)
+    winter = text.Property("DTSTART", "20261210T080000", {"TZID": "Pacific Standard Time"})
+    assert text.parse_moment(winter) == dt.datetime(2026, 12, 10, 16, tzinfo=dt.UTC)
+
+
+def test_every_windows_zone_names_a_zone_that_exists():
+    from zoneinfo import ZoneInfo
+
+    missing = []
+    for windows, iana in text.WINDOWS_ZONES.items():
+        try:
+            ZoneInfo(iana)
+        except Exception:  # noqa: BLE001 - the list of what is wrong is the point
+            missing.append((windows, iana))
+    assert missing == []
+
+
+def test_a_time_that_is_not_an_instant_is_not_read_as_utc():
+    assert text.read_moment(text.Property("DTSTART", "20260910T140000")) == (None, "floating")
+    assert text.read_moment(text.Property("DTSTART", "20260910", {"VALUE": "DATE"})) == (
+        None,
+        "date",
+    )
+    assert text.read_moment(
+        text.Property("DTSTART", "20260910T140000", {"TZID": "Nowhere/Land"})
+    ) == (None, "zone:Nowhere/Land")
+    assert text.read_moment(text.Property("DTSTART", "20260931T250000Z")) == (None, "unreadable")
+
+
+def test_a_zone_the_document_defines_itself_is_used_when_it_can_be_understood():
+    ics = (
+        "BEGIN:VCALENDAR\r\n"
+        "BEGIN:VTIMEZONE\r\nTZID:Customized Zone\r\nX-LIC-LOCATION:Europe/Paris\r\n"
+        "BEGIN:STANDARD\r\nTZOFFSETFROM:+0200\r\nTZOFFSETTO:+0100\r\nDTSTART:19701025T030000\r\n"
+        "END:STANDARD\r\nEND:VTIMEZONE\r\n"
+        "BEGIN:VTIMEZONE\r\nTZID:Fixed\r\n"
+        "BEGIN:STANDARD\r\nTZOFFSETFROM:+0530\r\nTZOFFSETTO:+0530\r\nDTSTART:19700101T000000\r\n"
+        "END:STANDARD\r\nEND:VTIMEZONE\r\n"
+        "BEGIN:VEVENT\r\nUID:e\r\n"
+        "DTSTART;TZID=Customized Zone:20260910T140000\r\n"
+        "DTEND;TZID=Fixed:20260910T150000\r\n"
+        "END:VEVENT\r\nEND:VCALENDAR\r\n"
+    )
+    (event,) = text.text_to_events(ics)
+    assert event.starts_at == dt.datetime(2026, 9, 10, 12, tzinfo=dt.UTC)
+    assert event.ends_at == dt.datetime(2026, 9, 10, 9, 30, tzinfo=dt.UTC)
+    assert event.problem == ""
+
+
+def test_an_alarms_text_does_not_replace_the_events_own_description():
+    ics = (
+        "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nUID:e\r\nDESCRIPTION:Bring the portfolio\r\n"
+        "BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Interview tomorrow\r\nTRIGGER:-P1D\r\n"
+        "END:VALARM\r\nSUMMARY:Panel\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+    )
+    (event,) = text.text_to_events(ics)
+    assert event.description == "Bring the portfolio" and event.summary == "Panel"
+    only_an_alarm = ics.replace("DESCRIPTION:Bring the portfolio\r\n", "")
+    assert text.text_to_events(only_an_alarm)[0].description == ""
+
+
+def test_a_duration_ends_an_event_that_has_no_end():
+    ics = "BEGIN:VEVENT\r\nDTSTART:20260910T100000Z\r\nDURATION:PT1H30M\r\nEND:VEVENT\r\n"
+    (event,) = text.text_to_events(ics)
+    assert event.ends_at == dt.datetime(2026, 9, 10, 11, 30, tzinfo=dt.UTC)
+
+
+# ------------------------------------------------------------------- the pull (#24 #34)
+
+
+def _push_one_interview(server, connection, application, kind="onsite"):
+    interview = schedule_interview(application, kind=kind, starts_at=next_week())
+    sync(connection)
+    (href,) = events(server)
+    return interview, href, server.resources[href][0]
+
+
+@pytest.mark.parametrize(
+    ("start", "why"),
+    [
+        ("DTSTART;TZID=Nowhere/Land:20260910T140000", "time zone"),
+        ("DTSTART:20260910T140000", "no time zone"),
+        ("DTSTART;VALUE=DATE:20260910", "all-day"),
+    ],
+)
+def test_an_event_whose_time_is_not_an_instant_does_not_move_the_interview(
+    server, connection, application, start, why
+):
+    interview, href, body = _push_one_interview(server, connection, application)
+    end = (
+        start.replace("DTSTART", "DTEND")
+        .replace("140000", "150000")
+        .replace("20260910", "20260911")
+    )
+    body = re.sub(r"DTSTART:\S+", start, body)
+    body = re.sub(r"DTEND:\S+", end, body)
+    server.resources[href] = (body, '"phone-1"')
+    before = Interview.objects.get(pk=interview.pk).starts_at
+    report = sync(connection)
+    interview.refresh_from_db()
+    assert interview.starts_at == before, "an interview is not moved on a guess"
+    assert "could not be used" in report.summary() and why in report.summary()
+    assert not ApplicationEvent.objects.filter(application=application, summary__contains="moved")
+
+
+def test_an_event_that_ends_before_it_starts_does_not_move_the_interview(
+    server, connection, application
+):
+    interview, href, body = _push_one_interview(server, connection, application)
+    start = interview.starts_at
+    body = re.sub(r"DTSTART:\S+", f"DTSTART:{text.stamp(start + dt.timedelta(hours=2))}", body)
+    body = re.sub(r"DTEND:\S+", f"DTEND:{text.stamp(start)}", body)
+    server.resources[href] = (body, '"phone-1"')
+    report = sync(connection)
+    interview.refresh_from_db()
+    assert interview.starts_at == start
+    assert "ends before it starts" in report.summary()
+
+
+def test_one_bad_resource_is_a_note_and_the_run_goes_on(made, connection, application):
+    server = made
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    server.add(BOOK + "long-uid.vcf", vcard("U" * 300, "Long Uid"))
+    server.add(BOOK + "odd-rev.vcf", vcard("odd", "Odd Rev", REV="20261301T000000Z"))
+    server.add(BOOK + "fine.vcf", vcard("fine", "Fine Person"))
+    report = sync(connection)
+    assert report.error == ""
+    assert {c.name for c in Contact.objects.all()} == {"Odd Rev", "Fine Person"}
+    assert "Long Uid" in report.summary() and "too long" in report.summary()
+    assert len(events(server)) == 1, "the interview was pushed in the same run"
+
+
+# --------------------------------------------------------------- the database (#20)
+
+
+def test_a_card_with_a_name_and_a_company_over_the_limit_is_adopted_once(made, connection, user):
+    server = made
+    server.add(BOOK + "long.vcf", vcard("long", "N" * 250, ORG="O" * 250))
+    report = sync(connection)
+    assert report.error == "" and report.pulled == 1
+    (contact,) = Contact.objects.all()
+    assert len(contact.name) <= 200 and len(contact.company.name) <= 200
+    assert SyncLink.of_model(connection, Contact).count() == 1
+    assert sync(connection).summary() == "nothing to do"
+
+
+def test_a_card_that_cannot_be_applied_leaves_no_contact_and_ends_nothing(
+    made, connection, application, monkeypatch
+):
+    from django.core.exceptions import ValidationError
+
+    from postulo_dav import sync as sync_module
+
+    server = made
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    server.add(BOOK + "bad.vcf", vcard("bad", "Bad Card"))
+    server.add(BOOK + "good.vcf", vcard("good", "Good Card"))
+    real = sync_module.apply_card
+
+    def apply(contact, card, *args, **kwargs):
+        if card.name == "Bad Card":
+            contact.save()
+            raise ValidationError("no")
+        return real(contact, card, *args, **kwargs)
+
+    monkeypatch.setattr(sync_module, "apply_card", apply)
+    report = sync(connection)
+    assert not Contact.objects.filter(name="Bad Card").exists(), "no half-made contact is left"
+    assert Contact.objects.filter(name="Good Card").exists()
+    assert "Bad Card" in report.summary() and report.skipped == 1
+    assert len(events(server)) == 1, "the interviews half ran in the same run"
+
+
+def test_one_half_failing_is_reported_and_the_other_still_runs(
+    made, connection, application, monkeypatch
+):
+    server = made
+    schedule_interview(application, kind="phone", starts_at=next_week())
+
+    def broken(self, run, book):
+        raise RuntimeError("the contacts half broke")
+
+    monkeypatch.setattr(DavSync, "_sync_contacts", broken)
+    report = sync(connection)
+    assert "the contacts half broke" in report.error
+    assert len(events(server)) == 1
+
+
+# ------------------------------------------------------------------ conflicts (#21)
+
+
+def test_read_only_records_a_lost_contact_conflict_once(server, connection, recruiter, user):
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    server.resources[href] = (
+        re.sub(r"REV:\S+", "REV:20200101T000000Z", body).replace("TITLE:CEO", "TITLE:Janitor"),
+        '"phone-2"',
+    )
+    recruiter.role = "Chairman"
+    recruiter.save()
+    connection.config["read_only"] = True
+    connection.save()
+    for _run in range(3):
+        sync(connection)
+    note = Contact.objects.get(pk=recruiter.pk).note_for(user)
+    assert note.count("Changed on the phone on") == 1
+
+
+def test_read_only_records_a_lost_interview_conflict_once(server, connection, application):
+    interview, href, body = _push_one_interview(server, connection, application)
+    body = body.replace("END:VEVENT", "LOCATION:Phone room\r\nEND:VEVENT")
+    body = re.sub(r"LAST-MODIFIED:\S+", "LAST-MODIFIED:20200101T000000Z", body)
+    server.resources[href] = (body, '"phone-2"')
+    Interview.objects.filter(pk=interview.pk).update(
+        location="Room 9", updated_at=timezone.now() + dt.timedelta(minutes=1)
+    )
+    connection.config["read_only"] = True
+    connection.save()
+    for _run in range(3):
+        sync(connection)
+    assert (
+        ApplicationEvent.objects.filter(
+            application=application, summary__contains="kept ours"
+        ).count()
+        == 1
+    )
+
+
+# -------------------------------------------------------------- what the phone typed (#22)
+
+
+def test_notes_typed_on_the_phone_are_pulled_and_survive_a_push(server, connection, application):
+    interview, href, body = _push_one_interview(server, connection, application)
+    server.resources[href] = (
+        body.replace("END:VEVENT", "DESCRIPTION:Bring the portfolio\r\nEND:VEVENT"),
+        '"phone-1"',
+    )
+    assert sync(connection).pulled == 1
+    interview.refresh_from_db()
+    assert interview.notes == "Bring the portfolio"
+
+    Interview.objects.filter(pk=interview.pk).update(location="Room 9")
+    assert sync(connection).pushed == 1
+    (event,) = text.text_to_events(server.resources[href][0])
+    assert "Bring the portfolio" in event.description, "the push did not erase what was typed"
+    assert event.location == "Room 9"
+    assert "BEGIN:VALARM" in server.resources[href][0], "the alarm is still Postulo's"
+
+
+def test_notes_extended_on_the_phone_are_pulled(server, connection, application):
+    interview, href, body = _push_one_interview(server, connection, application)
+    Interview.objects.filter(pk=interview.pk).update(notes="Bring CV")
+    server.resources[href] = (
+        body.replace("END:VEVENT", "DESCRIPTION:Bring CV and the portfolio\r\nEND:VEVENT"),
+        '"phone-1"',
+    )
+    sync(connection)
+    interview.refresh_from_db()
+    assert interview.notes == "Bring CV and the portfolio"
+    sync(connection)
+    interview.refresh_from_db()
+    assert interview.notes == "Bring CV and the portfolio", "the same text is never added twice"
+
+
+def test_postulos_own_lines_are_not_taken_for_notes(
+    server, connection, application, recruiter, settings
+):
+    settings.POSTULO_PUBLIC_URL = "https://postulo.example.org"
+    interview = schedule_interview(
+        application, kind="video", starts_at=next_week(), contacts=[recruiter]
+    )
+    sync(connection)
+    (href,) = events(server)
+    body, _ = server.resources[href]
+    assert "With: Cave Johnson (CEO)" in body
+    assert f"https://postulo.example.org{application.get_absolute_url()}" in body
+    server.resources[href] = (body, '"phone-1"')  # touched, not changed
+    sync(connection)
+    interview.refresh_from_db()
+    assert interview.notes == ""
+
+
+def test_the_event_carries_no_link_when_the_instance_does_not_know_its_address(
+    server, connection, application, settings
+):
+    settings.POSTULO_PUBLIC_URL = ""
+    schedule_interview(application, kind="video", starts_at=next_week())
+    sync(connection)
+    (body,) = events(server).values()
+    assert "http" not in body and "URL:" not in body
+
+
+def test_a_server_that_refuses_a_method_is_written_to_without_one(server, connection, application):
+    server.reject_method = True
+    schedule_interview(application, kind="video", starts_at=next_week())
+    report = sync(connection)
+    assert report.pushed == 1 and report.error == ""
+    (body,) = events(server).values()
+    assert "METHOD" not in body
+    assert [m for m, _p in server.log].count("PUT") == 2
+
+
+# ----------------------------------------------------------- numbers and links (#26 #32)
+
+
+def test_a_number_held_elsewhere_is_a_note_and_the_card_stays_changed(
+    server, connection, recruiter, user, monkeypatch
+):
+    from postulo.core import phone_numbers
+
+    from postulo_dav import sync as sync_module
+
+    # A number somebody holds as their own on the instance: the core's answer is a yes, and
+    # which rows it counts is the core's business, so the answer is given here.
+    monkeypatch.setattr(
+        sync_module, "phone_number_is_taken", lambda number, **kwargs: number == "+1 555 0111"
+    )
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    server.resources[href] = (
+        body.replace("TEL;TYPE=work,voice:+1 555 0100", "TEL:+1 555 0111"),
+        '"phone-1"',
+    )
+    report = sync(connection)
+    assert "already held" in report.summary()
+    assert phone_numbers.primary_for(recruiter).number == "+1 555 0100"
+    assert sync(connection).summary() != "nothing to do", "the card is still seen as changed"
+
+    recruiter.role = "Chairman"
+    recruiter.save()
+    sync(connection)
+    note = Contact.objects.get(pk=recruiter.pk).note_for(user)
+    assert "+1 555 0111" in note, "the phone's number was not overwritten without a word"
+
+
+def test_a_card_without_a_number_leaves_the_number_here_alone(server, connection, recruiter):
+    from postulo.core import phone_numbers
+
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    body = re.sub(r"TEL[^\r\n]*\r\n", "", body).replace("TITLE:CEO", "TITLE:Founder")
+    server.resources[href] = (body, '"phone-1"')
+    sync(connection)
+    recruiter.refresh_from_db()
+    assert recruiter.role == "Founder"
+    assert phone_numbers.primary_for(recruiter).number == "+1 555 0100"
+
+
+def test_a_card_without_a_web_address_leaves_the_link_here_alone(server, connection, recruiter):
+    from postulo.core import web_links
+
+    web_links.save_only_link(
+        recruiter, recruiter.owner, LinkKind.SOCIAL, "https://example.org/in/c"
+    )
+    sync(connection)
+    (href,) = cards(server)
+    body, _ = server.resources[href]
+    body = re.sub(r"URL[^\r\n]*\r\n", "", body).replace("TITLE:CEO", "TITLE:Founder")
+    server.resources[href] = (body, '"phone-1"')
+    sync(connection)
+    assert web_links.primary_for(recruiter, LinkKind.SOCIAL).url == "https://example.org/in/c"
+
+
+def test_a_web_address_that_is_not_a_web_address_is_not_taken(made, connection):
+    server = made
+    server.add(BOOK + "a.vcf", vcard("a", "Plain Url", URL="javascript:alert(1)"))
+    server.add(
+        BOOK + "b.vcf",
+        vcard("b", "Grouped Url", **{"item1.URL": "data:text/html,<b>x</b>"}),
+    )
+    server.add(BOOK + "c.vcf", vcard("c", "Good Url", URL="https://example.org/good"))
+    report = sync(connection)
+    assert report.error == ""
+    assert "not a web address" in report.summary()
+    for name in ("Plain Url", "Grouped Url"):
+        assert Contact.objects.get(name=name).web_links.count() == 0
+    assert [link.url for link in Contact.objects.get(name="Good Url").web_links.all()] == [
+        "https://example.org/good"
+    ]
+
+
+# --------------------------------------------------------------- notes per reader (#30)
+
+
+def test_a_contacts_note_is_the_connection_owners_own(server, connection, recruiter, user):
+    recruiter.write_note(user, "likes lemons")
+    sync(connection)
+    (body,) = cards(server).values()
+    assert "NOTE:likes lemons" in body
+    (href,) = cards(server)
+    server.resources[href] = (body.replace("likes lemons", "likes oranges"), '"phone-1"')
+    sync(connection)
+    assert Contact.objects.get(pk=recruiter.pk).note_for(user) == "likes oranges"
+
+
+def test_another_persons_contact_is_not_synced(server, connection, recruiter, company):
+    from django.contrib.auth import get_user_model
+
+    stranger = get_user_model().objects.create_user(email="bo@example.org", password="pw" * 8)  # noqa: S106
+    Contact.objects.create(owner=stranger, name="Somebody Else")
+    sync(connection)
+    assert len(cards(server)) == 1 and "Somebody Else" not in "".join(cards(server).values())
+
+
+# -------------------------------------------------------------------- the address (#19)
+
+
+def test_a_server_that_escapes_its_hrefs_does_not_make_every_event_vanish(
+    server, connection, application
+):
+    server.quote_listing = True
+    schedule_interview(application, kind="panel", starts_at=next_week())
+    assert sync(connection).pushed == 1
+    link = SyncLink.of_model(connection, Interview).get()
+    assert sync(connection).summary() == "nothing to do"
+    link.refresh_from_db()
+    assert not link.remote_gone
+    assert not ApplicationEvent.objects.filter(
+        application=application, summary__contains="removed from the calendar"
+    )
+
+
+def test_a_link_stored_with_a_literal_at_sign_still_matches_an_escaped_listing(
+    server, connection, application
+):
+    server.quote_listing = True
+    interview = schedule_interview(application, kind="panel", starts_at=next_week())
+    sync(connection)
+    link = SyncLink.of_model(connection, Interview).get()
+    legacy = f"{BASE}{CALENDAR_PATH}{interview.uid}.ics"
+    (old,) = events(server)
+    server.resources[legacy.removeprefix(BASE)] = server.resources.pop(old)
+    link.remote_href = legacy
+    link.save()
+    assert sync(connection).summary() == "nothing to do"
+    link.refresh_from_db()
+    assert not link.remote_gone
+
+
+def test_an_interview_is_named_for_the_part_of_its_uid_with_no_reserved_character(
+    server, connection, application
+):
+    interview = schedule_interview(application, kind="panel", starts_at=next_week())
+    sync(connection)
+    (href,) = events(server)
+    assert "@" not in href and href.endswith(f"{interview.uid.split('@')[0]}.ics")
+
+
+# ----------------------------------------------------------------- discovery (#23 #28)
+
+
+class UnderAPath:
+    """A DAV server installed under ``/baikal/``: nothing answers at the root of the host."""
+
+    def __init__(self, fake: FakeDav) -> None:
+        self.fake = fake
+        self.root = []
+
+    def handler(self, request: httpx.Request) -> httpx.Response:
+        path = request.url.path
+        if not path.startswith("/baikal/"):
+            self.root.append(path)
+            return httpx.Response(404)
+        inner = httpx.Request(
+            request.method,
+            request.url.copy_with(path=path.removeprefix("/baikal")),
+            headers=request.headers,
+            content=request.content,
+        )
+        response = self.fake.handler(inner)
+        if response.status_code == 207:
+            body = response.text.replace("<d:href>/", "<d:href>/baikal/")
+            response = httpx.Response(207, content=body.encode(), headers=response.headers)
+        return response
+
+
+def test_a_server_under_a_path_connects_from_the_address_typed(monkeypatch):
+    fake = FakeDav()
+    fake.collections["/dav/addressbooks/ana/postulo-contacts/"] = {
+        "name": "Postulo",
+        "kind": ADDRESSBOOK,
+    }
+    fake.collections["/dav/calendars/ana/postulo-interviews/"] = {
+        "name": "Postulo",
+        "kind": CALENDAR,
+    }
+    under = UnderAPath(fake)
+
+    def client(**kwargs):
+        kwargs.pop("event_hooks", None)
+        kwargs.pop("total", None)
+        return httpx.Client(transport=httpx.MockTransport(under.handler), **kwargs)
+
+    monkeypatch.setattr(dav_module, "postulo_client", client)
+    result = DavSync().test({**CONFIG, "url": f"{BASE}/baikal/dav/"})
+    assert result.ok, result.message
+    assert result.message == "Found the address book “Postulo” and the calendar “Postulo”."
+    assert under.root == [], "nothing was asked at the root of the host"
+
+
+# ------------------------------------------------- what the server sends (#13 #33)
+
+
+def test_a_card_over_the_limit_is_skipped_and_the_next_is_read(made, connection):
+    server = made
+    server.add(BOOK + "a-huge.vcf", vcard("h", "Huge Person", NOTE="x" * dav_module.RESOURCE_LIMIT))
+    server.add(BOOK + "b-small.vcf", vcard("s", "Small Person"))
+    report = sync(connection)
+    assert Contact.objects.filter(name="Small Person").exists()
+    assert not Contact.objects.filter(name="Huge Person").exists()
+    assert "a-huge.vcf" in report.summary() and "too large" in report.summary()
+
+
+def test_a_listing_over_the_limit_is_reported_and_the_other_half_still_runs(
+    made, connection, application, monkeypatch
+):
+    server = made
+    for number in range(40):
+        server.add(f"{BOOK}card-{number}.vcf", vcard(f"u{number}", f"Person {number}"))
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    monkeypatch.setattr(dav_module, "LISTING_LIMIT", 2000)
+    report = sync(connection)
+    assert "too large" in report.error
+    assert Contact.objects.count() == 0
+    assert len(events(server)) == 1
+
+
+def test_the_password_goes_only_where_the_person_pointed_it(made, connection):
+    server = made
+    server.foreign_hrefs = [
+        "https://evil.example/dav/addressbooks/ana/postulo-contacts/x.vcf",
+        "/dav/addressbooks/ana/other/y.vcf",
+        "/dav/addressbooks/ana/postulo-contacts/../other/z.vcf",
+    ]
+    report = sync(connection)
+    assert report.error == ""
+    assert set(server.hosts) == {"cloud.example.org"}
+    assert not [p for _m, p in server.log if "other" in p or "evil" in p or "foreign" in p]
+    assert Contact.objects.count() == 0
+
+
+def test_a_redirect_to_another_host_is_not_followed(server, connection):
+    server.well_known_location = "https://evil.example/dav/"
+    report = sync(connection)
+    assert report.error, "discovery fails rather than going there"
+    assert "evil.example" not in server.hosts
+
+
+def test_the_client_is_held_to_a_total_and_follows_no_redirect_itself(monkeypatch):
+    seen = {}
+
+    def spy(**kwargs):
+        seen.update(kwargs)
+        return httpx.Client()
+
+    monkeypatch.setattr(dav_module, "postulo_client", spy)
+    client, _server = dav_module.connect(CONFIG)
+    client.close()
+    assert seen == {"total": 60.0, "follow_redirects": False}
+
+
+# ---------------------------------------------------------------- pairing by UID (#7)
+
+
+def test_an_adopted_card_keeps_its_uid_when_it_is_edited_here(made, connection, user):
+    server = made
+    server.enforce_uid = True
+    server.add(BOOK + "phone.vcf", vcard("phone-uid-1", "Gordon Freeman", EMAIL="g@bm.test"))
+    assert sync(connection).pulled == 1
+    contact = Contact.objects.get(name="Gordon Freeman")
+    contact.role = "Physicist"
+    contact.save()
+    report = sync(connection)
+    assert report.error == "" and report.pushed == 1
+    body, _ = server.resources[BOOK + "phone.vcf"]
+    assert "UID:phone-uid-1" in body and "TITLE:Physicist" in body
+
+
+def test_a_card_moved_to_a_new_address_stays_paired(server, connection, recruiter):
+    server.enforce_uid = True
+    sync(connection)
+    (href,) = cards(server)
+    server.resources[BOOK + "renamed.vcf"] = server.resources.pop(href)
+    report = sync(connection)
+    assert report.error == "" and Contact.objects.count() == 1
+    link = SyncLink.for_record(connection, recruiter)
+    assert link.remote_href.endswith("renamed.vcf") and not link.remote_gone
+    assert "moved to another address" in report.summary()
+    recruiter.role = "Chairman"
+    recruiter.save()
+    assert sync(connection).pushed == 1
+    assert "TITLE:Chairman" in server.resources[BOOK + "renamed.vcf"][0]
+
+
+def test_a_flagged_card_that_comes_back_is_paired_again(server, connection, recruiter):
+    sync(connection)
+    (href,) = cards(server)
+    saved = server.resources.pop(href)
+    sync(connection)
+    assert SyncLink.for_record(connection, recruiter).remote_gone
+    server.resources[BOOK + "back.vcf"] = saved
+    sync(connection)
+    link = SyncLink.for_record(connection, recruiter)
+    assert not link.remote_gone and link.remote_href.endswith("back.vcf")
+    assert Contact.objects.count() == 1
+
+
+def test_deleting_and_adding_a_connection_again_changes_no_counts(
+    server, connection, recruiter, application, user
+):
+    server.enforce_uid = True
+    server.add(BOOK + "phone.vcf", vcard("phone-uid-1", "Gordon Freeman", EMAIL="g@bm.test"))
+    schedule_interview(application, kind="onsite", starts_at=next_week())
+    first = sync(connection)
+    assert first.error == ""
+    contacts, cards_before, events_before = (
+        Contact.objects.count(),
+        len(cards(server)),
+        len(events(server)),
+    )
+
+    connection.delete()
+    assert SyncLink.objects.count() == 0
+    second = sync(new_connection(user))
+    assert second.error == "", second.error
+    assert Contact.objects.count() == contacts
+    assert len(cards(server)) == cards_before and len(events(server)) == events_before
+    assert SyncLink.objects.count() == contacts + 1
+    assert sync(SyncLink.objects.first().connection).summary() == "nothing to do"
+
+
+def test_an_interview_whose_event_is_already_there_is_paired_not_pushed_again(
+    server, connection, application, user
+):
+    server.enforce_uid = True
+    interview = schedule_interview(application, kind="onsite", starts_at=next_week())
+    sync(connection)
+    connection.delete()
+    report = sync(new_connection(user))
+    assert report.error == "" and len(events(server)) == 1
+    assert (
+        SyncLink.of_model(SyncLink.objects.get().connection, Interview).get().uid == interview.uid
+    )
+
+
+def test_a_server_that_refuses_one_put_is_a_note_not_a_failed_run(
+    server, connection, recruiter, application, user
+):
+    server.enforce_uid = True
+    schedule_interview(application, kind="onsite", starts_at=next_week())
+    # A card already in the collection under the UID the contact would be given.
+    server.add(
+        BOOK + "squatter.vcf", vcard(f"contact-{recruiter.pk}-{user.pk}@postulo", "Squatter")
+    )
+    report = sync(connection)
+    assert report.error == ""
+    assert len(events(server)) == 1, "the interviews half ran"
+
+
+def test_an_interview_with_notes_and_a_reminder_moved_on_the_phone_keeps_its_notes(
+    server, connection, application
+):
+    interview = schedule_interview(application, kind="onsite", starts_at=next_week())
+    Interview.objects.filter(pk=interview.pk).update(notes="Ask about the on-call rota")
+    sync(connection)
+    (href,) = events(server)
+    body, _ = server.resources[href]
+    assert "BEGIN:VALARM" in body and "Ask about the on-call rota" not in body
+    later = next_week(hour=15)
+    body = re.sub(r"DTSTART:\S+", f"DTSTART:{text.stamp(later)}", body)
+    body = re.sub(r"DTEND:\S+", f"DTEND:{text.stamp(later + dt.timedelta(hours=1))}", body)
+    body = re.sub(r"LAST-MODIFIED:\S+", "LAST-MODIFIED:20990101T000000Z", body)
+    server.resources[href] = (body, '"phone-9"')
+    sync(connection)
+    interview.refresh_from_db()
+    assert interview.starts_at == later
+    assert interview.notes == "Ask about the on-call rota", "the alarm's text did not replace them"

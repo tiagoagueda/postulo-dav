@@ -55,6 +55,10 @@ msgid "An interview deleted here had been changed on the phone since the last sy
 msgstr "Razgovor izbrisan ovdje bio je promijenjen na telefonu nakon zadnje sinkronizacije. Događaj je ostavljen u kalendaru."
 
 #: src/postulo_dav/sync.py
+msgid "An interview moved to another address on the calendar; still paired."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy
 msgid "Calendar"
 msgstr "Kalendar"
@@ -93,6 +97,31 @@ msgstr "Promijenjeno na telefonu, ali kasnije i ovdje; zadržana je naša verzij
 #, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Pronađen je adresar „%(book)s” i kalendar „%(calendar)s”."
+
+#: src/postulo_dav/sync.py
+msgid "it could not be saved here"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "it has no time zone"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "it is an all-day event"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "its address or identifier is too long"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "its time cannot be read"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "its time zone “%(zone)s” is not known here"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -140,6 +169,11 @@ msgid "Server address"
 msgstr "Adresa poslužitelja"
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Adresar „%(name)s” ne postoji na poslužitelju."
@@ -159,10 +193,56 @@ msgstr "Kalendar „%(name)s” ne postoji na poslužitelju."
 msgid "The first sync will make what is missing."
 msgstr "Prva sinkronizacija stvorit će ono što nedostaje."
 
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server does not name a calendar home."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server does not name an address book home."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server does not say where the %(kind)s account is."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server redirected %(path)s too many times."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server refused the user name or password."
+msgstr ""
+
 #: src/postulo_dav/sync.py
-#, fuzzy
-msgid "The server's root, e.g. https://cloud.example.org. Postulo finds the address book and calendar homes from there."
-msgstr "Korijen poslužitelja, npr. https://cloud.example.org. Postulo odatle pronalazi početne lokacije adresara i kalendara."
+msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server's answer could not be read: %(error)s"
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server's answer for %(path)s was too large or too slow, and was not read."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -175,6 +255,46 @@ msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s” promijenjen na obje strane istodobno; sljedeći prolaz odlučuje."
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” moved to another address on the server; still paired."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s” uklonjen je iz adresara; ovdje zadržan."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” was skipped: %(reason)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the number on the card was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the web address on the card was not taken."
+msgstr ""

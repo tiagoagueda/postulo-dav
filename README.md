@@ -30,7 +30,7 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 
 | Field | What it is |
 | --- | --- |
-| Server address | The server's root, e.g. `https://cloud.example.org`. Discovery (`/.well-known/carddav` and `caldav`) finds the rest. It must be `https://`: the password goes over the wire, and only a machine on your own network may be reached over plain `http://`. |
+| Server address | The server's root, e.g. `https://cloud.example.org`, or the address of its DAV service where it lives under a path, e.g. `https://example.org/dav.php/`: that address is asked first, then `/.well-known/carddav` and `caldav`, then the root. It must be `https://`: the password goes over the wire, and only a machine on your own network may be reached over plain `http://`. |
 | Username, password | An app password where the server offers one. Stored encrypted. |
 | Address book, Calendar | Both default to *Postulo*; made by the first sync if they are not there, never in read-only mode. |
 | Read only | Contacts and interviews still come in; nothing goes out — not even a new address book. |
@@ -48,11 +48,31 @@ contact here, under the company its `ORG` names or a *(no company)* holding comp
 you assign one.
 
 **Interviews ↔ VEVENT.** Start, end, *Kind: Role at Company* as the summary, the place or
-the call link, the preparation notes and the application's link in the description, the
-people you are meeting as attendees — informational only: Postulo never sends invitations —
-and an alarm from the interview's reminder. Interviews from the last ninety days onwards
+the call link, the people you are meeting and the application's link (when the instance
+knows its own address, `POSTULO_PUBLIC_URL`) in the description, and an alarm from the
+interview's reminder. Your preparation notes are not written to the calendar, and nobody
+is named as an attendee: a calendar can be shared, and many programs offer to mail an
+attendee (postulo/postulo#963). The file says `METHOD:PUBLISH`, so that nothing takes it
+for an invitation; a server that refuses a calendar object carrying a `METHOD` (RFC 4791
+§4.1) is written to without one. What you type in the description on the phone comes back
+as the interview's notes, and a later push keeps it. Interviews from the last ninety days onwards
 are in the calendar. An event created on the phone stays on the phone: nothing links it to
 an application, and a job tracker must not invent one. Recurring events are ignored.
+
+**Pairing.** A card or an event is paired with its record by its `UID`, with the
+address as a cache. Postulo never changes a `UID` it did not write, so a card created on the
+phone keeps its own; a card moved to another address on the server is found again by it; and
+a connection deleted and added again pairs with what is already there instead of making
+everything twice. A server that lists its addresses with escaped characters (Radicale
+writes `%40` for `@`) is read the same as one that does not.
+
+**What the server may send.** The password goes only to the host in the address you typed:
+an address in a listing, a redirect or a principal that names another host is not followed,
+and nothing outside the collection is read or written. An answer is read to a size (2 MB
+for a listing, 256 KB for a card or an event) and to a minute in all; a card that is too
+large, too slow or not readable is skipped with a note, and the next one is read. So is one
+whose date, number, address or name does not fit. A time zone Postulo cannot resolve, a
+floating time and an all-day event never move an interview.
 
 **Both directions.** What you edit here is pushed on the next run; what you edit on the
 phone is pulled. Moving an interview on the phone moves it here through Postulo's own

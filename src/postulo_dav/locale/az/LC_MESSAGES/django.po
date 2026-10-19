@@ -1,0 +1,279 @@
+# azərbaycan translation of postulo-dav.
+# This file is distributed under the same license as the postulo-dav package (AGPL-3.0-or-later).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: postulo-dav\n"
+"PO-Revision-Date: 2026-10-19 07:05+0000\n"
+"Last-Translator: Postulo contributors\n"
+"Language-Team: azərbaycan\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: postulo-messages\n"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "%(count)d events on the calendar are not from Postulo and were left alone."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "%(kind)s removed from the calendar on another device; kept here."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "(no company)"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Address book"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "An app password where the server offers one. Stored encrypted."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "An interview changed on both sides at once; next run decides."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "An interview moved to another address on the calendar; still paired."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Calendar"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Cancelled on the calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "CardDAV and CalDAV"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Changed here on %(when)s: %(text)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Changed here, but changed on the phone later; took theirs."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Changed on the phone on %(when)s: %(text)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Changed on the phone, but changed here later; kept ours."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "it could not be saved here"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "it has no time zone"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "it is an all-day event"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "its address or identifier is too long"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "its time cannot be read"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "its time zone “%(zone)s” is not known here"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Password or app password"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Read only"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "read only"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Server address"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The address book “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The address must start with https:// — for example %(example)s."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The calendar “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The first sync will make what is missing."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server does not name a calendar home."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server does not name an address book home."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server does not say where the %(kind)s account is."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server redirected %(path)s too many times."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+msgid "The server refused the user name or password."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server's answer could not be read: %(error)s"
+msgstr ""
+
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "The server's answer for %(path)s was too large or too slow, and was not read."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Username"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed on both sides at once; next run decides."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” moved to another address on the server; still paired."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” was removed from the address book; kept here."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” was skipped: %(reason)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the number on the card was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the web address on the card was not taken."
+msgstr ""
