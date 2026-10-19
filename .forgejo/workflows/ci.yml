@@ -21,6 +21,14 @@ on:
 permissions:
   contents: read
 
+env:
+  # The uv this repository is tested with, and the sha256 of that version's install.sh, checked
+  # before it is run: the script is the trust root for the uv binary it fetches, and
+  # `curl | sh` ran whatever the address answered (postulo/postulo#233, #790). The same two
+  # values as Postulo's own CI; bump them together.
+  UV_VERSION: "0.12.17"
+  UV_INSTALLER_SHA256: "37b82230b28617c6c24fa52364fa28aa37f2aa40c114809a623f6b064a9730e5"
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -46,13 +54,24 @@ jobs:
 
       - name: Install uv
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
+          curl -LsSf "https://astral.sh/uv/${UV_VERSION}/install.sh" -o /tmp/uv-install.sh
+          echo "${UV_INSTALLER_SHA256}  /tmp/uv-install.sh" | sha256sum -c -
+          sh /tmp/uv-install.sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Install the plugin, Postulo and the test tools
         # --locked: the lock names the Postulo this plugin is released beside, and a lock
         # that no longer matches pyproject.toml is a resolution nobody reviewed.
         run: uv sync --locked --python 3.14
+
+      - name: Audit the locked dependencies
+        # The lock file, not the environment: Postulo is installed from git and is not on
+        # PyPI, so it is left out of the export (--strict would stop at it), and the core
+        # audits itself. `--strict` still fails on anything else it cannot look up, so a
+        # dependency that becomes unauditable fails the build, and so does a new advisory (#31).
+        run: |
+          uv export --no-emit-project --no-emit-package postulo --all-groups             --format requirements-txt --no-hashes > /tmp/locked-requirements.txt
+          uv run --with pip-audit==2.10.1 pip-audit --strict --progress-spinner off             -r /tmp/locked-requirements.txt
 
       - name: Lint
         run: |
