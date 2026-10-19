@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-13 12:44+0000\n"
-"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-10-19 11:15+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Hungarian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -49,8 +49,9 @@ msgid "An interview deleted here had been changed on the phone since the last sy
 msgstr "Az itt törölt interjút a legutóbbi szinkronizálás óta módosították a telefonon. Az esemény a naptárban maradt."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "Az interjú áthelyeződött egy másik címre a naptárban, még párosítva."
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -88,29 +89,34 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Megtaláltuk a(z) „%(book)s” címjegyzéket és a(z) „%(calendar)s” naptárat."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it could not be saved here"
-msgstr ""
+msgstr "itt nem lehet megmenteni"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it has no time zone"
-msgstr ""
+msgstr "nincs időzóna"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it is an all-day event"
-msgstr ""
+msgstr "ez egy egynapos esemény"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "a címe vagy azonosítója túl hosszú"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its time cannot be read"
-msgstr ""
+msgstr "az idő nem olvasható"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "időzóna \"%(zone)s\" nem ismert itt"
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
@@ -150,9 +156,9 @@ msgid "Server address"
 msgstr "Kiszolgáló címe"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "A %(kind)s a naptár vége előtt kezdődik, így nem mozdult."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -174,55 +180,59 @@ msgid "The first sync will make what is missing."
 msgstr "Az első szinkronizálás azt hozza létre, ami hiányzik."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "A kiszolgáló a %(method)s %(path)s -re HTTP %(status)d -t válaszolt."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "A kiszolgáló nem nevez meg egy naptár otthont."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "A kiszolgáló nem nevez meg egy lakcímjegyzéket."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "A kiszolgáló nem mondja meg, hol van az %(kind)s számla."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "A szerver a saját (%(host)s) címére mutatott, nem követte."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "A kiszolgáló túl sokszor irányította át %(path)s."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "A kiszolgáló visszautasította a felhasználó nevét vagy jelszavát."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "A kiszolgáló címe, pl. https: / / cloud.example.org, vagy a DAV-szolgáltatásának címe, ahol egy útvonal alatt él, például https: / / example.org / dav.php /. Postulo megtalálja a címjegyzéket és a naptár otthonokat onnan."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "A szerver válasza nem olvasható: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "A kiszolgáló válasza %(path)s volt túl nagy vagy túl lassú, és nem olvasott."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "A %(kind)s időpontja a naptárban nem volt használható (%(why)s), így nem mozdították el."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -234,19 +244,19 @@ msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s” mindkét oldalon egyszerre változott; a következő futás dönt."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "\"%(name)s\" mindkét oldalon megváltozott, és a telefon kártyája nem ad időt: a telefon verziója foglalt."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "\"%(name)s\" van osztva, hogy csak olvasni; a változás a telefonon nem alkalmazták."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "\"%(name)s\" áthelyezve egy másik címre a szerveren, még mindig párosítva."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -254,26 +264,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s” eltávolítva a címjegyzékből; itt megtartva."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "\"%(name)s\" kimaradt: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "\"%(name)s\": a kártyán lévő számot már egy másik rekord tartja, tehát nem készült el."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "\"%(name)s\": a kártyán lévő számot nem vették fel."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "\"%(name)s\": a kártyán található internetes cím nem internetes cím, így nem készült el."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "\"%(name)s\": a kártyán található internetes cím nem került feltüntetésre."

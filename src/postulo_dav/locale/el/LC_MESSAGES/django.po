@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-10 12:45+0000\n"
+"PO-Revision-Date: 2026-10-19 11:15+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Greek <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/el/>\n"
 "Language: el\n"
@@ -55,8 +55,9 @@ msgid "An interview deleted here had been changed on the phone since the last sy
 msgstr "Μια συνέντευξη που διαγράφηκε εδώ είχε αλλαχτεί στο τηλέφωνο από τον τελευταίο συγχρονισμό. Το γεγονός έμεινε στο ημερολόγιο."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "Μια συνέντευξη μεταφέρθηκε σε άλλη διεύθυνση του ημερολογίου, ακόμα σε ζεύγη."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -99,29 +100,34 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Βρέθηκαν το βιβλίο διευθύνσεων «%(book)s» και το ημερολόγιο «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it could not be saved here"
-msgstr ""
+msgstr "δεν μπόρεσε να σωθεί εδώ"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it has no time zone"
-msgstr ""
+msgstr "δεν έχει ζώνη ώρας"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it is an all-day event"
-msgstr ""
+msgstr "είναι μια ολοήμερη εκδήλωση"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "η διεύθυνση ή ο αναγνωριστικός κωδικός του είναι πολύ μεγάλος"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its time cannot be read"
-msgstr ""
+msgstr "ο χρόνος του δεν μπορεί να διαβαστεί"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "η ζώνη ώρας “%(zone)s” δεν είναι γνωστή εδώ"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -169,9 +175,9 @@ msgid "Server address"
 msgstr "Διεύθυνση διακομιστή"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "Το %(kind)s στο ημερολόγιο τελειώνει πριν ξεκινήσει, οπότε δεν μετακινήθηκε."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -194,55 +200,59 @@ msgid "The first sync will make what is missing."
 msgstr "Ο πρώτος συγχρονισμός θα κάνει αυτό που λείπει."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "Ο εξυπηρετητής απάντησε HTTP %(status)d για %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "Ο εξυπηρετητής δεν ορίζει ένα σπίτι ημερολογίου."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "Ο εξυπηρετητής δεν αναφέρει ένα βιβλίο διευθύνσεων στο σπίτι."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "Ο εξυπηρετητής δεν αναφέρει πού είναι ο λογαριασμός %(kind)s."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "Ο εξυπηρετητής έδειξε μια διεύθυνση έξω από τη δική του (%(host)s)· δεν ακολουθήθηκε."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "Ο εξυπηρετητής ανακατευθύνει %(path)s πάρα πολλές φορές."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "Ο διακομιστής αρνήθηκε το όνομα χρήστη ή τον κωδικό πρόσβασης."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Η διεύθυνση του εξυπηρετητή, π.χ. https://cloud.example.org, ή η διεύθυνση της υπηρεσίας DAV του όπου ζει κάτω από μια διαδρομή, π.χ. https://example.org/dav.php/. Ο Postulo βρίσκει το βιβλίο διευθύνσεων και τα σπίτια ημερολογίου από εκεί."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "Η απάντηση του εξυπηρετητή δεν μπορεί να διαβαστεί: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "Η απάντηση του εξυπηρετητή για το %(path)s ήταν πολύ μεγάλη ή πολύ αργή και δεν διαβάστηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "Ο χρόνος %(kind)s στο ημερολόγιο δεν μπορούσε να χρησιμοποιηθεί (%(why)s), οπότε δεν μετακινήθηκε."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -255,19 +265,19 @@ msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "«%(name)s» άλλαξε και στις δύο πλευρές ταυτόχρονα· η επόμενη εκτέλεση αποφασίζει."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "“%(name)s” άλλαξε και στις δύο πλευρές, και η κάρτα από το τηλέφωνο δεν δίνει χρόνο: η έκδοση του τηλεφώνου πάρθηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "“%(name)s” μοιράζεται μαζί σας για να διαβάσετε μόνο; η αλλαγή στο τηλέφωνο δεν εφαρμόστηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "Το “%(name)s” μετακινήθηκε σε άλλη διεύθυνση στον εξυπηρετητή."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -275,26 +285,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "«%(name)s» αφαιρέθηκε από το βιβλίο διευθύνσεων· διατηρήθηκε εδώ."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "“%(name)s” παραλείφθηκε: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "“%(name)s”: ο αριθμός της κάρτας κρατείται ήδη από άλλο ρεκόρ εδώ, οπότε δεν λήφθηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "“%(name)s”: ο αριθμός της κάρτας δεν λήφθηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "“%(name)s”: η διεύθυνση web στην κάρτα δεν είναι διεύθυνση web, οπότε δεν λήφθηκε."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "“%(name)s”: η διεύθυνση web στην κάρτα δεν λήφθηκε."
