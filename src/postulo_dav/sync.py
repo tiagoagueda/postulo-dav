@@ -3,36 +3,52 @@
 One run does, for each of the two collections:
 
 1. **List** the collection: every resource with its ETag.
-2. **Push** each local record — a contact, an upcoming or recent interview — that has no
+2. **Pair** what lost its pairing: a twin that moved to another address is found again by its
+   ``UID``, and a record whose twin is already there (a connection deleted and added again) is
+   paired with it instead of being pushed a second time (#7).
+3. **Push** each local record — a contact, an upcoming or recent interview — that has no
    twin yet, or whose content changed since it was last pushed. A write is conditional
    on the ETag last seen, so a change made on the phone in the meantime is noticed rather
    than overwritten: the later change wins, and the losing version is kept as a note.
-3. **Pull** each twin whose ETag changed since it was last seen, and apply it locally.
+4. **Pull** each twin whose ETag changed since it was last seen, and apply it locally.
    Interview times move through Postulo's own service, so the timeline says so.
-4. **Notice deletions**. A twin that vanished from the collection is *unlinked and
+5. **Notice deletions**. A twin that vanished from the collection is *unlinked and
    flagged* — the local record stays, and the report says what happened. A record
    deleted here takes its twin with it, but only the twin it was told about: the DELETE
    carries ``If-Match``, so a card or an event edited on the phone since the last sync
    survives the deletion and becomes a note instead (#2).
-5. **Adopt** what appeared in the collection from elsewhere: a contact created on the
+6. **Adopt** what appeared in the collection from elsewhere: a contact created on the
    phone becomes a contact here, under the company its ORG names or a holding company.
    An event created on the phone is left alone with a note: nothing links it to an
    application, and a job tracker must not invent one.
 
-Recurring events are ignored: interviews do not recur. Attendees are informational; no
-invitation is ever sent. Read-only mode does steps 1, 3, 4 and 5 and never writes — and
-*never writes* includes the collections themselves: a person who asked for read only, and
-a person who merely pressed *Test*, gets no address book and no calendar made for them on
-their server. Both look the collections up and report what is not there (#2).
+One card, or one event, that cannot be read or saved costs that one and not the run: it is
+a note and a count, and the next resource is tried. The contacts and the interviews are
+two halves of a run, and one failing does not stop the other (#20, #34).
+
+Recurring events are ignored: interviews do not recur. Postulo writes no attendee and no
+preparation notes into the calendar (postulo/postulo#963); what the person types in an
+event's description on the phone is theirs, and comes back as the interview's notes without
+the push ever overwriting it. Read-only mode does steps 1, 2, 4, 5 and 6 and never writes —
+and *never writes* includes the collections themselves: a person who asked for read only,
+and a person who merely pressed *Test*, gets no address book and no calendar made for them
+on their server. Both look the collections up and report what is not there (#2).
 """
 
 from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import logging
+import re
 import uuid
+from dataclasses import dataclass, field
 from urllib.parse import urljoin, urlsplit
 
+import httpx
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db import DatabaseError, transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
@@ -70,7 +86,9 @@ from postulo.plugins.api import (
 )
 
 from . import __version__, dav, text
-from .dav import ADDRESSBOOK, CALENDAR, Conflict, DavError, Server
+from .dav import ADDRESSBOOK, CALENDAR, AuthenticationRefused, Conflict, DavError, Server
+
+logger = logging.getLogger(__name__)
 
 PRODID = f"-//Postulo//postulo-dav {__version__}//EN"
 ACTOR = "dav"
@@ -85,6 +103,18 @@ READ_ONLY_TAIL = gettext_lazy(
     "Read only is on, so nothing is made: create it on the server, or name one that is "
     "already there."
 )
+#: The columns of a link, which a longer address or identifier would overflow (#34).
+HREF_LENGTH = 500
+UID_LENGTH = 200
+#: Contact.name and Company.name.
+NAME_LENGTH = 200
+
+#: What one resource may fail with without ending the run: the server refusing it, or the
+#: database refusing what it said. The first is a sentence; the second is not worth one.
+TOLERATED = (DavError, DatabaseError, ValidationError, ValueError)
+
+#: A UID Postulo itself wrote for a contact: ``contact-<pk>-<owner>@postulo``.
+POSTULO_CARD_UID = re.compile(r"^contact-\d+-\d+@postulo$")
 
 
 def digest(source: str) -> str:
@@ -123,52 +153,195 @@ def drop_twin(server: Server, link, report: SyncReport, kept: str) -> bool:
     return True
 
 
+@dataclass
+class Run:
+    """What one half of a sync shares: the server, the connection, the report, the clock."""
+
+    server: Server
+    connection: object
+    report: SyncReport
+    read_only: bool
+    now: dt.datetime = field(default_factory=timezone.now)
+
+    @property
+    def owner(self):
+        return self.connection.owner
+
+    def canon(self, href: str) -> str:
+        return self.server.canonical(href)
+
+    def skip(self, name: str, error: BaseException) -> None:
+        """One resource that could not be handled: counted, named, and the run goes on."""
+        self.report.skipped += 1
+        reason = str(error) if isinstance(error, DavError) else _("it could not be saved here")
+        self.report.notes.append(
+            _("“%(name)s” was skipped: %(reason)s") % {"name": name[:120], "reason": reason}
+        )
+
+    def each(self, name: str, work) -> None:
+        """Do ``work`` for one resource, all or nothing, and survive it failing (#20, #34)."""
+        try:
+            with transaction.atomic():
+                work()
+        except TOLERATED as error:
+            self.skip(name, error)
+
+
+def _tail(href: str) -> str:
+    return urlsplit(href).path.rstrip("/").rsplit("/", 1)[-1]
+
+
 # ------------------------------------------------------------------ contacts
 
 
-def card_for(contact: Contact) -> text.Card:
+def card_for(contact: Contact, reader=None, uid: str = "") -> text.Card:
+    """The card for ``contact`` as ``reader`` sees it: their own note, their own numbers.
+
+    The note is each person's own since postulo/postulo#896: read for nobody, it raises. A
+    queryset that read the contact with ``with_notes`` has set it already; otherwise it is
+    asked for. ``uid`` is the identifier the card already has on the server, and is never
+    changed: a server may refuse a write that does (RFC 6352 §5.1, #7).
+    """
+    reader = reader or contact.owner
     # A card carries one number and one address on the web; a contact holds several of
     # each since Postulo 0.3, with one of each kind marked as the one to use. The card
     # gets the primaries, which is what "the number" and "the LinkedIn" mean there now.
     number = primary_phone_number(contact)
     profile = primary_web_link(contact, LinkKind.SOCIAL)
+    note = contact.notes if "notes" in contact.__dict__ else contact.note_for(reader)
     return text.Card(
-        uid=f"contact-{contact.pk}-{contact.owner_id}@postulo",
+        uid=uid or f"contact-{contact.pk}-{reader.pk}@postulo",
         name=contact.name,
         org=contact.company.name if contact.company_id else "",
         title=contact.role,
         email=contact.email,
         phone=number.number if number else "",
         url=profile.url if profile else "",
-        note=contact.notes,
+        note=note,
     )
 
 
-def apply_card(contact: Contact, card: text.Card) -> None:
-    contact.name = card.name or contact.name
+def web_address(url: str) -> str:
+    """``url`` if it is a complete http(s) address, else nothing.
+
+    A card's ``URL`` is whatever somebody typed, and the page that shows a contact writes it
+    into an ``href``. ``addresses.web_address`` in Postulo is not on the plugin surface, so
+    the two-line rule is kept here (#32).
+    """
+    url = (url or "").strip()
+    parts = urlsplit(url)
+    if parts.scheme.lower() in ("http", "https") and parts.netloc and not text.CONTROLS & set(url):
+        return url
+    return ""
+
+
+def apply_card(contact: Contact, card: text.Card, owner, report: SyncReport | None = None) -> bool:
+    """Write a card onto the contact. ``False`` if some of it could not be taken.
+
+    Only what the card says is written: a card without a ``TEL`` leaves the number here
+    alone, and one without a ``URL`` the link, because this plugin never deletes what the
+    core keeps (#26). A number another record holds is a note, never a failed run.
+    """
+    notes = report.notes if report is not None else []
+    contact.name = (card.name or contact.name)[:NAME_LENGTH]
     contact.role = card.title[:200]
     contact.email = card.email[:254]
-    contact.notes = card.note
     if card.org and (not contact.company_id or contact.company.name.lower() != card.org.lower()):
-        contact.company = get_or_create_company(contact.owner, card.org)
+        contact.company = get_or_create_company(owner, card.org[:NAME_LENGTH])
     contact.save()
+    contact.write_note(owner, card.note)
+    complete = True
     # The number and the profile are rows of their own, written once the contact has a
     # key to hang them on. Only the primary of each is touched: the rest of what the
-    # person keeps here is not the card's to lose. A number some other row on the instance
-    # already holds is left alone rather than failing the sync over one field of a card.
+    # person keeps here is not the card's to lose.
     number = card.phone[:40].strip()
-    primary = primary_phone_number(contact)
-    if not number or not phone_number_is_taken(
-        number, exclude_pk=primary.pk if primary else None, asked_by=contact.owner
-    ):
-        save_phone_number(contact, contact.owner, number)
-    save_web_link(contact, contact.owner, LinkKind.SOCIAL, card.url[:500])
+    if number:
+        primary = primary_phone_number(contact)
+        if phone_number_is_taken(
+            number, exclude_pk=primary.pk if primary else None, asked_by=owner
+        ):
+            complete = False
+            notes.append(
+                _(
+                    "“%(name)s”: the number on the card is already held by another record "
+                    "here, so it was not taken."
+                )
+                % {"name": contact.name}
+            )
+        else:
+            try:
+                with transaction.atomic():
+                    save_phone_number(contact, owner, number)
+            except (ValidationError, ValueError):
+                complete = False
+                notes.append(
+                    _("“%(name)s”: the number on the card was not taken.") % {"name": contact.name}
+                )
+    if card.url.strip():
+        url = web_address(card.url)[:500]
+        if not url:
+            notes.append(
+                _(
+                    "“%(name)s”: the web address on the card is not a web address, so it was "
+                    "not taken."
+                )
+                % {"name": contact.name}
+            )
+        else:
+            try:
+                with transaction.atomic():
+                    save_web_link(contact, owner, LinkKind.SOCIAL, url)
+            except (ValidationError, ValueError):
+                notes.append(
+                    _("“%(name)s”: the web address on the card was not taken.")
+                    % {"name": contact.name}
+                )
+    return complete
 
 
 # ---------------------------------------------------------------- interviews
 
 
-def event_text(interview: Interview) -> str:
+def application_url(interview: Interview) -> str:
+    """The application's page, absolute, when the instance knows its own address (#11)."""
+    base = str(getattr(settings, "POSTULO_PUBLIC_URL", "") or "").rstrip("/")
+    return f"{base}{interview.application.get_absolute_url()}" if base else ""
+
+
+def _description_of(lines: list[str]) -> tuple[int | None, str]:
+    """Where the event's own DESCRIPTION is in ``lines`` (an alarm's is not), and its text."""
+    depth = 0
+    for index, line in enumerate(lines):
+        upper = line.upper()
+        if upper.startswith("BEGIN:") and upper != "BEGIN:VEVENT":
+            depth += 1
+        elif upper.startswith("END:") and upper != "END:VEVENT":
+            depth -= 1
+        elif depth == 0 and upper.startswith("DESCRIPTION"):
+            prop = text.parse_line(line)
+            if prop is not None and prop.name == "DESCRIPTION":
+                return index, text.unescape(prop.value)
+    return None, ""
+
+
+def postulo_block(interview: Interview) -> str:
+    """The description Postulo itself writes: who is met, and the application's link."""
+    return _description_of(event_lines(interview, url=application_url(interview)))[1]
+
+
+def free_text(description: str, block: str) -> str:
+    """What a person wrote in an event's description: all of it but Postulo's own lines."""
+    ours = [line for line in block.split("\n") if line]
+    kept = []
+    for line in description.replace("\r\n", "\n").split("\n"):
+        if line in ours:
+            ours.remove(line)
+        else:
+            kept.append(line)
+    return "\n".join(kept).strip()
+
+
+def event_text(interview: Interview, free: str = "", *, method: bool = True) -> str:
     """The whole iCalendar document for one interview, alarm included.
 
     `alarm=True` is what writing into somebody's *own* calendar means: the reminder is
@@ -176,37 +349,99 @@ def event_text(interview: Interview) -> str:
     serves carries no alarm, because a subscription that rings is a decision for whoever
     subscribes. Assembling the VALARM here was this plugin's job until the core took it
     (postulo/postulo#229).
+
+    The event carries no attendee and no notes (postulo/postulo#963), and the document says
+    ``METHOD:PUBLISH`` so that a calendar program does not take it for an invitation. What
+    a person wrote in the description on the phone is ``free``, and stays above Postulo's
+    own lines.
     """
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", f"PRODID:{PRODID}", "CALSCALE:GREGORIAN"]
-    return text.render(lines + event_lines(interview, alarm=True) + ["END:VCALENDAR"])
+    if method:
+        lines.append("METHOD:PUBLISH")
+    body = event_lines(interview, url=application_url(interview), alarm=True)
+    if free:
+        index, ours = _description_of(body)
+        description = "DESCRIPTION:" + text.escape("\n".join(part for part in (free, ours) if part))
+        if index is None:
+            body.insert(len(body) - 1, description)
+        else:
+            body[index] = description
+    return text.render(lines + body + ["END:VCALENDAR"])
 
 
-def interview_source(interview: Interview) -> str:
-    """What a push is a function of: the parts of an interview a calendar can change."""
+def core_source(interview: Interview) -> str:
+    """The parts of an interview a calendar can change, as one string."""
     return text.Event(
         starts_at=interview.starts_at,
         ends_at=interview.ends_at,
         location=interview.location,
-        description=interview.notes,
         status=calendar_status(interview),
     ).digest_source()
 
 
-def apply_event(interview: Interview, event: text.Event, report: SyncReport) -> None:
+def interview_source(interview: Interview) -> str:
+    """What a push is a function of: those parts, and the lines Postulo writes itself."""
+    return core_source(interview) + "\n" + postulo_block(interview)
+
+
+def event_source(event: text.Event) -> str:
+    """The same, as the other side holds it: the notes and Postulo's lines are no part."""
+    return text.Event(
+        starts_at=event.starts_at,
+        ends_at=event.ends_at,
+        location=event.location,
+        status=event.status or "CONFIRMED",
+    ).digest_source()
+
+
+def _problem(event: text.Event) -> str:
+    kind, _sep, zone = event.problem.partition(":")
+    if kind == "floating":
+        return _("it has no time zone")
+    if kind == "date":
+        return _("it is an all-day event")
+    if kind == "zone":
+        return _("its time zone “%(zone)s” is not known here") % {"zone": zone}
+    return _("its time cannot be read")
+
+
+def apply_event(
+    interview: Interview, event: text.Event, report: SyncReport, block: str = ""
+) -> None:
+    kind = interview.get_kind_display()
     if event.starts_at and event.ends_at:
-        reschedule_interview(
-            interview, starts_at=event.starts_at, ends_at=event.ends_at, actor=ACTOR
+        if event.ends_at > event.starts_at:
+            reschedule_interview(
+                interview, starts_at=event.starts_at, ends_at=event.ends_at, actor=ACTOR
+            )
+        else:
+            report.notes.append(
+                _("The %(kind)s on the calendar ends before it starts, so it was not moved.")
+                % {"kind": kind}
+            )
+    elif event.problem:
+        # A time that is not an instant is not a time to move an interview to (#24).
+        report.notes.append(
+            _(
+                "The time of the %(kind)s on the calendar could not be used (%(why)s), so it "
+                "was not moved."
+            )
+            % {"kind": kind, "why": _problem(event)}
         )
     changed = []
     if event.location != interview.location:
         interview.location = event.location[:500]
         changed.append("location")
-    if (
-        event.description
-        and event.description != interview.notes
-        and not event.description.startswith(interview.notes)
-    ):
-        interview.notes = event.description
+    written = free_text(event.description, block)
+    if written and written not in interview.notes:
+        # What was typed on the phone is the person's own: added to the notes, or taking
+        # the place of the notes it extends, and the same text is never added twice.
+        if interview.notes and interview.notes in written:
+            interview.notes = written
+        elif interview.notes:
+            interview.notes = f"{interview.notes}\n\n{written}"
+        else:
+            interview.notes = written
         changed.append("notes")
     if changed:
         interview.save(update_fields=[*changed, "updated_at"])
@@ -236,8 +471,10 @@ class DavSync:
                 type="url",
                 help=str(
                     _(
-                        "The server's root, e.g. https://cloud.example.org. Postulo finds the "
-                        "address book and calendar homes from there."
+                        "The server's address, e.g. https://cloud.example.org, or the address "
+                        "of its DAV service where it lives under a path, e.g. "
+                        "https://example.org/dav.php/. Postulo finds the address book and "
+                        "calendar homes from there."
                     )
                 ),
             ),
@@ -353,7 +590,10 @@ class DavSync:
                     kind: self._collection(server, config, kind, create=False)
                     for kind in (ADDRESSBOOK, CALENDAR)
                 }
-        except (DavError, Exception) as error:  # noqa: BLE001 - the sentence is the point
+        except DavError as error:
+            # Already a sentence for the person, in their language: no class name in front.
+            return TestResult(False, str(error))
+        except Exception as error:  # noqa: BLE001 - the sentence is the point
             return TestResult(False, f"{type(error).__name__}: {error}")
         missing = [kind for kind, collection in found.items() if collection is None]
         if not missing:
@@ -398,66 +638,180 @@ class DavSync:
     def sync(self, connection, config: dict) -> SyncReport:
         report = SyncReport()
         read_only = bool(config.get("read_only"))
+        errors: list[str] = []
         client, server = dav.connect(config)
         with client:
-            # In read-only mode a missing collection is reported, not made: half a sync
-            # still runs, and the person is told which half did not.
-            book = self._collection(server, config, ADDRESSBOOK, create=not read_only)
-            if book is None:
-                report.notes.append(
-                    f"{self._missing_sentence(config, ADDRESSBOOK)} {READ_ONLY_TAIL}"
-                )
-            else:
-                self._sync_contacts(server, book, connection, report, read_only=read_only)
-            calendar = self._collection(server, config, CALENDAR, create=not read_only)
-            if calendar is None:
-                report.notes.append(f"{self._missing_sentence(config, CALENDAR)} {READ_ONLY_TAIL}")
-            else:
-                self._sync_interviews(server, calendar, connection, report, read_only=read_only)
+            run = Run(server, connection, report, read_only)
+            for kind, half in (
+                (ADDRESSBOOK, self._sync_contacts),
+                (CALENDAR, self._sync_interviews),
+            ):
+                # Each half on its own: a server with no calendar home still gets the
+                # contacts, and one failing says so without stopping the other (#20).
+                try:
+                    # In read-only mode a missing collection is reported, not made: half a
+                    # sync still runs, and the person is told which half did not.
+                    collection = self._collection(server, config, kind, create=not read_only)
+                    if collection is None:
+                        report.notes.append(
+                            f"{self._missing_sentence(config, kind)} {READ_ONLY_TAIL}"
+                        )
+                        continue
+                    half(run, collection)
+                except AuthenticationRefused as error:
+                    errors.append(str(error))
+                    break  # the other half would be refused the same way
+                except DavError as error:
+                    errors.append(str(error))
+                except httpx.HTTPError as error:
+                    errors.append(f"{type(error).__name__}: {error}")
+                    break  # the server is not answering; asking again would only wait twice
+                except Exception as error:
+                    logger.exception("The %s half of a DAV sync failed", kind)
+                    errors.append(f"{type(error).__name__}: {error}")
+        if errors:
+            report.error = " ".join(dict.fromkeys(errors))
         return report
 
     # ---------------------------------------------------------- contacts
 
-    def _sync_contacts(self, server, book, connection, report, *, read_only: bool) -> None:
-        now = timezone.now()
+    def _sync_contacts(self, run: Run, book) -> None:
+        server, connection, report = run.server, run.connection, run.report
+        owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
         remote = server.etags(book.href)
         # Links flagged remote_gone are kept in the map: they say "the person removed
         # this from the address book", and the record must not be pushed back.
         links = {link.object_id: link for link in SyncLink.of_model(connection, Contact)}
         contacts = {
-            c.pk: c for c in Contact.objects.for_user(connection.owner).select_related("company")
+            c.pk: c
+            for c in Contact.objects.visible_to(owner).with_notes(owner).select_related("company")
         }
-        linked_hrefs = {link.remote_href for link in links.values()}
+        # A contact may be a group's, or shared to read: what comes in from the phone is
+        # applied only to those the person may change (postulo/postulo#896).
+        writable = set(Contact.objects.visible_to(owner, write=True).values_list("pk", flat=True))
+        cache: dict[str, tuple[dav.Resource, text.Card]] = {}
+
+        def read(href: str):
+            if href not in cache:
+                resource = server.get(href)
+                cache[href] = (resource, text.text_to_card(resource.text))
+            return cache[href]
+
+        def linked() -> set[str]:
+            return {canon(link.remote_href) for link in links.values() if link.remote_href}
+
+        def strangers() -> list[str]:
+            """The cards read that no link claims: adopted below, unless paired first."""
+            claimed = linked()
+            return [h for h in remote if h in cache and h not in claimed]
+
+        # Read what no link claims: it is what a moved twin and an old pairing are found in,
+        # and what is adopted below.
+        for href in [h for h in remote if h not in linked()]:
+            try:
+                read(href)
+            except DavError as error:
+                run.skip(_tail(href), error)
+
+        # Pair: a twin that moved is found again by its UID, never by its address (#7).
+        for link in list(links.values()):
+            contact = contacts.get(link.object_id)
+            if contact is None or not link.uid:
+                continue
+            if canon(link.remote_href) in remote and not link.remote_gone:
+                continue
+            found = next((h for h in strangers() if cache[h][1].uid == link.uid), None)
+            if found is None or len(found) > HREF_LENGTH:
+                continue
+            resource, card = cache[found]
+            same = digest(card.digest_source()) == digest(
+                card_for(contact, owner, link.uid).digest_source()
+            )
+            link.remote_href, link.remote_gone = found, False
+            link.etag = resource.etag if same else ""
+            link.save(update_fields=["remote_href", "remote_gone", "etag", "updated_at"])
+            report.notes.append(
+                _("“%(name)s” moved to another address on the server; still paired.")
+                % {"name": contact.name}
+            )
+
+        # Pair: a contact with no twin yet whose twin is already there, as after a connection
+        # was deleted and added again. Postulo's own UID counts only with the same name, since
+        # after an export and an import its number may name somebody else; a card from the
+        # phone is matched on an email address that exactly one contact and one card share.
+        lonely = [c for pk, c in contacts.items() if pk not in links]
+        emails: dict[str, int] = {}
+        for contact in lonely:
+            if contact.email:
+                key = contact.email.strip().lower()
+                emails[key] = emails.get(key, 0) + 1
+        for contact in lonely:
+            default_uid = f"contact-{contact.pk}-{owner.pk}@postulo"
+            name = contact.name.strip().lower()
+            found = next(
+                (
+                    h
+                    for h in strangers()
+                    if cache[h][1].uid == default_uid and cache[h][1].name.strip().lower() == name
+                ),
+                None,
+            )
+            key = contact.email.strip().lower()
+            if found is None and key and emails.get(key) == 1:
+                matches = [
+                    h
+                    for h in strangers()
+                    if cache[h][1].email.strip().lower() == key
+                    and not POSTULO_CARD_UID.match(cache[h][1].uid)
+                ]
+                if len(matches) == 1:
+                    found = matches[0]
+            if found is None or len(found) > HREF_LENGTH:
+                continue
+            resource, card = cache[found]
+            uid = card.uid if card.uid and len(card.uid) <= UID_LENGTH else default_uid
+            mine = digest(card_for(contact, owner, uid).digest_source())
+            same = digest(card.digest_source()) == mine
+            links[contact.pk] = SyncLink.bind(
+                connection,
+                contact,
+                remote_href=found,
+                uid=uid,
+                etag=resource.etag if same else "",
+                local_hash=mine if same else "",
+                last_synced_at=now if same else None,
+            )
 
         # Local records: push new and changed ones; notice twins that vanished.
-        for pk, contact in contacts.items():
-            link = links.get(pk)
+        def one(contact: Contact) -> None:
+            link = links.get(contact.pk)
             if link is not None and link.remote_gone:
-                continue  # removed from the address book on purpose; leave it removed
-            card = card_for(contact)
+                return  # removed from the address book on purpose; leave it removed
+            card = card_for(contact, owner, link.uid if link else "")
             source = digest(card.digest_source())
             if link is None:
                 if read_only:
                     report.skipped += 1
-                    continue
+                    return
                 href = urljoin(book.href, f"{uuid.uuid4()}.vcf")
                 etag = server.put(
                     href,
                     text.card_to_text(card, prodid=PRODID, rev=now),
                     "text/vcard; charset=utf-8",
                 )
-                SyncLink.bind(
+                links[contact.pk] = SyncLink.bind(
                     connection,
                     contact,
-                    remote_href=href,
+                    remote_href=canon(href),
                     uid=card.uid,
                     etag=etag,
                     local_hash=source,
                     last_synced_at=now,
                 )
                 report.pushed += 1
-                continue
-            if link.remote_href not in remote:
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
                 link.remote_gone = True
                 link.save(update_fields=["remote_gone", "updated_at"])
                 report.removed += 1
@@ -465,24 +819,46 @@ class DavSync:
                     str(_("“%(name)s” was removed from the address book; kept here."))
                     % {"name": contact.name}
                 )
-                continue
-            remote_changed = remote[link.remote_href] != link.etag
+                return
+            remote_changed = remote[href] != link.etag
             local_changed = link.local_hash != source
             if remote_changed:
-                resource = server.get(link.remote_href)
-                incoming = text.text_to_card(resource.text)
+                resource, incoming = read(link.remote_href)
+                if local_changed and digest(incoming.digest_source()) == source:
+                    # Both sides already say the same: nothing to merge, only to remember.
+                    link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
+                    link.uid = link.uid or card.uid
+                    link.save()
+                    return
+                if contact.pk not in writable:
+                    link.etag = resource.etag
+                    link.save(update_fields=["etag", "updated_at"])
+                    report.skipped += 1
+                    report.notes.append(
+                        _(
+                            "“%(name)s” is shared with you to read only; the change on the "
+                            "phone was not applied."
+                        )
+                        % {"name": contact.name}
+                    )
+                    return
                 if local_changed and (incoming.rev or now) < contact.updated_at:
                     # Both changed and ours is later: ours wins, theirs is kept as a note.
-                    contact.notes = (contact.notes + "\n\n" if contact.notes else "") + str(
-                        _("Changed on the phone on %(when)s: %(text)s")
-                    ) % {
-                        "when": (incoming.rev or now).date().isoformat(),
-                        "text": incoming.digest_source().replace("\n", " · "),
-                    }
-                    contact.save(update_fields=["notes", "updated_at"])
-                    card = card_for(contact)
-                    source = digest(card.digest_source())
+                    contact.write_note(
+                        owner,
+                        (contact.notes + "\n\n" if contact.notes else "")
+                        + _("Changed on the phone on %(when)s: %(text)s")
+                        % {
+                            "when": (incoming.rev or now).date().isoformat(),
+                            "text": incoming.digest_source().replace("\n", " · "),
+                        },
+                    )
+                    # The version just recorded is remembered at once, whatever happens to
+                    # the push: a skipped or failed one must not record it again (#21).
                     link.etag = resource.etag
+                    link.save(update_fields=["etag", "updated_at"])
+                    card = card_for(contact, owner, link.uid)
+                    source = digest(card.digest_source())
                     local_changed = True
                 else:
                     if local_changed:
@@ -490,17 +866,31 @@ class DavSync:
                         incoming.note = (incoming.note + "\n\n" if incoming.note else "") + str(
                             _("Changed here on %(when)s: %(text)s")
                         ) % {"when": contact.updated_at.date().isoformat(), "text": losing}
-                    apply_card(contact, incoming)
-                    link.etag = resource.etag
-                    link.local_hash = digest(card_for(contact).digest_source())
+                        if incoming.rev is None:
+                            # No time on the card to weigh against ours: the phone's wins,
+                            # and the person is told it was chosen blind (#25).
+                            report.notes.append(
+                                _(
+                                    "“%(name)s” changed on both sides, and the card from the "
+                                    "phone gives no time: the phone's version was taken."
+                                )
+                                % {"name": contact.name}
+                            )
+                    complete = apply_card(contact, incoming, owner, report)
+                    if complete:
+                        link.etag = resource.etag
+                    # else the card is still seen as changed, and the note repeats until the
+                    # two sides agree; a later edit here meets the conflict rule above (#26).
+                    link.local_hash = digest(card_for(contact, owner, link.uid).digest_source())
                     link.last_synced_at = now
+                    link.uid = link.uid or card.uid
                     link.save()
                     report.pulled += 1
-                    continue
+                    return
             if local_changed:
                 if read_only:
                     report.skipped += 1
-                    continue
+                    return
                 try:
                     etag = server.put(
                         link.remote_href,
@@ -513,82 +903,195 @@ class DavSync:
                         str(_("“%(name)s” changed on both sides at once; next run decides."))
                         % {"name": contact.name}
                     )
-                    continue
+                    return
                 link.etag, link.local_hash, link.last_synced_at = etag, source, now
+                link.uid = link.uid or card.uid
                 link.save()
                 report.pushed += 1
 
+        for contact in contacts.values():
+            run.each(contact.name, lambda contact=contact: one(contact))
+
         # Links whose contact is gone here: take the twin with it — unless the twin moved.
         for link in list(links.values()):
-            if link.object_id not in contacts:
-                if not read_only and link.remote_href in remote:
+            if link.object_id in contacts:
+                continue
+            if Contact.objects.filter(pk=link.object_id).exists():
+                continue  # no longer visible to this person, but not deleted: not ours to drop
+            if not read_only and canon(link.remote_href) in remote:
+                try:
                     if drop_twin(server, link, report, CARD_KEPT):
                         report.removed += 1
-                link.delete()
+                except DavError as error:
+                    run.skip(_tail(link.remote_href), error)
+                    continue
+            link.delete()
 
         # Cards that appeared on the other side: adopt them.
-        for href in remote:
-            if href in linked_hrefs:
-                continue
-            resource = server.get(href)
-            card = text.text_to_card(resource.text)
+        for href in strangers():
+            resource, card = cache[href]
             if not card.name:
                 report.skipped += 1
                 continue
-            company = get_or_create_company(connection.owner, card.org or str(HOLDING_COMPANY))
-            contact = Contact.objects.create(
-                owner=connection.owner, company=company, name=card.name[:200]
-            )
-            apply_card(contact, card)
-            SyncLink.bind(
-                connection,
-                contact,
-                remote_href=href,
-                uid=card.uid,
-                etag=resource.etag,
-                local_hash=digest(card_for(contact).digest_source()),
-                last_synced_at=now,
-            )
-            report.pulled += 1
+            if len(href) > HREF_LENGTH or len(card.uid) > UID_LENGTH:
+                # A longer address or identifier does not fit the link, and a cut one would
+                # name another resource: the card is left alone, with a word (#34).
+                run.skip(card.name, DavError(_("its address or identifier is too long")))
+                continue
+
+            def adopt(href=href, resource=resource, card=card) -> None:
+                company = get_or_create_company(
+                    owner, (card.org or str(HOLDING_COMPANY))[:NAME_LENGTH]
+                )
+                contact = Contact.objects.create(
+                    owner=owner, company=company, name=card.name[:NAME_LENGTH]
+                )
+                apply_card(contact, card, owner, report)
+                SyncLink.bind(
+                    connection,
+                    contact,
+                    remote_href=href,
+                    uid=card.uid,
+                    etag=resource.etag,
+                    local_hash=digest(card_for(contact, owner, card.uid).digest_source()),
+                    last_synced_at=now,
+                )
+                report.pulled += 1
+
+            run.each(card.name, adopt)
 
     # -------------------------------------------------------- interviews
 
-    def _sync_interviews(self, server, calendar, connection, report, *, read_only: bool) -> None:
-        now = timezone.now()
+    def _sync_interviews(self, run: Run, calendar) -> None:
+        server, connection, report = run.server, run.connection, run.report
+        owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
         remote = server.etags(calendar.href)
         links = {link.object_id: link for link in SyncLink.of_model(connection, Interview)}
         interviews = {
             i.pk: i
-            for i in Interview.objects.for_user(connection.owner)
+            for i in Interview.objects.for_user(owner)
             .filter(starts_at__gte=now - HISTORY)
             .select_related("application__posting__company", "reminder")
             .prefetch_related("contacts")
         }
-        linked_hrefs = {link.remote_href for link in links.values()}
+        cache: dict[str, tuple[dav.Resource, list[text.Event]]] = {}
 
+        def read(href: str):
+            if href not in cache:
+                resource = server.get(href)
+                cache[href] = (
+                    resource,
+                    [e for e in text.text_to_events(resource.text) if not e.recurring],
+                )
+            return cache[href]
+
+        def linked() -> set[str]:
+            return {canon(link.remote_href) for link in links.values() if link.remote_href}
+
+        def strangers() -> list[str]:
+            claimed = linked()
+            return [h for h in remote if h in cache and h not in claimed]
+
+        # The events no link claims are read only when something might be theirs: an
+        # interview with no twin yet, or one whose twin has gone from its address.
+        wanted = any(pk not in links for pk in interviews) or any(
+            canon(link.remote_href) not in remote or link.remote_gone
+            for pk, link in links.items()
+            if pk in interviews
+        )
+        if wanted:
+            for href in [h for h in remote if h not in linked()]:
+                try:
+                    read(href)
+                except DavError as error:
+                    run.skip(_tail(href), error)
+
+        # Pair: a twin that moved is found again by its UID; an interview with no twin yet
+        # whose event is already there is paired with it instead of being pushed again (#7).
         for pk, interview in interviews.items():
             link = links.get(pk)
+            if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
+                continue
+            found = next(
+                (h for h in strangers() if any(e.uid == interview.uid for e in cache[h][1])), None
+            )
+            if found is None or len(found) > HREF_LENGTH:
+                continue
+            resource, events = cache[found]
+            event = next(e for e in events if e.uid == interview.uid)
+            same = event_source(event) == core_source(interview)
+            links[pk] = SyncLink.bind(
+                connection,
+                interview,
+                remote_href=found,
+                uid=interview.uid,
+                etag=resource.etag if same else "",
+                local_hash=digest(interview_source(interview)) if same else "",
+                last_synced_at=now if same else None,
+                remote_gone=False,
+            )
+            if link is not None:
+                report.notes.append(
+                    _("An interview moved to another address on the calendar; still paired.")
+                )
+
+        def push(interview: Interview, href: str, *, known: dav.Resource | None, etag: str) -> str:
+            """Write the event, keeping what was typed in its description on the phone."""
+            free = ""
+            if etag:
+                current = known or server.get(href)
+                events = [e for e in text.text_to_events(current.text) if not e.recurring]
+                if events:
+                    free = free_text(events[0].description, postulo_block(interview))
+            # RFC 4791 §4.1 asks a calendar object resource to carry no METHOD; some servers
+            # refuse one that does. The first try says PUBLISH, so that nothing takes the
+            # event for an invitation; a refusal is tried again without it.
+            try:
+                return server.put(
+                    href,
+                    event_text(interview, free),
+                    "text/calendar; charset=utf-8",
+                    etag=etag,
+                )
+            except Conflict:
+                raise
+            except DavError as error:
+                if error.status not in (400, 403, 415):
+                    raise
+            return server.put(
+                href,
+                event_text(interview, free, method=False),
+                "text/calendar; charset=utf-8",
+                etag=etag,
+            )
+
+        def one(interview: Interview) -> None:
+            pk = interview.pk
+            link = links.get(pk)
             if link is not None and link.remote_gone:
-                continue  # removed from the calendar on purpose; leave it removed
+                return  # removed from the calendar on purpose; leave it removed
             source = digest(interview_source(interview))
             if link is None:
                 if read_only:
                     report.skipped += 1
-                    continue
-                href = urljoin(calendar.href, f"{interview.uid}.ics")
-                etag = server.put(href, event_text(interview), "text/calendar; charset=utf-8")
-                SyncLink.bind(
+                    return
+                # The resource is named for the UID's own part, which has no reserved
+                # character in it, so that no server writes the address two ways (#19).
+                href = urljoin(calendar.href, f"{interview.uid.split('@')[0]}.ics")
+                etag = push(interview, href, known=None, etag="")
+                links[pk] = SyncLink.bind(
                     connection,
                     interview,
-                    remote_href=href,
+                    remote_href=canon(href),
                     uid=interview.uid,
                     etag=etag,
                     local_hash=source,
                     last_synced_at=now,
                 )
                 report.pushed += 1
-                continue
-            if link.remote_href not in remote:
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
                 link.remote_gone = True
                 link.save(update_fields=["remote_gone", "updated_at"])
                 report.removed += 1
@@ -600,24 +1103,35 @@ class DavSync:
                     % {"kind": interview.get_kind_display()},
                     actor=ACTOR,
                 )
-                continue
-            remote_changed = remote[link.remote_href] != link.etag
+                return
+            remote_changed = remote[href] != link.etag
             local_changed = link.local_hash != source
+            known = None
             if remote_changed:
-                resource = server.get(link.remote_href)
-                events = [e for e in text.text_to_events(resource.text) if not e.recurring]
-                incoming = events[0] if events else None
+                resource, events = read(link.remote_href)
+                incoming = next((e for e in events if e.uid == interview.uid), None) or (
+                    events[0] if events else None
+                )
                 if incoming is None:
                     report.skipped += 1
-                    continue
+                    return
+                known = resource
+                if local_changed and event_source(incoming) == core_source(interview):
+                    # Both sides already say the same: nothing to merge, only to remember.
+                    link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
+                    link.save()
+                    return
                 if local_changed and (incoming.last_modified or now) < interview.updated_at:
                     record_event(
                         interview.application,
                         summary=str(_("Changed on the phone, but changed here later; kept ours.")),
-                        body=incoming.digest_source().replace("\n", " · "),
+                        body=event_source(incoming).replace("\n", " · "),
                         actor=ACTOR,
                     )
+                    # Remembered at once: a push that is skipped or fails must not record
+                    # the same conflict on every run (#21).
                     link.etag = resource.etag
+                    link.save(update_fields=["etag", "updated_at"])
                 else:
                     if local_changed:
                         record_event(
@@ -625,48 +1139,51 @@ class DavSync:
                             summary=str(
                                 _("Changed here, but changed on the phone later; took theirs.")
                             ),
-                            body=interview_source(interview).replace("\n", " · "),
+                            body=core_source(interview).replace("\n", " · "),
                             actor=ACTOR,
                         )
-                    apply_event(interview, incoming, report)
+                    apply_event(interview, incoming, report, postulo_block(interview))
                     interview.refresh_from_db()
                     link.etag = resource.etag
                     link.local_hash = digest(interview_source(interview))
                     link.last_synced_at = now
                     link.save()
                     report.pulled += 1
-                    continue
+                    return
             if local_changed:
                 if read_only:
                     report.skipped += 1
-                    continue
+                    return
                 try:
-                    etag = server.put(
-                        link.remote_href,
-                        event_text(interview),
-                        "text/calendar; charset=utf-8",
-                        etag=link.etag,
-                    )
+                    etag = push(interview, link.remote_href, known=known, etag=link.etag)
                 except Conflict:
                     report.notes.append(
                         str(_("An interview changed on both sides at once; next run decides."))
                     )
-                    continue
+                    return
                 link.etag, link.local_hash, link.last_synced_at = etag, source, now
                 link.save()
                 report.pushed += 1
+
+        for interview in interviews.values():
+            run.each(interview.get_kind_display(), lambda interview=interview: one(interview))
 
         for link in list(links.values()):
             if link.object_id not in interviews:
                 still_exists = Interview.objects.filter(pk=link.object_id).exists()
                 if still_exists:
                     continue  # merely too old for the window; leave the calendar alone
-                if not read_only and link.remote_href in remote:
-                    if drop_twin(server, link, report, EVENT_KEPT):
-                        report.removed += 1
+                if not read_only and canon(link.remote_href) in remote:
+                    try:
+                        if drop_twin(server, link, report, EVENT_KEPT):
+                            report.removed += 1
+                    except DavError as error:
+                        run.skip(_tail(link.remote_href), error)
+                        continue
                 link.delete()
 
-        foreign = [href for href in remote if href not in linked_hrefs]
+        claimed = linked()
+        foreign = [href for href in remote if href not in claimed]
         if foreign:
             report.skipped += len(foreign)
             report.notes.append(
