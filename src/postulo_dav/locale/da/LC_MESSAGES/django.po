@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Danish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr "Adressebogen \"%(name)s\" er ikke på serveren."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Kommissionen konkluderer derfor, at foranstaltning 3 udgør statsstøtte."
+msgstr "Adressen skal begynde med https:// – for eksempel %(example)s."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

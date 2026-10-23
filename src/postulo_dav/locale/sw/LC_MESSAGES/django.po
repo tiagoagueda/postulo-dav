@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Swahili <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Na katika kipindi hicho mambo hayakwenda sawa na wakati wake."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "[TD=\"width: 456\"] [FONT=&](2)[/FONT][FONT=&]Bila kuathiri masharti ya kifungu kidogo (1) cha kifungu hiki, Tume itakuwa na mamlaka ya kuajiri mtaalamu yeyote kwa ajili ya shughuli maalumu au kwa muda mfupi.[/FONT]."
+msgstr "%(kind)s kiliondolewa kwenye kalenda kwenye kifaa kingine; kimehifadhiwa hapa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -77,7 +77,7 @@ msgstr "KadidaV na CaldaV"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr "Picha zote na Wizara ya Mambo ya Ndani ya Nchi. ..................................................................."
+msgstr "Ilibadilishwa hapa tarehe %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -87,7 +87,7 @@ msgstr "Ilibadilika, lakini ilibadilishwa kwenye simu baadaye."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr "Picha zote na Wizara ya Mambo ya Ndani ya Nchi. ..................................................................."
+msgstr "Ilibadilishwa kwenye simu tarehe %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -97,7 +97,7 @@ msgstr "Ilibadilishwa kwenye simu, lakini ilibadilika baadaye; ilihifadhi yetu."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr "Kitabu hiki kiliandikwa kwa mkono wa kuume na kwa mkono wa kuume."
+msgstr "Kitabu cha anwani “%(book)s” na kalenda “%(calendar)s” vimepatikana."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -127,7 +127,7 @@ msgstr "muda wake wa kusoma hauwezi"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "← Previous Story ‘X15X’ yatajwa hapa"
+msgstr "saa za eneo lake “%(zone)s” hazijulikani hapa"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -147,7 +147,7 @@ msgstr "Kamwe kuandika kwa seva - si hata kufanya kitabu cha anwani au kalenda. 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Zaidi ya nenosiri linazunguka mtandao wazi, na \"X69X\") sio anwani kwenye mtandao wako mwenyewe. Matumizi ya https://."
+msgstr "Kupitia http:// nenosiri hupita kwenye mtandao bila kusimbwa, na “%(host)s” si anwani iliyo kwenye mtandao wako mwenyewe. Tumia https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -177,12 +177,12 @@ msgstr "Anwani ya Server"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "Kabla ya kupanda, mmea lazima uwe wa kutosha."
+msgstr "%(kind)s kwenye kalenda kinaisha kabla ya kuanza, kwa hiyo hakikuhamishwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Kitabu cha anwani (X18X) sio kwenye seva."
+msgstr "Kitabu cha anwani “%(name)s” hakipo kwenye seva."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "Anwani lazima kuanza na https:// - kwa mfano %(example)s."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "\"X14X\" haipo kwenye seva."
+msgstr "Kalenda “%(name)s” haipo kwenye seva."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -217,12 +217,12 @@ msgstr "Jina la mtumiaji halipo kwenye kitabu cha nyumbani."
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr "Kwa mfano, hakuna mahali popote katika orodha hii."
+msgstr "Seva haisemi akaunti ya %(kind)s iko wapi."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Kwa upande mwingine, wavuti yako iko tayari - basi endelea kuchapisha."
+msgstr "Seva ilielekeza kwenye anwani iliyo nje ya yake yenyewe (%(host)s); haikufuatwa."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -252,7 +252,7 @@ msgstr "Jibu la seva kwa %(path)s lilikuwa kubwa sana au la polepole sana, na ha
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Katika siku za hivi karibuni, hakuna njia ya mkato, na hakuna njia ya mkato."
+msgstr "Muda wa %(kind)s kwenye kalenda haukuweza kutumika (%(why)s), kwa hiyo hakikuhamishwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -262,49 +262,49 @@ msgstr "Jina la mtumiaji"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "\"X1\" ilibadilisha pande zote mbili kwa wakati mmoja, na hatua inayofuata huamua."
+msgstr "“%(name)s” ilibadilishwa pande zote mbili kwa wakati mmoja; mzunguko ujao utaamua."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "“X1” ilibadilika pande zote mbili, na kadi kutoka kwa simu haitoi muda: toleo la simu lilichukuliwa."
+msgstr "“%(name)s” ilibadilishwa pande zote mbili, na kadi kutoka kwenye simu haitoi muda: toleo la simu lilichukuliwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "\"X1X\" inashirikiwa na wewe kusoma tu; mabadiliko kwenye simu hayakutumika."
+msgstr "“%(name)s” imeshirikiwa nawe kwa kusoma tu; badiliko kwenye simu halikutekelezwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "[TD=\"width: 456\"] [FONT=&](2)[/FONT][FONT=&]Bila kuathiri masharti ya kifungu kidogo (1) cha kifungu hiki, Tume itakuwa na mamlaka ya kuajiri mtaalamu yeyote kwa ajili ya shughuli maalumu au kwa muda mfupi.[/FONT]."
+msgstr "“%(name)s” imehamia anwani nyingine kwenye seva; bado zimeoanishwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "Kitabu hiki kimetayarishwa kwa kuzingatia yafuatayo:-."
+msgstr "“%(name)s” iliondolewa kwenye kitabu cha anwani; imehifadhiwa hapa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "[TD=\"width: 456\"] [FONT=&](2)[/FONT][FONT=&]Bila kuathiri masharti ya kifungu kidogo (1) cha kifungu hiki, Tume itakuwa na mamlaka ya kuajiri mtaalamu yeyote kwa ajili ya shughuli maalumu au kwa muda mfupi.[/FONT]"
+msgstr "“%(name)s” iliachwa: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "\"(X1X)\": Idadi ya kadi tayari imewekwa na rekodi nyingine hapa, kwa hivyo haikuchukuliwa."
+msgstr "“%(name)s”: namba iliyo kwenye kadi tayari inamilikiwa na rekodi nyingine hapa, kwa hiyo haikuchukuliwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "[TD=\"width: 456\"] [FONT=&](2)[/FONT][FONT=&]Bila kuathiri masharti ya kifungu kidogo (1) cha kifungu hiki, Tume itakuwa na mamlaka ya kuajiri mtaalamu yeyote kwa ajili ya shughuli maalumu au kwa muda mfupi.[/FONT]."
+msgstr "“%(name)s”: namba iliyo kwenye kadi haikuchukuliwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "\"X1X\": Anwani ya wavuti kwenye kadi sio anwani ya wavuti, kwa hivyo haikuchukuliwa."
+msgstr "“%(name)s”: anwani ya wavuti iliyo kwenye kadi si anwani ya wavuti, kwa hiyo haikuchukuliwa."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "\"X1X\": Anwani ya wavuti kwenye kadi haikuchukuliwa."
+msgstr "“%(name)s”: anwani ya wavuti iliyo kwenye kadi haikuchukuliwa."

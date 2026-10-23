@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Finnish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "sen aikaa ei voi lukea"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "sen aikavyöhykettä"
+msgstr "sen aikavyöhykettä ”%(zone)s” ei tunneta täällä"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -182,7 +182,7 @@ msgstr "Kalenterissa oleva %(kind)s päättyy ennen kuin se alkaa, joten sitä e
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Osoitekirjaa ei ole palvelimella."
+msgstr "Osoitekirjaa ”%(name)s” ei ole palvelimella."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "Osoite on aloitettava esimerkiksi %(example)s."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "Kalenteria ei ole palvelimella."
+msgstr "Kalenteria ”%(name)s” ei ole palvelimella."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -287,7 +287,7 @@ msgstr "”%(name)s” poistettiin osoitekirjasta; säilytetty täällä."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "Häntä ei otettu mukaan: %(reason)s"
+msgstr "”%(name)s” ohitettiin: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -297,7 +297,7 @@ msgstr "“%(name)s”: the number on the card is already held by another record
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "Kortin numeroa ei otettu."
+msgstr "”%(name)s”: kortin numeroa ei otettu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

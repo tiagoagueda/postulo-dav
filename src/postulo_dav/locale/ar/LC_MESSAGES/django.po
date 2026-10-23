@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Arabic <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "لا يمكن قراءة وقته"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "المنطقة الزمنية \" ]X15X[ \" غير معروفة هنا"
+msgstr "منطقتها الزمنية «%(zone)s» غير معروفة هنا"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -242,7 +242,7 @@ msgstr "عنوان الخادم، على سبيل المثال: https://cloud.ex
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr "جواب الخادم لا يمكن قراءة:"
+msgstr "تعذّرت قراءة ردّ الخادم: %(error)s"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -272,7 +272,7 @@ msgstr "\" %(name)s \" غيرت على الجانبين، والبطاقة من 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "\" ]X1X[ \" يُشارككم في القراءة فقط؛ ولم يُطبق التغيير على الهاتف."
+msgstr "«%(name)s» مشارَك معك للقراءة فقط؛ لم يُطبَّق التغيير الذي أُجري على الهاتف."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

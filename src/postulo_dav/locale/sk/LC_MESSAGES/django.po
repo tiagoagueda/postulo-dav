@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Slovak <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "jeho čas sa nedá prečítať"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "jeho časové pásmo nie je tu známe"
+msgstr "jeho časové pásmo „%(zone)s“ tu nie je známe"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -147,7 +147,7 @@ msgstr "Nikdy nepíšte na server ani urobiť adresár alebo kalendár. Kontakty
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Nad http:// heslo prechádza cez sieť v prehľadnom, a  Použite https://."
+msgstr "Cez http:// ide heslo sieťou nezašifrované a „%(host)s“ nie je adresa vo vašej vlastnej sieti. Použite https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -182,7 +182,7 @@ msgstr "%(kind)s na kalendári končí skôr, než začne, takže to nebolo pres
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Adresár nie je na serveri."
+msgstr "Adresár „%(name)s“ nie je na serveri."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "Adresa musí začať napríklad s %(example)s."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "Kalendár nie je na serveri."
+msgstr "Kalendár „%(name)s“ nie je na serveri."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -287,7 +287,7 @@ msgstr "„%(name)s“ bol odstránený z adresára; tu ponechaný."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "%(reason)s"
+msgstr "Položka „%(name)s“ bola preskočená: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -297,7 +297,7 @@ msgstr "“%(name)s”: the number on the card is already held by another record
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "Číslo na karte nebolo prijaté."
+msgstr "„%(name)s“: číslo z karty nebolo prevzaté."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

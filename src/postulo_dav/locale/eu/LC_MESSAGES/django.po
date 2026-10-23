@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Basque <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "bere denbora ezin da irakurri"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "bere ordu-zona ez da hemen ezagutzen"
+msgstr "haren “%(zone)s” ordu-eremua ez da ezaguna hemen"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -177,7 +177,7 @@ msgstr "Zerbitzariaren helbidea"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "Egutegiko X4X-a hasi aurretik amaitzen da, eta ez da mugitu."
+msgstr "Egutegiko %(kind)s elementua hasi baino lehen amaitzen da, beraz ez da mugitu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -217,17 +217,17 @@ msgstr "Zerbitzariak ez du helbide-liburu baten izena."
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr "Zerbitzariak ez du esaten non dagoen kontua."
+msgstr "Zerbitzariak ez du esaten non dagoen %(kind)s kontua."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Zerbitzariak beretik kanpoko helbide bat seinalatu zuen, ez zioten jarraitu."
+msgstr "Zerbitzariak bere domeinutik kanpoko helbide batera bideratu du (%(host)s); ez zaio jarraitu."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "Zerbitzaria askotan birbideratu zen."
+msgstr "Zerbitzariak %(path)s gehiegitan birbideratu du."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -247,12 +247,12 @@ msgstr "Zerbitzariaren erantzuna ezin izan da irakurri: %(error)s"
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr "Zerbitzariaren erantzuna handiegia edo motelegia zen, eta ez zen irakurri."
+msgstr "Zerbitzariak %(path)s bideari emandako erantzuna handiegia edo motelegia izan da, eta ez da irakurri."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Egutegian ezin zen erabili (%(why)s), beraz ez zen mugitu."
+msgstr "Ezin izan da erabili egutegiko %(kind)s elementuaren ordua (%(why)s), beraz ez da mugitu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy

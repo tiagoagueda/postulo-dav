@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Dutch <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "de tijd kan niet gelezen worden"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "de tijdzone"
+msgstr "de tijdzone “%(zone)s” is hier niet bekend"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -147,7 +147,7 @@ msgstr "Schrijf nooit naar de server om het adresboek of de agenda te maken. Con
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Over http:// het wachtwoord gaat over het netwerk in de duidelijke, en  Gebruik https://."
+msgstr "Via http:// gaat het wachtwoord onversleuteld over het netwerk, en “%(host)s” is geen adres op je eigen netwerk. Gebruik https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -182,17 +182,17 @@ msgstr "De %(kind)s op de kalender eindigt voordat het begint, dus het werd niet
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Het adresboek is niet op de server."
+msgstr "Het adresboek “%(name)s” staat niet op de server."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Het adres moet beginnen met https:// ."
+msgstr "Het adres moet beginnen met https:// — bijvoorbeeld %(example)s."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "De agenda ."
+msgstr "De agenda “%(name)s” staat niet op de server."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -267,12 +267,12 @@ msgstr "“%(name)s” is aan beide kanten tegelijk gewijzigd; de volgende ronde
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "De kaart van de telefoon geeft geen tijd: de versie van de telefoon werd genomen."
+msgstr "“%(name)s” is aan beide kanten gewijzigd en de kaart van de telefoon vermeldt geen tijd: de versie van de telefoon is overgenomen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "De verandering op de telefoon werd niet toegepast."
+msgstr "“%(name)s” is alleen-lezen met je gedeeld; de wijziging op de telefoon is niet toegepast."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -287,7 +287,7 @@ msgstr "“%(name)s” is uit het adresboek verwijderd; hier behouden."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "Er werd overgeslagen: %(reason)s"
+msgstr "“%(name)s” is overgeslagen: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -297,7 +297,7 @@ msgstr "“%(name)s”: the number on the card is already held by another record
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "Het nummer op de kaart is niet genomen."
+msgstr "“%(name)s”: het nummer op de kaart is niet overgenomen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

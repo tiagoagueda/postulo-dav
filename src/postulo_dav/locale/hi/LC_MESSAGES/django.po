@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Hindi <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hi/>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "यहां डिलीट किया गया एक इंटर�
 #: src/postulo_dav/sync.py
 #, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "एक साक्षात्कार कैलेंडर पर किसी अन्य पते पर चला गया; अभी भी जोड़ी गई।।"
+msgstr "कैलेंडर पर एक साक्षात्कार किसी अन्य पते पर चला गया; अभी भी युग्मित है।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -177,7 +177,7 @@ msgstr "सर्वर का पता"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "%(kind)s कैलेंडर शुरू होने से पहले समाप्त होता है, इसलिए इसे स्थानांतरित नहीं किया गया था।।"
+msgstr "कैलेंडर पर %(kind)s शुरू होने से पहले ही समाप्त हो जाता है, इसलिए उसे स्थानांतरित नहीं किया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -202,42 +202,42 @@ msgstr "जो कुछ मौजूद नहीं है, उसे पह�
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "सर्वर ने %(status)d के लिए HTTP %(method)s का उत्तर दिया।।"
+msgstr "सर्वर ने %(method)s %(path)s के लिए HTTP %(status)d उत्तर दिया।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "सर्वर एक कैलेंडर घर का नाम नहीं है।।"
+msgstr "सर्वर कोई कैलेंडर होम नहीं बताता।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy
 msgid "The server does not name an address book home."
-msgstr "सर्वर एक एड्रेस बुक होम का नाम नहीं है।।"
+msgstr "सर्वर कोई पता-पुस्तिका होम नहीं बताता।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr "सर्वर नहीं कहता कि %(kind)s खाता कहां है।।"
+msgstr "सर्वर यह नहीं बताता कि %(kind)s खाता कहाँ है।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "सर्वर ने अपने (%(host)s) के बाहर एक पते की ओर इशारा किया; इसका पालन नहीं किया गया।।"
+msgstr "सर्वर ने अपने से बाहर के किसी पते (%(host)s) की ओर संकेत किया; उसका अनुसरण नहीं किया गया।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "सर्वर ने कई बार %(path)s को पुनर्निर्देशित किया।।"
+msgstr "सर्वर ने %(path)s को बहुत अधिक बार रीडायरेक्ट किया।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy
 msgid "The server refused the user name or password."
-msgstr "सर्वर ने उपयोगकर्ता नाम या पासवर्ड को अस्वीकार कर दिया।।"
+msgstr "सर्वर ने उपयोगकर्ता नाम या पासवर्ड अस्वीकार कर दिया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "सर्वर का पता, उदाहरण के लिए https://cloud.example.org, या इसके DAV सेवा का पता जहां यह एक पथ के तहत रहता है, उदाहरण के लिए https://example.org/dav.php/। पोस्टुलो वहाँ से पता पुस्तिका और कैलेंडर घरों को पाता है।।"
+msgstr "सर्वर का पता, जैसे https://cloud.example.org, या उसकी DAV सेवा का पता यदि वह किसी पथ के अंतर्गत है, जैसे https://example.org/dav.php/। Postulo वहाँ से पता-पुस्तिका और कैलेंडर होम ढूँढ लेता है।"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -247,12 +247,12 @@ msgstr "सर्वर का जवाब नहीं पढ़ा जा स
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr "%(path)s के लिए सर्वर का जवाब बहुत बड़ा या बहुत धीमा था, और पढ़ा नहीं गया था।।"
+msgstr "%(path)s के लिए सर्वर का उत्तर बहुत बड़ा या बहुत धीमा था, और उसे पढ़ा नहीं गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "कैलेंडर पर %(kind)s का समय उपयोग नहीं किया जा सकता (%(why)s), इसलिए इसे स्थानांतरित नहीं किया गया था।।"
+msgstr "कैलेंडर पर %(kind)s का समय उपयोग नहीं किया जा सका (%(why)s), इसलिए उसे स्थानांतरित नहीं किया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -267,17 +267,17 @@ msgstr "“%(name)s” दोनों तरफ़ एक साथ बदल�
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "\"%(name)s\" दोनों तरफ बदल गया, और फोन से कार्ड कोई समय नहीं देता: फोन का संस्करण लिया गया।।"
+msgstr "“%(name)s” दोनों ओर बदला गया, और फ़ोन के कार्ड में कोई समय नहीं है: फ़ोन वाला संस्करण लिया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "\"%(name)s\" आपको केवल पढ़ने के लिए साझा किया जाता है; फोन पर परिवर्तन लागू नहीं किया गया था।।"
+msgstr "“%(name)s” आपके साथ केवल पढ़ने के लिए साझा किया गया है; फ़ोन पर किया गया बदलाव लागू नहीं किया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "\"%(name)s\" सर्वर पर दूसरे पते पर चले गए; अभी भी जोड़ी गई।।"
+msgstr "“%(name)s” सर्वर पर किसी अन्य पते पर चला गया; अभी भी युग्मित है।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -292,19 +292,19 @@ msgstr "\"%(name)s\" को छोड़ दिया गया: %(reason)s"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "\"%(name)s\": कार्ड पर संख्या पहले से ही यहां एक अन्य रिकॉर्ड द्वारा आयोजित की जाती है, इसलिए इसे नहीं लिया गया था।।"
+msgstr "“%(name)s”: कार्ड पर दिया नंबर यहाँ पहले से किसी अन्य रिकॉर्ड के पास है, इसलिए उसे नहीं लिया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "\"%(name)s\": कार्ड पर नंबर नहीं लिया गया था।।"
+msgstr "“%(name)s”: कार्ड पर दिया नंबर नहीं लिया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "\"%(name)s\": कार्ड पर वेब एड्रेस एक वेब एड्रेस नहीं है, इसलिए इसे नहीं लिया गया था।।"
+msgstr "“%(name)s”: कार्ड पर दिया वेब पता वेब पता नहीं है, इसलिए उसे नहीं लिया गया।"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "\"%(name)s\": कार्ड पर वेब एड्रेस नहीं लिया गया था।।"
+msgstr "“%(name)s”: कार्ड पर दिया वेब पता नहीं लिया गया।"

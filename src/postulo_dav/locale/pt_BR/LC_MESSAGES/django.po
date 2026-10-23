@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "seu tempo não pode ser lido"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "seu fuso horário não é conhecido aqui"
+msgstr "o fuso horário “%(zone)s” dele não é conhecido aqui"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -242,7 +242,7 @@ msgstr "O endereço do servidor, por exemplo, https://cloud.example.org, ou o en
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr "A resposta do servidor não pode ser lida:"
+msgstr "Não foi possível ler a resposta do servidor: %(error)s"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -287,7 +287,7 @@ msgstr "«%(name)s» foi removido do livro de endereços; mantido aqui."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "\"%(name)s\" foi ignorado:"
+msgstr "“%(name)s” foi ignorado: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -297,7 +297,7 @@ msgstr "\"%(name)s\": o número no cartão já é mantido por outro registro aqu
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "O número no cartão não foi levado."
+msgstr "“%(name)s”: o número do cartão não foi aproveitado."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

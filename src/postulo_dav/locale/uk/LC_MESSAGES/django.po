@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Ukrainian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr "Адреса книги «%(name)s» не на сервері."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Адреса повинна починатися з https://www.X51X."
+msgstr "Адреса має починатися з https:// — наприклад, %(example)s."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

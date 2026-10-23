@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Irish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
@@ -147,7 +147,7 @@ msgstr "Ná scríobh chuig an bhfreastalaí - ní fiú a dhéanamh ar an leabhar
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Cóipeáil nasc leis an tweet Leabaigh an Tweet http://www. Úsáid https://."
+msgstr "Thar http:// téann an focal faire trasna an líonra gan chriptiú, agus ní seoladh ar do líonra féin é “%(host)s”. Úsáid https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -187,7 +187,7 @@ msgstr "Níl an leabhar seoltaí \"%(name)s\" ar an bhfreastalaí."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Cóipeáil nasc leis an tweet Leabaigh an Tweet https://www."
+msgstr "Caithfidh an seoladh tosú le https:// — mar shampla %(example)s."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
