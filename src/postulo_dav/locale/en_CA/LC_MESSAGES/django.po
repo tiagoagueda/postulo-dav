@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-13 18:44+0000\n"
+"PO-Revision-Date: 2026-10-23 08:08+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: English (Canada) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/en_CA/>\n"
 "Language: en_CA\n"
@@ -50,7 +50,7 @@ msgstr "An interview deleted here had been changed on the phone since the last s
 
 #: src/postulo_dav/sync.py
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "An interview moved to another address on the calendar; still paired."
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -89,28 +89,28 @@ msgstr "Found the address book “%(book)s” and the calendar “%(calendar)s�
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
-msgstr ""
+msgstr "it could not be saved here"
 
 #: src/postulo_dav/sync.py
 msgid "it has no time zone"
-msgstr ""
+msgstr "it has no time zone"
 
 #: src/postulo_dav/sync.py
 msgid "it is an all-day event"
-msgstr ""
+msgstr "it is an all-day event"
 
 #: src/postulo_dav/sync.py
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "its address or identifier is too long"
 
 #: src/postulo_dav/sync.py
 msgid "its time cannot be read"
-msgstr ""
+msgstr "its time cannot be read"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "its time zone “%(zone)s” is not known here"
 
 #: src/postulo_dav/sync.py
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
@@ -152,7 +152,7 @@ msgstr "Server address"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "The %(kind)s on the calendar ends before it starts, so it was not moved."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -176,53 +176,53 @@ msgstr "The first sync will make what is missing."
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "The server answered HTTP %(status)d for %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "The server does not name a calendar home."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "The server does not name an address book home."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "The server does not say where the %(kind)s account is."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "The server pointed to an address outside its own (%(host)s); it was not followed."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "The server redirected %(path)s too many times."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "The server refused the user name or password."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "The server's answer could not be read: %(error)s"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "The server's answer for %(path)s was too large or too slow, and was not read."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -236,17 +236,17 @@ msgstr "“%(name)s” changed on both sides at once; next run decides."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "“%(name)s” is shared with you to read only; the change on the phone was not applied."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "“%(name)s” moved to another address on the server; still paired."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -256,24 +256,24 @@ msgstr "“%(name)s” was removed from the address book; kept here."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "“%(name)s” was skipped: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "“%(name)s”: the number on the card was not taken."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "“%(name)s”: the web address on the card is not a web address, so it was not taken."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "“%(name)s”: the web address on the card was not taken."

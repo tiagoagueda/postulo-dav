@@ -4,276 +4,307 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-19 07:05+0000\n"
-"Last-Translator: Postulo contributors\n"
-"Language-Team: føroyskt\n"
+"PO-Revision-Date: 2026-10-22 21:55+0000\n"
+"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
+"Language-Team: Faroese <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/fo/>\n"
 "Language: fo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: postulo-messages\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr ""
+msgstr "%(count)d hendingar á kalendaranum eru ikki frá Postulo og vórðu latnar vera."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr ""
+msgstr "%(kind)s tikið av kalendaranum á aðrari eind; varðveitt her."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "(no company)"
-msgstr ""
+msgstr "(eingin fyritøka)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr ""
+msgstr "Eitt samband, sum varð strikað her, var broytt á telefonini síðan seinastu samstilling. Kortið varð latið vera í adressubókini og kemur aftur sum eitt samband næstu ferð."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Address book"
-msgstr ""
+msgstr "Adressubók"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr ""
+msgstr "Eitt app-loyniorð, har ambætarin bjóðar eitt. Goymt bronglað."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Ein samrøða broyttist á báðum síðum í senn; næsta koyring avger."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr ""
+msgstr "Ein samrøða, sum varð strikað her, var broytt á telefonini síðan seinastu samstilling. Hendingin varð latin vera á kalendaranum."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "Ein samrøða flutti til eina aðra adressu á kalendaranum; framvegis parað."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendari"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Cancelled on the calendar."
-msgstr ""
+msgstr "Avlýst á kalendaranum."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "CardDAV and CalDAV"
-msgstr ""
+msgstr "CardDAV og CalDAV"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr ""
+msgstr "Broytt her %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Broytt her, men broytt á telefonini seinni; teirra tikið."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr ""
+msgstr "Broytt á telefonini %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Broytt á telefonini, men broytt her seinni; okkara varðveitt."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr ""
+msgstr "Fann adressubókina „%(book)s“ og kalendaran „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it could not be saved here"
-msgstr ""
+msgstr "tað kundi ikki goymast her"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it has no time zone"
-msgstr ""
+msgstr "tað hevur onga tíðarsonu"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it is an all-day event"
-msgstr ""
+msgstr "tað er ein heildagshending"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "adressa ella eyðmerki tess er ov langt"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its time cannot be read"
-msgstr ""
+msgstr "tíðin kann ikki lesast"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "tíðarsonan „%(zone)s“ er ikki kend her"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr ""
+msgstr "Gjørd á ambætaranum av fyrstu samstillingini, um hon ikki er har, uttan so at bert lesing er tendrað. Bert henda adressubókin verður nomin."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr ""
+msgstr "Gjørdur á ambætaranum av fyrstu samstillingini, um hann ikki er har, uttan so at bert lesing er tendrað. Bert hesin kalendarin verður nomin."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr ""
+msgstr "Skriva ongantíð til ambætaran — ikki eingang fyri at gera adressubókina ella kalendaran. Sambond og samrøður koma framvegis inn; einki fer út."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr ""
+msgstr "Yvir http:// fer loyniorðið ódulkóðað gjøgnum netið, og „%(host)s“ er ikki ein adressa á tínum egna neti. Brúka https://."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Password or app password"
-msgstr ""
+msgstr "Loyniorð ella app-loyniorð"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only"
-msgstr ""
+msgstr "Bert lesing"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "read only"
-msgstr ""
+msgstr "bert lesing"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr ""
+msgstr "Bert lesing er tendrað, so einki verður gjørt: stovna tað á ambætaranum, ella nevn eitt, sum longu er har."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Server address"
-msgstr ""
+msgstr "Adressa hjá ambætara"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "%(kind)s á kalendaranum endar, áðrenn tað byrjar, so tað varð ikki flutt."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr ""
+msgstr "Adressubókin „%(name)s“ er ikki á ambætaranum."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr ""
+msgstr "Adressan má byrja við https:// — til dømis %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr ""
+msgstr "Kalendarin „%(name)s“ er ikki á ambætaranum."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr ""
+msgstr "Fyrsta samstillingin fer at gera tað, sum vantar."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "Ambætarin svaraði HTTP %(status)d fyri %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "Ambætarin nevnir einki heim fyri kalendarar."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "Ambætarin nevnir einki heim fyri adressubøkur."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "Ambætarin sigur ikki, hvar %(kind)s-kontan er."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "Ambætarin vísti á eina adressu uttanfyri sína egnu (%(host)s); henni varð ikki fylgt."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "Ambætarin vísti %(path)s víðari ov nógvar ferðir."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "Ambætarin noktaði brúkaranavninum ella loyniorðinum."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Adressan hjá ambætaranum, t.d. https://cloud.example.org, ella adressan hjá DAV-tænastu hansara, har hon liggur undir eini leið, t.d. https://example.org/dav.php/. Postulo finnur heimini hjá adressubókini og kalendaranum haðani."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "Svarið frá ambætaranum kundi ikki lesast: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "Svarið frá ambætaranum fyri %(path)s var ov stórt ella ov seint og varð ikki lisið."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "Tíðin fyri %(kind)s á kalendaranum kundi ikki brúkast (%(why)s), so tað varð ikki flutt."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Brúkaranavn"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr ""
+msgstr "„%(name)s“ broyttist á báðum síðum í senn; næsta koyring avger."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "„%(name)s“ broyttist á báðum síðum, og kortið úr telefonini gevur onga tíð: útgávan úr telefonini varð tikin."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "„%(name)s“ er deilt við teg bert til lesing; broytingin á telefonini varð ikki framd."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "„%(name)s“ flutti til eina aðra adressu á ambætaranum; framvegis parað."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr ""
+msgstr "„%(name)s“ varð tikið úr adressubókini; varðveitt her."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "„%(name)s“ varð leypt um: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: nummarið á kortinum er longu hjá aðrari skráseting her, so tað varð ikki tikið."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: nummarið á kortinum varð ikki tikið."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: vevadressan á kortinum er ikki ein vevadressa, so hon varð ikki tikin."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: vevadressan á kortinum varð ikki tikin."

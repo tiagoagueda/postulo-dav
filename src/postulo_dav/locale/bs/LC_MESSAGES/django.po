@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-14 08:04+0000\n"
-"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-10-22 21:54+0000\n"
+"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
 "Language-Team: Bosnian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/bs/>\n"
 "Language: bs\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "Intervju obrisan ovdje bio je izmijenjen na telefonu nakon zadnje sinhro
 
 #: src/postulo_dav/sync.py
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "Razgovor za posao premješten je na drugu adresu u kalendaru; i dalje je uparen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -99,29 +99,30 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "Pronađeni su adresar „%(book)s“ i kalendar „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it could not be saved here"
-msgstr ""
+msgstr "ovdje ga nije bilo moguće sačuvati"
 
 #: src/postulo_dav/sync.py
 msgid "it has no time zone"
-msgstr ""
+msgstr "nema vremensku zonu"
 
 #: src/postulo_dav/sync.py
 msgid "it is an all-day event"
-msgstr ""
+msgstr "to je cjelodnevni događaj"
 
 #: src/postulo_dav/sync.py
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "adresa ili identifikator je predug"
 
 #: src/postulo_dav/sync.py
 msgid "its time cannot be read"
-msgstr ""
+msgstr "vrijeme nije moguće pročitati"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "vremenska zona „%(zone)s“ ovdje nije poznata"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -169,9 +170,9 @@ msgid "Server address"
 msgstr "Adresa servera"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "%(kind)s u kalendaru završava prije nego što počne, pa se ne premješta."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -196,53 +197,56 @@ msgstr "Prva sinhronizacija napravit će ono što nedostaje."
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "Server je odgovorio HTTP %(status)d za %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "Server ne navodi početnu lokaciju kalendara."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "Server ne navodi početnu lokaciju adresara."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "Server ne kaže gdje se nalazi račun za %(kind)s."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "Server je uputio na adresu izvan svoje (%(host)s); ta uputa nije praćena."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "Server je preusmjerio %(path)s previše puta."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "Server je odbio korisničko ime ili lozinku."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Adresa servera, npr. https://cloud.example.org, ili adresa njegovog DAV servisa ako se nalazi pod nekom putanjom, npr. https://example.org/dav.php/. Postulo odatle pronalazi početne lokacije adresara i kalendara."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "Odgovor servera nije bilo moguće pročitati: %(error)s"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "Odgovor servera za %(path)s bio je prevelik ili prespor, pa nije pročitan."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "Vrijeme u kalendaru (%(kind)s) nije bilo moguće iskoristiti (%(why)s), pa se ne premješta."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -255,19 +259,19 @@ msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s“: izmijenjeno na obje strane istovremeno; odlučit će sljedeće pokretanje."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "Kod „%(name)s“ došlo je do promjena na obje strane, a kartica s telefona ne navodi vrijeme: preuzeta je verzija s telefona."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "Zapis „%(name)s“ je s vama podijeljen samo za čitanje; promjena s telefona nije primijenjena."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "Zapis „%(name)s“ premješten je na drugu adresu na serveru; i dalje je uparen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -275,26 +279,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s“: uklonjeno iz adresara; ovdje zadržano."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "Preskočeno „%(name)s“: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: broj na kartici već pripada drugom zapisu ovdje, pa nije preuzet."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: broj na kartici nije preuzet."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: web adresa na kartici nije web adresa, pa nije preuzeta."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: web adresa na kartici nije preuzeta."

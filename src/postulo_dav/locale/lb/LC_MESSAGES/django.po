@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-13 18:58+0000\n"
-"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-10-22 21:54+0000\n"
+"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
 "Language-Team: Luxembourgish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/lb/>\n"
 "Language: lb\n"
 "MIME-Version: 1.0\n"
@@ -55,8 +55,9 @@ msgid "An interview deleted here had been changed on the phone since the last sy
 msgstr "En Entretien, deen hei geläscht gouf, war zënter der leschter Synchronisatioun um Telefon geännert ginn. D'Evenement gouf am Kalenner gelooss."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "En Interview ass am Kalenner op eng aner Adress geplënnert; nach ëmmer verbonnen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -99,29 +100,34 @@ msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”
 msgstr "D'Adressbuch „%(book)s“ an de Kalenner „%(calendar)s“ fonnt."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it could not be saved here"
-msgstr ""
+msgstr "et konnt hei net gespäichert ginn"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it has no time zone"
-msgstr ""
+msgstr "et huet keng Zäitzon"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "it is an all-day event"
-msgstr ""
+msgstr "et ass en Evenement fir de ganzen Dag"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "seng Adress oder säin Identifiant ass ze laang"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "its time cannot be read"
-msgstr ""
+msgstr "seng Zäit kann net gelies ginn"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "seng Zäitzon „%(zone)s“ ass hei net bekannt"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -169,9 +175,9 @@ msgid "Server address"
 msgstr "Serveradress"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "%(kind)s am Kalenner: d'Enn läit virum Ufank, dofir gouf et net iwwerholl."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -194,55 +200,59 @@ msgid "The first sync will make what is missing."
 msgstr "Déi éischt Synchronisatioun leet un, wat feelt."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "De Server huet HTTP %(status)d fir %(method)s %(path)s geäntwert."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "De Server gëtt keen Heemverzeechnes fir Kalenneren un."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "De Server gëtt keen Heemverzeechnes fir Adressbicher un."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "De Server seet net, wou de %(kind)s-Kont ass."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "De Server huet op eng Adress ausserhalb vu sech selwer verwisen (%(host)s); där gouf net gefollegt."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "De Server huet %(path)s ze dacks weidergeleet."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "De Server huet de Benotzernumm oder d'Passwuert refuséiert."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "D'Adress vum Server, z. B. https://cloud.example.org, oder d'Adress vu sengem DAV-Service, wann dee sech ënner engem Pfad befënnt, z. B. https://example.org/dav.php/. De Postulo fënnt vun do aus, wou d'Adressbicher an d'Kalennere leien."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "D'Äntwert vum Server konnt net gelies ginn: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "D'Äntwert vum Server fir %(path)s war ze grouss oder ze lues a gouf net gelies."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "D'Zäit vun %(kind)s am Kalenner konnt net benotzt ginn (%(why)s), dofir gouf et net iwwerholl."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -255,19 +265,19 @@ msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s“ gouf op béide Säite gläichzäiteg geännert; den nächsten Duerchgang entscheet."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "„%(name)s“ gouf op béide Säite geännert, an d'Kaart vum Telefon gëtt keng Zäit un: d'Versioun vum Telefon gouf iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "„%(name)s“ gouf just zum Liese mat Iech gedeelt; d'Ännerung um Telefon gouf net iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "„%(name)s“ ass um Server op eng aner Adress geplënnert; nach ëmmer verbonnen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -275,26 +285,26 @@ msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s“ gouf aus dem Adressbuch ewechgeholl; hei behalen."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "„%(name)s“ gouf iwwersprongen: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: d'Nummer op der Kaart gehéiert hei schonn engem aneren Androg, dofir gouf se net iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: d'Nummer op der Kaart gouf net iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "„%(name)s“: d'Webadress op der Kaart ass keng Webadress, dofir gouf se net iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "„%(name)s“: d'Webadress op der Kaart gouf net iwwerholl."
