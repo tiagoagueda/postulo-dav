@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Indonesian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -271,7 +271,7 @@ msgstr "\"%(name)s\" dilewati: %(reason)s"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "\"(X1X)\": nomor di kartu sudah dipegang oleh catatan lain di sini, sehingga tidak diambil."
+msgstr "“%(name)s”: nomor pada kartu sudah dimiliki oleh catatan lain di sini, sehingga tidak diambil."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

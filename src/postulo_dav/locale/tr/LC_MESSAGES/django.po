@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Turkish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -202,7 +202,7 @@ msgstr "İlk senkronizasyon neyin eksik olduğunu yapacaktır."
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "Sunucu HTTP %(status)d için cevap verdi %(method)s."
+msgstr "Sunucu %(method)s %(path)s isteğine HTTP %(status)d yanıtını verdi."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -227,7 +227,7 @@ msgstr "Sunucu kendi dışında bir adrese işaret etti (%(host)s; takip edilmed
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "Sunucu çok fazla kez yönlendirildi."
+msgstr "Sunucu %(path)s yolunu çok fazla kez yönlendirdi."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -252,7 +252,7 @@ msgstr "Sunucunun %(path)s cevabı çok büyük ya da çok yavaştı ve okumuyor
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Takvimde %(kind)s zamanı kullanılmadı ([X60X), bu yüzden taşındı."
+msgstr "Takvimdeki %(kind)s zamanı kullanılamadı (%(why)s), bu nedenle taşınmadı."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -267,12 +267,12 @@ msgstr "%(name)s” her iki tarafta da değişti; bir sonraki iş karar verir."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "“[X1X)” her iki tarafta değişti ve telefondan gelen kart zaman vermiyor: telefonın versiyonu alındı."
+msgstr "“%(name)s” her iki tarafta da değişti ve telefondan gelen kartta zaman bilgisi yok: telefondaki sürüm alındı."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "“[X1X)\" sadece okumak için sizinle paylaşılır; telefondaki değişim uygulanmadı."
+msgstr "“%(name)s” sizinle yalnızca okuma için paylaşılmış; telefondaki değişiklik uygulanmadı."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -292,7 +292,7 @@ msgstr "%(name)s atladı: %(reason)s"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "“[X1X)”: Kartdaki sayı zaten burada başka bir kayıt tarafından tutuluyor, bu yüzden alınmadı."
+msgstr "“%(name)s”: karttaki numara burada zaten başka bir kayıtta bulunuyor, bu nedenle alınmadı."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -302,7 +302,7 @@ msgstr "%(name)s”: Kartdaki sayı alınmadı."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "“[X1X)”: Kartdaki web adresi bir web adresi değil, bu yüzden alınmadı."
+msgstr "“%(name)s”: karttaki web adresi geçerli bir web adresi değil, bu nedenle alınmadı."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

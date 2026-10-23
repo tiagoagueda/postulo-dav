@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Bulgarian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr "%(kind)s на календара завършва преди да зап
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Адресната книга не е на сървъра."
+msgstr "Адресната книга „%(name)s“ не е на сървъра."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "Адресът трябва да започне с https://  год. н�
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "Календарът не е на сървъра."
+msgstr "Календарът „%(name)s“ не е на сървъра."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -272,12 +272,12 @@ msgstr "%(name)s, променена от двете страни, и карта
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "Споделено е с вас да четете само; промяната на телефона не е приложена."
+msgstr "„%(name)s“ е споделен с Вас само за четене; промяната от телефона не беше приложена."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "Премести се на друг адрес на сървъра."
+msgstr "„%(name)s“ се премести на друг адрес на сървъра; все още е сдвоен."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -287,17 +287,17 @@ msgstr "„%(name)s“ е премахнат от адресната книга;
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "%(name)s"
+msgstr "„%(name)s“ беше пропуснат: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "Номерът на картата вече се държи от друг запис тук, така че не е взето."
+msgstr "„%(name)s“: номерът от картата вече е зает от друг запис тук, затова не беше взет."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "Номерът на картата не е взет."
+msgstr "„%(name)s“: номерът от картата не беше взет."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -307,4 +307,4 @@ msgstr "%(name)s...: уеб адресът на картата не е уеб а
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "Не е взет уеб адресът на картата."
+msgstr "„%(name)s“: уеб адресът от картата не беше взет."

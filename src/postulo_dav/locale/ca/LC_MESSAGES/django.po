@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Catalan <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -97,7 +97,7 @@ msgstr "Canviat per telèfon, però va canviar aquí més tard, va mantenir la n
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr "S' ha trobat la llibreta d' adreces √[ x24X] 2001- 2003 i el calendari 52[ X2X] 255."
+msgstr "S'han trobat la llibreta d'adreces «%(book)s» i el calendari «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -147,7 +147,7 @@ msgstr "No s' ha escrit mai al servidor o tan sols per fer la llibreta d' adrece
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Més enllà de http: // la contrasenya es troba a través de la xarxa en la xarxa clara, i atakonsult[ X69] DOCTYPE no és una adreça a la vostra pròpia xarxa. Usa https://."
+msgstr "Per http:// la contrasenya viatja per la xarxa sense xifrar, i «%(host)s» no és una adreça de la vostra pròpia xarxa. Utilitzeu https://."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -182,7 +182,7 @@ msgstr "El %(kind)s en el calendari acaba abans de començar, per tant no s' ha 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "La llibreta d' adreces [ X18X] DOCTYPE no és al servidor."
+msgstr "La llibreta d'adreces «%(name)s» no és al servidor."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "L' adreça ha de començar amb https:// Manveen per exemple %(example)s.
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "El calendari SAX[ X14] L' ordre no és al servidor."
+msgstr "El calendari «%(name)s» no és al servidor."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -262,49 +262,49 @@ msgstr "Nom d' usuari"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "1][ X1X] Settings en ambdós costats a la vegada, el següent comandament decideix."
+msgstr "«%(name)s» ha canviat als dos costats alhora; la propera execució ho decidirà."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "1][ X1X] canvi en ambdós costats, i la targeta del telèfon no dóna temps: la versió del telèfon fou presa."
+msgstr "«%(name)s» ha canviat als dos costats i la targeta del telèfon no indica cap hora: s'ha agafat la versió del telèfon."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "1][ X1X] kde compartit amb vós només lectura, no s' ha aplicat el canvi al telèfon."
+msgstr "«%(name)s» se us ha compartit només per a lectura; no s'ha aplicat el canvi fet al telèfon."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "1][ X1X] rwell es mou a una altra adreça del servidor; encara s' utilitza."
+msgstr "«%(name)s» s'ha traslladat a una altra adreça del servidor; continua emparellat."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "correspond[ X1X] removed de la llibreta d' adreces; es va mantenir aquí."
+msgstr "«%(name)s» s'ha suprimit de la llibreta d'adreces; aquí es conserva."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "1][ X1X] L' XBUBI s' ha omès: %(reason)s"
+msgstr "S'ha omès «%(name)s»: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "Manveen[ X1X]: el número de la targeta ja està agafat per un altre registre, així que no s' ha pres."
+msgstr "«%(name)s»: el número de la targeta ja el té un altre registre d'aquí, de manera que no s'ha agafat."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "1][ X1X]: no s' ha pres el número de la targeta."
+msgstr "«%(name)s»: no s'ha agafat el número de la targeta."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "1][ X1X]: L' adreça web de la targeta no és una adreça web, així que no s' ha pres."
+msgstr "«%(name)s»: l'adreça web de la targeta no és una adreça web, de manera que no s'ha agafat."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "1][ X1X]: no s' ha pres l' adreça web de la targeta."
+msgstr "«%(name)s»: no s'ha agafat l'adreça web de la targeta."

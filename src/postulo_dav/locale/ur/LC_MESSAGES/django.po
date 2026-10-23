@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Urdu <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ur/>\n"
 "Language: ur\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,7 @@ msgstr "یہاں تبدیلی آئی لیکن بعد میں فون پر تبدی
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr "%(when)s پر فون پر تبدیلی"
+msgstr "فون پر %(when)s کو تبدیل کیا گیا: %(text)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -182,7 +182,7 @@ msgstr "کیلنڈر پر %(kind)s شروع ہونے سے پہلے ہی ختم �
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "عنوان کتاب (X18X) سرور پر نہیں ہے۔."
+msgstr "ایڈریس بُک “%(name)s” سرور پر موجود نہیں۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -192,7 +192,7 @@ msgstr "پتے کا آغاز https://s:// — مثال کے طور پر %(exampl
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "کیلنڈر (X14X) سرور پر نہیں ہے۔."
+msgstr "کیلنڈر “%(name)s” سرور پر موجود نہیں۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -202,7 +202,7 @@ msgstr "سب سے پہلے سنک وہ چیز بنا دے گی جو گم ہو ج
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "سرور نے %(method)s کے لیے HTP %(status)d جواب دیا۔."
+msgstr "سرور نے %(method)s %(path)s کے لیے HTTP %(status)d جواب دیا۔"
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -222,7 +222,7 @@ msgstr "سرور یہ نہیں کہتا کہ %(kind)s حساب کہاں ہے۔."
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "سرور نے اپنے ایک پتے کے باہر (X50X) کی طرف اشارہ کیا، اس کی پیروی نہیں کی گئی۔."
+msgstr "سرور نے اپنے سے باہر کے ایک پتے (%(host)s) کی طرف اشارہ کیا؛ اس کی پیروی نہیں کی گئی۔"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -252,7 +252,7 @@ msgstr "سرور کا جواب %(path)s بہت بڑا یا بہت سستا تھ�
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "کیلنڈر پر موجود %(kind)s کا وقت (X6X] استعمال نہیں کیا جا سکتا تھا، اس لیے اسے منتقل نہیں کیا گیا۔."
+msgstr "کیلنڈر پر %(kind)s کا وقت استعمال نہیں کیا جا سکا (%(why)s)، اس لیے اسے منتقل نہیں کیا گیا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -262,37 +262,37 @@ msgstr "پرنٹ"
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "\"X1X [XXX]\" ایک ہی وقت میں دونوں اطراف میں تبدیل کر دیا گیا؛ اگلے دور میں فیصلہ ہوتا ہے۔."
+msgstr "“%(name)s” دونوں طرف بیک وقت تبدیل ہوا؛ اگلا رَن فیصلہ کرے گا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "\"X1X [XXX]\" دونوں جانب تبدیل ہوئی اور فون سے کارڈ کوئی وقت نہیں دیتا: فون کا ورژن لیا گیا۔."
+msgstr "“%(name)s” دونوں طرف تبدیل ہوا، اور فون سے آنے والے کارڈ میں کوئی وقت درج نہیں: فون والا نسخہ لے لیا گیا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "\"X1X [XX]\" صرف پڑھنے کے لیے آپ کے ساتھ مشترک ہے؛ فون پر ہونے والی تبدیلی کا اطلاق نہیں کیا گیا۔."
+msgstr "“%(name)s” آپ کے ساتھ صرف پڑھنے کے لیے شیئر کیا گیا ہے؛ فون پر کی گئی تبدیلی لاگو نہیں کی گئی۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "\"X1X [XX]\" سرور پر ایک اور پتا منتقل ہوا؛ پھر بھی جوڑے."
+msgstr "“%(name)s” سرور پر کسی دوسرے پتے پر منتقل ہو گیا؛ جوڑا اب بھی قائم ہے۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "\"X1X [XXX]\" کو پتہ کتاب سے ہٹا دیا گیا، یہیں رکھا گیا۔."
+msgstr "“%(name)s” ایڈریس بُک سے ہٹا دیا گیا؛ یہاں رکھ لیا گیا ہے۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "\"X1X %(name)s\" تھا: %(reason)s"
+msgstr "“%(name)s” چھوڑ دیا گیا: %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "\"X1X [XX]\": کارڈ پر موجود نمبر ایک اور ریکارڈ پہلے ہی سے یہاں رکھا جاتا ہے، اس لیے اسے نہیں لیا گیا۔."
+msgstr "“%(name)s”: کارڈ پر درج نمبر یہاں پہلے ہی کسی دوسرے ریکارڈ کے پاس ہے، اس لیے اسے نہیں لیا گیا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -302,9 +302,9 @@ msgstr "%(name)s\": کارڈ پر موجود نمبر نہیں لیا گیا۔."
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "\"X1X [XXX]\": کارڈ پر ویب سائٹ کوئی ویب سائٹ نہیں ہے، اس لیے اسے نہیں لیا گیا۔."
+msgstr "“%(name)s”: کارڈ پر درج ویب ایڈریس درست ویب ایڈریس نہیں، اس لیے اسے نہیں لیا گیا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "\"X1X [XXX]\": کارڈ پر ویب سائٹ نہیں لی گئی۔."
+msgstr "“%(name)s”: کارڈ پر درج ویب ایڈریس نہیں لیا گیا۔"
