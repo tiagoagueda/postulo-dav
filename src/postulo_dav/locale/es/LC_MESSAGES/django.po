@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 03:02+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Spanish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "%(count)d eventos del calendario no son de Postulo y se dejaron como estaban."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s se eliminó del calendario en otro dispositivo; se conserva aquí."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(sin empresa)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr "Un contacto borrado aquí había sido cambiado en el teléfono desde la última sincronización. La tarjeta se quedó en el libro de direcciones, y vuelve como un contacto en la siguiente carrera."
+msgstr "Un contacto eliminado aquí se había modificado en el teléfono desde la última sincronización. La tarjeta se dejó en la libreta de direcciones y vuelve como contacto en la siguiente ejecución."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Libreta de direcciones"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Una contraseña de aplicación si el servidor la ofrece. Se guarda cifrada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Una entrevista cambió en ambos lados a la vez; la próxima ejecución decide."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Una entrevista borrada aquí había sido cambiada por teléfono desde la última sincronización. El evento quedó en el calendario."
+msgstr "Una entrevista eliminada aquí se había modificado en el teléfono desde la última sincronización. El evento se dejó en el calendario."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Una entrevista se trasladó a otra dirección del calendario; aún emparejado."
+msgstr "Una entrevista se trasladó a otra dirección del calendario; sigue emparejada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Calendario"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Cancelada en el calendario."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV y CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Cambiado aquí el %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Cambiado aquí, pero cambiado más tarde en el teléfono; se tomó su versión."
+msgstr "Cambiado aquí, pero modificado después en el teléfono; se tomó la versión del teléfono."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Cambiado en el teléfono el %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr "Cambiado en el teléfono, pero cambiado más tarde aquí; se conservó la nuestra."
+msgstr "Cambiado en el teléfono, pero modificado después aquí; se conservó la versión de aquí."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Se encontraron la libreta de direcciones «%(book)s» y el calendario «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "no se puede salvar aquí"
+msgstr "no se pudo guardar aquí"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
 msgstr "no tiene zona horaria"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
-msgstr "es un evento todo el día"
+msgstr "es un evento de todo el día"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
 msgstr "su dirección o identificador es demasiado largo"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "su tiempo no se puede leer"
+msgstr "su hora no se puede leer"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "su zona de tiempo “%(zone)s” no se conoce aquí"
+msgstr "su zona horaria «%(zone)s» no se conoce aquí"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Hecho en el servidor por la primera sincronización si no está allí, a menos que se lea solamente. Sólo este libro de direcciones está tocado."
+msgstr "Si no existe, la primera sincronización la crea en el servidor, salvo que esté activado el modo de solo lectura. Solo se modifica esta libreta de direcciones."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Hecho en el servidor por la primera sincronización si no está allí, a menos que se lea solamente. Sólo este calendario está tocado."
+msgstr "Si no existe, la primera sincronización lo crea en el servidor, salvo que esté activado el modo de solo lectura. Solo se modifica este calendario."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Nunca escriba al servidor — ni siquiera para hacer el libro de direcciones o el calendario. Los contactos y entrevistas siguen entrando; nada sale."
+msgstr "No escribir nunca en el servidor, ni siquiera para crear la libreta de direcciones o el calendario. Los contactos y las entrevistas siguen entrando; no sale nada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Sobre http:// la contraseña va a través de la red en la clara, y “%(host)s” no es una dirección en su propia red. Use https://."
+msgstr "Con http:// la contraseña viaja por la red sin cifrar, y «%(host)s» no es una dirección de su propia red. Use https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Contraseña o contraseña de aplicación"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Solo lectura"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "solo lectura"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Leer sólo está encendido, por lo que no se hace nada: crearlo en el servidor, o nombrar uno que ya está allí."
+msgstr "El modo de solo lectura está activado, así que no se crea nada: créelo en el servidor o indique uno que ya exista."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Dirección del servidor"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "El %(kind)s en el calendario termina antes de que comience, por lo que no fue movido."
+msgstr "El evento (%(kind)s) del calendario termina antes de empezar, así que no se movió."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "El libro de direcciones “%(name)s” no está en el servidor."
+msgstr "La libreta de direcciones «%(name)s» no está en el servidor."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "La dirección debe comenzar con https://, por ejemplo %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "El calendario “%(name)s” no está en el servidor."
+msgstr "El calendario «%(name)s» no está en el servidor."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr "La primera sincronización hará lo que falta."
+msgstr "La primera sincronización creará lo que falte."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "El servidor respondió HTTP %(status)d para %(method)s %(path)s."
+msgstr "El servidor respondió HTTP %(status)d a %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "El servidor no nombre un hogar calendario."
+msgstr "El servidor no indica la ubicación de los calendarios."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "El servidor no nombre un libro de direcciones en casa."
+msgstr "El servidor no indica la ubicación de las libretas de direcciones."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr "El servidor no dice dónde está la cuenta %(kind)s."
+msgstr "El servidor no indica dónde está la cuenta %(kind)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "El servidor señaló una dirección fuera de sí (%(host)s); no fue seguida."
+msgstr "El servidor remitió a una dirección fuera de la suya (%(host)s); no se siguió."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "El servidor redireccionó %(path)s demasiadas veces."
+msgstr "El servidor redirigió %(path)s demasiadas veces."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
-msgstr "El servidor rechazó el nombre de usuario o contraseña."
+msgstr "El servidor rechazó el nombre de usuario o la contraseña."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "La dirección del servidor, por ejemplo: https://cloud.example.org, o la dirección de su servicio DAV donde vive bajo un camino, por ejemplo: https://example.org/dav.php/. Postulo encuentra el libro de direcciones y casas de calendario desde allí."
+msgstr "La dirección del servidor, p. ej. https://cloud.example.org, o la dirección de su servicio DAV si está bajo una ruta, p. ej. https://example.org/dav.php/. A partir de ahí, Postulo encuentra la ubicación de las libretas de direcciones y de los calendarios."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr "La respuesta del servidor no se podía leer: %(error)s"
+msgstr "No se pudo leer la respuesta del servidor: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr "La respuesta del servidor para %(path)s era demasiado grande o demasiado lenta, y no se leía."
+msgstr "La respuesta del servidor para %(path)s era demasiado grande o demasiado lenta, y no se leyó."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "El tiempo del %(kind)s en el calendario no se pudo utilizar (%(why)s), por lo que no se movió."
+msgstr "No se pudo usar la hora del evento (%(kind)s) del calendario (%(why)s), así que no se movió."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Nombre de usuario"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "«%(name)s» cambió en ambos lados a la vez; la próxima ejecución decide."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "“%(name)s” cambió en ambos lados, y la tarjeta del teléfono no da tiempo: la versión del teléfono fue tomada."
+msgstr "«%(name)s» cambió en ambos lados y la tarjeta del teléfono no indica la hora: se tomó la versión del teléfono."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "“%(name)s” es compartido con usted para leer solamente; el cambio en el teléfono no fue aplicado."
+msgstr "«%(name)s» se comparte con usted en solo lectura; el cambio del teléfono no se aplicó."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "“%(name)s” se trasladó a otra dirección en el servidor; aún emparejado."
+msgstr "«%(name)s» se trasladó a otra dirección del servidor; sigue emparejado."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "«%(name)s» se eliminó de la libreta de direcciones; se conserva aquí."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "“%(name)s” fue saltado: %(reason)s"
+msgstr "«%(name)s» se omitió: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "“%(name)s”: el número de la tarjeta ya está retenido por otro registro aquí, por lo que no fue tomado."
+msgstr "«%(name)s»: el número de la tarjeta ya pertenece a otro registro de aquí, así que no se tomó."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "“%(name)s”: no se tomó el número de la tarjeta."
+msgstr "«%(name)s»: no se tomó el número de la tarjeta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "“%(name)s”: la dirección web de la tarjeta no es una dirección web, por lo que no fue tomada."
+msgstr "«%(name)s»: la dirección web de la tarjeta no es una dirección web válida, así que no se tomó."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "“%(name)s”: no se tomó la dirección web de la tarjeta."
+msgstr "«%(name)s»: no se tomó la dirección web de la tarjeta."
