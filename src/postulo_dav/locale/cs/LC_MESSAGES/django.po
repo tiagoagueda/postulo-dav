@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 03:02+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Czech <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "%(count)d událostí v kalendáři není z Postulo a bylo ponecháno beze změny."
+msgstr "%(count)d událostí v kalendáři nepochází z Postulo, a proto zůstaly beze změny."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "%(kind)s odstraněno z kalendáře na jiném zařízení; zde ponecháno."
+msgstr "%(kind)s – odstraněno z kalendáře na jiném zařízení; zde ponecháno."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(bez firmy)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr "Kontakt smazán zde byl změněn na telefonu od poslední synchronizace. Karta byla zanechána v adresáři a vrací se jako kontakt při dalším běhu."
+msgstr "Kontakt smazaný zde byl od poslední synchronizace změněn v telefonu. Vizitka zůstala v adresáři a při příštím běhu se vrátí jako kontakt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Adresář"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr "Heslo aplikace tam, kde ho server nabízí. Uloženo šifrovaně."
+msgstr "Heslo aplikace, pokud ho server nabízí. Ukládá se zašifrovaně."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr "Pohovor se změnil na obou stranách naráz; rozhodne příští běh."
+msgstr "Pohovor se změnil na obou stranách současně; rozhodne příští běh."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Rozhovor, který byl smazán, byl v telefonu změněn od poslední synchronizace. Akce byla ponechána v kalendáři."
+msgstr "Pohovor smazaný zde byl od poslední synchronizace změněn v telefonu. Událost zůstala v kalendáři."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Rozhovor přesunut na jinou adresu v kalendáři, stále spárovaný."
+msgstr "Pohovor se v kalendáři přesunul na jinou adresu; stále je spárovaný."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalendář"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Zrušeno v kalendáři."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV a CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Změněno zde dne %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Změněno zde, ale později změněno v telefonu; převzata jejich verze."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Změněno v telefonu dne %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Změněno v telefonu, ale později změněno zde; ponechána naše verze."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Nalezen adresář „%(book)s“ a kalendář „%(calendar)s“."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "tady to nejde zachránit"
+msgstr "zde ho nelze uložit"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
 msgstr "nemá žádné časové pásmo"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
-msgstr "je to událost na celý den"
+msgstr "jde o celodenní událost"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
-msgstr "jeho adresa nebo identifikátor je příliš dlouhý"
+msgstr "jeho adresa nebo identifikátor jsou příliš dlouhé"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "jeho čas nelze číst"
+msgstr "jeho čas nelze přečíst"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "jeho časové pásmo \"%(zone)s\" není zde známo"
+msgstr "jeho časové pásmo „%(zone)s“ zde není známé"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Made on the server by the first sync if it is not there, unless read only is on. Pouze tento adresář se dotkne."
+msgstr "Pokud na serveru neexistuje, vytvoří ho první synchronizace, ledaže je zapnuto „pouze pro čtení“. Pracuje se jen s tímto adresářem."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Made on the server by the first sync if it is not there, unless read only is on. Jen tento kalendář je dojatý."
+msgstr "Pokud na serveru neexistuje, vytvoří ho první synchronizace, ledaže je zapnuto „pouze pro čtení“. Pracuje se jen s tímto kalendářem."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Nikdy nenapište na server - ani pro vytvoření adresáře nebo kalendáře. Kontakty a rozhovory stále přicházejí, nic nejde ven."
+msgstr "Nikdy nezapisovat na server – ani kvůli vytvoření adresáře nebo kalendáře. Kontakty a pohovory dál přicházejí; nic neodchází."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Přes http: / / heslo jde přes síť v jasné, a \"%(host)s\" není adresa na vaší vlastní síti. Použití https: / /."
+msgstr "Přes http:// jde heslo sítí nešifrovaně a „%(host)s“ není adresa ve vaší vlastní síti. Použijte https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Heslo nebo heslo aplikace"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Pouze pro čtení"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "pouze pro čtení"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Číst pouze je zapnuto, takže nic není vyrobeno: vytvořit na serveru, nebo název jeden, který je již tam."
+msgstr "Je zapnuto „pouze pro čtení“, takže se nic nevytvoří: vytvořte ho na serveru, nebo zadejte název takového, který tam už je."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Adresa serveru"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "%(kind)s v kalendáři končí před tím, než začne, takže nebyl přesunut."
+msgstr "%(kind)s v kalendáři končí dřív, než začíná, proto nebylo přesunuto."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Adresář \"%(name)s\" není na serveru."
+msgstr "Adresář „%(name)s“ na serveru není."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Adresa musí začínat na https: / / - např. %(example)s."
+msgstr "Adresa musí začínat https:// – například %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "Kalendář \"%(name)s\" není na serveru."
+msgstr "Kalendář „%(name)s“ na serveru není."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr "První synchronizace udělá to, co chybí."
+msgstr "Co chybí, vytvoří první synchronizace."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "Server odpověděl HTTP %(status)d pro %(method)s %(path)s."
+msgstr "Server odpověděl HTTP %(status)d na %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "Server nejmenuje kalendář domů."
+msgstr "Server neuvádí domovskou kolekci kalendářů."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "Server nejmenuje adresář domů."
+msgstr "Server neuvádí domovskou kolekci adresářů."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "Server neříká, kde je účet %(kind)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Server poukázal na adresu mimo svou vlastní adresu (%(host)s); nebyla sledována."
+msgstr "Server odkázal na adresu mimo vlastní server (%(host)s); odkaz nebyl následován."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "Server přesměroval %(path)s příliš mnohokrát."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
 msgstr "Server odmítl uživatelské jméno nebo heslo."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "Adresa serveru, např. https: / / cloud.example.org, nebo adresa jeho služby DAV, kde žije pod cestou, např. https: / / example.org / dav.php /. Postulo odtud najde adresář a domovy."
+msgstr "Adresa serveru, např. https://cloud.example.org, nebo adresa jeho služby DAV, pokud je pod nějakou cestou, např. https://example.org/dav.php/. Postulo z ní najde domovské kolekce adresářů a kalendářů."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr "Odpověď serveru nemohla být přečtena: %(error)s"
+msgstr "Odpověď serveru nelze přečíst: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
 msgstr "Odpověď serveru na %(path)s byla příliš velká nebo příliš pomalá a nebyla přečtena."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Čas %(kind)s v kalendáři nemohl být použit (%(why)s), takže nebyl přesunut."
+msgstr "Čas položky %(kind)s v kalendáři nelze použít (%(why)s), proto nebyla přesunuta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Uživatelské jméno"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "„%(name)s“ se změnil na obou stranách naráz; rozhodne příští běh."
+msgstr "„%(name)s“ se změnil(a) na obou stranách současně; rozhodne příští běh."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "\"%(name)s\" změnil na obou stranách, a karta z telefonu nedává žádný čas: telefon verze byla přijata."
+msgstr "„%(name)s“ se změnil(a) na obou stranách a vizitka z telefonu neuvádí čas: převzata verze z telefonu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "\"%(name)s\" je sdíleno pouze pro čtení; změna v telefonu nebyla použita."
+msgstr "„%(name)s“ je s vámi sdíleno pouze pro čtení; změna z telefonu nebyla použita."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "\"%(name)s\" přesunuto na jinou adresu na serveru; stále spárováno."
+msgstr "„%(name)s“ – přesunuto na jinou adresu na serveru; stále spárováno."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
-msgstr "„%(name)s“ byl odstraněn z adresáře; zde ponechán."
+msgstr "„%(name)s“ – odstraněno z adresáře; zde ponecháno."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr "\"%(name)s\" bylo přeskočeno: %(reason)s"
+msgstr "„%(name)s“ – přeskočeno: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "\"%(name)s\": číslo na kartě je již drženo jiným záznamem zde, takže nebyl pořízen."
+msgstr "„%(name)s“: číslo z vizitky už má jiný záznam zde, proto nebylo převzato."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "\"%(name)s\": číslo na kartě nebylo odebráno."
+msgstr "„%(name)s“: číslo z vizitky nebylo převzato."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "\"%(name)s\": webová adresa na kartě není webová adresa, takže nebyla přijata."
+msgstr "„%(name)s“: webová adresa na vizitce není platná webová adresa, proto nebyla převzata."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "\"%(name)s\": webová adresa na kartě nebyla přijata."
+msgstr "„%(name)s“: webová adresa z vizitky nebyla převzata."

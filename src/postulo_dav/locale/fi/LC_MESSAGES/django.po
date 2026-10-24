@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"PO-Revision-Date: 2026-10-24 05:02+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Finnish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/fi/>\n"
 "Language: fi\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "%(count)d kalenterin tapahtumaa ei ole Postulosta, ja ne jätettiin rauhaan."
+msgstr "%(count)d kalenterin tapahtumaa ei ole peräisin Postulosta, joten niihin ei koskettu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s poistettiin kalenterista toisella laitteella; säilytetty täällä."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(ei yritystä)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr "Täällä poistettu yhteyshenkilö oli vaihdettu puhelimessa edellisen synkronoinnin jälkeen. Kortti oli jätetty osoitekirjaan, ja se tuli takaisin yhteyshenkilönä seuraavalla lenkillä."
+msgstr "Täällä poistettua yhteyshenkilöä oli muutettu puhelimessa edellisen synkronoinnin jälkeen. Kortti jätettiin osoitekirjaan, ja se palaa yhteyshenkilöksi seuraavalla synkronointikerralla."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Osoitekirja"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Sovellussalasana, jos palvelin sellaisen tarjoaa. Tallennetaan salattuna."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr "Haastattelu muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
+msgstr "Haastattelu muuttui molemmilla puolilla yhtä aikaa; seuraava synkronointi ratkaisee."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Haastattelu, joka on poistettu täältä, on vaihdettu puhelimessa edellisen synkronoinnin jälkeen. Tapahtuma jätettiin kalenteriin."
+msgstr "Täällä poistettua haastattelua oli muutettu puhelimessa edellisen synkronoinnin jälkeen. Tapahtuma jätettiin kalenteriin."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Haastattelu siirtyi toiseen osoitteeseen kalenterissa; edelleen pari."
+msgstr "Haastattelu siirtyi kalenterissa toiseen osoitteeseen; linkitys säilyy."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalenteri"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Peruttu kalenterissa."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV ja CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Muutettu täällä %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Muutettu täällä, mutta myöhemmin puhelimessa; otettiin puhelimen versio."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Muutettu puhelimessa %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Muutettu puhelimessa, mutta myöhemmin täällä; säilytettiin oma versio."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Löydettiin osoitekirja ”%(book)s” ja kalenteri ”%(calendar)s”."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "se ei voitu tallentaa täällä"
+msgstr "sitä ei voitu tallentaa tänne"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
 msgstr "sillä ei ole aikavyöhykettä"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
 msgstr "se on koko päivän tapahtuma"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
 msgstr "sen osoite tai tunniste on liian pitkä"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
 msgstr "sen aikaa ei voi lukea"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
 msgstr "sen aikavyöhykettä ”%(zone)s” ei tunneta täällä"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Valmistettu palvelimelle ensimmäisellä synkronointi, jos se ei ole siellä, ellei vain lukea on päällä. Vain tämä osoitekirja on kosketettu."
+msgstr "Ensimmäinen synkronointi luo sen palvelimelle, jos sitä ei ole, ellei Vain luku ole päällä. Vain tähän osoitekirjaan kosketaan."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Valmistettu palvelimelle ensimmäisellä synkronointi, jos se ei ole siellä, ellei vain lukea on päällä. Vain tämä kalenteri on kosketettu."
+msgstr "Ensimmäinen synkronointi luo sen palvelimelle, jos sitä ei ole, ellei Vain luku ole päällä. Vain tähän kalenteriin kosketaan."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Älä koskaan kirjoita palvelimelle  Kontakteja ja haastatteluja tulee yhä."
+msgstr "Älä koskaan kirjoita palvelimelle — et edes osoitekirjan tai kalenterin luomiseksi. Yhteyshenkilöt ja haastattelut tulevat yhä sisään; mitään ei lähetetä ulos."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Http://:n yläpuolella salasana menee verkon poikki selkeästi, ja ...%(host)s... ei ole osoite omassa verkossasi. Käytä https://."
+msgstr "http://-yhteydellä salasana kulkee verkossa salaamattomana, eikä ”%(host)s” ole osoite omassa verkossasi. Käytä https://-osoitetta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Salasana tai sovellussalasana"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Vain luku"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "vain luku"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Lue vain, joten mitään ei tehdä: luo se palvelimelle, tai nimeä yksi, joka on jo olemassa."
+msgstr "Vain luku on päällä, joten mitään ei luoda: luo se palvelimelle tai nimeä jo olemassa oleva."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Palvelimen osoite"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
 msgstr "Kalenterissa oleva %(kind)s päättyy ennen kuin se alkaa, joten sitä ei siirretty."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Osoitekirjaa ”%(name)s” ei ole palvelimella."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Osoite on aloitettava esimerkiksi %(example)s."
+msgstr "Osoitteen on alettava https:// — esimerkiksi %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "Kalenteria ”%(name)s” ei ole palvelimella."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr "Ensimmäinen synkronointi tekee sen, mikä puuttuu."
+msgstr "Ensimmäinen synkronointi luo sen, mikä puuttuu."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "Palvelin vastasi HTTP %(status)d varten %(method)s %(path)s."
+msgstr "Palvelin vastasi HTTP %(status)d pyyntöön %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "Palvelin ei nimeä kalenteria."
+msgstr "Palvelin ei ilmoita kalenterien kotikansiota."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "Palvelin ei nimeä osoitekirjan kotia."
+msgstr "Palvelin ei ilmoita osoitekirjojen kotikansiota."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "Palvelin ei kerro, missä %(kind)s-tili on."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Palvelin osoitti osoitteeseen omansa ulkopuolella (%(host)s); sitä ei seurattu."
+msgstr "Palvelin ohjasi oman osoitteensa ulkopuolelle (%(host)s); ohjausta ei seurattu."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "Palvelin ohjasi %(path)s liian monta kertaa."
+msgstr "Palvelin uudelleenohjasi osoitteen %(path)s liian monta kertaa."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
-msgstr "Palvelin kieltäytyi käyttäjätunnuksesta tai salasanasta."
+msgstr "Palvelin hylkäsi käyttäjätunnuksen tai salasanan."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "Palvelimen osoite, esim. https://cloud.example.org, tai sen DAV-palvelun osoite, jossa se asuu polun alla, esim. https://example.org/dav.php/. Postilo löytää sieltä osoitekirjan ja kalenterin."
+msgstr "Palvelimen osoite, esim. https://cloud.example.org, tai sen DAV-palvelun osoite, jos se on polun alla, esim. https://example.org/dav.php/. Postulo löytää sieltä osoitekirjojen ja kalenterien kotikansiot."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
 msgstr "Palvelimen vastausta ei voitu lukea: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr "Palvelimen vastaus %(path)s oli liian suuri tai liian hidas, eikä sitä luettu."
+msgstr "Palvelimen vastaus osoitteelle %(path)s oli liian suuri tai liian hidas, eikä sitä luettu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "%(kind)s:n aikaa kalenterissa ei voitu käyttää (%(why)s), joten sitä ei siirretty."
+msgstr "Kalenterissa olevan kohteen %(kind)s aikaa ei voitu käyttää (%(why)s), joten sitä ei siirretty."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
-msgstr "Käyttäjänimi"
+msgstr "Käyttäjätunnus"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
-msgstr "”%(name)s” muuttui molemmilla puolilla yhtä aikaa; seuraava ajo ratkaisee."
+msgstr "”%(name)s” muuttui molemmilla puolilla yhtä aikaa; seuraava synkronointi ratkaisee."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
+msgstr "”%(name)s” muuttui molemmilla puolilla, eikä puhelimen kortissa ole aikaa: puhelimen versio otettiin käyttöön."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "“%(name)s” is shared with you to read only; the change on the phone was not applied."
+msgstr "”%(name)s” on jaettu sinulle vain luettavaksi; puhelimessa tehtyä muutosta ei otettu käyttöön."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "“%(name)s” moved to another address on the server; still paired."
+msgstr "”%(name)s” siirtyi palvelimella toiseen osoitteeseen; linkitys säilyy."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "”%(name)s” poistettiin osoitekirjasta; säilytetty täällä."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "”%(name)s” ohitettiin: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
+msgstr "”%(name)s”: kortin numero on jo toisella täällä olevalla tietueella, joten sitä ei otettu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
 msgstr "”%(name)s”: kortin numeroa ei otettu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "“%(name)s”: the web address on the card is not a web address, so it was not taken."
+msgstr "”%(name)s”: kortin verkko-osoite ei ole kelvollinen verkko-osoite, joten sitä ei otettu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "“%(name)s”: the web address on the card was not taken."
+msgstr "”%(name)s”: kortin verkko-osoitetta ei otettu."

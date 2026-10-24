@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 05:02+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Latvian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -15,52 +15,44 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "%(count)d notikumi kalendārā nav no Postulo un tika atstāti neskarti."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "%(kind)s noņemta no kalendāra citā ierīcē; šeit paturēta."
+msgstr "%(kind)s: noņemts no kalendāra citā ierīcē; šeit paturēts."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(bez uzņēmuma)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr "Kontakts dzēsts šeit tika mainīts tālrunī kopš pēdējās sinhronizācijas. Karte tika atstāta adrešu grāmatā, un nāk atpakaļ kā kontaktpersona nākamajā palaist."
+msgstr "Šeit dzēstā kontaktpersona kopš pēdējās sinhronizācijas tika mainīta tālrunī. Kartīte tika atstāta adrešu grāmatā un nākamajā palaišanā atgriezīsies kā kontaktpersona."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Adrešu grāmata"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Lietotnes parole, ja serveris tādu piedāvā. Glabāta šifrēti."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Intervija mainīta abās pusēs vienlaikus; izšķirs nākamā palaišana."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Kopš pēdējās sinhronizācijas tālrunī tika mainīta šeit svītrota intervija. Notikums tika atstāts kalendārā."
+msgstr "Šeit dzēstā intervija kopš pēdējās sinhronizācijas tika mainīta tālrunī. Notikums tika atstāts kalendārā."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Intervija pārcēlās uz citu adresi kalendārā; joprojām pārī."
+msgstr "Intervija kalendārā pārvietota uz citu adresi; joprojām sasaistīta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalendārs"
 
@@ -70,241 +62,219 @@ msgid "Cancelled on the calendar."
 msgstr "Atcelta kalendārā."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV un CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Mainīts šeit %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Mainīts šeit, bet vēlāk mainīts telefonā; ņemta viņu versija."
+msgstr "Mainīts šeit, bet vēlāk mainīts tālrunī; pieņemta tālruņa versija."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr "Mainīts telefonā %(when)s: %(text)s"
+msgstr "Mainīts tālrunī %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr "Mainīts telefonā, bet vēlāk mainīts šeit; paturēta mūsu versija."
+msgstr "Mainīts tālrunī, bet vēlāk mainīts šeit; paturēta mūsu versija."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Atrasta adrešu grāmata “%(book)s” un kalendārs “%(calendar)s”."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
 msgstr "šeit to neizdevās saglabāt"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
-msgstr "tai nav laika zonas"
+msgstr "tam nav laika zonas"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
-msgstr "tas ir visu dienu notikums"
+msgstr "tas ir visas dienas notikums"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
 msgstr "tā adrese vai identifikators ir pārāk garš"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "to nevar nolasīt"
+msgstr "tā laiku nevar nolasīt"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
 msgstr "tā laika zona “%(zone)s” šeit nav zināma"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Made uz servera ar pirmo sinhronizāciju, ja tas nav tur, ja vien lasīt tikai ir ieslēgts. Tikai šī adrešu grāmata ir aizkustināta."
+msgstr "Ja tās nav, pirmā sinhronizācija to izveido serverī, ja vien nav ieslēgts režīms “Tikai lasīt”. Tiek mainīta tikai šī adrešu grāmata."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Made uz servera ar pirmo sinhronizāciju, ja tas nav tur, ja vien lasīt tikai ir ieslēgts. Tikai šis kalendārs ir aizkustināts."
+msgstr "Ja tā nav, pirmā sinhronizācija to izveido serverī, ja vien nav ieslēgts režīms “Tikai lasīt”. Tiek mainīts tikai šis kalendārs."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Nekad nerakstiet uz servera — pat ne lai izveidotu adrešu grāmatu vai kalendāru. Kontakti un intervijas joprojām ienāk, nekas nenotiek."
+msgstr "Nekad nerakstīt serverī — pat ne lai izveidotu adrešu grāmatu vai kalendāru. Kontaktpersonas un intervijas joprojām ienāk; nekas neiziet."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
-msgstr "Virs http://parole iet pāri tīklam skaidri, un “%(host)s” nav adrese savā tīklā. Izmanto https://."
+msgstr "Izmantojot http://, parole tiek sūtīta pa tīklu nešifrēta, un “%(host)s” nav adrese jūsu paša tīklā. Izmantojiet https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Parole vai lietotnes parole"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Tikai lasīt"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "tikai lasīt"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Lasīt tikai ir ieslēgts, tāpēc nekas netiek veikts: izveidot to uz servera, vai nosaukt vienu, kas jau ir tur."
+msgstr "Ir ieslēgts režīms “Tikai lasīt”, tāpēc nekas netiek izveidots: izveidojiet to serverī vai norādiet tādu, kas tur jau ir."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Servera adrese"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "%(kind)s kalendārā beidzas pirms tā sākuma, tāpēc tas netika pārvietots."
+msgstr "%(kind)s kalendārā beidzas pirms sākuma, tāpēc netika pārvietots."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
-msgstr "Adrešu grāmata “%(name)s” nav uz servera."
+msgstr "Adrešu grāmatas “%(name)s” serverī nav."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Adresei jāsākas ar https:// — piemēram %(example)s."
+msgstr "Adresei jāsākas ar https:// — piemēram, %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
-msgstr "Kalendārs “%(name)s” nav uz servera."
+msgstr "Kalendāra “%(name)s” serverī nav."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr "Pirmā sinhronizācija padarīs to, kas trūkst."
+msgstr "Pirmā sinhronizācija izveidos to, kas trūkst."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr "Serveris atbildēja HTTP %(status)d par %(method)s %(path)s."
+msgstr "Serveris atbildēja ar HTTP %(status)d uz %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "Serveris nenosauc kalendāra mājas."
+msgstr "Serveris nenorāda kalendāru mājvietu."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "Serveris nenosauc adrešu grāmatu mājās."
+msgstr "Serveris nenorāda adrešu grāmatu mājvietu."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "Serveris nesaka, kur ir %(kind)s konts."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Serveris norādīja uz adresi ārpus sava (%(host)s); tas netika ievērots."
+msgstr "Serveris norādīja uz adresi ārpus sava servera (%(host)s); tai netika sekots."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "Serveris novirzīts %(path)s pārāk daudz reižu."
+msgstr "Serveris pāradresēja %(path)s pārāk daudz reižu."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
-msgstr "Serveris atteica lietotājvārdu vai paroli."
+msgstr "Serveris noraidīja lietotājvārdu vai paroli."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "Servera adrese, piemēram, https://cloud.example.org, vai tā DAV pakalpojuma adrese, kur tas dzīvo zem ceļa, piemēram, https://example.org/dav.php/. Postulo no turienes atrod adrešu grāmatu un kalendāru mājas."
+msgstr "Servera adrese, piemēram, https://cloud.example.org, vai tā DAV pakalpojuma adrese, ja tas atrodas zem ceļa, piemēram, https://example.org/dav.php/. Postulo no turienes atrod adrešu grāmatu un kalendāru mājvietas."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
 msgstr "Neizdevās nolasīt servera atbildi: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr "Servera atbilde %(path)s bija pārāk liela vai pārāk lēna, un netika lasīta."
+msgstr "Servera atbilde uz %(path)s bija pārāk liela vai pārāk lēna, un tā netika nolasīta."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "%(kind)s laiku kalendārā nevarēja izmantot (%(why)s), tāpēc tas netika pārvietots."
+msgstr "Kalendārā esošā %(kind)s laiku nevarēja izmantot (%(why)s), tāpēc tas netika pārvietots."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Lietotājvārds"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "“%(name)s” mainīts abās pusēs vienlaikus; izšķirs nākamā palaišana."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "“%(name)s” mainīts abās pusēs, un karte no tālruņa nedod laiku: tālruņa versija tika veikta."
+msgstr "“%(name)s” mainīts abās pusēs, un tālruņa kartītē nav laika: tika pieņemta tālruņa versija."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "“%(name)s” ir kopīgs ar jums tikai lasīt; izmaiņas tālrunī netika piemērots."
+msgstr "“%(name)s” ir kopīgots ar jums tikai lasīšanai; izmaiņas tālrunī netika piemērotas."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "“%(name)s” pārvietots uz citu adresi uz servera; joprojām pārī."
+msgstr "“%(name)s” serverī pārvietots uz citu adresi; joprojām sasaistīts."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "“%(name)s” tika noņemts no adrešu grāmatas; šeit paturēts."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "“%(name)s” tika izlaists: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "“%(name)s”: numuru uz kartes jau tur cits ieraksts šeit, tāpēc tas netika ņemts."
+msgstr "“%(name)s”: kartītes numurs šeit jau pieder citam ierakstam, tāpēc tas netika pārņemts."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "“%(name)s”: numurs uz kartes netika ņemts."
+msgstr "“%(name)s”: kartītes numurs netika pārņemts."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "“%(name)s”: tīmekļa adrese kartē nav tīmekļa adrese, tāpēc tā netika ņemta."
+msgstr "“%(name)s”: kartītes tīmekļa adrese nav derīga tīmekļa adrese, tāpēc tā netika pārņemta."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "“%(name)s”: kartes tīmekļa adrese netika ņemta."
+msgstr "“%(name)s”: kartītes tīmekļa adrese netika pārņemta."

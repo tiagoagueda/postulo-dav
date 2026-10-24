@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-24 03:02+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Armenian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hy/>\n"
 "Language: hy\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "Այստեղ ջնջված հարցազրույցը վերջին համա
 
 #: src/postulo_dav/sync.py
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr ""
+msgstr "Հարցազրույցը տեղափոխվել է օրացույցի մեկ այլ հասցե․ դեռ զուգակցված է։"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -100,28 +100,28 @@ msgstr "Գտնվեցին «%(book)s» հասցեագիրքը և «%(calendar)s»
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
-msgstr ""
+msgstr "այն հնարավոր չեղավ պահպանել այստեղ"
 
 #: src/postulo_dav/sync.py
 msgid "it has no time zone"
-msgstr ""
+msgstr "այն ժամային գոտի չունի"
 
 #: src/postulo_dav/sync.py
 msgid "it is an all-day event"
-msgstr ""
+msgstr "այն ամբողջօրյա իրադարձություն է"
 
 #: src/postulo_dav/sync.py
 msgid "its address or identifier is too long"
-msgstr ""
+msgstr "դրա հասցեն կամ նույնացուցիչը չափազանց երկար է"
 
 #: src/postulo_dav/sync.py
 msgid "its time cannot be read"
-msgstr ""
+msgstr "դրա ժամը հնարավոր չէ կարդալ"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr ""
+msgstr "դրա «%(zone)s» ժամային գոտին այստեղ հայտնի չէ"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -169,9 +169,9 @@ msgid "Server address"
 msgstr "Սերվերի հասցե"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr ""
+msgstr "Օրացույցում գտնվող %(kind)s-ն ավարտվում է սկսվելուց առաջ, ուստի այն չի տեղափոխվել։"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -196,53 +196,55 @@ msgstr "Առաջին համաժամեցումը կստեղծի այն, ինչ պ
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
-msgstr ""
+msgstr "Սերվերը պատասխանեց HTTP %(status)d՝ %(method)s %(path)s հարցմանը։"
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr ""
+msgstr "Սերվերը չի նշում օրացույցների տնային թղթապանակը (calendar home)։"
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "The server does not name an address book home."
-msgstr ""
+msgstr "Սերվերը չի նշում հասցեագրքերի տնային թղթապանակը (address book home)։"
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr ""
+msgstr "Սերվերը չի նշում, թե որտեղ է %(kind)s հաշիվը։"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr ""
+msgstr "Սերվերն ուղղորդեց իր սեփականից դուրս գտնվող հասցեի (%(host)s)․ դրան չհետևեցին։"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr ""
+msgstr "Սերվերը չափազանց շատ անգամ վերահղեց %(path)s-ը։"
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
-msgstr ""
+msgstr "Սերվերը մերժեց օգտանունը կամ գաղտնաբառը։"
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr ""
+msgstr "Սերվերի հասցեն, օրինակ՝ https://cloud.example.org, կամ դրա DAV ծառայության հասցեն, եթե այն գտնվում է որևէ ուղու տակ, օրինակ՝ https://example.org/dav.php/։ Այնտեղից Postulo-ն գտնում է հասցեագրքերի և օրացույցների տնային թղթապանակները։"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr ""
+msgstr "Սերվերի պատասխանը հնարավոր չեղավ կարդալ՝ %(error)s"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
-msgstr ""
+msgstr "%(path)s-ի համար սերվերի պատասխանը չափազանց մեծ էր կամ չափազանց դանդաղ, և այն չկարդացվեց։"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr ""
+msgstr "Օրացույցում գտնվող %(kind)s-ի ժամը հնարավոր չեղավ օգտագործել (%(why)s), ուստի այն չի տեղափոխվել։"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -257,17 +259,17 @@ msgstr "«%(name)s» — միաժամանակ փոփոխվել է երկու կ�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr ""
+msgstr "«%(name)s»-ը փոխվել է երկու կողմում էլ, և հեռախոսից եկած քարտը ժամ չի նշում․ ընդունվեց հեռախոսի տարբերակը։"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr ""
+msgstr "«%(name)s»-ը ձեզ հետ կիսված է միայն կարդալու համար․ հեռախոսում կատարված փոփոխությունը չկիրառվեց։"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr ""
+msgstr "«%(name)s»-ը սերվերում տեղափոխվել է մեկ այլ հասցե․ դեռ զուգակցված է։"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -277,24 +279,24 @@ msgstr "«%(name)s» կոնտակտը հեռացվել է հասցեագրքից
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
-msgstr ""
+msgstr "«%(name)s»-ը բաց թողնվեց՝ %(reason)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr ""
+msgstr "«%(name)s»․ քարտի համարն այստեղ արդեն պատկանում է մեկ այլ գրառման, ուստի այն չվերցվեց։"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr ""
+msgstr "«%(name)s»․ քարտի համարը չվերցվեց։"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr ""
+msgstr "«%(name)s»․ քարտի վեբ հասցեն վեբ հասցե չէ, ուստի այն չվերցվեց։"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr ""
+msgstr "«%(name)s»․ քարտի վեբ հասցեն չվերցվեց։"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-23 11:33+0000\n"
+"PO-Revision-Date: 2026-10-24 05:02+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Romanian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ro/>\n"
 "Language: ro\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "%(count)d evenimente din calendar nu sunt de la Postulo și au fost lăsate neatinse."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
-msgstr "%(kind)s eliminat din calendar pe alt dispozitiv; păstrat aici."
+msgstr "Eveniment (%(kind)s) eliminat din calendar pe alt dispozitiv; păstrat aici."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(fără companie)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
-msgstr "Un contact şters aici a fost schimbat la telefon de la ultima sincronizare. Cartea a fost lăsată în agenda de adrese, și se întoarce ca un contact pe următoarea cursă."
+msgstr "Un contact șters aici fusese modificat pe telefon de la ultima sincronizare. Fișa a fost lăsată în agendă și revine ca contact la următoarea rulare."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Agendă de contacte"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "O parolă de aplicație acolo unde serverul oferă una. Stocată criptat."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Un interviu s-a schimbat pe ambele părți deodată; următoarea rulare decide."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Un interviu şters aici a fost schimbat la telefon de la ultima sincronizare. Evenimentul a fost lăsat în calendar."
+msgstr "Un interviu șters aici fusese modificat pe telefon de la ultima sincronizare. Evenimentul a fost lăsat în calendar."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Un interviu s-a mutat la o altă adresă din calendar."
+msgstr "Un interviu a fost mutat la o altă adresă în calendar; asocierea se păstrează."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Calendar"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Anulat în calendar."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV și CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
-msgstr "Schimbat aici pe %(when)s: %(text)s"
+msgstr "Modificat aici la %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
-msgstr "Schimbat aici, dar schimbat mai târziu pe telefon; s-a păstrat versiunea lor."
+msgstr "Modificat aici, dar modificat ulterior pe telefon; s-a preluat versiunea de pe telefon."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
-msgstr "Schimbat pe telefon pe %(when)s: %(text)s"
+msgstr "Modificat pe telefon la %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
-msgstr "Schimbat pe telefon, dar schimbat mai târziu aici; s-a păstrat versiunea noastră."
+msgstr "Modificat pe telefon, dar modificat ulterior aici; s-a păstrat versiunea de aici."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "S-au găsit agenda de contacte „%(book)s” și calendarul „%(calendar)s”."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
 msgstr "nu a putut fi salvat aici"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
 msgstr "nu are fus orar"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
-msgstr "este un eveniment de zi cu zi"
+msgstr "este un eveniment de o zi întreagă"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
-msgstr "adresa sau identificatorul este prea lung"
+msgstr "adresa sau identificatorul său este prea lung"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "timpul său nu poate fi citit"
+msgstr "ora sa nu poate fi citită"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "zona sa temporală %(zone)s"
+msgstr "fusul său orar „%(zone)s” nu este cunoscut aici"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Made on the server by the first sync if it is not there, exceptly read only is on. Numai această carte de adrese este atins."
+msgstr "Creată pe server la prima sincronizare dacă nu există, cu excepția cazului în care modul doar citire este activ. Nu se modifică decât această agendă."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Made on the server by the first sync if it is not there, exceptly read only is on. Numai acest calendar este atins."
+msgstr "Creat pe server la prima sincronizare dacă nu există, cu excepția cazului în care modul doar citire este activ. Nu se modifică decât acest calendar."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Nu scrieți niciodată serverului nici măcar pentru a face cartea de adrese sau calendarul. Contactele și interviurile încă vin; nimic nu iese."
+msgstr "Nu se scrie niciodată pe server — nici măcar pentru a crea agenda sau calendarul. Contactele și interviurile sunt preluate în continuare; nu se trimite nimic."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "Prin http:// parola trece prin rețea necriptată, iar „%(host)s” nu este o adresă din propria dumneavoastră rețea. Folosiți https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Parolă sau parolă de aplicație"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Doar citire"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "doar citire"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Citit numai este pe, astfel încât nimic nu se face: creați-l pe server, sau nume unul care este deja acolo."
+msgstr "Modul doar citire este activ, așa că nu se creează nimic: creați pe server ceea ce lipsește sau indicați ceva ce există deja."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Adresa serverului"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
-msgstr "%(kind)s din calendar se termină înainte de a începe, așa că nu a fost mutat."
+msgstr "Evenimentul (%(kind)s) din calendar se termină înainte de a începe, așa că nu a fost mutat."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Agenda „%(name)s” nu se află pe server."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
-msgstr "Adresa trebuie să înceapă cu: %(example)s."
+msgstr "Adresa trebuie să înceapă cu https:// — de exemplu %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "Calendarul „%(name)s” nu se află pe server."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
-msgstr "Prima sincronizare va face ceea ce lipseşte."
+msgstr "Prima sincronizare va crea ceea ce lipsește."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "Serverul a răspuns HTTP %(status)d pentru %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "Serverul nu numește un calendar acasă."
+msgstr "Serverul nu indică locația calendarelor."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "Serverul nu numește o carte de adrese acasă."
+msgstr "Serverul nu indică locația agendelor."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "Serverul nu spune unde este contul %(kind)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
-msgstr "Serverul a indicat o adresă în afara propriei sale adrese (%(host)s; nu a fost urmărit."
+msgstr "Serverul a indicat o adresă din afara propriului domeniu (%(host)s); aceasta nu a fost urmată."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "Serverul a redirecționat %(path)s de prea multe ori."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
 msgstr "Serverul a refuzat numele de utilizator sau parola."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
-msgstr "Adresa serverului, de exemplu https://cloud.exemplu.org, sau adresa serviciului său DAV în cazul în care acesta trăiește sub o cale, de exemplu https://exemplu.org/dav.php/. Postulo găseşte adresa şi calendarele de acolo."
+msgstr "Adresa serverului, de exemplu https://cloud.example.org, sau adresa serviciului său DAV, dacă acesta se află sub o cale, de exemplu https://example.org/dav.php/. Postulo găsește de acolo locațiile agendelor și ale calendarelor."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
 msgstr "Răspunsul serverului nu a putut fi citit: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
 msgstr "Răspunsul serverului pentru %(path)s a fost prea mare sau prea lent și nu a fost citit."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Ora %(kind)s din calendar nu a putut fi utilizată (%(why)s), astfel încât nu a fost mutată."
+msgstr "Ora evenimentului (%(kind)s) din calendar nu a putut fi folosită (%(why)s), așa că evenimentul nu a fost mutat."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Nume de utilizator"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s” s-a schimbat pe ambele părți deodată; următoarea rulare decide."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "„%(name)s” s-a modificat de ambele părți, iar cardul de pe telefon nu indică nicio oră: a fost preluată versiunea de pe telefon."
+msgstr "„%(name)s” s-a modificat de ambele părți, iar fișa de pe telefon nu indică nicio oră: s-a preluat versiunea de pe telefon."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
-msgstr "“%(name)s” is shared with you to read only; the change on the phone was not applied."
+msgstr "„%(name)s” vă este partajat doar pentru citire; modificarea de pe telefon nu a fost aplicată."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "“%(name)s” moved to another address on the server; still paired."
+msgstr "„%(name)s” s-a mutat la o altă adresă pe server; asocierea se păstrează."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "„%(name)s” a fost eliminat din agenda de contacte; păstrat aici."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "„%(name)s” a fost omis: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
-msgstr "„%(name)s”: numărul de pe card aparține deja altei înregistrări de aici, așa că nu a fost preluat."
+msgstr "„%(name)s”: numărul de pe fișă aparține deja altei înregistrări de aici, așa că nu a fost preluat."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
-msgstr "„%(name)s”: numărul de pe card nu a fost preluat."
+msgstr "„%(name)s”: numărul de pe fișă nu a fost preluat."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "„%(name)s”: adresa web de pe card nu este o adresă web, așa că nu a fost preluată."
+msgstr "„%(name)s”: adresa web de pe fișă nu este o adresă web, așa că nu a fost preluată."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
-msgstr "„%(name)s”: adresa web de pe card nu a fost preluată."
+msgstr "„%(name)s”: adresa web de pe fișă nu a fost preluată."
