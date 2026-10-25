@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-10-24 21:42+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Welsh <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/cy/>\n"
 "Language: cy\n"
 "MIME-Version: 1.0\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "Nid yw %(count)d digwyddiad ar y calendr yn dod o Postulo, a gadawyd llonydd iddynt."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "Tynnwyd %(kind)s o'r calendr ar ddyfais arall; fe'i cadwyd yma."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(dim cwmni)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Roedd cyswllt a ddilëwyd yma wedi'i newid ar y ffôn ers y cysoni diwethaf. Gadawyd y cerdyn yn y llyfr cyfeiriadau, a daw'n ôl fel cyswllt ar y rhediad nesaf."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Llyfr cyfeiriadau"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Cyfrinair ap, lle mae'r gweinydd yn cynnig un. Wedi'i storio wedi'i amgryptio."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "Newidiwyd cyfweliad ar y ddwy ochr ar yr un pryd; y rhediad nesaf fydd yn penderfynu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
 msgstr "Roedd cyfweliad a ddilëwyd yma wedi'i newid ar y ffôn ers y cysoni diwethaf. Gadawyd y digwyddiad ar y calendr."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
 msgstr "Symudodd cyfweliad i gyfeiriad arall ar y calendr; mae'n dal wedi'i baru."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Calendr"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Wedi'i ganslo ar y calendr."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV a CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "Newidiwyd yma ar %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Newidiwyd yma, ond newidiwyd ar y ffôn yn ddiweddarach; cymerwyd eu fersiwn nhw."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Newidiwyd ar y ffôn ar %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Newidiwyd ar y ffôn, ond newidiwyd yma yn ddiweddarach; cadwyd ein fersiwn ni."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Daethpwyd o hyd i'r llyfr cyfeiriadau “%(book)s” a'r calendr “%(calendar)s”."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "doedd dim modd ei gadw yma"
+msgstr "nid oedd modd ei gadw yma"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
-msgstr "does ganddo ddim cylchfa amser"
+msgstr "nid oes ganddo gylchfa amser"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
 msgstr "mae'n ddigwyddiad diwrnod cyfan"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
 msgstr "mae ei gyfeiriad neu ei ddynodwr yn rhy hir"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "does dim modd darllen ei amser"
+msgstr "nid oes modd darllen ei amser"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
-msgstr "dyw ei gylchfa amser “%(zone)s” ddim yn hysbys yma"
+msgstr "nid yw ei gylchfa amser “%(zone)s” yn hysbys yma"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr "Caiff ei greu ar y gweinydd gan y cysoni cyntaf os nad yw yno, oni bai bod Darllen yn unig ymlaen. Dim ond y llyfr cyfeiriadau hwn a gyffyrddir."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
 msgstr "Caiff ei greu ar y gweinydd gan y cysoni cyntaf os nad yw yno, oni bai bod Darllen yn unig ymlaen. Dim ond y calendr hwn a gyffyrddir."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Peidio byth ag ysgrifennu i'r gweinydd — dim hyd yn oed i greu'r llyfr cyfeiriadau na'r calendr. Mae pobl gyswllt a chyfweliadau'n dal i ddod i mewn; nid oes dim yn mynd allan."
+msgstr "Peidio byth ag ysgrifennu i'r gweinydd — nid hyd yn oed i greu'r llyfr cyfeiriadau na'r calendr. Mae pobl gyswllt a chyfweliadau'n dal i ddod i mewn; nid oes dim yn mynd allan."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "Dros http:// mae'r cyfrinair yn croesi'r rhwydwaith heb ei amgryptio, ac nid yw “%(host)s” yn gyfeiriad ar eich rhwydwaith eich hun. Defnyddiwch https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Cyfrinair neu gyfrinair ap"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Darllen yn unig"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "darllen yn unig"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr "Mae Darllen yn unig ymlaen, felly ni chaiff dim ei greu: crëwch ef ar y gweinydd, neu enwch un sydd yno eisoes."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Cyfeiriad y gweinydd"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
 msgstr "Mae'r %(kind)s ar y calendr yn gorffen cyn iddo ddechrau, felly ni chafodd ei symud."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Nid yw'r llyfr cyfeiriadau “%(name)s” ar y gweinydd."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "Rhaid i'r cyfeiriad ddechrau gyda https:// — er enghraifft %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "Nid yw'r calendr “%(name)s” ar y gweinydd."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
 msgstr "Bydd y cysoni cyntaf yn creu'r hyn sydd ar goll."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "Atebodd y gweinydd HTTP %(status)d ar gyfer %(method)s %(path)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
-msgstr "Dyw'r gweinydd ddim yn enwi cartref calendr."
+msgstr "Nid yw'r gweinydd yn enwi cartref calendr."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
-msgstr "Dyw'r gweinydd ddim yn enwi cartref llyfr cyfeiriadau."
+msgstr "Nid yw'r gweinydd yn enwi cartref llyfr cyfeiriadau."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
-msgstr "Dyw'r gweinydd ddim yn dweud ble mae'r cyfrif %(kind)s."
+msgstr "Nid yw'r gweinydd yn dweud ble mae'r cyfrif %(kind)s."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
 msgstr "Pwyntiodd y gweinydd at gyfeiriad y tu allan i'w un ei hun (%(host)s); ni chafodd ei ddilyn."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "Ailgyfeiriodd y gweinydd %(path)s ormod o weithiau."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
 msgstr "Gwrthododd y gweinydd yr enw defnyddiwr neu'r cyfrinair."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 msgstr "Cyfeiriad y gweinydd, e.e. https://cloud.example.org, neu gyfeiriad ei wasanaeth DAV lle mae'n byw o dan lwybr, e.e. https://example.org/dav.php/. Mae Postulo'n dod o hyd i gartrefi'r llyfr cyfeiriadau a'r calendr o'r fan honno."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
-msgstr "Doedd dim modd darllen ateb y gweinydd: %(error)s"
+msgstr "Nid oedd modd darllen ateb y gweinydd: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
 msgstr "Roedd ateb y gweinydd ar gyfer %(path)s yn rhy fawr neu'n rhy araf, ac ni chafodd ei ddarllen."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
-msgstr "Doedd dim modd defnyddio amser y %(kind)s ar y calendr (%(why)s), felly ni chafodd ei symud."
+msgstr "Nid oedd modd defnyddio amser y %(kind)s ar y calendr (%(why)s), felly ni chafodd ei symud."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Enw defnyddiwr"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "Newidiwyd “%(name)s” ar y ddwy ochr ar yr un pryd; y rhediad nesaf fydd yn penderfynu."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
-msgstr "Newidiodd “%(name)s” ar y ddwy ochr, a dyw'r cerdyn o'r ffôn ddim yn rhoi amser: cymerwyd fersiwn y ffôn."
+msgstr "Newidiodd “%(name)s” ar y ddwy ochr, ac nid yw'r cerdyn o'r ffôn yn rhoi amser: cymerwyd fersiwn y ffôn."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
 msgstr "Mae “%(name)s” wedi'i rannu â chi i'w ddarllen yn unig; ni chafodd y newid ar y ffôn ei roi ar waith."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
 msgstr "Symudodd “%(name)s” i gyfeiriad arall ar y gweinydd; mae'n dal wedi'i baru."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "Tynnwyd “%(name)s” o'r llyfr cyfeiriadau; fe'i cadwyd yma."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "Cafodd “%(name)s” ei hepgor: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
 msgstr "“%(name)s”: mae'r rhif ar y cerdyn eisoes gan gofnod arall yma, felly ni chafodd ei gymryd."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
 msgstr "“%(name)s”: ni chafodd y rhif ar y cerdyn ei gymryd."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "“%(name)s”: dyw'r cyfeiriad gwe ar y cerdyn ddim yn gyfeiriad gwe, felly ni chafodd ei gymryd."
+msgstr "“%(name)s”: nid yw'r cyfeiriad gwe ar y cerdyn yn gyfeiriad gwe, felly ni chafodd ei gymryd."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
 msgstr "“%(name)s”: ni chafodd y cyfeiriad gwe ar y cerdyn ei gymryd."

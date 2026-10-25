@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:55+0000\n"
-"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-10-25 01:03+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Romansh <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/rm/>\n"
 "Language: rm\n"
 "MIME-Version: 1.0\n"
@@ -15,62 +15,52 @@ msgstr ""
 "X-Generator: postulo-messages\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "%(count)d eveniments en il chalender na derivan betg da Postulo e n'èn betg vegnids tutgads."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s allontanà dal chalender sin in auter apparat; tegnì qua."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(nagina interpresa)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "In contact stizzà qua era vegnì midà sin il telefonin dapi l'ultima sincronisaziun. La carta è restada en il cudesch d'adressas e turna sco contact a la proxima execuziun."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "Cudesch d'adressas"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
-msgstr "In pled-clav d'app, nua ch'il server offra in. Memorisà criptà."
+msgstr "In pled-clav d'app, nua ch'il server porscha in. Memorisà criptà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
-msgstr "Ina intervista è vegnida midada sin omaduas varts a medem temp; la proxima execuziun decida."
+msgstr "In discurs è vegnì midà sin omaduas varts a medem temp; la proxima execuziun decida."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
-msgstr "Ina intervista stizzada qua era vegnida midada sin il telefonin dapi l'ultima sincronisaziun. L'eveniment è restà en il chalender."
+msgstr "In discurs stizzà qua era vegnì midà sin il telefonin dapi l'ultima sincronisaziun. L'eveniment è restà en il chalender."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
-msgstr "Ina intervista è vegnida spustada ad ina autra adressa en il chalender; anc colliada."
+msgstr "In discurs è vegnì spustà ad in'autra adressa en il chalender; anc collià."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "Chalender"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "Annullà en il chalender."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV e CalDAV"
 
@@ -80,7 +70,6 @@ msgid "Changed here on %(when)s: %(text)s"
 msgstr "Midà qua ils %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "Midà qua, ma midà sin il telefonin pli tard; lur versiun surpigliada."
 
@@ -90,117 +79,102 @@ msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "Midà sin il telefonin ils %(when)s: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "Midà sin il telefonin, ma midà qua pli tard; nossa versiun tegnida."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "Chattà il cudesch d'adressas «%(book)s» ed il chalender «%(calendar)s»."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "i n'ha betg pudì vegnir memorisà qua"
+msgstr "el n'ha betg pudì vegnir arcunà qua"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
-msgstr "i n'ha nagina zona d'urari"
+msgstr "el n'ha nagina zona d'urari"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
 msgstr "i sa tracta d'in eveniment dal di entir"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
 msgstr "sia adressa u ses identificatur è memia lung"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
 msgstr "ses temp na po betg vegnir legì"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
 msgstr "sia zona d'urari «%(zone)s» n'è betg enconuschenta qua"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "Creà sin il server da l'emprima sincronisaziun, sch'el n'è betg là, nun che mo per leger saja activà. Mo quest cudesch d'adressas vegn tutgà."
+msgstr "Creà sin il server da l'emprima sincronisaziun, sch'el n'è betg là, nun che l'opziun «Mo per leger» saja activada. Mo quest cudesch d'adressas vegn tutgà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "Creà sin il server da l'emprima sincronisaziun, sch'el n'è betg là, nun che mo per leger saja activà. Mo quest chalender vegn tutgà."
+msgstr "Creà sin il server da l'emprima sincronisaziun, sch'el n'è betg là, nun che l'opziun «Mo per leger» saja activada. Mo quest chalender vegn tutgà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Mai scriver sin il server — gnanc per crear il cudesch d'adressas u il chalender. Contacts ed intervistas vegnan anc importads; nagut na vegn exportà."
+msgstr "Mai scriver sin il server — gnanc per crear il cudesch d'adressas u il chalender. Contacts e discurs vegnan tuttina importads; nagut na vegn exportà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "Via http:// va il pled-clav betg criptà tras la rait, e «%(host)s» n'è betg ina adressa da Vossa atgna rait. Utilisai https://."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "Pled-clav u pled-clav d'app"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "Mo per leger"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "mo per leger"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
-msgstr "Mo per leger è activà, perquai na vegn nagut creà: al creai sin il server, u numnai in che è gia là."
+msgstr "«Mo per leger» è activà, perquai na vegn nagut creà: creai el sin il server u numnai in che exista gia."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "Adressa dal server"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
 msgstr "%(kind)s en il chalender finescha avant ch'el cumenza, perquai n'è el betg vegnì spustà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "Il cudesch d'adressas «%(name)s» n'è betg sin il server."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "L'adressa sto cumenzar cun https:// — per exempel %(example)s."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "Il chalender «%(name)s» n'è betg sin il server."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
 msgstr "L'emprima sincronisaziun creescha quai che manca."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "Il server ha respundì HTTP %(status)d per %(method)s %(path)s."
 
@@ -215,37 +189,35 @@ msgid "The server does not name an address book home."
 msgstr "Il server na numna nagin ordinatur principal dal cudesch d'adressas."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "Il server na di betg nua ch'il conto %(kind)s è."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
 msgstr "Il server ha renvià ad ina adressa ordaifer sia atgna (%(host)s); quella n'è betg vegnida suandada."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "Il server ha renvià %(path)s memia savens."
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
 msgstr "Il server ha refusà il num d'utilisader u il pled-clav."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 msgstr "L'adressa dal server, p.ex. https://cloud.example.org, u l'adressa da ses servetsch DAV, sch'el sa chatta sut ina via, p.ex. https://example.org/dav.php/. Postulo chatta da là ils ordinaturs principals dal cudesch d'adressas e dal chalender."
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
 msgstr "La resposta dal server n'ha betg pudì vegnir legida: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
 msgstr "La resposta dal server per %(path)s era memia gronda u memia plauna e n'è betg vegnida legida."
 
@@ -255,56 +227,55 @@ msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so 
 msgstr "Il temp da %(kind)s en il chalender n'ha betg pudì vegnir utilisà (%(why)s), perquai n'è el betg vegnì spustà."
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "Num d'utilisader"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "«%(name)s» è vegnì midà sin omaduas varts a medem temp; la proxima execuziun decida."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 msgstr "«%(name)s» è vegnì midà sin omaduas varts, e la carta dal telefonin na dat nagin temp: la versiun dal telefonin è vegnida surpigliada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
 msgstr "«%(name)s» è partì cun Vus mo per leger; la midada sin il telefonin n'è betg vegnida applitgada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
-msgstr "«%(name)s» è vegnì spustà ad ina autra adressa sin il server; anc collià."
+msgstr "«%(name)s» è vegnì spustà ad in'autra adressa sin il server; anc collià."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "«%(name)s» è vegnì allontanà dal cudesch d'adressas; tegnì qua."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "«%(name)s» è vegnì sursiglì: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
 msgstr "«%(name)s»: il numer sin la carta appartegna gia ad ina autra inscripziun qua, perquai n'è el betg vegnì surpiglià."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
 msgstr "«%(name)s»: il numer sin la carta n'è betg vegnì surpiglià."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
-msgstr "«%(name)s»: l'adressa web sin la carta n'è betg ina adressa web, perquai n'è ella betg vegnida surpigliada."
+msgstr "«%(name)s»: l'adressa web sin la carta n'è betg in'adressa web, perquai n'è ella betg vegnida surpigliada."
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
 msgstr "«%(name)s»: l'adressa web sin la carta n'è betg vegnida surpigliada."
