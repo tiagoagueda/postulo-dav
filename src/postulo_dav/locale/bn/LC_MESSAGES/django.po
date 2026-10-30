@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"PO-Revision-Date: 2026-10-30 23:16+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Bengali <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/bn/>\n"
 "Language: bn\n"
@@ -15,296 +15,265 @@ msgstr ""
 "X-Generator: postulo-messages\n"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "ক্যালেন্ডারের %(count)dটি ইভেন্ট Postulo-র নয়, তাই সেগুলোতে হাত দেওয়া হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s অন্য একটি ডিভাইসে ক্যালেন্ডার থেকে সরানো হয়েছে; এখানে রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "(no company)"
 msgstr "(কোনো কোম্পানি নেই)"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "এখানে মোছা একটি পরিচিতি শেষ সিঙ্কের পর ফোনে পরিবর্তন করা হয়েছিল। কার্ডটি ঠিকানা বইয়ে রেখে দেওয়া হয়েছে, এবং পরের বার চালানোর সময় এটি পরিচিতি হিসেবে ফিরে আসবে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Address book"
 msgstr "ঠিকানা বই"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "সার্ভার অ্যাপ পাসওয়ার্ড দিলে সেটি। এনক্রিপ্ট করে সংরক্ষণ করা হয়।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview changed on both sides at once; next run decides."
 msgstr "একটি সাক্ষাৎকার একই সময়ে দুই দিকেই পরিবর্তন হয়েছে; পরের বার চালানোর সময় সিদ্ধান্ত হবে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview deleted here had been changed on the phone since the last sync. The event was left on the calendar."
 msgstr "এখানে মোছা একটি সাক্ষাৎকার শেষ সিঙ্কের পর ফোনে পরিবর্তন করা হয়েছিল। ইভেন্টটি ক্যালেন্ডারে রেখে দেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "An interview moved to another address on the calendar; still paired."
 msgstr "একটি সাক্ষাৎকার ক্যালেন্ডারে অন্য একটি ঠিকানায় সরে গেছে; এখনও যুক্ত আছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Calendar"
 msgstr "ক্যালেন্ডার"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Cancelled on the calendar."
 msgstr "ক্যালেন্ডারে বাতিল করা হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "CardDAV and CalDAV"
 msgstr "CardDAV ও CalDAV"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed here on %(when)s: %(text)s"
 msgstr "%(when)s তারিখে এখানে পরিবর্তন করা হয়েছে: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed here, but changed on the phone later; took theirs."
 msgstr "এখানে পরিবর্তন করা হয়েছিল, কিন্তু পরে ফোনে আবার পরিবর্তন হয়েছে; ফোনেরটি নেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Changed on the phone on %(when)s: %(text)s"
 msgstr "%(when)s তারিখে ফোনে পরিবর্তন করা হয়েছে: %(text)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "ফোনে পরিবর্তন করা হয়েছিল, কিন্তু পরে এখানে আবার পরিবর্তন হয়েছে; এখানকারটি রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
 msgstr "ঠিকানা বই “%(book)s” এবং ক্যালেন্ডার “%(calendar)s” পাওয়া গেছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it could not be saved here"
-msgstr "এটা এখানে সংরক্ষণ করা যাবে না"
+msgstr "এটি এখানে সংরক্ষণ করা যায়নি"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it has no time zone"
-msgstr "এটা সময়ের অঞ্চল নয়"
+msgstr "এতে কোনো সময় অঞ্চল নেই"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "it is an all-day event"
-msgstr "এটা সারাদিনের অনুষ্ঠান"
+msgstr "এটি সারাদিনের ইভেন্ট"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its address or identifier is too long"
-msgstr "ঠিকানা-বইয়ের তালিকা পাওয়া যায়নি অথবা এটি অত্যাধিক লম্বা"
+msgstr "এর ঠিকানা বা শনাক্তকারী খুব দীর্ঘ"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "its time cannot be read"
-msgstr "সময় অতিবাহিত করা সম্ভব নয়"
+msgstr "এর সময় পড়া যায় না"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "its time zone “%(zone)s” is not known here"
 msgstr "এর সময় অঞ্চল “%(zone)s” এখানে পরিচিত নয়"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
 msgstr "সার্ভারে না থাকলে প্রথম সিঙ্ক এটি তৈরি করে, যদি না কেবল পঠনযোগ্য চালু থাকে। কেবল এই ঠিকানা বইটিতেই হাত দেওয়া হয়।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
 msgstr "সার্ভারে না থাকলে প্রথম সিঙ্ক এটি তৈরি করে, যদি না কেবল পঠনযোগ্য চালু থাকে। কেবল এই ক্যালেন্ডারটিতেই হাত দেওয়া হয়।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
 msgstr "সার্ভারে কখনও কিছু লিখবেন না — ঠিকানা বই বা ক্যালেন্ডার তৈরি করার জন্যও নয়। পরিচিতি ও সাক্ষাৎকার তবুও আসে; কিছুই বাইরে যায় না।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "http:// দিয়ে পাসওয়ার্ড খোলাখুলিভাবে নেটওয়ার্কের মধ্য দিয়ে যায়, এবং “%(host)s” আপনার নিজের নেটওয়ার্কের কোনো ঠিকানা নয়। https:// ব্যবহার করুন।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Password or app password"
 msgstr "পাসওয়ার্ড বা অ্যাপ পাসওয়ার্ড"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only"
 msgstr "কেবল পঠনযোগ্য"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "read only"
 msgstr "কেবল পঠনযোগ্য"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr "কেবল পঠনযোগ্য চালু আছে, তাই কিছুই তৈরি করা হয় না: সার্ভারে এটি তৈরি করুন, অথবা সেখানে আগে থেকেই আছে এমন একটির নাম দিন।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Server address"
 msgstr "সার্ভারের ঠিকানা"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The %(kind)s on the calendar ends before it starts, so it was not moved."
 msgstr "ক্যালেন্ডারে %(kind)s শুরু হওয়ার আগেই শেষ হয়ে যায়, তাই এটি সরানো হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address book “%(name)s” is not on the server."
 msgstr "ঠিকানা বই “%(name)s” সার্ভারে নেই।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "ঠিকানাটি অবশ্যই https:// দিয়ে শুরু হতে হবে — যেমন %(example)s।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "ক্যালেন্ডার “%(name)s” সার্ভারে নেই।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The first sync will make what is missing."
 msgstr "যা নেই, প্রথম সিঙ্ক তা তৈরি করবে।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "সার্ভার %(method)s %(path)s-এর জন্য HTTP %(status)d উত্তর দিয়েছে।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name a calendar home."
 msgstr "সার্ভার কোনো ক্যালেন্ডার হোমের নাম জানায় না।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server does not name an address book home."
 msgstr "সার্ভার কোনো ঠিকানা বইয়ের হোমের নাম জানায় না।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "%(kind)s অ্যাকাউন্টটি কোথায় তা সার্ভার জানায় না।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server pointed to an address outside its own (%(host)s); it was not followed."
 msgstr "সার্ভার তার নিজের বাইরের একটি ঠিকানার দিকে নির্দেশ করেছে (%(host)s); তা অনুসরণ করা হয়নি।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server redirected %(path)s too many times."
-msgstr "সার্ভার %(path)s অনেক বেশিবার পুনর্নির্দেশ করেছে।"
+msgstr "সার্ভার %(path)s অনেক বেশিবার রিডাইরেক্ট করেছে।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy
 msgid "The server refused the user name or password."
 msgstr "সার্ভার ব্যবহারকারীর নাম বা পাসওয়ার্ড প্রত্যাখ্যান করেছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 msgstr "সার্ভারের ঠিকানা, যেমন https://cloud.example.org, অথবা এর DAV পরিষেবা কোনো পাথের অধীনে থাকলে তার ঠিকানা, যেমন https://example.org/dav.php/। Postulo সেখান থেকে ঠিকানা বই ও ক্যালেন্ডারের হোম খুঁজে নেয়।"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer could not be read: %(error)s"
 msgstr "সার্ভারের উত্তর পড়া যায়নি: %(error)s"
 
 #: src/postulo_dav/dav.py
-#, fuzzy, python-format
+#, python-format
 msgid "The server's answer for %(path)s was too large or too slow, and was not read."
 msgstr "%(path)s-এর জন্য সার্ভারের উত্তর অত্যধিক বড় বা অত্যধিক ধীর ছিল, তাই পড়া হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
 msgstr "ক্যালেন্ডারে %(kind)s-এর সময় ব্যবহার করা যায়নি (%(why)s), তাই এটি সরানো হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy
 msgid "Username"
 msgstr "ব্যবহারকারীর নাম"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "“%(name)s” একই সময়ে দুই দিকেই পরিবর্তন হয়েছে; পরের বার চালানোর সময় সিদ্ধান্ত হবে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 msgstr "“%(name)s” উভয় দিকেই পরিবর্তিত হয়েছে, এবং ফোনের কার্ডে কোনো সময় দেওয়া নেই: ফোনের সংস্করণটি নেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” is shared with you to read only; the change on the phone was not applied."
 msgstr "“%(name)s” কেবল পড়ার জন্য আপনার সঙ্গে শেয়ার করা; ফোনের পরিবর্তনটি প্রয়োগ করা হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
 msgstr "“%(name)s” সার্ভারে অন্য একটি ঠিকানায় সরে গেছে; এখনও যুক্ত আছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was removed from the address book; kept here."
 msgstr "“%(name)s” ঠিকানা বই থেকে সরানো হয়েছে; এখানে রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "“%(name)s” বাদ দেওয়া হয়েছে: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card is already held by another record here, so it was not taken."
 msgstr "“%(name)s”: কার্ডের নম্বরটি এখানে ইতিমধ্যে অন্য একটি রেকর্ডে আছে, তাই এটি নেওয়া হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the number on the card was not taken."
 msgstr "“%(name)s”: কার্ডের নম্বরটি নেওয়া হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card is not a web address, so it was not taken."
 msgstr "“%(name)s”: কার্ডের ওয়েব ঠিকানাটি কোনো ওয়েব ঠিকানা নয়, তাই এটি নেওয়া হয়নি।"
 
 #: src/postulo_dav/sync.py
-#, fuzzy, python-format
+#, python-format
 msgid "“%(name)s”: the web address on the card was not taken."
 msgstr "“%(name)s”: কার্ডের ওয়েব ঠিকানাটি নেওয়া হয়নি।"
