@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"PO-Revision-Date: 2026-11-01 14:35+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Swahili <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sw/>\n"
 "Language: sw\n"
@@ -17,7 +17,7 @@ msgstr ""
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
-msgstr "Na katika kipindi hicho mambo hayakwenda sawa na wakati wake."
+msgstr "Matukio %(count)d kwenye kalenda hayatoki Postulo na yameachwa kama yalivyo."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
