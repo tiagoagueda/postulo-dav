@@ -4,8 +4,8 @@ CardDAV (RFC 6352) and CalDAV (RFC 4791) are WebDAV with two collection types an
 properties. What this needs is: find the person's principal from the address they typed,
 ``/.well-known/carddav`` and ``/.well-known/caldav`` (RFC 6764), from it the address-book
 home and the calendar home, list the collections there, and then the four verbs on a
-collection — list with ETags, GET, PUT with ``If-Match``, DELETE with ``If-Match``. Nothing
-else.
+collection — list with ETags, read (GET, or a multiget REPORT for many at once), PUT with
+``If-Match``, DELETE with ``If-Match``. Nothing else.
 
 Looking a collection up and creating one are two methods on purpose, never one:
 :meth:`Server.find_collection` reads, :meth:`Server.create_collection` writes, and the
@@ -52,6 +52,10 @@ RESOURCE_LIMIT = 256 * 1024
 SMALL_LIMIT = 64 * 1024
 #: A server that redirects more than this is looping, or sending us somewhere it should not.
 MAX_REDIRECTS = 5
+#: How many cards or events one multiget REPORT asks for, and how much of its answer is
+#: read. A batch whose answer is over the limit is asked again in two halves (#45).
+MULTIGET_BATCH = 50
+MULTIGET_LIMIT = 4 * 1024 * 1024
 
 _PRINCIPAL = (
     '<?xml version="1.0" encoding="utf-8"?>'
@@ -84,6 +88,21 @@ _MKCALENDAR = (
     '<c:supported-calendar-component-set><c:comp name="VEVENT"/>'
     "</c:supported-calendar-component-set></d:prop></d:set></c:mkcalendar>"
 )
+#: The two multiget reports, and the property each carries the resource's text in.
+_MULTIGET = {
+    ADDRESSBOOK: (
+        '<?xml version="1.0" encoding="utf-8"?>'
+        '<c:addressbook-multiget xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:carddav">'
+        "<d:prop><d:getetag/><c:address-data/></d:prop>{hrefs}</c:addressbook-multiget>",
+        f"{{{CARD}}}address-data",
+    ),
+    CALENDAR: (
+        '<?xml version="1.0" encoding="utf-8"?>'
+        '<c:calendar-multiget xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">'
+        "<d:prop><d:getetag/><c:calendar-data/></d:prop>{hrefs}</c:calendar-multiget>",
+        f"{{{CAL}}}calendar-data",
+    ),
+}
 
 
 class DavError(Exception):
@@ -103,6 +122,10 @@ class AuthenticationRefused(DavError):
 
 class Conflict(DavError):
     """The record changed on the server since it was last read (412)."""
+
+
+class TooLarge(DavError):
+    """The answer was over its size limit, or too slow, and was not read."""
 
 
 @dataclass(frozen=True)
@@ -213,7 +236,7 @@ class Server:
                 try:
                     body = read_body(response, limit=limit, deadline=deadline)
                 except BodyRefused as error:
-                    raise DavError(
+                    raise TooLarge(
                         _(
                             "The server's answer for %(path)s was too large or too slow, "
                             "and was not read."
@@ -352,6 +375,10 @@ class Server:
         followed, and nothing is fetched, adopted, written or deleted there (#13).
         """
         tree = self.propfind(collection, _ETAGS, "1")
+        return self._listed(tree, collection)
+
+    def _listed(self, tree, collection: str) -> dict[str, str]:
+        """The resources a multistatus names under ``collection``, as canonical href → ETag."""
         found: dict[str, str] = {}
         root = urlsplit(self.canonical(collection)).path.rstrip("/") + "/"
         for response in tree.iter(f"{{{DAV}}}response"):
@@ -374,6 +401,84 @@ class Server:
             found[href] = (etag_node.text or "").strip() if etag_node is not None else ""
         return found
 
+    def multiget(self, collection: str, hrefs, kind: str) -> dict[str, Resource]:
+        """Several resources of ``collection`` at once, as canonical href → Resource.
+
+        One ``addressbook-multiget`` (RFC 6352 §8.7) or ``calendar-multiget`` (RFC 4791
+        §7.9) ``REPORT`` per :data:`MULTIGET_BATCH` addresses, where a ``GET`` each made a
+        request per card or event (#45); both reports are mandatory, so every server
+        answers them. An answer refused for its size (cards with photos) is asked again in
+        two halves. Only what was asked for is taken from the answer, on the host that was
+        typed; whatever the server leaves out — a 404, a resource over
+        :data:`RESOURCE_LIMIT`, a batch too large even alone, a report it refuses — is
+        left out here too, and the caller reads it with :meth:`get`, which says why.
+        """
+        wanted = list(dict.fromkeys(self.canonical(href) for href in hrefs))
+        batches = [
+            wanted[start : start + MULTIGET_BATCH]
+            for start in range(0, len(wanted), MULTIGET_BATCH)
+        ]
+        found: dict[str, Resource] = {}
+        while batches:
+            batch = batches.pop(0)
+            try:
+                found.update(self._multiget(collection, batch, kind))
+            except TooLarge:
+                if len(batch) > 1:
+                    middle = len(batch) // 2
+                    batches[:0] = [batch[:middle], batch[middle:]]
+            except AuthenticationRefused:
+                raise
+            except DavError:
+                break  # the report is refused: what is left is read one by one
+        return found
+
+    def _multiget(self, collection: str, batch: list[str], kind: str) -> dict[str, Resource]:
+        template, data_tag = _MULTIGET[kind]
+        body = template.format(
+            hrefs="".join(f"<d:href>{_xml(urlsplit(href).path)}</d:href>" for href in batch)
+        )
+        response, answer = self._send(
+            "REPORT",
+            collection,
+            limit=MULTIGET_LIMIT,
+            content=body.encode(),
+            headers={"Content-Type": "application/xml; charset=utf-8"},
+        )
+        if response.status_code != 207:
+            raise _refusal(response)
+        try:
+            tree = ElementTree.fromstring(answer)
+        except ElementTree.ParseError as error:
+            raise DavError(
+                _("The server's answer could not be read: %(error)s") % {"error": error}
+            ) from error
+        asked = set(batch)
+        found: dict[str, Resource] = {}
+        for node in tree.iter(f"{{{DAV}}}response"):
+            href_node = node.find(f"{{{DAV}}}href")
+            if href_node is None or not href_node.text:
+                continue
+            try:
+                href = self.canonical(href_node.text.strip())
+            except DavError:
+                continue  # another host's
+            if href not in asked:
+                continue  # only what was asked for, which the listing held to the collection
+            for propstat in node.findall(f"{{{DAV}}}propstat"):
+                status = propstat.find(f"{{{DAV}}}status")
+                if status is not None and " 200 " not in f"{status.text or ''} ":
+                    continue
+                data = propstat.find(f".//{data_tag}")
+                if data is None or not data.text:
+                    continue
+                if len(data.text.encode("utf-8")) > RESOURCE_LIMIT:
+                    continue  # get() refuses it with a sentence
+                etag_node = propstat.find(f".//{{{DAV}}}getetag")
+                etag = (etag_node.text or "").strip() if etag_node is not None else ""
+                found[href] = Resource(data.text, etag)
+        return found
+
     def get(self, href: str) -> Resource:
         response, body = self._send("GET", href, limit=RESOURCE_LIMIT)
         if response.status_code != 200:
@@ -391,9 +496,20 @@ class Server:
             raise _refusal(response)
         new_etag = response.headers.get("ETag", "").strip()
         if not new_etag:
-            # Some servers answer without one; ask, so the next write can be conditional.
-            new_etag = self.etags(href.rsplit("/", 1)[0] + "/").get(self.canonical(href), "")
+            # A server that stored something other than the bytes it was sent must not
+            # answer with an ETag (RFC 4791 §5.3.4, RFC 6352 §6.3.2.3), and SabreDAV drops
+            # it whenever it repairs a body. Ask for this one resource, so the next write
+            # can be conditional: one small request, not a listing of the whole collection
+            # for every write (#46). No ETag there either leaves it blank, and the next
+            # run reads the resource once and settles it.
+            new_etag = self.etag(href)
         return new_etag
+
+    def etag(self, href: str) -> str:
+        """The ETag of the one resource at ``href``, or ``""`` when the server gives none."""
+        collection = href.rsplit("/", 1)[0] + "/"
+        tree = self.propfind(href, _ETAGS, "0")
+        return self._listed(tree, collection).get(self.canonical(href), "")
 
     def delete(self, href: str, *, etag: str = "") -> None:
         headers = {"If-Match": etag} if etag else {}

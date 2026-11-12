@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import datetime as dt
 import re
+from html import escape
 from importlib import metadata
 from urllib.parse import quote, unquote, urlsplit
 
 import httpx
 import pytest
+from django.db import connection as db_connection
+from django.test.utils import CaptureQueriesContext
 from django.utils import timezone
 from postulo.applications.models import (
     Application,
@@ -20,14 +23,19 @@ from postulo.applications.models import (
 from postulo.applications.services import schedule_interview
 from postulo.jobs.models import Company, Contact, JobPosting
 from postulo.plugins import registry, syncing
-from postulo.plugins.api import LinkKind
+from postulo.plugins.api import (
+    LinkKind,
+    primary_phone_number,
+    save_phone_number,
+    save_web_link,
+)
 from postulo.plugins.base import SyncPlugin
 from postulo.plugins.models import Connection, SyncLink
 
 from postulo_dav import dav as dav_module
 from postulo_dav import text
 from postulo_dav.dav import ADDRESSBOOK, CALENDAR, Conflict, Server
-from postulo_dav.sync import PRODID, DavSync, card_for, event_text
+from postulo_dav.sync import HISTORY, PRODID, DavSync, card_for, event_text
 
 pytestmark = pytest.mark.django_db
 
@@ -68,6 +76,16 @@ class FakeDav:
         self.foreign_hrefs: list[str] = []
         #: A server that refuses a calendar object carrying a METHOD (RFC 4791 §4.1).
         self.reject_method = False
+        #: A server that rewrote what it was sent answers a PUT without an ETag (RFC 4791
+        #: §5.3.4, RFC 6352 §6.3.2.3), as SabreDAV does whenever it repairs a body.
+        self.put_etag = True
+        #: The path and the Depth of every PROPFIND, so a test can count the listings.
+        self.propfinds: list[tuple[str, str]] = []
+        #: The multiget REPORTs (RFC 6352 §8.7, RFC 4791 §7.9); a server that refuses
+        #: them answers 405, which no conforming server does.
+        self.multiget = True
+        #: How many hrefs each multiget REPORT asked for.
+        self.multigets: list[int] = []
 
     def _etag(self) -> str:
         self.counter += 1
@@ -105,6 +123,10 @@ class FakeDav:
 
         if method == "PROPFIND":
             depth = request.headers.get("Depth", "0")
+            self.propfinds.append((path, depth))
+            if path in self.resources and depth == "0":
+                etag = self.resources[path][1]
+                return _multistatus([(path, f"<d:getetag>{etag}</d:getetag><d:resourcetype/>")])
             if path in ("/.well-known/carddav", "/.well-known/caldav"):
                 return httpx.Response(301, headers={"Location": self.well_known_location})
             if path == "/dav/" and "current-user-principal" in body:
@@ -152,6 +174,23 @@ class FakeDav:
                 return _multistatus(rows)
             return httpx.Response(404)
 
+        if method == "REPORT":
+            if not self.multiget or "-multiget" not in body:
+                return httpx.Response(405)
+            data = "c:address-data" if "addressbook-multiget" in body else "cal:calendar-data"
+            asked = [unquote(href) for href in re.findall(r"<d:href>(.*?)</d:href>", body)]
+            self.multigets.append(len(asked))
+            rows, missing = [], []
+            for href in asked:
+                if href in self.resources and href.startswith(path):
+                    text_, etag = self.resources[href]
+                    rows.append(
+                        (href, f"<d:getetag>{etag}</d:getetag><{data}>{escape(text_)}</{data}>")
+                    )
+                else:
+                    missing.append(href)
+            return _multistatus(rows, missing)
+
         if method in ("MKCOL", "MKCALENDAR"):
             name = re.search(r"<d:displayname>(.*?)</d:displayname>", body).group(1)
             self.collections[path] = {
@@ -188,7 +227,8 @@ class FakeDav:
                     return httpx.Response(409)  # no-uid-conflict: the UID is already there
             etag = self._etag()
             self.resources[path] = (body, etag)
-            return httpx.Response(201 if current is None else 204, headers={"ETag": etag})
+            headers = {"ETag": etag} if self.put_etag else {}
+            return httpx.Response(201 if current is None else 204, headers=headers)
 
         if method == "DELETE":
             self.delete_conditions.append(request.headers.get("If-Match"))
@@ -203,7 +243,7 @@ class FakeDav:
         return httpx.Response(405)
 
 
-def _multistatus(rows) -> httpx.Response:
+def _multistatus(rows, missing=()) -> httpx.Response:
     xml = [
         '<?xml version="1.0"?><d:multistatus xmlns:d="DAV:" '
         'xmlns:c="urn:ietf:params:xml:ns:carddav" '
@@ -213,6 +253,11 @@ def _multistatus(rows) -> httpx.Response:
         xml.append(
             f"<d:response><d:href>{href}</d:href><d:propstat><d:prop>{props}</d:prop>"
             "<d:status>HTTP/1.1 200 OK</d:status></d:propstat></d:response>"
+        )
+    for href in missing:
+        xml.append(
+            f"<d:response><d:href>{href}</d:href>"
+            "<d:status>HTTP/1.1 404 Not Found</d:status></d:response>"
         )
     xml.append("</d:multistatus>")
     return httpx.Response(
@@ -1191,6 +1236,170 @@ def test_a_server_that_refuses_a_method_is_written_to_without_one(server, connec
     (body,) = events(server).values()
     assert "METHOD" not in body
     assert [m for m, _p in server.log].count("PUT") == 2
+
+
+def test_a_write_answered_without_an_etag_asks_for_that_resource_alone(
+    made, connection, user, company, application
+):
+    server = made
+    server.put_etag = False
+    for number in range(3):
+        Contact.objects.create(owner=user, company=company, name=f"Person {number}")
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    report = sync(connection)
+    assert report.pushed == 4 and report.error == ""
+    # One listing of each collection, the run's own. Asking the collection again for each
+    # write's ETag made it 1 + 3 listings of the address book and 1 + 1 of the calendar
+    # (#46); each write now costs one Depth 0 PROPFIND of the resource it wrote.
+    listings = [path for path, depth in server.propfinds if depth == "1"]
+    assert listings.count(BOOK) == 1 and listings.count(CALENDAR_PATH) == 1
+    asked = [
+        path for path, depth in server.propfinds if depth == "0" and path.endswith((".vcf", ".ics"))
+    ]
+    assert len(asked) == 4
+    # The ETags were remembered, so the next run reads and writes nothing.
+    for link in SyncLink.objects.filter(connection=connection):
+        assert link.etag == server.resources[unquote(urlsplit(link.remote_href).path)][1]
+    seen = len(server.log)
+    sync(connection)
+    assert not [m for m, _p in server.log[seen:] if m in ("GET", "PUT")]
+
+
+# ------------------------------------------------------------------ multiget (#45)
+
+
+def foreign_event(uid: str) -> str:
+    return (
+        f"BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nUID:{uid}\r\nDTSTART:20260910T090000Z\r\n"
+        "DTEND:20260910T100000Z\r\nSUMMARY:Dentist & co\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+    )
+
+
+def test_a_first_run_reads_the_address_book_in_a_few_reports(made, connection):
+    server = made
+    for number in range(120):
+        server.add(f"{BOOK}card-{number}.vcf", vcard(f"u{number}", f"Person {number} & co"))
+    report = sync(connection)
+    assert report.pulled == 120 and report.error == ""
+    assert Contact.objects.filter(name="Person 7 & co").exists()
+    # A GET per card made it 120 requests; three REPORTs of at most fifty now.
+    assert not [p for m, p in server.log if m == "GET"]
+    assert server.multigets == [50, 50, 20]
+
+
+def test_a_card_changed_on_the_phone_is_read_through_a_report(server, connection, recruiter):
+    sync(connection)
+    (href,) = cards(server)
+    body, _etag = server.resources[href]
+    server.resources[href] = (body.replace("TITLE:CEO", "TITLE:Founder"), '"phone-1"')
+    seen = len(server.log)
+    report = sync(connection)
+    assert report.pulled == 1
+    recruiter.refresh_from_db()
+    assert recruiter.role == "Founder"
+    assert [m for m, _p in server.log[seen:] if m in ("GET", "REPORT")] == ["REPORT"]
+    assert SyncLink.for_record(connection, recruiter).etag == '"phone-1"'
+
+
+def test_read_only_reads_the_foreign_events_in_reports_on_every_run(made, connection, application):
+    server = made
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    for number in range(60):
+        server.add(f"{CALENDAR_PATH}dentist-{number}.ics", foreign_event(f"d{number}"))
+    connection.config["read_only"] = True
+    connection.save()
+    for _run in range(2):
+        seen, asked = len(server.log), len(server.multigets)
+        report = sync(connection)
+        assert "60 events on the calendar are not from Postulo" in report.summary()
+        # Nothing is pushed in read-only mode, so the foreign events are read on every run:
+        # 60 GETs a run before, two REPORTs now.
+        assert not [m for m, _p in server.log[seen:] if m in ("GET", "PUT")]
+        assert server.multigets[asked:] == [50, 10]
+
+
+def test_a_report_too_large_is_asked_again_in_halves(made, connection, monkeypatch):
+    server = made
+    for number in range(8):
+        server.add(f"{BOOK}card-{number}.vcf", vcard(f"u{number}", f"Person {number}"))
+    one = len(
+        _multistatus(
+            [("x", "<c:address-data>" + vcard("u0", "Person 0") + "</c:address-data>")]
+        ).content
+    )
+    monkeypatch.setattr(dav_module, "MULTIGET_LIMIT", 3 * one)
+    report = sync(connection)
+    assert report.pulled == 8 and report.error == ""
+    assert not [p for m, p in server.log if m == "GET"]
+    assert server.multigets == [8, 4, 2, 2, 4, 2, 2]
+
+
+def test_a_server_that_refuses_the_report_is_read_one_card_at_a_time(made, connection):
+    server = made
+    server.multiget = False
+    for number in range(3):
+        server.add(f"{BOOK}card-{number}.vcf", vcard(f"u{number}", f"Person {number}"))
+    report = sync(connection)
+    assert report.pulled == 3 and report.error == ""
+    assert len([p for m, p in server.log if m == "GET"]) == 3
+
+
+# ------------------------------------------------------------------ queries (#47)
+
+
+def queries_of_an_idle_run(connection) -> int:
+    with CaptureQueriesContext(db_connection) as queries:
+        report = sync(connection)
+    assert report.error == "" and report.pushed == report.pulled == 0
+    return len(queries)
+
+
+def test_an_idle_run_asks_nothing_per_old_interview(made, connection, application):
+    def add_old_interviews(count: int) -> None:
+        for _number in range(count):
+            schedule_interview(application, kind="phone", starts_at=next_week())
+        sync(connection)
+        # Older than the window: no longer synced, but their links and events are kept.
+        Interview.objects.update(starts_at=timezone.now() - 2 * HISTORY)
+        sync(connection)
+
+    add_old_interviews(1)
+    one = queries_of_an_idle_run(connection)
+    add_old_interviews(4)
+    five = queries_of_an_idle_run(connection)
+    assert SyncLink.objects.filter(connection=connection).count() == 5
+    assert len(events(made)) == 5
+    # One `exists()` per old interview made it 4 more; one query for all of them now.
+    assert five == one
+
+
+def test_an_idle_run_asks_nothing_per_unchanged_contact(made, connection, user, company):
+    made_so_far = []
+
+    def add_contacts(count: int) -> None:
+        for _number in range(count):
+            number = len(made_so_far)
+            contact = Contact.objects.create(owner=user, company=company, name=f"P {number}")
+            save_phone_number(contact, user, f"+1 555 01{number:02d}")
+            save_web_link(contact, user, LinkKind.SOCIAL, f"https://example.org/in/p{number}")
+            made_so_far.append(contact)
+        sync(connection)
+        sync(connection)
+
+    add_contacts(2)
+    two = queries_of_an_idle_run(connection)
+    add_contacts(3)
+    five = queries_of_an_idle_run(connection)
+    assert len(cards(made)) == 5
+    assert all("TEL" in body and "URL" in body for body in cards(made).values())
+    # Each unchanged contact cost a SAVEPOINT and a RELEASE, and two queries for its
+    # primary number and link. The savepoint is gone; the two queries go too with a core
+    # that reads the primaries from the rows prefetched (postulo/postulo#1171).
+    contact = Contact.objects.prefetch_related("phone_numbers").get(pk=made_so_far[0].pk)
+    with CaptureQueriesContext(db_connection) as asked:
+        primary_phone_number(contact)
+    per_contact = 0 if len(asked) == 0 else 2
+    assert five - two == 3 * per_contact
 
 
 # ----------------------------------------------------------- numbers and links (#26 #32)

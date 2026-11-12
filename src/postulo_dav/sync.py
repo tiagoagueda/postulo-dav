@@ -682,20 +682,28 @@ class DavSync:
         # Links flagged remote_gone are kept in the map: they say "the person removed
         # this from the address book", and the record must not be pushed back.
         links = {link.object_id: link for link in SyncLink.of_model(connection, Contact)}
+        # The numbers and the links are prefetched for the card's primaries: two queries a
+        # run, where a core that reads the primary from prefetched rows (postulo/postulo#1171)
+        # asked two per contact (#47). An older core still asks per contact, as before.
         contacts = {
             c.pk: c
-            for c in Contact.objects.visible_to(owner).with_notes(owner).select_related("company")
+            for c in Contact.objects.visible_to(owner)
+            .with_notes(owner)
+            .select_related("company")
+            .prefetch_related("phone_numbers", "web_links")
         }
         # A contact may be a group's, or shared to read: what comes in from the phone is
         # applied only to those the person may change (postulo/postulo#896).
         writable = set(Contact.objects.visible_to(owner, write=True).values_list("pk", flat=True))
         cache: dict[str, tuple[dav.Resource, text.Card]] = {}
+        fetched: dict[str, dav.Resource] = {}
 
         def read(href: str):
-            if href not in cache:
-                resource = server.get(href)
-                cache[href] = (resource, text.text_to_card(resource.text))
-            return cache[href]
+            key = canon(href)
+            if key not in cache:
+                resource = fetched.pop(key, None) or server.get(href)
+                cache[key] = (resource, text.text_to_card(resource.text))
+            return cache[key]
 
         def linked() -> set[str]:
             return {canon(link.remote_href) for link in links.values() if link.remote_href}
@@ -705,9 +713,22 @@ class DavSync:
             claimed = linked()
             return [h for h in remote if h in cache and h not in claimed]
 
+        # Every card this run will read, asked for in a few multiget REPORTs rather than a
+        # GET each (#45): those no link claims, and the twins whose ETag moved.
+        unclaimed = [h for h in remote if h not in linked()]
+        moved = [
+            canon(link.remote_href)
+            for link in links.values()
+            if link.remote_href
+            and link.object_id in contacts
+            and not link.remote_gone
+            and remote.get(canon(link.remote_href), link.etag) != link.etag
+        ]
+        fetched.update(server.multiget(book.href, unclaimed + moved, ADDRESSBOOK))
+
         # Read what no link claims: it is what a moved twin and an old pairing are found in,
         # and what is adopted below.
-        for href in [h for h in remote if h not in linked()]:
+        for href in unclaimed:
             try:
                 read(href)
             except DavError as error:
@@ -909,14 +930,38 @@ class DavSync:
                 link.save()
                 report.pushed += 1
 
+        def idle(contact: Contact) -> bool:
+            """Nothing to do for this contact: its twin and its card are as last synced.
+
+            Asked before :meth:`Run.each`, so an unchanged contact costs no savepoint (#47).
+            Anything that cannot be decided here is left to ``one``, which says why.
+            """
+            link = links.get(contact.pk)
+            if link is None:
+                return False
+            if link.remote_gone:
+                return True
+            try:
+                href = canon(link.remote_href)
+                if remote.get(href) != link.etag:
+                    return False
+                card = card_for(contact, owner, link.uid)
+            except TOLERATED:
+                return False
+            return link.local_hash == digest(card.digest_source())
+
         for contact in contacts.values():
-            run.each(contact.name, lambda contact=contact: one(contact))
+            if not idle(contact):
+                run.each(contact.name, lambda contact=contact: one(contact))
 
         # Links whose contact is gone here: take the twin with it — unless the twin moved.
+        # Whether each one still exists is asked once for all of them, not once each (#47).
+        unseen = [link.object_id for link in links.values() if link.object_id not in contacts]
+        existing = set(Contact.objects.filter(pk__in=unseen).values_list("pk", flat=True))
         for link in list(links.values()):
             if link.object_id in contacts:
                 continue
-            if Contact.objects.filter(pk=link.object_id).exists():
+            if link.object_id in existing:
                 continue  # no longer visible to this person, but not deleted: not ours to drop
             if not read_only and canon(link.remote_href) in remote:
                 try:
@@ -975,15 +1020,17 @@ class DavSync:
             .prefetch_related("contacts")
         }
         cache: dict[str, tuple[dav.Resource, list[text.Event]]] = {}
+        fetched: dict[str, dav.Resource] = {}
 
         def read(href: str):
-            if href not in cache:
-                resource = server.get(href)
-                cache[href] = (
+            key = canon(href)
+            if key not in cache:
+                resource = fetched.pop(key, None) or server.get(href)
+                cache[key] = (
                     resource,
                     [e for e in text.text_to_events(resource.text) if not e.recurring],
                 )
-            return cache[href]
+            return cache[key]
 
         def linked() -> set[str]:
             return {canon(link.remote_href) for link in links.values() if link.remote_href}
@@ -999,8 +1046,22 @@ class DavSync:
             for pk, link in links.items()
             if pk in interviews
         )
+        # Every event this run will read, asked for in a few multiget REPORTs rather than a
+        # GET each (#45): those no link claims when they are wanted, and the twins whose
+        # ETag moved. In read-only mode the foreign events are still read on every run, as
+        # nothing is ever pushed to settle `wanted`, but as a REPORT per fifty.
+        unclaimed = [h for h in remote if h not in linked()] if wanted else []
+        moved = [
+            canon(link.remote_href)
+            for pk, link in links.items()
+            if pk in interviews
+            and link.remote_href
+            and not link.remote_gone
+            and remote.get(canon(link.remote_href), link.etag) != link.etag
+        ]
+        fetched.update(server.multiget(calendar.href, unclaimed + moved, CALENDAR))
         if wanted:
-            for href in [h for h in remote if h not in linked()]:
+            for href in unclaimed:
                 try:
                     read(href)
                 except DavError as error:
@@ -1168,10 +1229,13 @@ class DavSync:
         for interview in interviews.values():
             run.each(interview.get_kind_display(), lambda interview=interview: one(interview))
 
+        # The links of interviews outside the window grow with the person's whole history:
+        # whether each one still exists is asked once for all of them, not once each (#47).
+        unseen = [link.object_id for link in links.values() if link.object_id not in interviews]
+        existing = set(Interview.objects.filter(pk__in=unseen).values_list("pk", flat=True))
         for link in list(links.values()):
             if link.object_id not in interviews:
-                still_exists = Interview.objects.filter(pk=link.object_id).exists()
-                if still_exists:
+                if link.object_id in existing:
                     continue  # merely too old for the window; leave the calendar alone
                 if not read_only and canon(link.remote_href) in remote:
                     try:
