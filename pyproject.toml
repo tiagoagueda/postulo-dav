@@ -5,7 +5,7 @@ description = "Company contacts in a CardDAV address book and interviews in a Ca
 readme = "README.md"
 requires-python = ">=3.12.4"
 license = "AGPL-3.0-or-later"
-authors = [{ name = "Tiago Agueda" }]
+authors = [{ name = "Postulo contributors" }]
 keywords = ["postulo", "plugin", "carddav", "caldav", "webdav", "vcard", "icalendar"]
 classifiers = [
     "Development Status :: 4 - Beta",

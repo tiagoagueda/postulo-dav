@@ -139,4 +139,4 @@ uv run --no-sync pytest
 
 ## Licence
 
-AGPL-3.0-or-later, like Postulo.
+Copyright (C) 2026 Postulo contributors. AGPL-3.0-or-later, like Postulo.
