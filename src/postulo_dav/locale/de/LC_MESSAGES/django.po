@@ -248,6 +248,10 @@ msgid "The calendar “%(name)s” is not on the server."
 msgstr "Der Kalender „%(name)s“ ist auf dem Server nicht vorhanden."
 
 #: src/postulo_dav/sync.py
+msgid "The card could not be read, so it was not changed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
 msgstr ""
@@ -377,6 +381,11 @@ msgstr "„%(name)s“ ist nur zum Lesen mit Ihnen geteilt; die Änderung auf de
 #, python-format
 msgid "“%(name)s” moved to another address on the server; still paired."
 msgstr "„%(name)s“ wurde auf dem Server an eine andere Adresse verschoben; weiterhin verknüpft."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” was not changed from the card: %(why)s"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format

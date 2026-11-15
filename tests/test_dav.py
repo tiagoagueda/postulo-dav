@@ -191,6 +191,22 @@ class FakeDav:
             return httpx.Response(404)
 
         if method == "REPORT":
+            if "addressbook-query" in body:
+                self.queries.append(path)
+                found = re.search(r'match-type="contains">(.*?)<', body)
+                needle = found.group(1).lower() if found else ""
+                rows = [
+                    (
+                        href,
+                        f"<d:getetag>{etag}</d:getetag>"
+                        f"<c:address-data>{escape(text_)}</c:address-data>",
+                    )
+                    for href, (text_, etag) in self.resources.items()
+                    if href.startswith(path)
+                    and href.endswith(".vcf")
+                    and needle in (re.search(r"^FN:(.*)$", text_, re.M) or [""] * 2)[1].lower()
+                ]
+                return _multistatus(rows)
             if "calendar-query" in body:
                 self.queries.append(path)
                 rows = [
@@ -2160,7 +2176,9 @@ def test_events_from_elsewhere_are_offered_for_pairing_and_postulos_own_are_not(
     assert DavSync().remote_items(connection.full_config, search="aperture")
     assert not DavSync().remote_items(connection.full_config, search="nothing like it")
     assert not DavSync().remote_items(connection.full_config, kind="contact")
-    assert made.queries == [CALENDAR_PATH] * 3  # a calendar-query each, never a full listing
+    assert [p for p in made.queries if p == CALENDAR_PATH] == [
+        CALENDAR_PATH
+    ] * 3  # a calendar-query each, never a full listing
 
 
 def test_a_paired_event_keeps_its_uid_and_everything_postulo_does_not_own(made, connection, phone):
@@ -2346,3 +2364,165 @@ def test_an_event_with_no_readable_time_is_noted_and_makes_nothing(made, connect
     report = DavSync().sync(connection, connection.full_config)
     assert "could not be made into an interview" in report.summary()
     assert not Interview.objects.exists()
+
+
+# ------------------------------- pairing cards with contacts and companies (#8)
+
+
+def phone_card(uid: str, name: str, **extra: str) -> str:
+    lines = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        f"UID:{uid}",
+        f"FN;LANGUAGE=pt-BR:{name}",
+        "N:Freeman;Gordon;;;",
+        "ORG:Black Mesa;Research",
+        "TITLE:Physicist",
+        "EMAIL;TYPE=home:gordon@bm.test",
+        "TEL;TYPE=cell:+1 555 0100",
+        "TEL;TYPE=home:+1 555 0199",
+        "ADR;TYPE=home:;;1 Mesa Rd;Mesa;;;US",
+        "BDAY:19700101",
+        "PHOTO;ENCODING=b;TYPE=JPEG:AAAA",
+        "X-VENDOR:keep me",
+        "NOTE:Their private note",
+    ]
+    lines += [f"{k}:{v}" for k, v in extra.items()]
+    return "\r\n".join([*lines, "END:VCARD"]) + "\r\n"
+
+
+def test_the_card_patch_changes_only_what_is_given():
+    source = phone_card("p-1", "Gordon Freeman")
+    patched = text.patch_card(
+        source, "p-1", {"TITLE": "Director", "ORG": "Aperture", "TEL": ""}, rev=next_week(1)
+    )
+    assert "TITLE:Director" in patched and "ORG:Aperture;Research" in patched
+    assert "+1 555 0100" not in patched and "+1 555 0199" in patched  # the first number only
+    for kept in (
+        "UID:p-1",
+        "VERSION:3.0",
+        "FN;LANGUAGE=pt-BR:Gordon Freeman",
+        "N:Freeman;Gordon;;;",
+        "ADR;TYPE=home:;;1 Mesa Rd;Mesa;;;US",
+        "BDAY:19700101",
+        "PHOTO;ENCODING=b;TYPE=JPEG:AAAA",
+        "X-VENDOR:keep me",
+        "NOTE:Their private note",
+        "EMAIL;TYPE=home:gordon@bm.test",
+    ):
+        assert kept in patched
+    assert text.patch_card(source, "other", {"TITLE": "x"}, rev=next_week(1)) is None
+
+
+def test_a_card_made_elsewhere_is_patched_when_the_contact_changes_here(made, connection):
+    server = made
+    server.enforce_uid = True
+    server.add(BOOK + "phone.vcf", phone_card("phone-uid-1", "Gordon Freeman"))
+    assert sync(connection).pulled == 1
+    contact = Contact.objects.get(name="Gordon Freeman")
+    contact.role = "Director"
+    contact.save()
+    report = sync(connection)
+    assert report.error == "" and report.pushed == 1
+    body, _etag = server.resources[BOOK + "phone.vcf"]
+    assert "TITLE:Director" in body and "UID:phone-uid-1" in body
+    for kept in (
+        "FN;LANGUAGE=pt-BR:Gordon Freeman",
+        "ADR;TYPE=home:;;1 Mesa Rd;Mesa;;;US",
+        "BDAY:19700101",
+        "PHOTO;ENCODING=b;TYPE=JPEG:AAAA",
+        "X-VENDOR:keep me",
+        "TEL;TYPE=home:+1 555 0199",
+        "NOTE:Their private note",
+        "VERSION:3.0",
+        "ORG:Black Mesa;Research",
+    ):
+        assert kept in body
+    assert "VERSION:4.0" not in body
+
+
+def test_notes_are_not_exchanged_with_a_card_made_elsewhere(made, connection):
+    server = made
+    server.add(BOOK + "phone.vcf", phone_card("phone-uid-1", "Gordon Freeman"))
+    sync(connection)
+    contact = Contact.objects.get(name="Gordon Freeman")
+    contact.write_note(contact.owner, "My private view of Gordon")
+    contact.role = "Director"
+    contact.save()
+    sync(connection)
+    body, _etag = server.resources[BOOK + "phone.vcf"]
+    assert "My private view" not in body and "NOTE:Their private note" in body
+    body = body.replace("Their private note", "Changed on the phone").replace(
+        "TITLE:Director", "TITLE:Chief"
+    )
+    server.add(BOOK + "phone.vcf", body)
+    sync(connection)
+    contact = Contact.objects.get(name="Gordon Freeman")
+    assert contact.role == "Chief"
+    assert "My private view of Gordon" in contact.note_for(contact.owner)
+    assert "Changed on the phone" not in contact.note_for(contact.owner)
+
+
+def test_deleting_a_contact_unpairs_a_card_made_elsewhere_and_leaves_it(made, connection):
+    server = made
+    server.add(BOOK + "phone.vcf", phone_card("phone-uid-1", "Gordon Freeman"))
+    sync(connection)
+    Contact.objects.get(name="Gordon Freeman").delete()
+    server.log.clear()
+    sync(connection)
+    assert BOOK + "phone.vcf" in server.resources
+    assert not [m for m, _p in server.log if m == "DELETE"]
+    assert not SyncLink.objects.filter(connection=connection, uid="phone-uid-1")
+
+
+def test_cards_are_offered_by_a_query_and_postulos_own_are_not(made, connection, recruiter):
+    server = made
+    sync(connection)  # the recruiter's own card is on the book now
+    server.add(BOOK + "phone.vcf", phone_card("phone-uid-1", "Gordon Freeman"))
+    server.add(
+        BOOK + "acme.vcf",
+        "BEGIN:VCARD\r\nVERSION:4.0\r\nUID:acme-1\r\nKIND:org\r\nFN:Acme\r\nEND:VCARD\r\n",
+    )
+    found = DavSync().remote_items(connection.full_config, kind="contact")
+    assert [(i.uid, i.kinds) for i in found] == [("phone-uid-1", ("contact", "company"))]
+    assert sorted(
+        i.uid for i in DavSync().remote_items(connection.full_config, kind="company")
+    ) == ["acme-1", "phone-uid-1"]
+    assert [i.uid for i in DavSync().remote_items(connection.full_config, search="acme")] == [
+        "acme-1"
+    ]
+    assert BOOK in server.queries
+
+
+def test_a_company_paired_with_a_card_keeps_name_and_website_in_step(made, connection, company):
+    from postulo.plugins import pairing
+
+    server = made
+    server.enforce_uid = True
+    server.add(
+        BOOK + "acme.vcf",
+        "BEGIN:VCARD\r\nVERSION:4.0\r\nUID:acme-1\r\nKIND:org\r\nFN:Aperture Labs\r\n"
+        "URL:https://aperture.example.org\r\nADR:;;1 Rd;Town;;;PT\r\nNOTE:theirs\r\nEND:VCARD\r\n",
+    )
+    (item,) = DavSync().remote_items(
+        connection.full_config, kind="company", key=(f"{BASE}{BOOK}", "acme-1")
+    )
+    pairing.pair(connection, item, company)
+    report = sync(connection)
+    company.refresh_from_db()
+    assert report.error == "" and company.name == "Aperture Labs"
+    assert company.website == "https://aperture.example.org"
+    # Changed here: the card is patched, KIND, address and note kept.
+    from postulo.plugins.api import update_company
+
+    update_company(
+        company, actor=company.owner, name="Aperture Science", website="https://as.example.org"
+    )
+    server.log.clear()
+    report = sync(connection)
+    assert report.pushed == 1, server.log
+    body, _etag = server.resources[BOOK + "acme.vcf"]
+    assert "FN:Aperture Science" in body and "URL:https://as.example.org" in body
+    for kept in ("UID:acme-1", "KIND:org", "ADR:;;1 Rd;Town;;;PT", "NOTE:theirs", "VERSION:4.0"):
+        assert kept in body
+    assert sync(connection).summary() == "nothing to do"

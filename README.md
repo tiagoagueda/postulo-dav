@@ -80,6 +80,19 @@ Events that belong to no application (an appointment with the employment office)
 paired yet: the core's Pairing page has no record kind for an appointment. Whole-day events
 (deadlines, closing dates) are not written to the calendar.
 
+**Pairing a card made elsewhere with a contact or a company.** On the connection's *Pairing*
+page a person finds a card of the chosen address book (one `addressbook-query` on its name,
+never the whole book) and pairs it with a contact, or with a company. A card marked
+`KIND:org` (or Apple's `X-ABShowAs:COMPANY`) is offered as a company. A card made elsewhere,
+including one adopted from the phone, is patched, never rebuilt: only the name, company (the
+first `ORG` component; a unit after it stays), title, first email, first number and web
+address are replaced, and its UID, version, photo, addresses, birthday, further numbers,
+`X-` properties and parameters such as `LANGUAGE` stay as written. Its `NOTE` is not
+exchanged either way: your notes are private and gather conflict records. Deleting the
+contact unpairs the card and leaves it; only a card Postulo wrote is deleted. A company
+paired with a card keeps name and website in step both ways. Departments, the account
+holder's own card and a vCard 3 step-down for the cards Postulo writes are not done yet.
+
 **Pairing.** A card or an event is paired with its record by its `UID`, with the
 address as a cache. Postulo never changes a `UID` it did not write, so a card created on the
 phone keeps its own; a card moved to another address on the server is found again by it; and

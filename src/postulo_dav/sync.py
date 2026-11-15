@@ -42,7 +42,7 @@ import hashlib
 import logging
 import re
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from urllib.parse import urljoin, urlsplit
 
 import httpx
@@ -64,6 +64,7 @@ from django.utils.translation import gettext_lazy, ngettext
 from postulo.plugins.api import (
     AlreadyPaired,
     Application,
+    Company,
     Contact,
     DestinationRefused,
     DiscoveredOption,
@@ -77,6 +78,7 @@ from postulo.plugins.api import (
     SyncLink,
     SyncReport,
     TestResult,
+    WriteRefused,
     calendar_status,
     check_destination,
     event_lines,
@@ -90,6 +92,7 @@ from postulo.plugins.api import (
     save_web_link,
     schedule_interview,
     settle_interview,
+    update_company,
 )
 
 from . import __version__, dav, text
@@ -153,6 +156,35 @@ def made_elsewhere(link, interview=None) -> bool:
     if interview is not None:
         return bool(uid) and uid != interview.uid
     return bool(uid) and not POSTULO_UID.search(uid)
+
+
+def card_made_elsewhere(link, contact, owner) -> bool:
+    """Whether the card of ``link`` was made by somebody else: its UID is not Postulo's (#8).
+
+    Such a card is patched, never rebuilt, and its ``NOTE`` is not exchanged: Postulo's notes
+    are private and gather conflict records, so a pushed one would expose them and a pulled
+    one would replace them.
+    """
+    uid = link.uid if link is not None else ""
+    return bool(uid) and uid != f"contact-{contact.pk}-{owner.pk}@postulo"
+
+
+def card_hash(card: text.Card, elsewhere: bool) -> str:
+    """What a push of ``card`` is a function of: without the note for a card made elsewhere."""
+    return digest((replace(card, note="") if elsewhere else card).digest_source())
+
+
+def card_changes(card: text.Card, current: text.Card) -> dict[str, str]:
+    """The properties of ``card`` that differ from the card on the server, as for `patch_card`."""
+    wanted = {
+        "FN": (card.name, current.name),
+        "ORG": (card.org, current.org),
+        "TITLE": (card.title, current.title),
+        "EMAIL": (card.email, current.email),
+        "TEL": (card.phone, current.phone),
+        "URL": (card.url, current.url),
+    }
+    return {name: new for name, (new, old) in wanted.items() if new != old}
 
 
 def digest(source: str) -> str:
@@ -972,6 +1004,62 @@ class DavSync:
     def remote_items(
         self, config: dict, search: str = "", kind: str = "", key: tuple[str, str] | None = None
     ) -> list[RemoteItem]:
+        """What a person may pair by hand: the chosen address book's cards and calendar's events."""
+        items: list[RemoteItem] = []
+        if kind in ("", "interview", "application"):
+            items += self._event_items(config, search, kind, key)
+        if kind in ("", "contact", "company"):
+            items += self._card_items(config, search, kind, key)
+        return items
+
+    def _card_items(
+        self, config: dict, search: str, kind: str, key: tuple[str, str] | None
+    ) -> list[RemoteItem]:
+        """Cards of the chosen address book a person may pair with a contact or a company (#8).
+
+        One ``addressbook-query`` on the card's name, limited, never a whole book. A card
+        Postulo made is paired already and is not offered; a company's card
+        (``KIND:org``) is offered as a company, any other as a contact.
+        """
+        client, server = dav.connect(config)
+        with client:
+            chosen = self._resolve(server, config, [])
+            if chosen is not None:
+                picked = chosen.get(ADDRESSBOOK)
+                book = picked[0] if picked else None
+            else:
+                book = self._collection(server, config, ADDRESSBOOK, create=False)
+            if book is None:
+                return []
+            where = server.canonical(book.href)
+            if key is not None and server.canonical(key[0]) != where:
+                return []
+            items = []
+            for href, resource in server.query_cards(book.href, search).items():
+                card = text.text_to_card(resource.text)
+                if not card.uid or not (card.name or card.org) or POSTULO_CARD_UID.match(card.uid):
+                    continue
+                if key is not None and card.uid != key[1]:
+                    continue
+                kinds = ("company",) if card.kind == "org" else ("contact", "company")
+                if kind and kind not in kinds:
+                    continue
+                items.append(
+                    RemoteItem(
+                        collection=where,
+                        uid=card.uid,
+                        label=card.name or card.org,
+                        collection_label=book.name or _tail(book.href),
+                        href=href,
+                        detail=" · ".join(p for p in (card.org, card.title) if p),
+                        kinds=kinds,
+                    )
+                )
+            return items
+
+    def _event_items(
+        self, config: dict, search: str, kind: str, key: tuple[str, str] | None
+    ) -> list[RemoteItem]:
         """Events a person may pair with an interview, from the chosen calendar (#11).
 
         Asked live, and answered from one ``calendar-query`` with a time range (RFC 4791
@@ -979,8 +1067,6 @@ class DavSync:
         events and events without a UID are not offered: the first are paired already, and an
         interview is one meeting. Nothing is written.
         """
-        if kind not in ("", "interview", "application"):
-            return []
         client, server = dav.connect(config)
         with client:
             notes: list[str] = []
@@ -1131,8 +1217,17 @@ class DavSync:
                 cache[key] = (resource, text.text_to_card(resource.text))
             return cache[key]
 
+        # A card paired with a company is that company's, and is never adopted as a contact.
+        companies = {
+            canon(link.remote_href)
+            for link in SyncLink.of_model(connection, Company)
+            if link.remote_href
+        }
+
         def linked() -> set[str]:
-            return {canon(link.remote_href) for link in links.values() if link.remote_href}
+            return {
+                canon(link.remote_href) for link in links.values() if link.remote_href
+            } | companies
 
         def strangers() -> list[str]:
             """The cards read that no link claims: adopted below, unless paired first."""
@@ -1233,6 +1328,26 @@ class DavSync:
             except AlreadyPaired:
                 continue  # that card is another contact's by now: leave both alone
 
+        def patch(contact: Contact, link, card: text.Card) -> str:
+            """Write what changed here into a card somebody else made; its new ETag (#8).
+
+            Only the properties Postulo owns are replaced, in the card as it is now, so
+            that its UID, version, kind, photo, address and the rest survive.
+            """
+            resource = server.get(link.remote_href)
+            changes = card_changes(card, text.text_to_card(resource.text))
+            if not changes:
+                return resource.etag
+            patched = text.patch_card(resource.text, link.uid, changes, rev=now)
+            if patched is None:
+                raise DavError(_("The card could not be read, so it was not changed."))
+            return server.put(
+                link.remote_href,
+                patched,
+                "text/vcard; charset=utf-8",
+                etag=link.etag or resource.etag,
+            )
+
         # Local records: push new and changed ones; notice twins that vanished.
         def one(contact: Contact) -> None:
             link = links.get(contact.pk)
@@ -1241,7 +1356,8 @@ class DavSync:
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the address book on purpose, or unpaired: leave it
             card = card_for(contact, owner, link.uid if link else "")
-            source = digest(card.digest_source())
+            other = card_made_elsewhere(link, contact, owner)
+            source = card_hash(card, other)
             if link is None:
                 if read_only:
                     report.skipped += 1
@@ -1277,7 +1393,7 @@ class DavSync:
             local_changed = link.local_hash != source
             if remote_changed:
                 resource, incoming = read(link.remote_href)
-                if local_changed and digest(incoming.digest_source()) == source:
+                if local_changed and card_hash(incoming, other) == source:
                     # Both sides already say the same: nothing to merge, only to remember.
                     link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
                     link.uid = link.uid or card.uid
@@ -1311,7 +1427,7 @@ class DavSync:
                     link.etag = resource.etag
                     link.save(update_fields=["etag", "updated_at"])
                     card = card_for(contact, owner, link.uid)
-                    source = digest(card.digest_source())
+                    source = card_hash(card, other)
                     local_changed = True
                 else:
                     if local_changed:
@@ -1329,12 +1445,14 @@ class DavSync:
                                 )
                                 % {"name": contact.name}
                             )
+                    if other:
+                        incoming.note = card.note  # a card made elsewhere: no notes exchanged
                     complete = apply_card(contact, incoming, owner, report)
                     if complete:
                         link.etag = resource.etag
                     # else the card is still seen as changed, and the note repeats until the
                     # two sides agree; a later edit here meets the conflict rule above (#26).
-                    link.local_hash = digest(card_for(contact, owner, link.uid).digest_source())
+                    link.local_hash = card_hash(card_for(contact, owner, link.uid), other)
                     link.last_synced_at = now
                     link.uid = link.uid or card.uid
                     link.save()
@@ -1345,12 +1463,15 @@ class DavSync:
                     report.skipped += 1
                     return
                 try:
-                    etag = server.put(
-                        link.remote_href,
-                        text.card_to_text(card, prodid=PRODID, rev=now),
-                        "text/vcard; charset=utf-8",
-                        etag=link.etag,
-                    )
+                    if other:
+                        etag = patch(contact, link, card)
+                    else:
+                        etag = server.put(
+                            link.remote_href,
+                            text.card_to_text(card, prodid=PRODID, rev=now),
+                            "text/vcard; charset=utf-8",
+                            etag=link.etag,
+                        )
                 except Conflict:
                     report.notes.append(
                         str(_("“%(name)s” changed on both sides at once; next run decides."))
@@ -1380,7 +1501,7 @@ class DavSync:
                 card = card_for(contact, owner, link.uid)
             except TOLERATED:
                 return False
-            return link.local_hash == digest(card.digest_source())
+            return link.local_hash == card_hash(card, card_made_elsewhere(link, contact, owner))
 
         for contact in contacts.values():
             if not idle(contact):
@@ -1395,7 +1516,14 @@ class DavSync:
                 continue
             if link.object_id in existing:
                 continue  # no longer visible to this person, but not deleted: not ours to drop
-            if link.paired and not read_only and canon(link.remote_href) in remote:
+            if (
+                link.paired
+                and not read_only
+                and POSTULO_CARD_UID.match(
+                    link.uid or ""
+                )  # a card somebody else made is unpaired, never deleted (#8)
+                and canon(link.remote_href) in remote
+            ):
                 try:
                     if drop_twin(server, link, report, CARD_KEPT):
                         report.removed += 1
@@ -1436,6 +1564,110 @@ class DavSync:
                 report.pulled += 1
 
             run.each(card.name, adopt)
+
+        self._sync_company_cards(run, book, remote)
+
+    def _sync_company_cards(self, run: Run, book, remote: dict[str, str]) -> None:
+        """Keep each company a person paired with a card in step: name and website (#8).
+
+        Both ways, as for a contact; the card is patched and never rebuilt, and its ``NOTE``
+        is not exchanged. The company's other details wait for what the core gives a company
+        (postulo/postulo#329). Nothing is made here: a card becomes a company's twin only by
+        being paired, and a pairing leaves unpaired links alone.
+        """
+        server, connection, report, canon = run.server, run.connection, run.report, run.canon
+        now, read_only = run.now, run.read_only
+        links = {link.object_id: link for link in SyncLink.of_model(connection, Company)}
+        held = run.held(links, book)
+
+        def one(link) -> None:
+            company = link.target
+            if company is None:
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
+                link.remote_gone = True
+                link.save(update_fields=["remote_gone", "updated_at"])
+                report.removed += 1
+                report.notes.append(
+                    _("“%(name)s” was removed from the address book; kept here.")
+                    % {"name": company.name}
+                )
+                return
+            card = text.Card(name=company.name, org=company.name, url=company.website)
+            source = digest(f"{company.name}\n{company.website}")
+            local_changed = link.local_hash != source
+            resource = None
+            if remote[href] != link.etag:
+                resource = server.get(link.remote_href)
+                incoming = text.text_to_card(resource.text)
+                name = incoming.name or incoming.org
+                same = (name, web_address(incoming.url)) == (company.name, company.website)
+                ours_later = (
+                    local_changed
+                    and incoming.rev is not None
+                    and getattr(company, "updated_at", None) is not None
+                    and incoming.rev < company.updated_at
+                )
+                if same or not ours_later:
+                    changes = {}
+                    if name:
+                        changes["name"] = name
+                    if incoming.url.strip():
+                        changes["website"] = web_address(incoming.url)
+                    if changes and not same:
+                        try:
+                            update_company(company, actor=run.owner, via=ACTOR, **changes)
+                        except WriteRefused as refused:
+                            report.skipped += 1
+                            report.notes.append(
+                                _("“%(name)s” was not changed from the card: %(why)s")
+                                % {"name": company.name, "why": refused}
+                            )
+                            link.etag = resource.etag
+                            link.save(update_fields=["etag", "updated_at"])
+                            return
+                        company.refresh_from_db()
+                    link.etag = resource.etag
+                    link.local_hash = digest(f"{company.name}\n{company.website}")
+                    link.last_synced_at = now
+                    link.save()
+                    if not same:
+                        report.pulled += 1
+                    return
+                link.etag = resource.etag
+            if local_changed:
+                if read_only:
+                    report.skipped += 1
+                    return
+                resource = resource or server.get(link.remote_href)
+                changes = card_changes(card, text.text_to_card(resource.text))
+                etag = resource.etag
+                if changes:
+                    patched = text.patch_card(resource.text, link.uid, changes, rev=now)
+                    if patched is None:
+                        raise DavError(_("The card could not be read, so it was not changed."))
+                    try:
+                        etag = server.put(
+                            link.remote_href,
+                            patched,
+                            "text/vcard; charset=utf-8",
+                            etag=resource.etag,
+                        )
+                    except Conflict:
+                        report.notes.append(
+                            _("“%(name)s” changed on both sides at once; next run decides.")
+                            % {"name": company.name}
+                        )
+                        return
+                    report.pushed += 1
+                link.etag, link.local_hash, link.last_synced_at = etag, source, now
+                link.save()
+
+        for pk, link in links.items():
+            if not link.paired or link.remote_gone or pk in held:
+                continue
+            run.each(str(link.uid)[:60], lambda link=link: one(link))
 
     # -------------------------------------------------------- interviews
 

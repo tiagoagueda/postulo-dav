@@ -117,6 +117,14 @@ _QUERY = (
 )
 
 
+_CARD_QUERY = (
+    '<?xml version="1.0" encoding="utf-8"?>'
+    '<c:addressbook-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:carddav">'
+    "<d:prop><d:getetag/><c:address-data/></d:prop>{filter}"
+    "<c:limit><c:nresults>{limit}</c:nresults></c:limit></c:addressbook-query>"
+)
+
+
 class DavError(Exception):
     """The server answered, and the answer was no. The message is for the person.
 
@@ -686,6 +694,61 @@ class Server:
                 if data is None or not data.text:
                     continue
                 if len(data.text.encode("utf-8")) > RESOURCE_LIMIT:
+                    continue
+                etag_node = propstat.find(f".//{{{DAV}}}getetag")
+                etag = (etag_node.text or "").strip() if etag_node is not None else ""
+                found[href] = Resource(data.text, etag)
+        return found
+
+    def query_cards(
+        self, collection: str, search: str = "", limit: int = 100
+    ) -> dict[str, Resource]:
+        """The cards of ``collection`` whose name contains ``search``, as href → Resource.
+
+        One ``addressbook-query`` REPORT (RFC 6352 §8.6) with a text match on ``FN`` and a
+        limit, so the server narrows the answer and a whole address book is never read to
+        find one card. An empty search is the first ``limit`` cards. Only what is under the
+        collection is taken from the answer.
+        """
+        match = ""
+        if search.strip():
+            match = (
+                '<c:filter><c:prop-filter name="FN"><c:text-match collation="i;unicode-casemap" '
+                f'match-type="contains">{_xml(search.strip())}</c:text-match></c:prop-filter>'
+                "</c:filter>"
+            )
+        response, answer = self._send(
+            "REPORT",
+            collection,
+            limit=MULTIGET_LIMIT,
+            content=_CARD_QUERY.format(filter=match, limit=int(limit)).encode(),
+            headers={"Content-Type": "application/xml; charset=utf-8", "Depth": "1"},
+        )
+        if response.status_code != 207:
+            raise _refusal(response)
+        try:
+            tree = ElementTree.fromstring(answer)
+        except ElementTree.ParseError as error:
+            raise DavError(
+                _("The server's answer could not be read: %(error)s") % {"error": error}
+            ) from error
+        found: dict[str, Resource] = {}
+        for node in tree.iter(f"{{{DAV}}}response"):
+            href_node = node.find(f"{{{DAV}}}href")
+            if href_node is None or not href_node.text:
+                continue
+            try:
+                href = self.canonical(href_node.text.strip())
+            except DavError:
+                continue
+            if not self.within(collection, href):
+                continue
+            for propstat in node.findall(f"{{{DAV}}}propstat"):
+                status = propstat.find(f"{{{DAV}}}status")
+                if status is not None and " 200 " not in f"{status.text or ''} ":
+                    continue
+                data = propstat.find(f".//{{{CARD}}}address-data")
+                if data is None or not data.text or len(data.text.encode()) > RESOURCE_LIMIT:
                     continue
                 etag_node = propstat.find(f".//{{{DAV}}}getetag")
                 etag = (etag_node.text or "").strip() if etag_node is not None else ""

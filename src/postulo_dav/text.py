@@ -165,6 +165,9 @@ class Card:
     url: str = ""
     note: str = ""
     rev: dt.datetime | None = None
+    #: ``org`` for a company's card: ``KIND:org`` (vCard 4, RFC 6350 §6.1.4) or Apple's
+    #: ``X-ABShowAs:COMPANY``. Not part of what is compared, and not written (#8).
+    kind: str = ""
 
     def digest_source(self) -> str:
         return "\n".join(
@@ -222,7 +225,93 @@ def text_to_card(text: str) -> Card:
             card.note = unescape(prop.value)
         elif prop.name == "REV":
             card.rev = parse_stamp(prop.value)
+        elif prop.name == "KIND" and prop.value.strip().lower() == "org":
+            card.kind = "org"
+        elif prop.name == "X-ABSHOWAS" and prop.value.strip().upper() == "COMPANY":
+            card.kind = "org"
     return card
+
+
+def _value_at(line: str) -> int:
+    """Where the value of a content line starts: after the first colon outside quotes."""
+    in_quotes = False
+    for index, char in enumerate(line):
+        if char == '"':
+            in_quotes = not in_quotes
+        elif char == ":" and not in_quotes:
+            return index + 1
+    return len(line)
+
+
+def patch_card(source: str, uid: str, changes: dict[str, str], *, rev: dt.datetime) -> str | None:
+    """The card ``uid`` with only the properties in ``changes`` replaced, or ``None``.
+
+    A card somebody else made is patched, never rebuilt (#8): its UID, VERSION, KIND, photo,
+    address, birthday, the numbers and emails after the first, ``X-`` properties and every
+    parameter such as ``LANGUAGE`` come back as they were. ``changes`` maps ``FN``, ``ORG``
+    (the company, the first component: a unit after it stays), ``TITLE``, ``EMAIL``, ``TEL``
+    and ``URL`` to their new value, the first of each property is the one replaced, and an
+    empty value removes it. ``N`` is left as it is: a name does not split reliably.
+    """
+    lines = unfold(source)
+    start = end = None
+    for index, line in enumerate(lines):
+        prop = parse_line(line)
+        if prop is None:
+            continue
+        if prop.name == "BEGIN" and prop.value.strip().upper() == "VCARD" and start is None:
+            start = index
+        elif prop.name == "END" and prop.value.strip().upper() == "VCARD" and start is not None:
+            end = index
+            break
+    if start is None or end is None:
+        return None
+    body = lines[start + 1 : end]
+    found = next(
+        (p.value.strip() for p in (parse_line(line) for line in body) if p and p.name == "UID"), ""
+    )
+    if found != uid:
+        return None
+    out: list[str] = []
+    seen: set[str] = set()
+    for line in body:
+        prop = parse_line(line)
+        name = prop.name if prop is not None else ""
+        if name == "REV":
+            continue
+        if name in changes and name not in seen:
+            seen.add(name)
+            new = changes[name]
+            head = line[: _value_at(line)]
+            if name == "ORG":
+                parts = _split_unquoted(prop.value, ";")
+                parts[0] = escape(new)
+                if not new and len(parts) == 1:
+                    continue
+                out.append(head + ";".join(parts))
+            elif not new:
+                continue
+            elif name in ("EMAIL", "URL"):
+                out.append(head + without_controls(new))
+            else:
+                out.append(head + escape(new))
+            continue
+        out.append(line)
+    added = {
+        "FN": "FN:{}",
+        "ORG": "ORG:{}",
+        "TITLE": "TITLE:{}",
+        "EMAIL": "EMAIL;TYPE=work:{}",
+        "TEL": "TEL;TYPE=work,voice:{}",
+        "URL": "URL:{}",
+    }
+    for name, template in added.items():
+        if name in changes and name not in seen and changes[name]:
+            value = changes[name]
+            value = without_controls(value) if name in ("EMAIL", "URL") else escape(value)
+            out.append(template.format(value))
+    out.append(f"REV:{stamp(rev)}")
+    return render(lines[: start + 1] + out + lines[end:])
 
 
 # --------------------------------------------------------------- iCalendar
