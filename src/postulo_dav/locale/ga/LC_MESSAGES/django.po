@@ -48,6 +48,10 @@ msgid "(no title)"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+msgid "A card cannot be made into that."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Athraíodh teagmhálaí a scriosadh anseo ar an bhfón ón sioncronú deireanach. Fágadh an cárta sa leabhar seoltaí, agus tiocfaidh sé ar ais mar theagmhálaí ar an gcéad rith eile."
 
@@ -136,6 +140,11 @@ msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar �
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "From the card “%(name)s”: %(details)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "it could not be saved here"
 msgstr "níorbh fhéidir é a shábháil anseo"
 
@@ -220,6 +229,14 @@ msgid "Server address"
 msgstr "Seoladh an fhreastalaí"
 
 #: src/postulo_dav/sync.py
+msgid "That card has changed since it was listed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That card is not in the chosen address book."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
 msgstr ""
@@ -251,6 +268,14 @@ msgstr "Níl an féilire “%(name)s” ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The card has no name to make a company of."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The card has no name to make a contact of."
 msgstr ""
 
 #: src/postulo_dav/sync.py

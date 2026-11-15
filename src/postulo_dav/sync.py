@@ -81,8 +81,10 @@ from postulo.plugins.api import (
     WriteRefused,
     calendar_status,
     check_destination,
+    create_contact,
     event_lines,
     get_or_create_company,
+    get_or_create_department,
     phone_number_is_taken,
     primary_phone_number,
     primary_web_link,
@@ -93,6 +95,7 @@ from postulo.plugins.api import (
     schedule_interview,
     settle_interview,
     update_company,
+    update_contact,
 )
 
 from . import __version__, dav, text
@@ -1000,6 +1003,121 @@ class DavSync:
                 report.pulled += 1
 
             run.each(link.uid, make)
+
+    def fill_record(self, connection, config: dict, item: RemoteItem, kind: str, into=None):
+        """Make a company or a contact from one card, or fill one of the person's own (#9).
+
+        One card, started by the person on the Pairing page, read from the chosen address
+        book now; nothing is written to the server. Written through the core's services with
+        the plugin as the actor: a new record is made from the card, and an existing one is
+        only given what it lacks (its blanks), never overwritten. Postulo pairs the two
+        afterwards unless the person asked for a one-off import.
+        """
+        client, server = dav.connect(config)
+        with client:
+            chosen = self._resolve(server, config, [])
+            if chosen is not None:
+                picked = chosen.get(ADDRESSBOOK)
+                book = picked[0] if picked else None
+            else:
+                book = self._collection(server, config, ADDRESSBOOK, create=False)
+            if book is None or not server.within(book.href, item.href):
+                raise DavError(_("That card is not in the chosen address book."))
+            card = text.text_to_card(server.get(item.href).text)
+        if card.uid != item.uid:
+            raise DavError(_("That card has changed since it was listed."))
+        owner = connection.owner
+        if kind == "company":
+            return self._company_from(owner, card, into)
+        if kind == "contact":
+            return self._contact_from(owner, card, into)
+        raise DavError(_("A card cannot be made into that."))
+
+    def _company_from(self, owner, card: text.Card, into):
+        """A company from a card: its name, website and, as notes, the numbers it carries.
+
+        The name is the card's ``FN`` for a company's card, else the first ``ORG`` component.
+        Matching an existing company is the person's call: what is filled is ``into``, and a
+        new company is made only when none was given, by the name the core would match
+        (case aside). A card's numbers and emails, which a company has no place for yet
+        (postulo/postulo#329), go into its notes, under a line naming the card.
+        """
+        name = (card.name if card.kind == "org" else card.org or card.name)[:NAME_LENGTH]
+        if not name.strip():
+            raise DavError(_("The card has no name to make a company of."))
+        company = into or get_or_create_company(owner, name, strict=True)
+        changes: dict = {}
+        site = web_address(card.url)
+        if site and not company.website:
+            changes["website"] = site
+        extras = [p for p in (card.phone, card.email) if p]
+        if extras:
+            note = company.note_for(owner)
+            line = _("From the card “%(name)s”: %(details)s") % {
+                "name": name,
+                "details": ", ".join(extras),
+            }
+            if line not in note:
+                changes["notes"] = f"{note}\n\n{line}".strip()
+        if changes:
+            update_company(company, actor=owner, via=ACTOR, **changes)
+            company.refresh_from_db()
+        return company
+
+    def _contact_from(self, owner, card: text.Card, into):
+        """A contact from a card: what adoption takes, and the ``ORG`` unit as the department.
+
+        A card with no ``ORG`` gives a contact with no company. An existing contact is only
+        given what it lacks.
+        """
+        if not card.name.strip():
+            raise DavError(_("The card has no name to make a contact of."))
+        company = into.company if into is not None else None
+        if card.org and company is None:
+            company = get_or_create_company(owner, card.org[:NAME_LENGTH], strict=True)
+        department = None
+        if card.unit and company is not None:
+            try:
+                department = get_or_create_department(
+                    company, card.unit[:NAME_LENGTH], actor=owner, via=ACTOR
+                )
+            except WriteRefused:
+                department = None  # employer structure is off: no department is written
+        if into is None:
+            contact = create_contact(
+                company,
+                actor=owner,
+                via=ACTOR,
+                name=card.name[:NAME_LENGTH],
+                role=card.title[:200],
+                email=card.email[:254],
+                department=department,
+            )
+        else:
+            contact = into
+            changes = {}
+            if not contact.role and card.title:
+                changes["role"] = card.title[:200]
+            if not contact.email and card.email:
+                changes["email"] = card.email[:254]
+            if contact.company_id is None and company is not None:
+                changes["company"] = company
+            if contact.department_id is None and department is not None:
+                changes["department"] = department
+            if changes:
+                update_contact(contact, actor=owner, via=ACTOR, **changes)
+        number = card.phone[:40].strip()
+        if number and primary_phone_number(contact) is None:
+            if not phone_number_is_taken(number, exclude_pk=None, asked_by=owner):
+                save_phone_number(contact, owner, number)
+        url = web_address(card.url)[:500]
+        if url and primary_web_link(contact, LinkKind.SOCIAL) is None:
+            try:
+                save_web_link(contact, owner, LinkKind.SOCIAL, url)
+            except (ValidationError, ValueError):
+                pass  # an address the core will not keep is left out, as adoption does
+        contact.refresh_from_db()
+        return contact
 
     def remote_items(
         self, config: dict, search: str = "", kind: str = "", key: tuple[str, str] | None = None

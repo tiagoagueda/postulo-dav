@@ -168,6 +168,8 @@ class Card:
     #: ``org`` for a company's card: ``KIND:org`` (vCard 4, RFC 6350 §6.1.4) or Apple's
     #: ``X-ABShowAs:COMPANY``. Not part of what is compared, and not written (#8).
     kind: str = ""
+    #: The second ``ORG`` component, the unit (RFC 6350 §6.6.4): a department. Not compared.
+    unit: str = ""
 
     def digest_source(self) -> str:
         return "\n".join(
@@ -212,7 +214,9 @@ def text_to_card(text: str) -> Card:
                 given, family = unescape(parts[1]), unescape(parts[0])
             card.name = " ".join(part for part in (given, family) if part).strip()
         elif prop.name == "ORG":
-            card.org = unescape(_split_unquoted(prop.value, ";")[0]).strip()
+            parts = _split_unquoted(prop.value, ";")
+            card.org = unescape(parts[0]).strip()
+            card.unit = unescape(parts[1]).strip() if len(parts) > 1 else ""
         elif prop.name == "TITLE":
             card.title = unescape(prop.value).strip()
         elif prop.name == "EMAIL" and not card.email:

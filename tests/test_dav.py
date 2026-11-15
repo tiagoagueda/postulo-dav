@@ -2526,3 +2526,81 @@ def test_a_company_paired_with_a_card_keeps_name_and_website_in_step(made, conne
     for kept in ("UID:acme-1", "KIND:org", "ADR:;;1 Rd;Town;;;PT", "NOTE:theirs", "VERSION:4.0"):
         assert kept in body
     assert sync(connection).summary() == "nothing to do"
+
+
+# ------------------------------- importing one card (#9)
+
+
+def import_card(connection, uid, kind, into=None, pair=False):
+    from postulo.plugins.testing import create_by_hand
+
+    return create_by_hand(
+        connection, collection=f"{BASE}{BOOK}", uid=uid, kind=kind, into=into, pair=pair
+    )
+
+
+def test_a_company_card_becomes_a_new_company_and_writes_nothing_to_the_server(
+    made, connection, user
+):
+    from postulo.jobs.models import Company
+
+    made.add(
+        BOOK + "acme.vcf",
+        "BEGIN:VCARD\r\nVERSION:4.0\r\nUID:acme-1\r\nKIND:org\r\nFN:Acme Corp\r\n"
+        "ORG:Acme Corp\r\nURL:https://acme.example.org\r\nTEL:+351 210 000 000\r\n"
+        "EMAIL:hello@acme.example.org\r\nEND:VCARD\r\n",
+    )
+    made.log.clear()
+    company = import_card(connection, "acme-1", "company")
+    assert Company.objects.get(name="Acme Corp") == company
+    assert company.website == "https://acme.example.org"
+    note = company.note_for(user)
+    assert "+351 210 000 000" in note and "hello@acme.example.org" in note
+    assert not [m for m, _p in made.log if m not in ("PROPFIND", "GET", "REPORT")]
+    assert not SyncLink.objects.filter(connection=connection)  # a one-off: nothing paired
+
+
+def test_a_card_fills_only_the_blanks_of_an_existing_company(made, connection, company):
+    company.website = "https://mine.example.org"
+    company.save()
+    made.add(
+        BOOK + "acme.vcf",
+        "BEGIN:VCARD\r\nVERSION:4.0\r\nUID:acme-1\r\nKIND:org\r\nFN:Different Name\r\n"
+        "URL:https://theirs.example.org\r\nEND:VCARD\r\n",
+    )
+    filled = import_card(connection, "acme-1", "company", into=company, pair=True)
+    assert filled.pk == company.pk and filled.name == "Aperture Science"
+    assert filled.website == "https://mine.example.org"
+    assert SyncLink.for_record(connection, company).uid == "acme-1"
+
+
+def test_a_card_becomes_a_contact_with_its_unit_as_department_or_no_company(made, connection, user):
+    made.add(
+        BOOK + "g.vcf",
+        "BEGIN:VCARD\r\nVERSION:3.0\r\nUID:g-1\r\nFN:Gordon Freeman\r\nORG:Black Mesa;Research\r\n"
+        "TITLE:Physicist\r\nEMAIL:g@bm.test\r\nTEL:+351 910 000 001\r\nEND:VCARD\r\n",
+    )
+    made.add(
+        BOOK + "h.vcf",
+        "BEGIN:VCARD\r\nVERSION:3.0\r\nUID:h-1\r\nFN:Alone Person\r\nEND:VCARD\r\n",
+    )
+    gordon = import_card(connection, "g-1", "contact")
+    assert gordon.name == "Gordon Freeman" and gordon.company.name == "Black Mesa"
+    assert gordon.role == "Physicist" and gordon.email == "g@bm.test"
+    assert primary_phone_number(gordon).number
+    alone = import_card(connection, "h-1", "contact")
+    assert alone.company_id is None  # not the holding company
+    assert Contact.objects.filter(owner=user).count() == 2
+
+
+def test_a_card_outside_the_chosen_book_cannot_be_imported(made, connection):
+    made.add("/dav/addressbooks/ana/contacts/x.vcf", vcard("x-1", "Somebody Personal"))
+    from postulo.plugins.testing import create_by_hand
+
+    full = choose_hrefs(connection, {BOOK: "read"})
+    assert full
+    with pytest.raises(Exception):  # noqa: B017,PT011 - the core's refusal wraps the plugin's
+        create_by_hand(
+            connection, collection=f"{BASE}{BOOK}", uid="x-1", kind="contact", pair=False
+        )
+    assert not Contact.objects.filter(name="Somebody Personal").exists()

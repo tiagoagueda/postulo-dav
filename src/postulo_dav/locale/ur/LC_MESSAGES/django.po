@@ -45,6 +45,10 @@ msgid "(no title)"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+msgid "A card cannot be made into that."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "یہاں حذف کیا گیا ایک رابطہ آخری سنک کے بعد فون پر تبدیل کیا جا چکا تھا۔ کارڈ ایڈریس بک میں چھوڑ دیا گیا، اور اگلے رن میں رابطے کے طور پر واپس آ جائے گا۔"
 
@@ -133,6 +137,11 @@ msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar �
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "From the card “%(name)s”: %(details)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "it could not be saved here"
 msgstr "اسے یہاں محفوظ نہیں کیا جا سکا"
 
@@ -217,6 +226,14 @@ msgid "Server address"
 msgstr "سرور کا پتہ"
 
 #: src/postulo_dav/sync.py
+msgid "That card has changed since it was listed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That card is not in the chosen address book."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
 msgstr ""
@@ -248,6 +265,14 @@ msgstr "کیلنڈر “%(name)s” سرور پر موجود نہیں۔"
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The card has no name to make a company of."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The card has no name to make a contact of."
 msgstr ""
 
 #: src/postulo_dav/sync.py

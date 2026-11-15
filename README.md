@@ -93,6 +93,18 @@ contact unpairs the card and leaves it; only a card Postulo wrote is deleted. A 
 paired with a card keeps name and website in step both ways. Departments, the account
 holder's own card and a vCard 3 step-down for the cards Postulo writes are not done yet.
 
+**Importing one card.** From the *Pairing* page a card of the chosen address book can be
+copied once into Postulo: as a **new company** (name from the card's `FN` for a company's
+card, else its first `ORG` component; website; its numbers and emails go into the notes,
+under a line naming the card, until a company can hold them), into an **existing company**
+or **existing contact** the person picked (only its blanks are filled, and nothing merges),
+or as a **contact** (name, title, one email, the primary number and web link; the `ORG` unit
+becomes its department where employer structure is on, and a card with no `ORG` gives a
+contact with no company). Records are written through Postulo's own services. An import
+alone writes nothing to the server; pairing it afterwards is the person's choice. Logos
+and photos are not imported, and the differences between a card and an existing company are
+not listed yet.
+
 **Pairing.** A card or an event is paired with its record by its `UID`, with the
 address as a cache. Postulo never changes a `UID` it did not write, so a card created on the
 phone keeps its own; a card moved to another address on the server is found again by it; and
