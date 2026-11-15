@@ -18,6 +18,7 @@ from postulo.applications.models import (
     ApplicationEvent,
     Interview,
     InterviewOutcome,
+    Reminder,
     Status,
 )
 from postulo.applications.services import schedule_interview
@@ -89,6 +90,8 @@ class FakeDav:
         self.multigets: list[int] = []
         #: The collection of every calendar-query REPORT (RFC 4791 §7.8).
         self.queries: list[str] = []
+        #: A server that refuses to make a task list (a calendar for ``VTODO``).
+        self.refuse_tasks = False
 
     @staticmethod
     def _collection_props(meta: dict) -> str:
@@ -243,10 +246,14 @@ class FakeDav:
 
         if method in ("MKCOL", "MKCALENDAR"):
             name = re.search(r"<d:displayname>(.*?)</d:displayname>", body).group(1)
+            if self.refuse_tasks and "VTODO" in body:
+                return httpx.Response(403)  # a server that keeps no tasks
             self.collections[path] = {
                 "name": name,
                 "kind": ADDRESSBOOK if method == "MKCOL" else CALENDAR,
             }
+            if method == "MKCALENDAR":
+                self.collections[path]["components"] = re.findall(r'<c:comp name="(\w+)"/>', body)
             return httpx.Response(201)
 
         if method == "GET":
@@ -2046,7 +2053,7 @@ def test_writing_chosen_for_a_read_only_collection_is_lowered_to_reading(
     assert not [m for m, _p in server.log if m in ("PUT", "DELETE")]
 
 
-def test_discovery_lists_collections_that_take_events_and_leaves_task_lists_out(made, connection):
+def test_discovery_lists_task_lists_apart_from_the_calendars(made, connection):
     server = made
     server.collections["/dav/calendars/ana/tasks/"] = {
         "name": "Tasks",
@@ -2056,7 +2063,7 @@ def test_discovery_lists_collections_that_take_events_and_leaves_task_lists_out(
     found = DavSync().discover(CONFIG)["collections"]
     labels = {(option.group, option.label) for option in found}
     assert ("Address books", "Contacts") in labels and ("Calendars", "Personal") in labels
-    assert not [option for option in found if option.label == "Tasks"]
+    assert ("Task lists", "Tasks") in labels and ("Calendars", "Tasks") not in labels
     assert len({option.value for option in found}) == len(found)
 
 
@@ -2722,3 +2729,355 @@ def test_the_own_card_is_off_by_default(made, connection, user):
     user.save()
     sync(connection)
     assert not cards(made)
+
+
+# ---------------------------------------------- reminders as tasks, in a task list (#12)
+
+TASKS_PATH = "/dav/calendars/ana/postulo-tasks/"
+PHONE_TASKS = "/dav/calendars/ana/phone-tasks/"
+
+
+def tasks(fake: FakeDav, root: str = TASKS_PATH) -> dict[str, str]:
+    return {h: b for h, (b, _e) in fake.resources.items() if h.startswith(root)}
+
+
+@pytest.fixture
+def listed(made):
+    """A task list of Postulo's own already on the server, and the connection told its name."""
+    made.collections[TASKS_PATH] = {
+        "name": "Postulo Tasks",
+        "kind": CALENDAR,
+        "components": ["VTODO"],
+    }
+    return made
+
+
+def with_tasks(connection, name="Postulo Tasks", **extra):
+    return with_config(connection, tasklist=name, **extra)
+
+
+def make_reminder(user, summary="Ring Cave", days=2, **kwargs):
+    from postulo.plugins.api import create_reminder
+
+    return create_reminder(
+        user, summary=summary, due=timezone.now() + dt.timedelta(days=days), **kwargs
+    )
+
+
+def task_text(uid, summary="Buy lemons", due="20991201T100000Z", extra=""):
+    return (
+        "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VTODO\r\n"
+        f"UID:{uid}\r\nDTSTAMP:20260101T000000Z\r\nSUMMARY:{summary}\r\n"
+        + (f"DUE:{due}\r\n" if due else "")
+        + extra
+        + "END:VTODO\r\nEND:VCALENDAR\r\n"
+    )
+
+
+def only_task(fake, root=TASKS_PATH):
+    ((href, body),) = tasks(fake, root).items()
+    return href, body
+
+
+def test_a_task_is_read_in_the_component_it_belongs_to_and_an_alarm_is_not_its_text():
+    ics = (
+        "BEGIN:VCALENDAR\r\nBEGIN:VTODO\r\nUID:t1\r\nSUMMARY:Ring Cave\r\n"
+        "DUE:20261201T100000Z\r\nSTATUS:NEEDS-ACTION\r\nPRIORITY:1\r\nREFID:app-1\r\n"
+        "BEGIN:VALARM\r\nACTION:DISPLAY\r\nSUMMARY:Alarm summary\r\n"
+        "DESCRIPTION:Alarm text\r\nTRIGGER:-PT15M\r\nEND:VALARM\r\n"
+        "RELATED-TO:parent-1\r\nEND:VTODO\r\nEND:VCALENDAR\r\n"
+    )
+    (todo,) = text.text_to_todos(ics)
+    assert todo.summary == "Ring Cave" and todo.parent == "parent-1"
+    assert todo.due == dt.datetime(2026, 12, 1, 10, tzinfo=dt.UTC)
+    assert todo.priority == 1 and todo.refid == "app-1" and not todo.done
+    (day,) = text.text_to_todos(
+        task_text("t2", due="").replace("END:VTODO", "DUE;VALUE=DATE:20261201\r\nEND:VTODO")
+    )
+    assert day.due is None and day.due_day == dt.date(2026, 12, 1)
+
+
+def test_a_task_is_patched_in_what_postulo_owns_and_nothing_else():
+    phone = task_text(
+        "t1",
+        extra=(
+            "DESCRIPTION:Mine, not Postulo's\r\nCATEGORIES:work\r\nLOCATION:Lisbon\r\n"
+            "BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm text\r\nTRIGGER:-PT15M\r\n"
+            "END:VALARM\r\nSTATUS:NEEDS-ACTION\r\n"
+        ),
+    )
+    now = dt.datetime(2026, 11, 1, tzinfo=dt.UTC)
+    done = text.Todo(uid="t1", summary="Buy lemons", status="COMPLETED", completed=now)
+    patched = text.patch_todo(phone, "t1", {"STATUS"}, done, modified=now)
+    for kept in ("DESCRIPTION:Mine, not Postulo's", "CATEGORIES:work", "LOCATION:Lisbon"):
+        assert kept in patched
+    assert "DESCRIPTION:Alarm text" in patched and "BEGIN:VALARM" in patched
+    assert "STATUS:COMPLETED" in patched and "COMPLETED:20261101T000000Z" in patched
+    assert "PERCENT-COMPLETE:100" in patched and "NEEDS-ACTION" not in patched
+    assert "DUE:20991201T100000Z" in patched and "SUMMARY:Buy lemons" in patched
+    assert text.patch_todo(phone, "someone-else", {"STATUS"}, done, modified=now) is None
+
+
+def test_a_reminder_goes_out_as_a_task_and_a_second_run_does_nothing(listed, connection, user):
+    reminder = make_reminder(user)
+    full = with_tasks(connection)
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.pushed == 1
+    href, body = only_task(listed)
+    assert f"UID:{reminder.uid}" in body and "SUMMARY:Ring Cave" in body
+    assert "STATUS:NEEDS-ACTION" in body and f"DUE:{text.stamp(reminder.due_at)}" in body
+    link = SyncLink.for_record(connection, reminder)
+    assert link.uid == reminder.uid and link.collection == f"{BASE}{TASKS_PATH}"
+    listed.log.clear()
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+    assert not [m for m, _p in listed.log if m in ("PUT", "DELETE")]
+
+
+def test_no_task_list_is_kept_unless_one_is_named_or_chosen(listed, connection, user):
+    make_reminder(user)
+    report = sync(connection)
+    assert report.error == "" and not tasks(listed)
+    assert not requests_under(listed, TASKS_PATH)
+
+
+def test_an_edit_on_the_phone_changes_the_reminder(listed, connection, user):
+    from postulo.applications.services import reopen_reminder  # noqa: F401
+
+    reminder = make_reminder(user)
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    href, body = only_task(listed)
+    later = timezone.now().replace(microsecond=0) + dt.timedelta(days=5)
+    listed.add(
+        href,
+        body.replace("Ring Cave", "Ring Cave Johnson").replace(
+            f"DUE:{text.stamp(reminder.due_at)}", f"DUE:{text.stamp(later)}"
+        ),
+    )
+    report = DavSync().sync(connection, full)
+    assert report.pulled == 1 and report.error == ""
+    reminder.refresh_from_db()
+    assert reminder.summary == "Ring Cave Johnson" and reminder.due_at == later
+    assert reminder.actor == "dav"
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+
+
+def test_a_tick_completes_it_at_its_moment_an_untick_reopens_and_cancelled_completes(
+    listed, connection, user
+):
+    reminder = make_reminder(user)
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    href, body = only_task(listed)
+    moment = (timezone.now() - dt.timedelta(hours=3)).replace(microsecond=0)
+    ticked = body.replace(
+        "STATUS:NEEDS-ACTION",
+        f"STATUS:COMPLETED\r\nCOMPLETED:{text.stamp(moment)}\r\nPERCENT-COMPLETE:100",
+    )
+    listed.add(href, ticked)
+    DavSync().sync(connection, full)
+    reminder.refresh_from_db()
+    assert reminder.done_at == moment
+    # Unticked on the phone: outstanding again.
+    listed.add(href, body)
+    DavSync().sync(connection, full)
+    reminder.refresh_from_db()
+    assert reminder.done_at is None
+    # Cancelled on the phone: completed, and not written back as anything else.
+    listed.add(href, body.replace("STATUS:NEEDS-ACTION", "STATUS:CANCELLED"))
+    DavSync().sync(connection, full)
+    reminder.refresh_from_db()
+    assert reminder.done_at is not None
+    listed.log.clear()
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+    assert "STATUS:CANCELLED" in listed.resources[href][0]
+
+
+def test_a_reminder_done_here_ticks_its_task_and_keeps_what_the_phone_added(
+    listed, connection, user
+):
+    from postulo.plugins.api import complete_reminder
+
+    reminder = make_reminder(user)
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    href, body = only_task(listed)
+    phone = body.replace(
+        "END:VTODO",
+        "DESCRIPTION:Mine\r\nCATEGORIES:phone\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\n"
+        "DESCRIPTION:Ring!\r\nTRIGGER:-PT5M\r\nEND:VALARM\r\nEND:VTODO",
+    )
+    listed.add(href, phone)
+    DavSync().sync(connection, full)  # the phone's version is read, nothing differs
+    complete_reminder(reminder, actor="")
+    report = DavSync().sync(connection, full)
+    assert report.pushed == 1
+    written = listed.resources[href][0]
+    assert "STATUS:COMPLETED" in written and "COMPLETED:" in written
+    assert "DESCRIPTION:Mine" in written and "CATEGORIES:phone" in written
+    assert "DESCRIPTION:Ring!" in written and "BEGIN:VALARM" in written
+
+
+def test_a_task_deleted_on_the_phone_flags_its_link_and_the_reminder_stays(
+    listed, connection, user
+):
+    reminder = make_reminder(user)
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    href, _body = only_task(listed)
+    del listed.resources[href]
+    report = DavSync().sync(connection, full)
+    assert report.removed == 1 and "reminder was kept" in report.summary()
+    assert SyncLink.for_record(connection, reminder).remote_gone
+    assert Reminder.objects.filter(pk=reminder.pk).exists()
+    listed.log.clear()
+    DavSync().sync(connection, full)
+    assert not tasks(listed), "a flagged link is not pushed back"
+
+
+def test_a_reminder_deleted_here_takes_its_task_and_cancels_one_the_phone_made(
+    listed, connection, user
+):
+    ours = make_reminder(user, "Ours")
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    listed.add(TASKS_PATH + "lemons.ics", task_text("lemons-1"))
+    DavSync().sync(connection, full)  # adopted: the list is Postulo's own
+    theirs = Reminder.objects.get(summary="Buy lemons")
+    ours.delete()
+    theirs.delete()
+    DavSync().sync(connection, full)
+    assert list(tasks(listed)) == [TASKS_PATH + "lemons.ics"]
+    assert "STATUS:CANCELLED" in listed.resources[TASKS_PATH + "lemons.ics"][0]
+
+
+def test_a_task_made_in_postulos_own_list_becomes_a_reminder(listed, connection, user):
+    listed.add(TASKS_PATH + "lemons.ics", task_text("lemons-1", due="20991201T100000Z"))
+    listed.add(TASKS_PATH + "nodue.ics", task_text("nodue-1", "Think about it", due=""))
+    listed.add(TASKS_PATH + "done.ics", task_text("done-1", "Old", extra="STATUS:COMPLETED\r\n"))
+    full = with_tasks(connection)
+    report = DavSync().sync(connection, full)
+    reminder = Reminder.objects.get(summary="Buy lemons")
+    assert reminder.due_at == dt.datetime(2099, 12, 1, 10, tzinfo=dt.UTC)
+    assert reminder.actor == "dav" and reminder.source == ""
+    assert "no due time" in report.summary()
+    assert not Reminder.objects.filter(summary__in=["Think about it", "Old"]).exists()
+    link = SyncLink.for_record(connection, reminder)
+    assert link.uid == "lemons-1" and link.collection == f"{BASE}{TASKS_PATH}"
+    DavSync().sync(connection, full)
+    assert Reminder.objects.filter(owner=user).count() == 1, "adopted once, not on every run"
+
+
+def test_a_task_in_any_other_list_is_left_alone_and_counted(made, connection, user):
+    made.collections[PHONE_TASKS] = {"name": "Phone", "kind": CALENDAR, "components": ["VTODO"]}
+    made.add(PHONE_TASKS + "errand.ics", task_text("errand-1", "Buy bread"))
+    full = with_tasks(connection, "Phone")
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and not Reminder.objects.filter(summary="Buy bread").exists()
+    assert "not from Postulo and was left alone" in report.summary()
+    assert not [m for m, _p in made.log if m in ("PUT", "DELETE")]
+
+
+def test_the_first_sync_makes_the_task_list_but_test_and_read_only_never_do(server, connection):
+    config = {**CONFIG, "tasklist": "Postulo Tasks"}
+    result = DavSync().test(config)
+    assert result.ok and "The task list “Postulo Tasks” is not on the server." in result.message
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+    only = {**connection.full_config, "tasklist": "Postulo Tasks", "read_only": True}
+    report = DavSync().sync(connection, only)
+    assert "The task list “Postulo Tasks” is not on the server." in report.summary()
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR", "PUT")]
+    DavSync().sync(connection, {**connection.full_config, "tasklist": "Postulo Tasks"})
+    made_list = server.collections[TASKS_PATH]
+    assert made_list["components"] == ["VTODO"]
+
+
+def test_a_server_that_keeps_no_tasks_is_a_note_and_the_rest_still_syncs(
+    server, connection, recruiter, user
+):
+    server.refuse_tasks = True
+    make_reminder(user)
+    report = DavSync().sync(connection, with_tasks(connection))
+    assert report.error == "" and "Reminders were not synced" in report.summary()
+    assert cards(server), "the contacts went out all the same"
+
+
+def test_an_interviews_reminder_gets_no_task_while_events_are_on(
+    listed, connection, user, application
+):
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    make_reminder(user, "Plain one")
+    full = with_tasks(connection)
+    DavSync().sync(connection, full)
+    (body,) = tasks(listed).values()
+    assert "SUMMARY:Plain one" in body
+    # With no calendar chosen but a task list, the interview's reminder is nobody's alarm:
+    chosen = choose_hrefs(connection, {TASKS_PATH: "readwrite"})
+    DavSync().sync(connection, chosen)
+    assert len(tasks(listed)) == 2
+
+
+def test_a_task_list_is_chosen_like_a_calendar_and_held_to_like_one(listed, connection, user):
+    make_reminder(user)
+    listed.add(PHONE_TASKS + "x.ics", task_text("x-1"))
+    full = choose_hrefs(connection, {TASKS_PATH: "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.pushed == 1
+    assert all(p.startswith(TASKS_PATH) for _m, p in listed.log), listed.log
+    assert not [(m, p) for m, p in listed.log if p in DISCOVERY_PATHS]
+    # Read only: tasks come in, nothing goes out.
+    listed.add(TASKS_PATH + "lemons.ics", task_text("lemons-1"))
+    listed.log.clear()
+    read = choose_hrefs(connection, {TASKS_PATH: "read"})
+    report = DavSync().sync(connection, read)
+    assert not [m for m, _p in listed.log if m in ("PUT", "DELETE", "MKCALENDAR")]
+    assert Reminder.objects.filter(summary="Buy lemons").exists()
+
+
+def test_two_task_lists_chosen_are_refused_rather_than_guessed(listed, connection):
+    listed.collections[PHONE_TASKS] = {"name": "Phone", "kind": CALENDAR, "components": ["VTODO"]}
+    report = DavSync().sync(
+        connection, choose_hrefs(connection, {TASKS_PATH: "readwrite", PHONE_TASKS: "readwrite"})
+    )
+    assert "More than one task list" in report.summary()
+    assert not requests_under(listed, TASKS_PATH + "x", PHONE_TASKS + "x")
+
+
+def test_a_task_is_offered_for_pairing_and_made_a_reminder_by_hand(made, connection, user):
+    from postulo.plugins.testing import create_by_hand, pair_by_hand
+
+    made.collections[PHONE_TASKS] = {"name": "Phone", "kind": CALENDAR, "components": ["VTODO"]}
+    made.add(PHONE_TASKS + "errand.ics", task_text("errand-1", "Buy bread"))
+    made.add(PHONE_TASKS + "ours.ics", task_text("abc@postulo", "Postulo's own"))
+    made.add(PHONE_TASKS + "nodue.ics", task_text("nodue-1", "Whenever", due=""))
+    full = with_tasks(connection, "Phone")
+    items = DavSync().remote_items(full, kind="reminder")
+    assert [(i.uid, i.kinds) for i in items if i.uid != "nodue-1"] == [("errand-1", ("reminder",))]
+    assert DavSync().remote_items(full, search="bread")[0].label == "Buy bread"
+    reminder = create_by_hand(
+        connection, collection=f"{BASE}{PHONE_TASKS}", uid="errand-1", kind="reminder"
+    )
+    assert reminder.summary == "Buy bread" and reminder.actor == "dav"
+    assert SyncLink.for_record(connection, reminder).uid == "errand-1"
+    mine = make_reminder(user, "Mine")
+    pair_by_hand(connection, mine, collection=f"{BASE}{PHONE_TASKS}", uid="nodue-1")
+    report = DavSync().sync(connection, full)
+    assert report.error == ""
+    mine.refresh_from_db()
+    assert mine.summary == "Whenever", "the phone gave no time, so its version was the later one"
+    from postulo.plugins.api import change_reminder
+
+    change_reminder(mine, summary="Mine again", actor="")
+    DavSync().sync(connection, full)
+    written = made.resources[PHONE_TASKS + "nodue.ics"][0]
+    assert "UID:nodue-1" in written and "SUMMARY:Mine again" in written
+    # A task without a due time cannot be made a reminder.
+    made.add(PHONE_TASKS + "nodue2.ics", task_text("nodue-2", "Someday", due=""))
+    with pytest.raises(Exception):  # noqa: B017,PT011
+        create_by_hand(
+            connection,
+            collection=f"{BASE}{PHONE_TASKS}",
+            uid="nodue-2",
+            kind="reminder",
+            pair=False,
+        )

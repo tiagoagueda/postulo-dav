@@ -37,6 +37,13 @@ msgid "%(count)d records were not sent, because sending that kind is switched of
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "%(count)d task in the task list is not from Postulo and was left alone."
+msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s kiliondolewa kwenye kalenda kwenye kifaa kingine; kimehifadhiwa hapa."
@@ -59,18 +66,30 @@ msgstr ""
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Mawasiliano yaliyofutwa hapa yalibadilishwa kwenye simu tangu sync ya mwisho. Kadi iliachwa katika kitabu cha anwani, na inarudi kama mawasiliano kwenye kukimbia ijayo."
 
+#: src/postulo_dav/sync.py
+msgid "A reminder changed on both sides at once; next run decides."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "A task moved to another address; still paired."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "address book"
 msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
 msgid "Address book"
 msgstr "Mwongozo wa Kitabu"
-
-#: src/postulo_dav/sync.py
-msgid "address book"
-msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
@@ -101,13 +120,13 @@ msgid "An interview moved to another address on the calendar; still paired."
 msgstr "Mahojiano yalihamia kwenye anwani nyingine kwenye kalenda; bado iliunganishwa."
 
 #: src/postulo_dav/sync.py
+msgid "calendar"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy
 msgid "Calendar"
 msgstr "Kalenda ya Kalenda"
-
-#: src/postulo_dav/sync.py
-msgid "calendar"
-msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
@@ -159,6 +178,11 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "Found the task list “%(name)s” (%(href)s)."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "From the card “%(name)s”: %(details)s"
 msgstr ""
 
@@ -203,9 +227,8 @@ msgid "More than one collection is called “%(name)s”. Choose one of them, by
 msgstr ""
 
 #: src/postulo_dav/sync.py
-#, fuzzy
-msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Kamwe kuandika kwa seva - si hata kufanya kitabu cha anwani au kalenda. Mawasiliano na mahojiano bado huja; hakuna kitu kinachoendelea."
+msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "None"
@@ -226,7 +249,7 @@ msgid "Password or app password"
 msgstr "Password au Password ya App"
 
 #: src/postulo_dav/sync.py
-msgid "Press Look on the server, then choose one address book and one calendar. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
+msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -257,6 +280,11 @@ msgid "Read only on the server"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "Reminders were not synced: the task list could not be used. %(why)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "Send companies"
 msgstr ""
 
@@ -274,11 +302,31 @@ msgid "Server address"
 msgstr "Anwani ya Server"
 
 #: src/postulo_dav/sync.py
+msgid "task list"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Task list"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Task lists"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
 msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That task has changed since it was listed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That task is not in the chosen task list."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -378,6 +426,10 @@ msgid "The server refused the user name or password."
 msgstr "Mtumiaji alikataa jina la mtumiaji au nywila."
 
 #: src/postulo_dav/sync.py
+msgid "The server would not make a task list, so it may not keep tasks."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 msgstr "Anwani ya seva, kwa mfano https://cloud.example.org, au anwani ya huduma yake ya DAV ambapo anaishi chini ya njia, kwa mfano https://example.org/dav.php/. Postulo hupata kitabu cha anwani na nyumba za kalenda kutoka hapo."
@@ -393,9 +445,37 @@ msgid "The server's answer for %(path)s was too large or too slow, and was not r
 msgstr "Jibu la seva kwa %(path)s lilikuwa kubwa sana au la polepole sana, na halikusomwa."
 
 #: src/postulo_dav/sync.py
+msgid "The task could not be read, so it was not changed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The task has no due time to make a reminder of."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task list “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task “%(name)s” has no due time, so it was not made a reminder."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
 msgstr "Muda wa %(kind)s kwenye kalenda haukuweza kutumika (%(why)s), kwa hiyo hakikuhamishwa."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
+msgstr ""
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -404,6 +484,10 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -445,6 +529,11 @@ msgid "“%(href)s” could not be read: %(error)s"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "“%(name)s” ilibadilishwa pande zote mbili kwa wakati mmoja; mzunguko ujao utaamua."
@@ -453,6 +542,11 @@ msgstr "“%(name)s” ilibadilishwa pande zote mbili kwa wakati mmoja; mzunguko
 #, fuzzy, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 msgstr "“%(name)s” ilibadilishwa pande zote mbili, na kadi kutoka kwenye simu haitoi muda: toleo la simu lilichukuliwa."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -467,6 +561,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is not a task list."
 msgstr ""
 
 #: src/postulo_dav/sync.py

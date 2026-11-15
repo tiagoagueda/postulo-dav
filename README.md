@@ -32,12 +32,13 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 | --- | --- |
 | Server address | The server's root, e.g. `https://cloud.example.org`, or the address of its DAV service where it lives under a path, e.g. `https://example.org/dav.php/`: that address is asked first, then `/.well-known/carddav` and `caldav`, then the root. It must be `https://`: the password goes over the wire, and only a machine on your own network may be reached over plain `http://`. |
 | Username, password | An app password where the server offers one. Stored encrypted. |
-| Collections | Press *Look on the server*, then choose one address book and one calendar from the list, each *Read only* or *Read and write*. They are kept by their address, so renaming one on the server changes nothing. A share the account may not write (it must hold `bind` and `write-content`; `write-properties` alone is what Nextcloud grants on a read-only share) offers only *Read only*; a server that does not say is offered writing, with a note. One of each kind per connection: add another connection for a second. |
+| Collections | Press *Look on the server*, then choose one address book, one calendar and one task list from the list, each *Read only* or *Read and write*. They are kept by their address, so renaming one on the server changes nothing. A share the account may not write (it must hold `bind` and `write-content`; `write-properties` alone is what Nextcloud grants on a read-only share) offers only *Read only*; a server that does not say is offered writing, with a note. One of each kind per connection: add another connection for a second. A task list is a calendar the server says takes tasks (`VTODO`) and not events, which is how a phone tells one: a calendar that takes both is a calendar here, and cannot hold the tasks. |
 | Address book, Calendar | Used only while no collection is chosen above, so a connection made before that keeps working. Both default to *Postulo*: a name or an address; made by the first sync if they are not there, never in read-only mode and never when it is an address. The whole collection syncs, and a name two collections share is refused. |
+| Task list | Used only while no collection is chosen above, and blank by default: **no task list is kept unless one is named or chosen**. A name or an address; a name that is not there is made by the first sync (as *postulo-tasks*, for tasks only), never in read-only mode, never by *Test* and never when it is an address. A server that keeps no tasks gets a note in the report and the rest of the run goes on. |
 | Send contacts | *All of them* (the default, and what every connection did before) or *None*. Cards already in the address book stay, nothing more is sent to them, and the run says how many were left. |
 | Send companies | Off by default. On, each company you own gets a card of its own: `KIND:org` in a vCard 4 book, `X-ABShowAs:COMPANY` (Apple's property, untried here) in a book whose `supported-address-data` lists no 4.0. Name and website travel, both ways; the notes do not. A company deleted here takes the card Postulo wrote with it; switching this off leaves the cards. |
 | Send my own card | Off by default. Writes your name, sign-in address, headline, primary number and first link to a new card Postulo makes in the chosen book, one way: a change on the phone is written over and never reaches your profile. |
-| Read only | Contacts and interviews still come in; nothing goes out — not even a new address book. |
+| Read only | Contacts, interviews and reminders still come in; nothing goes out — not even a new address book or task list. |
 | Run | Every 15 minutes to once a day. The scheduler honours it; *Sync now* runs at once. |
 
 Press *Test*: it signs in and says which collections it found, by name and address, and in
@@ -62,6 +63,27 @@ for an invitation; a server that refuses a calendar object carrying a `METHOD` (
 as the interview's notes, and a later push keeps it. Interviews from the last ninety days onwards
 are in the calendar. An event created on the phone stays on the phone: nothing links it to
 an application, and a job tracker must not invent one. Recurring events are ignored.
+
+**Reminders ↔ VTODO, in a task list of their own (#12).** A calendar made for events cannot hold tasks
+(RFC 4791 §5.2.3), so tasks live in a task list: chosen like the other collections, or named
+in *Task list*. Each reminder is a task with its summary, `DUE` (UTC), `STATUS` and
+`COMPLETED`, and `PERCENT-COMPLETE` with them. From the phone an edit changes the reminder, a
+moved `DUE` postpones it (a day-long `DUE` is that day at nine, your time), a tick completes it
+at the moment of the tick, an untick reopens it, and `CANCELLED` completes it; each through
+Postulo's own services, so the reminder says the plugin changed it. Only those properties are
+ever written, into the task as it is on the server, so a description, categories, alarms of
+its own and anything else the phone keeps survive every push, and an alarm's text is never
+read as the task's. Reminders from the last ninety days onwards go out, done ones included. An
+interview's reminder is its event's alarm already, and gets no task while interviews go to a
+calendar. A task made in the list Postulo made (*postulo-tasks*) becomes a reminder, if it has a
+due time and is not done; in any other list it is left alone and counted, and the person pairs
+it by hand on the *Pairing* page (which also makes a reminder from one), so that an errand never
+becomes a reminder by accident. A task deleted on the phone flags its link and the reminder
+stays; a reminder deleted here deletes a task Postulo made and cancels one the person's own
+phone made. Not done yet: tasks about an application (the apply and hear-back tasks, grouping),
+which wait on the next part of #12. By their documentation, and untried against any real server
+here, Nextcloud, Radicale, Fastmail and DAVx5's task apps carry tasks; Google's CalDAV and
+upgraded iCloud Reminders do not.
 
 **Pairing an event made elsewhere with an interview.** On the connection's *Pairing* page
 a person pairs an event from the chosen calendar (found with a `calendar-query` over the

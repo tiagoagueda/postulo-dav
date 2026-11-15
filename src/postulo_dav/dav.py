@@ -40,6 +40,13 @@ CAL = "urn:ietf:params:xml:ns:caldav"
 
 ADDRESSBOOK = "addressbook"
 CALENDAR = "calendar"
+#: A task list (#12): a calendar collection that takes tasks (``VTODO``) and not events, which
+#: is how a client tells one from a calendar (RFC 4791 §5.2.3). A kind of the plugin's own and
+#: not of the protocol's: on the server it is a ``CALENDAR``.
+TASKS = "tasks"
+
+#: The name of the task list Postulo makes, and so the one it adopts new tasks from (#12).
+OWN_TASK_LIST = "postulo-tasks"
 
 #: Every request is held to this many seconds in all, its redirects and the reading of its
 #: answer included (#33): `timeout` bounds each wait, not their sum.
@@ -88,7 +95,7 @@ _MKCALENDAR = (
     '<?xml version="1.0" encoding="utf-8"?>'
     '<c:mkcalendar xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:set><d:prop>'
     "<d:displayname>{name}</d:displayname>"
-    '<c:supported-calendar-component-set><c:comp name="VEVENT"/>'
+    '<c:supported-calendar-component-set><c:comp name="{component}"/>'
     "</c:supported-calendar-component-set></d:prop></d:set></c:mkcalendar>"
 )
 #: The two multiget reports, and the property each carries the resource's text in.
@@ -184,6 +191,30 @@ class Collection:
     @property
     def accepts_events(self) -> bool:
         return self.kind == CALENDAR and (not self.components or "VEVENT" in self.components)
+
+    @property
+    def accepts_tasks(self) -> bool:
+        return self.kind == CALENDAR and (not self.components or "VTODO" in self.components)
+
+    @property
+    def is_task_list(self) -> bool:
+        """A calendar that says it takes tasks and not events (#12).
+
+        One that says nothing takes everything, and is a calendar: a task list is told by its
+        component set, as a client tells one, and never guessed from its name.
+        """
+        return (
+            self.kind == CALENDAR
+            and bool(self.components)
+            and "VTODO" in self.components
+            and "VEVENT" not in self.components
+        )
+
+    def is_a(self, kind: str) -> bool:
+        """Whether this is what ``kind`` asks for: a task list is no calendar, nor the other way."""
+        if kind == TASKS:
+            return self.is_task_list
+        return self.kind == kind
 
     @property
     def writable(self) -> bool | None:
@@ -517,7 +548,7 @@ class Server:
         found = [
             c
             for c in self.collections(home)
-            if c.kind == kind and c.name.strip().lower() == name.strip().lower()
+            if c.is_a(kind) and c.name.strip().lower() == name.strip().lower()
         ]
         if len(found) > 1:
             raise Ambiguous(
@@ -531,7 +562,10 @@ class Server:
 
     def create_collection(self, home: str, name: str, kind: str) -> Collection:
         """Make the collection called ``name`` under ``home``. Writes to the server."""
-        slug = "postulo-" + ("contacts" if kind == ADDRESSBOOK else "interviews")
+        slug = {
+            ADDRESSBOOK: "postulo-contacts",
+            TASKS: OWN_TASK_LIST,
+        }.get(kind, "postulo-interviews")
         href = urljoin(home.rstrip("/") + "/", slug + "/")
         if kind == ADDRESSBOOK:
             response = self.request(
@@ -546,12 +580,14 @@ class Server:
                 "MKCALENDAR",
                 href,
                 discovery=True,
-                content=_MKCALENDAR.format(name=_xml(name)).encode(),
+                content=_MKCALENDAR.format(
+                    name=_xml(name), component="VTODO" if kind == TASKS else "VEVENT"
+                ).encode(),
                 headers={"Content-Type": "application/xml; charset=utf-8"},
             )
         if response.status_code not in (200, 201):
             raise _refusal(response)
-        return Collection(href, name, kind)
+        return Collection(href, name, CALENDAR, ("VTODO",) if kind == TASKS else (), None, ())
 
     # ------------------------------------------------------------ resources
 

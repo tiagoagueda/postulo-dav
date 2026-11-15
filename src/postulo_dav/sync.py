@@ -49,6 +49,7 @@ import httpx
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import DatabaseError, transaction
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, ngettext
@@ -74,22 +75,28 @@ from postulo.plugins.api import (
     InterviewOutcome,
     InterviewRefused,
     LinkKind,
+    Reminder,
     RemoteItem,
     SyncLink,
     SyncReport,
     TestResult,
     WriteRefused,
     calendar_status,
+    change_reminder,
     check_destination,
+    complete_reminder,
     create_contact,
+    create_reminder,
     event_lines,
     get_or_create_company,
     get_or_create_department,
     person_card,
     phone_number_is_taken,
+    postpone_reminder,
     primary_phone_number,
     primary_web_link,
     record_event,
+    reopen_reminder,
     reschedule_interview,
     save_phone_number,
     save_web_link,
@@ -103,8 +110,10 @@ from . import __version__, dav, text
 from .dav import (
     ADDRESSBOOK,
     CALENDAR,
+    OWN_TASK_LIST,
     READ,
     READ_WRITE,
+    TASKS,
     AuthenticationRefused,
     Conflict,
     DavError,
@@ -147,6 +156,8 @@ COMPANY_CARD_UID = re.compile(r"^company-\d+-\d+@postulo$")
 POSTULO_UID = re.compile(r"@postulo$")
 #: How far ahead the events offered for pairing reach.
 PAIRING_AHEAD = dt.timedelta(days=365)
+#: How many tasks of the list are read to offer for pairing.
+PAIRING_TASKS = 200
 
 
 def made_elsewhere(link, interview=None) -> bool:
@@ -202,6 +213,11 @@ CARD_KEPT = gettext_lazy(
     "A contact deleted here had been changed on the phone since the last sync. The card was "
     "left in the address book, and comes back as a contact on the next run."
 )
+#: ...and for a task of the task list (#12).
+TASK_KEPT = gettext_lazy(
+    "A reminder deleted here had been changed on the phone since the last sync. The task was "
+    "left in the task list."
+)
 #: The same for an event. Nothing adopts a foreign event, so this one simply stays put.
 EVENT_KEPT = gettext_lazy(
     "An interview deleted here had been changed on the phone since the last sync. The event "
@@ -247,6 +263,9 @@ class Run:
     vcard: str = "4.0"
     #: Records left unsent because their kind is switched off, for the report.
     unsent: int = 0
+    #: Whether interviews go to a calendar this run: an interview's reminder is then its
+    #: event's alarm already, and gets no task of its own (#12).
+    events_on: bool = True
 
     @property
     def owner(self):
@@ -293,6 +312,11 @@ class Run:
                 work()
         except TOLERATED as error:
             self.skip(name, error)
+
+
+def _what(kind: str) -> str:
+    """The collection of ``kind`` in words, for a sentence."""
+    return {ADDRESSBOOK: _("address book"), TASKS: _("task list")}.get(kind, _("calendar"))
 
 
 def _is_href(name: str) -> bool:
@@ -507,7 +531,101 @@ def event_source(event: text.Event) -> str:
     ).digest_source()
 
 
-def _problem(event: text.Event) -> str:
+# --------------------------------------------------------------------- tasks
+
+
+def reminder_todo(reminder: Reminder, uid: str) -> text.Todo:
+    """The task a reminder is: what to do, by when, and whether it is done (#12)."""
+    done = reminder.done_at
+    return text.Todo(
+        uid=uid,
+        summary=reminder.summary,
+        due=reminder.due_at,
+        status="COMPLETED" if done else "NEEDS-ACTION",
+        completed=done,
+    )
+
+
+def task_hash(todo: text.Todo) -> str:
+    """What a push of ``todo`` is a function of."""
+    return digest(todo.digest_source())
+
+
+def same_due(todo: text.Todo, wanted: dt.datetime | None) -> bool:
+    """Whether the task is due when ``wanted`` says: a day-long ``DUE`` is that day, any hour."""
+    if todo.due is not None:
+        return wanted is not None and text.stamp(todo.due) == text.stamp(wanted)
+    if todo.due_day is not None:
+        return wanted is not None and timezone.localtime(wanted).date() == todo.due_day
+    return wanted is None
+
+
+def same_task(theirs: text.Todo, ours: text.Todo) -> bool:
+    """Whether two tasks say the same of what Postulo keeps: summary, due time, done or not."""
+    return (
+        theirs.summary == ours.summary and same_due(theirs, ours.due) and theirs.done == ours.done
+    )
+
+
+def task_changes(ours: text.Todo, theirs: text.Todo) -> set[str]:
+    """The properties to write into the task on the server so that it says what ``ours`` says.
+
+    Only what differs, and only what Postulo owns (#12). A task the phone *cancelled* and a
+    reminder done are the same fact, so the status is left as the phone wrote it.
+    """
+    names: set[str] = set()
+    if ours.summary != theirs.summary:
+        names.add("SUMMARY")
+    if ours.due is not None and not same_due(theirs, ours.due):
+        names.add("DUE")
+    if ours.done != theirs.done:
+        names.add("STATUS")
+    elif (
+        ours.done
+        and theirs.status != "CANCELLED"
+        and (ours.completed and text.stamp(ours.completed))
+        != (theirs.completed and text.stamp(theirs.completed))
+    ):
+        names.add("COMPLETED")
+    if ours.priority != theirs.priority and ours.priority is not None:
+        names.add("PRIORITY")
+    if ours.refid != theirs.refid and ours.refid:
+        names.add("REFID")
+    if ours.parent != theirs.parent and (ours.parent or theirs.parent):
+        names.add("RELATED-TO")
+    return names
+
+
+def apply_todo(reminder: Reminder, todo: text.Todo, report: SyncReport, now: dt.datetime) -> None:
+    """Take from the task what a task list may change in a reminder (#12).
+
+    Through the core's services, so the reminder says who changed it: an edit changes what
+    it says, a moved ``DUE`` postpones it, a tick completes it at the moment of the tick, an
+    untick reopens it, and ``CANCELLED`` completes it.
+    """
+    if todo.summary and todo.summary != reminder.summary:
+        change_reminder(reminder, summary=todo.summary, actor=ACTOR)
+    if todo.done and not reminder.is_done:
+        at = todo.completed or todo.last_modified or now
+        complete_reminder(reminder, at=min(at, now), actor=ACTOR)
+    elif not todo.done and reminder.is_done:
+        reopen_reminder(reminder, actor=ACTOR)
+    if not same_due(todo, reminder.due_at):
+        if todo.due is not None:
+            postpone_reminder(reminder, todo.due, actor=ACTOR)
+        elif todo.due_day is not None:
+            postpone_reminder(reminder, todo.due_day, actor=ACTOR)
+        elif todo.problem:
+            report.notes.append(
+                _(
+                    "The time of the task “%(name)s” could not be used (%(why)s), so the "
+                    "reminder was not moved."
+                )
+                % {"name": reminder.summary[:120], "why": _problem(todo)}
+            )
+
+
+def _problem(event) -> str:
     kind, _sep, zone = event.problem.partition(":")
     if kind == "floating":
         return _("it has no time zone")
@@ -640,6 +758,21 @@ class DavSync:
                 ),
             ),
             FieldSpec(
+                "tasklist",
+                str(_("Task list")),
+                type="text",
+                required=False,
+                default="",
+                help=str(
+                    _(
+                        "Used only while no collection is chosen below. A name or an address "
+                        "of a task list to keep your reminders in; blank, and none is used. A "
+                        "name that is not there is made by the first sync, unless read only is "
+                        "on. Needs a server that keeps tasks."
+                    )
+                ),
+            ),
+            FieldSpec(
                 "collections",
                 str(_("Collections")),
                 type="discovered",
@@ -647,10 +780,10 @@ class DavSync:
                 modes=((READ, str(_("Read only"))), (READ_WRITE, str(_("Read and write")))),
                 help=str(
                     _(
-                        "Press Look on the server, then choose one address book and one "
-                        "calendar. Only those are read or written, and a mode set here is "
-                        "Postulo's word, not the server's lock: an app password cannot be "
-                        "narrowed to one collection. Whole collections sync."
+                        "Press Look on the server, then choose one address book, one calendar "
+                        "and one task list. Only those are read or written, and a mode set "
+                        "here is Postulo's word, not the server's lock: an app password cannot "
+                        "be narrowed to one collection. Whole collections sync."
                     )
                 ),
             ),
@@ -702,8 +835,9 @@ class DavSync:
                 default=False,
                 help=str(
                     _(
-                        "Never write to the server — not even to make the address book or the "
-                        "calendar. Contacts and interviews still come in; nothing goes out."
+                        "Never write to the server — not even to make the address book, the "
+                        "calendar or the task list. Contacts, interviews and reminders still "
+                        "come in; nothing goes out."
                     )
                 ),
             ),
@@ -784,9 +918,9 @@ class DavSync:
                 chosen = self._resolve(server, config, notes)
                 if chosen is not None:
                     return self._tested_choice(chosen, notes)
+                kinds = [ADDRESSBOOK, CALENDAR] + ([TASKS] if self._name(config, TASKS) else [])
                 found = {
-                    kind: self._collection(server, config, kind, create=False)
-                    for kind in (ADDRESSBOOK, CALENDAR)
+                    kind: self._collection(server, config, kind, create=False) for kind in kinds
                 }
         except DavError as error:
             # Already a sentence for the person, in their language: no class name in front.
@@ -795,21 +929,26 @@ class DavSync:
             return TestResult(False, f"{type(error).__name__}: {error}")
         missing = [kind for kind, collection in found.items() if collection is None]
         if not missing:
-            return TestResult(
-                True,
-                str(
-                    _(
-                        "Found the address book “%(book)s” (%(book_href)s) and the calendar "
-                        "“%(calendar)s” (%(calendar_href)s)."
-                    )
+            message = str(
+                _(
+                    "Found the address book “%(book)s” (%(book_href)s) and the calendar "
+                    "“%(calendar)s” (%(calendar_href)s)."
                 )
-                % {
-                    "book": found[ADDRESSBOOK].name,
-                    "book_href": urlsplit(found[ADDRESSBOOK].href).path,
-                    "calendar": found[CALENDAR].name,
-                    "calendar_href": urlsplit(found[CALENDAR].href).path,
-                },
-            )
+            ) % {
+                "book": found[ADDRESSBOOK].name,
+                "book_href": urlsplit(found[ADDRESSBOOK].href).path,
+                "calendar": found[CALENDAR].name,
+                "calendar_href": urlsplit(found[CALENDAR].href).path,
+            }
+            if TASKS in found:
+                message += " " + str(
+                    _("Found the task list “%(name)s” (%(href)s).")
+                    % {
+                        "name": found[TASKS].name or _tail(found[TASKS].href),
+                        "href": urlsplit(found[TASKS].href).path,
+                    }
+                )
+            return TestResult(True, message)
         sentences = [self._missing_sentence(config, kind) for kind in missing]
         # Signing in worked, which is what *Test* is for; what is missing is only a
         # problem the sync cannot solve when it is forbidden to write.
@@ -820,7 +959,7 @@ class DavSync:
     def _tested_choice(self, chosen: dict, notes: list[str]) -> TestResult:
         sentences = []
         for kind, (collection, mode) in chosen.items():
-            what = _("address book") if kind == ADDRESSBOOK else _("calendar")
+            what = _what(kind)
             how = _("read only") if mode == READ else _("read and write")
             sentences.append(
                 str(_("Found the %(what)s “%(name)s” (%(how)s)."))
@@ -831,12 +970,17 @@ class DavSync:
         return TestResult(bool(chosen), " ".join([*sentences, *notes]))
 
     def _name(self, config: dict, kind: str) -> str:
+        """What names the collection of ``kind``; a task list is named by nothing, by default."""
+        if kind == TASKS:
+            return str(config.get("tasklist") or "").strip()
         return str(config.get("addressbook" if kind == ADDRESSBOOK else "calendar") or "Postulo")
 
     def _missing_sentence(self, config: dict, kind: str) -> str:
         name = self._name(config, kind)
         if kind == ADDRESSBOOK:
             return str(_("The address book “%(name)s” is not on the server.")) % {"name": name}
+        if kind == TASKS:
+            return str(_("The task list “%(name)s” is not on the server.")) % {"name": name}
         return str(_("The calendar “%(name)s” is not on the server.")) % {"name": name}
 
     def _collection(
@@ -852,10 +996,16 @@ class DavSync:
         name = self._name(config, kind)
         if _is_href(name):
             found = server.describe(name)
-            if found is not None and found.kind != kind:
+            if found is not None and not (
+                found.kind == CALENDAR and found.accepts_tasks
+                if kind == TASKS
+                else found.is_a(kind)
+            ):
                 raise DavError(
                     _("“%(name)s” is not an address book.") % {"name": name}
                     if kind == ADDRESSBOOK
+                    else _("“%(name)s” is not a task list.") % {"name": name}
+                    if kind == TASKS
                     else _("“%(name)s” is not a calendar.") % {"name": name}
                 )
         else:
@@ -864,7 +1014,17 @@ class DavSync:
             home = server.home(principal, kind)
             found = server.find_collection(home, name, kind)
             if found is None and create:
-                found = server.create_collection(home, name, kind)
+                try:
+                    found = server.create_collection(home, name, kind)
+                except AuthenticationRefused as refused:
+                    # A 403 to making a task list is the server saying it keeps no tasks, and
+                    # not that the password is wrong: the rest of the run is not refused (#12).
+                    if kind == TASKS and refused.status == 403:
+                        raise DavError(
+                            _("The server would not make a task list, so it may not keep tasks."),
+                            status=403,
+                        ) from refused
+                    raise
         if found is not None:
             server.allow(found.href, mode)
         return found
@@ -897,7 +1057,11 @@ class DavSync:
         if not wanted:
             return None
         read_only = bool(config.get("read_only"))
-        found: dict[str, list[tuple[dav.Collection, str]]] = {ADDRESSBOOK: [], CALENDAR: []}
+        found: dict[str, list[tuple[dav.Collection, str]]] = {
+            ADDRESSBOOK: [],
+            CALENDAR: [],
+            TASKS: [],
+        }
         for href, mode in wanted.items():
             try:
                 collection = server.describe(href)
@@ -920,7 +1084,9 @@ class DavSync:
                     % {"href": href}
                 )
                 continue
-            if collection.kind == CALENDAR and not collection.accepts_events:
+            kind = TASKS if collection.is_task_list else collection.kind
+            # A task list is held to like any other collection: one guard, one more (#12).
+            if kind != TASKS and collection.kind == CALENDAR and not collection.accepts_events:
                 notes.append(
                     str(_("The calendar “%(name)s” does not take events, so it was not used."))
                     % {"name": collection.name or _tail(collection.href)}
@@ -933,7 +1099,7 @@ class DavSync:
                         % {"name": collection.name or _tail(collection.href)}
                     )
                 mode = READ
-            found[collection.kind].append((collection, mode))
+            found[kind].append((collection, mode))
         chosen: dict[str, tuple[dav.Collection, str]] = {}
         for kind, entries in found.items():
             if len(entries) > 1:
@@ -944,7 +1110,7 @@ class DavSync:
                             "none was used. Add a connection for each, or let the others go."
                         )
                     )
-                    % {"what": _("address book") if kind == ADDRESSBOOK else _("calendar")}
+                    % {"what": _what(kind)}
                 )
             elif entries:
                 collection, mode = entries[0]
@@ -953,21 +1119,29 @@ class DavSync:
         return chosen
 
     def discover(self, config: dict) -> dict[str, list[DiscoveredOption]]:
-        """What the server has to choose from: every address book and calendar of every home."""
+        """What the server has to choose from: each address book, calendar and task list."""
         options: dict[str, DiscoveredOption] = {}
+        groups = {
+            ADDRESSBOOK: str(_("Address books")),
+            CALENDAR: str(_("Calendars")),
+            TASKS: str(_("Task lists")),
+        }
         client, server = dav.connect(config)
         with client:
-            for kind, group in (
-                (ADDRESSBOOK, str(_("Address books"))),
-                (CALENDAR, str(_("Calendars"))),
-            ):
-                principal = server.principal("carddav" if kind == ADDRESSBOOK else "caldav")
-                for home in server.homes(principal, kind):
+            for home_kind in (ADDRESSBOOK, CALENDAR):
+                principal = server.principal("carddav" if home_kind == ADDRESSBOOK else "caldav")
+                for home in server.homes(principal, home_kind):
                     for collection in server.collections(home):
-                        if collection.kind != kind or (
-                            kind == CALENDAR and not collection.accepts_events
-                        ):
+                        # A calendar that takes events is a calendar, one that takes tasks and
+                        # not events is a task list (#12), and neither is the other.
+                        if collection.kind != home_kind:
                             continue
+                        if collection.is_task_list:
+                            kind = TASKS
+                        elif home_kind == CALENDAR and not collection.accepts_events:
+                            continue
+                        else:
+                            kind = home_kind
                         writable = collection.writable
                         note = ""
                         if writable is False:
@@ -979,7 +1153,7 @@ class DavSync:
                             DiscoveredOption(
                                 collection.href,
                                 collection.name or _tail(collection.href),
-                                group=group,
+                                group=groups[kind],
                                 modes=(READ,) if writable is False else (),
                                 note=note,
                             ),
@@ -1065,6 +1239,8 @@ class DavSync:
         only given what it lacks (its blanks), never overwritten. Postulo pairs the two
         afterwards unless the person asked for a one-off import.
         """
+        if kind == "reminder":
+            return self._reminder_from(connection, config, item, into)
         client, server = dav.connect(config)
         with client:
             chosen = self._resolve(server, config, [])
@@ -1084,6 +1260,39 @@ class DavSync:
         if kind == "contact":
             return self._contact_from(owner, card, into)
         raise DavError(_("A card cannot be made into that."))
+
+    def _task_list(self, server: Server, config: dict) -> dav.Collection | None:
+        """The task list chosen, or named, and allowed for this run; ``None`` if there is none."""
+        chosen = self._resolve(server, config, [])
+        if chosen is not None:
+            picked = chosen.get(TASKS)
+            return picked[0] if picked else None
+        if not self._name(config, TASKS):
+            return None
+        return self._collection(server, config, TASKS, create=False)
+
+    def _reminder_from(self, connection, config: dict, item: RemoteItem, into):
+        """Make a reminder from one task of the chosen task list, or give ``into`` back (#12).
+
+        Nothing is written to the server. A reminder has a summary and a due time already, so
+        there is nothing to fill in one that exists: it is returned as it is, and paired.
+        """
+        client, server = dav.connect(config)
+        with client:
+            tasks = self._task_list(server, config)
+            if tasks is None or not server.within(tasks.href, item.href):
+                raise DavError(_("That task is not in the chosen task list."))
+            found = [t for t in text.text_to_todos(server.get(item.href).text) if t.uid == item.uid]
+        if not found:
+            raise DavError(_("That task has changed since it was listed."))
+        if into is not None:
+            return into
+        todo = found[0]
+        if todo.due is None and todo.due_day is None:
+            raise DavError(_("The task has no due time to make a reminder of."))
+        return create_reminder(
+            connection.owner, summary=todo.summary, due=todo.due or todo.due_day, actor=ACTOR
+        )
 
     def _company_from(self, owner, card: text.Card, into):
         """A company from a card: its name, website and, as notes, the numbers it carries.
@@ -1180,7 +1389,58 @@ class DavSync:
             items += self._event_items(config, search, kind, key)
         if kind in ("", "contact", "company"):
             items += self._card_items(config, search, kind, key)
+        if kind in ("", "reminder"):
+            items += self._task_items(config, search, key)
         return items
+
+    def _task_items(
+        self, config: dict, search: str, key: tuple[str, str] | None
+    ) -> list[RemoteItem]:
+        """Tasks of the chosen task list a person may pair with a reminder (#12).
+
+        Asked live, and nothing is written. A task Postulo made is paired already and is not
+        offered, nor is a repeating one: a reminder is one nudge, not a series.
+        """
+        client, server = dav.connect(config)
+        with client:
+            tasks = self._task_list(server, config)
+            if tasks is None:
+                return []
+            where = server.canonical(tasks.href)
+            if key is not None and server.canonical(key[0]) != where:
+                return []
+            listed = server.etags(tasks.href)
+            found = server.multiget(tasks.href, list(listed)[:PAIRING_TASKS], CALENDAR)
+            words = search.strip().casefold()
+            items: list[RemoteItem] = []
+            for href, resource in found.items():
+                for todo in text.text_to_todos(resource.text):
+                    if todo.recurring or not todo.uid or POSTULO_UID.search(todo.uid):
+                        continue
+                    if key is not None and todo.uid != key[1]:
+                        continue
+                    if words and words not in todo.summary.casefold():
+                        continue
+                    due = todo.due.astimezone(timezone.get_current_timezone()) if todo.due else None
+                    detail = (
+                        due.strftime("%Y-%m-%d %H:%M")
+                        if due
+                        else todo.due_day.isoformat()
+                        if todo.due_day
+                        else ""
+                    )
+                    items.append(
+                        RemoteItem(
+                            collection=where,
+                            uid=todo.uid,
+                            label=todo.summary or str(_("(no title)")),
+                            collection_label=tasks.name or _tail(tasks.href),
+                            href=href,
+                            detail=detail,
+                            kinds=("reminder",),
+                        )
+                    )
+            return items
 
     def _card_items(
         self, config: dict, search: str, kind: str, key: tuple[str, str] | None
@@ -1313,6 +1573,7 @@ class DavSync:
             )
             try:
                 chosen = self._resolve(server, config, report.notes)
+                run.events_on = chosen is None or CALENDAR in chosen
             except AuthenticationRefused as error:
                 report.error = str(error)
                 return report
@@ -1322,6 +1583,7 @@ class DavSync:
             for kind, half in (
                 (ADDRESSBOOK, self._sync_contacts),
                 (CALENDAR, self._sync_interviews),
+                (TASKS, self._sync_tasks),
             ):
                 # Each half on its own: a server with no calendar home still gets the
                 # contacts, and one failing says so without stopping the other (#20).
@@ -1334,6 +1596,8 @@ class DavSync:
                         collection, mode = chosen[kind]
                         run.read_only = mode == READ
                     else:
+                        if kind == TASKS and not self._name(config, TASKS):
+                            continue  # no task list is named: none is kept (#12)
                         # In read-only mode a missing collection is reported, not made:
                         # half a sync still runs, and the person is told which half did not.
                         collection = self._collection(server, config, kind, create=not read_only)
@@ -1351,7 +1615,15 @@ class DavSync:
                     errors.append(str(error))
                     break  # the other half would be refused the same way
                 except DavError as error:
-                    errors.append(str(error))
+                    if kind == TASKS:
+                        # A server that keeps no tasks is a note, not a failed run: the
+                        # contacts and the interviews have synced, and say so (#12).
+                        report.notes.append(
+                            _("Reminders were not synced: the task list could not be used. %(why)s")
+                            % {"why": error}
+                        )
+                    else:
+                        errors.append(str(error))
                 except httpx.HTTPError as error:
                     errors.append(f"{type(error).__name__}: {error}")
                     break  # the server is not answering; asking again would only wait twice
@@ -2340,3 +2612,333 @@ class DavSync:
                 str(_("%(count)d events on the calendar are not from Postulo and were left alone."))
                 % {"count": len(foreign)}
             )
+
+    # ------------------------------------------------------------- tasks
+
+    def _sync_tasks(self, run: Run, tasks) -> None:
+        """Reminders ↔ the task list, both ways (#12).
+
+        A reminder is a task: ``SUMMARY``, ``DUE``, ``STATUS`` and ``COMPLETED`` are exchanged
+        and nothing else is written, so what the phone keeps in a task (its description, its
+        categories, its own alarms) survives every push, as an event somebody else made does
+        (#11). A task is paired with its reminder by list and UID, its address a cache. Only
+        the person's own reminders are kept: an interview's is its event's alarm already while
+        events are on. A task made in a list Postulo made becomes a reminder; in any other list
+        a person pairs it by hand, so that an errand never becomes one by accident.
+        """
+        server, connection, report = run.server, run.connection, run.report
+        owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
+        remote = server.etags(tasks.href)
+        own_list = _tail(tasks.href) == OWN_TASK_LIST
+        where = canon(tasks.href)
+        links = {
+            link.object_id: link
+            for link in SyncLink.of_model(connection, Reminder)
+            if not link.slot
+        }
+        held = run.held(links, tasks)
+        window = Reminder.objects.for_user(owner).filter(retired_at__isnull=True)
+        window = window.filter(Q(done_at__isnull=True) | Q(done_at__gte=now - HISTORY))
+        if run.events_on:
+            window = window.exclude(interview__isnull=False)
+        reminders = {r.pk: r for r in window}
+        cache: dict[str, tuple[dav.Resource, list[text.Todo]]] = {}
+        fetched: dict[str, dav.Resource] = {}
+
+        def read(href: str):
+            key = canon(href)
+            if key not in cache:
+                resource = fetched.pop(key, None) or server.get(href)
+                cache[key] = (
+                    resource,
+                    [t for t in text.text_to_todos(resource.text) if not t.recurring],
+                )
+            return cache[key]
+
+        def linked() -> set[str]:
+            return {canon(link.remote_href) for link in links.values() if link.remote_href}
+
+        def strangers() -> list[str]:
+            claimed = linked()
+            return [h for h in remote if h in cache and h not in claimed]
+
+        # What no link claims is read when something might be theirs: any task in the list
+        # Postulo made (it is where tasks are adopted from), a reminder with no twin yet, or
+        # a twin gone from its address.
+        wanted = (
+            own_list
+            or any(pk not in links for pk in reminders)
+            or any(
+                canon(link.remote_href) not in remote or link.remote_gone
+                for pk, link in links.items()
+                if pk in reminders and link.paired and pk not in held
+            )
+        )
+        unclaimed = [h for h in remote if h not in linked()] if wanted else []
+        moved = [
+            canon(link.remote_href)
+            for pk, link in links.items()
+            if pk in reminders
+            and link.paired
+            and link.remote_href
+            and not link.remote_gone
+            and remote.get(canon(link.remote_href), link.etag) != link.etag
+        ]
+        fetched.update(server.multiget(tasks.href, unclaimed + moved, CALENDAR))
+        for href in unclaimed:
+            try:
+                read(href)
+            except DavError as error:
+                run.skip(_tail(href), error)
+
+        # Pair: a twin that moved is found again by its UID, and a reminder whose task is
+        # already there (a connection deleted and added again) is paired, not pushed twice.
+        for pk, reminder in reminders.items():
+            link = links.get(pk)
+            if link is not None and (not link.paired or pk in held):
+                continue
+            if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
+                continue
+            twin = link.uid if link is not None and made_elsewhere(link, reminder) else reminder.uid
+            found = next((h for h in strangers() if any(t.uid == twin for t in cache[h][1])), None)
+            if found is None or len(found) > HREF_LENGTH:
+                continue
+            resource, todos = cache[found]
+            todo = next(t for t in todos if t.uid == twin)
+            ours = reminder_todo(reminder, twin)
+            same = same_task(todo, ours)
+            try:
+                links[pk] = SyncLink.bind(
+                    connection,
+                    reminder,
+                    collection=where,
+                    remote_href=found,
+                    uid=twin,
+                    etag=resource.etag if same else "",
+                    local_hash=task_hash(ours) if same else "",
+                    last_synced_at=now if same else None,
+                    remote_gone=False,
+                )
+            except AlreadyPaired:
+                continue  # that task is another reminder's by now: leave both alone
+            if link is not None:
+                report.notes.append(_("A task moved to another address; still paired."))
+
+        def put_task(reminder: Reminder, uid: str, href: str, etag: str, known) -> str:
+            """Write the task: new whole, or the properties Postulo owns into the one there."""
+            ours = reminder_todo(reminder, uid)
+            if not etag:
+                return server.put(
+                    href,
+                    text.todo_to_text(ours, prodid=PRODID, now=now),
+                    "text/calendar; charset=utf-8",
+                )
+            current = known or server.get(href)
+            theirs = next((t for t in text.text_to_todos(current.text) if t.uid == uid), None)
+            if theirs is None:
+                raise DavError(_("The task could not be read, so it was not changed."))
+            names = task_changes(ours, theirs)
+            if not names:
+                return current.etag
+            patched = text.patch_todo(current.text, uid, names, ours, modified=now)
+            if patched is None:
+                raise DavError(_("The task could not be read, so it was not changed."))
+            return server.put(href, patched, "text/calendar; charset=utf-8", etag=current.etag)
+
+        def one(reminder: Reminder) -> None:
+            pk = reminder.pk
+            link = links.get(pk)
+            if pk in held:
+                return  # paired with something outside the chosen task list
+            if link is not None and (link.remote_gone or not link.paired):
+                return  # removed from the list on purpose, or unpaired: leave it
+            uid = link.uid if link is not None else reminder.uid
+            source = task_hash(reminder_todo(reminder, uid))
+            if link is None:
+                if read_only:
+                    report.skipped += 1
+                    return
+                href = urljoin(tasks.href, f"{reminder.uid.split('@')[0]}.ics")
+                etag = put_task(reminder, uid, href, "", None)
+                links[pk] = SyncLink.bind(
+                    connection,
+                    reminder,
+                    collection=where,
+                    remote_href=canon(href),
+                    uid=uid,
+                    etag=etag,
+                    local_hash=source,
+                    last_synced_at=now,
+                )
+                report.pushed += 1
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
+                link.remote_gone = True
+                link.save(update_fields=["remote_gone", "updated_at"])
+                report.removed += 1
+                report.notes.append(
+                    _(
+                        "The task for “%(name)s” was removed from the task list; the reminder "
+                        "was kept."
+                    )
+                    % {"name": reminder.summary[:120]}
+                )
+                return
+            remote_changed = remote[href] != link.etag
+            local_changed = link.local_hash != source
+            known = None
+            if remote_changed:
+                resource, todos = read(link.remote_href)
+                incoming = next((t for t in todos if t.uid == uid), None) or (
+                    todos[0] if todos else None
+                )
+                if incoming is None:
+                    report.skipped += 1
+                    return
+                known = resource
+                if local_changed and same_task(incoming, reminder_todo(reminder, uid)):
+                    # Both sides already say the same: nothing to merge, only to remember.
+                    link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
+                    link.save()
+                    return
+                if local_changed and (incoming.last_modified or now) < reminder.updated_at:
+                    report.notes.append(
+                        _("“%(name)s” changed on the phone, but changed here later; kept ours.")
+                        % {"name": reminder.summary[:120]}
+                    )
+                    link.etag = resource.etag
+                    link.save(update_fields=["etag", "updated_at"])
+                else:
+                    if local_changed:
+                        report.notes.append(
+                            _(
+                                "“%(name)s” changed here, but changed on the phone later; took "
+                                "theirs."
+                            )
+                            % {"name": reminder.summary[:120]}
+                        )
+                    apply_todo(reminder, incoming, report, now)
+                    reminder.refresh_from_db()
+                    link.etag = resource.etag
+                    link.local_hash = task_hash(reminder_todo(reminder, uid))
+                    link.last_synced_at = now
+                    link.save()
+                    report.pulled += 1
+                    return
+            if local_changed:
+                if read_only:
+                    report.skipped += 1
+                    return
+                try:
+                    etag = put_task(reminder, uid, link.remote_href, link.etag, known)
+                except Conflict:
+                    report.notes.append(
+                        _("A reminder changed on both sides at once; next run decides.")
+                    )
+                    return
+                link.etag, link.local_hash, link.last_synced_at = etag, source, now
+                link.save()
+                report.pushed += 1
+
+        for reminder in reminders.values():
+            run.each(reminder.summary, lambda reminder=reminder: one(reminder))
+
+        # Links whose reminder is gone: the task goes with it when Postulo made it, and is
+        # cancelled when the person's own phone did (#12). One further than the window: a
+        # reminder merely too old for it is left alone, as an interview is.
+        unseen = [link.object_id for link in links.values() if link.object_id not in reminders]
+        existing = set(Reminder.objects.filter(pk__in=unseen).values_list("pk", flat=True))
+        for link in list(links.values()):
+            if link.object_id in reminders or link.object_id in existing:
+                continue
+            if link.paired and not read_only and canon(link.remote_href) in remote:
+                try:
+                    if not made_elsewhere(link):
+                        if drop_twin(server, link, report, TASK_KEPT):
+                            report.removed += 1
+                    else:
+                        self._cancel_task(run, link)
+                except DavError as error:
+                    run.skip(_tail(link.remote_href), error)
+                    continue
+            link.delete()
+
+        # Tasks that appeared in the list from elsewhere: a reminder each, in a list Postulo
+        # made; left alone, and counted, in any other (#12).
+        left = 0
+        for href in [h for h in remote if h not in linked()]:
+            if not own_list or href not in cache:
+                left += 1
+                continue
+            resource, todos = cache[href]
+            todo = todos[0] if todos else None
+            if (
+                todo is None
+                or not todo.uid
+                or len(href) > HREF_LENGTH
+                or len(todo.uid) > UID_LENGTH
+            ):
+                left += 1
+                continue
+            if todo.done:
+                left += 1
+                continue
+            if todo.due is None and todo.due_day is None:
+                report.skipped += 1
+                report.notes.append(
+                    _("The task “%(name)s” has no due time, so it was not made a reminder.")
+                    % {"name": todo.summary[:120]}
+                )
+                continue
+
+            def adopt(href=href, resource=resource, todo=todo) -> None:
+                reminder = create_reminder(
+                    owner,
+                    summary=todo.summary,
+                    due=todo.due or todo.due_day,
+                    actor=ACTOR,
+                )
+                SyncLink.bind(
+                    connection,
+                    reminder,
+                    collection=where,
+                    remote_href=href,
+                    uid=todo.uid,
+                    etag=resource.etag,
+                    local_hash=task_hash(reminder_todo(reminder, todo.uid)),
+                    last_synced_at=now,
+                )
+                report.pulled += 1
+
+            run.each(todo.summary or href, adopt)
+        if left:
+            report.skipped += left
+            report.notes.append(
+                ngettext(
+                    "%(count)d task in the task list is not from Postulo and was left alone.",
+                    "%(count)d tasks in the task list are not from Postulo and were left alone.",
+                    left,
+                )
+                % {"count": left}
+            )
+
+    def _cancel_task(self, run: Run, link) -> None:
+        """Mark a task somebody else made as cancelled, once its reminder is deleted here."""
+        server = run.server
+        resource = server.get(link.remote_href)
+        patched = text.patch_todo(
+            resource.text,
+            link.uid,
+            {"STATUS"},
+            text.Todo(status="CANCELLED"),
+            modified=run.now,
+        )
+        if patched is None:
+            return
+        try:
+            server.put(
+                link.remote_href, patched, "text/calendar; charset=utf-8", etag=resource.etag
+            )
+        except Conflict:
+            run.report.notes.append(str(TASK_KEPT))

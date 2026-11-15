@@ -531,6 +531,220 @@ def _own_uid(inner: list[str]) -> str:
     return ""
 
 
+# ------------------------------------------------------------------- tasks
+
+
+@dataclass
+class Todo:
+    """One VTODO: what a reminder or an application's milestone is as a task (#12)."""
+
+    uid: str = ""
+    summary: str = ""
+    #: The moment it is due, in UTC; ``None`` when it has none or it is not an instant.
+    due: dt.datetime | None = None
+    #: A bare date ``DUE`` (``VALUE=DATE``): a day and no hour, which Postulo reads as nine in
+    #: the morning of the person's own zone.
+    due_day: dt.date | None = None
+    status: str = ""
+    completed: dt.datetime | None = None
+    priority: int | None = None
+    #: RFC 9253 ``REFID``: what the tasks about one application share.
+    refid: str = ""
+    #: ``RELATED-TO`` with no ``RELTYPE`` (or ``PARENT``): the UID of the task this sits under.
+    parent: str = ""
+    last_modified: dt.datetime | None = None
+    recurring: bool = False
+    #: Why a ``DUE`` could not be read as an instant, if it could not: ``floating`` or
+    #: ``zone:<name>``. Such a task is never moved on a guess (#24).
+    problem: str = ""
+
+    @property
+    def done(self) -> bool:
+        """Whether the task is finished: ticked, or cancelled (which completes a reminder)."""
+        return self.status in ("COMPLETED", "CANCELLED") or self.completed is not None
+
+    def digest_source(self) -> str:
+        return "\n".join(
+            [
+                self.summary,
+                stamp(self.due) if self.due else (self.due_day.isoformat() if self.due_day else ""),
+                "done" if self.done else "open",
+                stamp(self.completed) if self.completed else "",
+                str(self.priority or ""),
+                self.refid,
+                self.parent,
+            ]
+        )
+
+
+def text_to_todos(text: str) -> list[Todo]:
+    """Every VTODO in the document, each property read in the component it belongs to.
+
+    A task carries alarms, and an alarm has a ``DESCRIPTION`` and a ``SUMMARY`` of its own
+    (RFC 5545 §3.6.6): a property belongs to the task only when the task is the innermost
+    component open, which is what stopped an alarm's text landing on its task (#11, #12).
+    """
+    props = properties(text)
+    zones = timezones_of(props)
+    todos: list[Todo] = []
+    current: Todo | None = None
+    stack: list[str] = []
+    for prop in props:
+        if prop.name == "BEGIN":
+            kind = prop.value.strip().upper()
+            stack.append(kind)
+            if kind == "VTODO" and current is None and "VTODO" not in stack[:-1]:
+                current = Todo()
+            continue
+        if prop.name == "END":
+            kind = prop.value.strip().upper()
+            if kind == "VTODO" and current is not None and stack[-1:] == ["VTODO"]:
+                todos.append(current)
+                current = None
+            if kind in stack:
+                while stack and stack.pop() != kind:
+                    pass
+            continue
+        if current is None or stack[-1:] != ["VTODO"]:
+            continue
+        if prop.name == "UID":
+            current.uid = prop.value.strip()
+        elif prop.name == "SUMMARY":
+            current.summary = unescape(prop.value).strip()
+        elif prop.name == "DUE":
+            moment, problem = read_moment(prop, zones)
+            if moment is not None:
+                current.due = moment
+            elif problem == "date":
+                match = _STAMP.match(prop.value.strip())
+                current.due_day = dt.date(*(int(match.group(i)) for i in (1, 2, 3)))
+            else:
+                current.problem = problem
+        elif prop.name == "STATUS":
+            current.status = prop.value.strip().upper()
+        elif prop.name == "COMPLETED":
+            current.completed = parse_stamp(prop.value)
+        elif prop.name == "PRIORITY":
+            current.priority = int(prop.value) if prop.value.strip().isdigit() else None
+        elif prop.name == "REFID":
+            current.refid = prop.value.strip()
+        elif prop.name == "RELATED-TO":
+            if prop.params.get("RELTYPE", "PARENT").upper() == "PARENT" and not current.parent:
+                current.parent = prop.value.strip()
+        elif prop.name == "LAST-MODIFIED":
+            current.last_modified = parse_stamp(prop.value)
+        elif prop.name == "RRULE":
+            current.recurring = True
+    return todos
+
+
+def todo_to_text(todo: Todo, *, prodid: str, now: dt.datetime) -> str:
+    """A whole new document with the one VTODO: only what Postulo owns of a task (#12)."""
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", f"PRODID:{prodid}", "BEGIN:VTODO"]
+    lines += [f"UID:{without_controls(todo.uid)}", f"DTSTAMP:{stamp(now)}", f"CREATED:{stamp(now)}"]
+    lines += todo_lines(todo, modified=now)
+    lines += ["END:VTODO", "END:VCALENDAR"]
+    return render(lines)
+
+
+def todo_lines(todo: Todo, *, modified: dt.datetime) -> list[str]:
+    """The properties Postulo writes into a task, as lines."""
+    lines = [f"SUMMARY:{escape(todo.summary)}"]
+    if todo.due is not None:
+        lines.append(f"DUE:{stamp(todo.due)}")
+    if todo.priority:
+        lines.append(f"PRIORITY:{todo.priority}")
+    if todo.refid:
+        lines.append(f"REFID:{without_controls(todo.refid)}")
+    if todo.parent:
+        lines.append(f"RELATED-TO:{without_controls(todo.parent)}")
+    lines += _completion_lines(todo)
+    lines.append(f"LAST-MODIFIED:{stamp(modified)}")
+    return lines
+
+
+def _completion_lines(todo: Todo) -> list[str]:
+    if todo.status == "CANCELLED":
+        return ["STATUS:CANCELLED"]
+    if todo.done:
+        lines = ["STATUS:COMPLETED"]
+        if todo.completed is not None:
+            lines.append(f"COMPLETED:{stamp(todo.completed)}")
+        return [*lines, "PERCENT-COMPLETE:100"]
+    return ["STATUS:NEEDS-ACTION"]
+
+
+#: What :func:`patch_todo` may replace; no other property of a task is touched.
+TODO_PATCHED = frozenset(
+    {
+        "SUMMARY",
+        "DUE",
+        "STATUS",
+        "COMPLETED",
+        "PERCENT-COMPLETE",
+        "PRIORITY",
+        "REFID",
+        "RELATED-TO",
+        "LAST-MODIFIED",
+    }
+)
+
+
+def patch_todo(
+    source: str, uid: str, names: set[str], todo: Todo, *, modified: dt.datetime
+) -> str | None:
+    """The document with the VTODO ``uid`` changed in the properties of ``names`` only.
+
+    A task somebody's phone keeps is patched, never rebuilt (#12): its description,
+    categories, own alarms, location, parameters and everything this does not know about come
+    back as they were. ``names`` says which of :data:`TODO_PATCHED` to rewrite from ``todo``
+    (the completion trio, ``STATUS``, ``COMPLETED`` and ``PERCENT-COMPLETE``, go together);
+    ``LAST-MODIFIED`` always. ``None`` when no task has that UID.
+    """
+    lines = unfold(source)
+    start = end = None
+    depth = 0
+    for index, line in enumerate(lines):
+        prop = parse_line(line)
+        if prop is None:
+            continue
+        value = prop.value.strip().upper()
+        if prop.name == "BEGIN":
+            if value == "VTODO" and depth == 1:
+                start = index
+            depth += 1
+        elif prop.name == "END":
+            depth -= 1
+            if value == "VTODO" and start is not None and depth == 1:
+                if _own_uid(lines[start + 1 : index]) == uid:
+                    end = index
+                    break
+                start = None
+    if start is None or end is None:
+        return None
+    replaced = (names & TODO_PATCHED) | {"LAST-MODIFIED"}
+    if "STATUS" in replaced or "COMPLETED" in replaced:
+        replaced |= {"STATUS", "COMPLETED", "PERCENT-COMPLETE"}
+    kept: list[str] = []
+    nested = 0
+    for line in lines[start + 1 : end]:
+        prop = parse_line(line)
+        name = prop.name if prop is not None else ""
+        if name == "BEGIN":
+            nested += 1
+        elif name == "END":
+            nested -= 1
+            kept.append(line)
+            continue
+        if nested == 0 and name in replaced:
+            continue
+        kept.append(line)
+    added = [
+        line for line in todo_lines(todo, modified=modified) if line.split(":", 1)[0] in replaced
+    ]
+    return render(lines[: start + 1] + kept + added + lines[end:])
+
+
 # ------------------------------------------------------------------- times
 
 _STAMP = re.compile(

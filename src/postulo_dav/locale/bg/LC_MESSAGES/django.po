@@ -37,6 +37,13 @@ msgid "%(count)d records were not sent, because sending that kind is switched of
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "%(count)d task in the task list is not from Postulo and was left alone."
+msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s е премахнато от календара на друго устройство; запазено тук."
@@ -57,17 +64,29 @@ msgstr ""
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Контакт, изтрит тук, е бил променен на телефона след последната синхронизация. Картата беше оставена в адресната книга и ще се върне като контакт при следващото изпълнение."
 
+#: src/postulo_dav/sync.py
+msgid "A reminder changed on both sides at once; next run decides."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
 msgstr ""
 
 #: src/postulo_dav/sync.py
-msgid "Address book"
-msgstr "Адресна книга"
+msgid "A task moved to another address; still paired."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "address book"
 msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Address book"
+msgstr "Адресна книга"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
@@ -94,12 +113,12 @@ msgid "An interview moved to another address on the calendar; still paired."
 msgstr "Интервю се премести на друг адрес в календара; все още е сдвоено."
 
 #: src/postulo_dav/sync.py
-msgid "Calendar"
-msgstr "Календар"
-
-#: src/postulo_dav/sync.py
 msgid "calendar"
 msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Calendar"
+msgstr "Календар"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
@@ -147,6 +166,11 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "Found the task list “%(name)s” (%(href)s)."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "From the card “%(name)s”: %(details)s"
 msgstr ""
 
@@ -187,8 +211,8 @@ msgid "More than one collection is called “%(name)s”. Choose one of them, by
 msgstr ""
 
 #: src/postulo_dav/sync.py
-msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
-msgstr "Никога да не се пише на сървъра — дори за създаване на адресната книга или календара. Контактите и интервютата пак се получават; нищо не се изпраща."
+msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "None"
@@ -208,7 +232,7 @@ msgid "Password or app password"
 msgstr "Парола или парола за приложение"
 
 #: src/postulo_dav/sync.py
-msgid "Press Look on the server, then choose one address book and one calendar. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
+msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -236,6 +260,11 @@ msgid "Read only on the server"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "Reminders were not synced: the task list could not be used. %(why)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "Send companies"
 msgstr ""
 
@@ -252,11 +281,31 @@ msgid "Server address"
 msgstr "Адрес на сървъра"
 
 #: src/postulo_dav/sync.py
+msgid "task list"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Task list"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Task lists"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
 msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That task has changed since it was listed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "That task is not in the chosen task list."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -352,6 +401,10 @@ msgid "The server refused the user name or password."
 msgstr "Сървърът отказа потребителското име или паролата."
 
 #: src/postulo_dav/sync.py
+msgid "The server would not make a task list, so it may not keep tasks."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
 msgstr "Адресът на сървъра, например https://cloud.example.org, или адресът на неговата DAV услуга, ако тя е под някакъв път, например https://example.org/dav.php/. Оттам Postulo намира началните папки на адресните книги и календарите."
 
@@ -366,9 +419,37 @@ msgid "The server's answer for %(path)s was too large or too slow, and was not r
 msgstr "Отговорът на сървъра за %(path)s беше твърде голям или твърде бавен и не беше прочетен."
 
 #: src/postulo_dav/sync.py
+msgid "The task could not be read, so it was not changed."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "The task has no due time to make a reminder of."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task list “%(name)s” is not on the server."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task “%(name)s” has no due time, so it was not made a reminder."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
 msgstr "Часът на %(kind)s в календара не можа да се използва (%(why)s), затова не беше преместено."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
+msgstr ""
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -377,6 +458,10 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -418,6 +503,11 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "“%(name)s” changed on both sides at once; next run decides."
 msgstr "„%(name)s“ е променен едновременно от двете страни; следващото изпълнение решава."
 
@@ -425,6 +515,11 @@ msgstr "„%(name)s“ е променен едновременно от две�
 #, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 msgstr "„%(name)s“ е променен от двете страни, а картата от телефона не посочва време: взета е версията от телефона."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -439,6 +534,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is not a task list."
 msgstr ""
 
 #: src/postulo_dav/sync.py
