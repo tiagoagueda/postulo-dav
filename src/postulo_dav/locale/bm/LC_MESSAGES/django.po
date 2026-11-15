@@ -348,6 +348,16 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "“%(name)s” could not be made into an interview: %(why)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” could not be made into an interview: its time cannot be read."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "“%(name)s” is not a calendar."
 msgstr ""
 

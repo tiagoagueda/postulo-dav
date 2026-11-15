@@ -69,8 +69,16 @@ never rebuilt: only its times, place and a cancellation are exchanged, both ways
 summary, description, link, attendees, alarms and any parameter such as `LANGUAGE` stay as
 written, and its description is never taken for the notes. An event with an `ORGANIZER` is a
 scheduling object (RFC 6638 §3) and is read, never written. Deleting the interview unpairs
-it; the event stays. Making an interview *from* an event, and whole-day events, are not
-done yet (#11).
+it; the event stays.
+
+An event can instead be paired with an **application**. The next sync makes an interview
+for it through Postulo's own service, so it has its timeline entry and its reminder, and
+pairs that interview with the event as above. The kind is *Other* (nothing on the Pairing
+page asks for one; change it on the interview), and an interview deleted here is made again
+while the event stays paired with the application, so unpair the application to stop that.
+Events that belong to no application (an appointment with the employment office) cannot be
+paired yet: the core's Pairing page has no record kind for an appointment. Whole-day events
+(deadlines, closing dates) are not written to the calendar.
 
 **Pairing.** A card or an event is paired with its record by its `UID`, with the
 address as a cache. Postulo never changes a `UID` it did not write, so a card created on the

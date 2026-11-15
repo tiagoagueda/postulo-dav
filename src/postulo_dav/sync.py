@@ -63,12 +63,15 @@ from django.utils.translation import gettext_lazy, ngettext
 # to the line.
 from postulo.plugins.api import (
     AlreadyPaired,
+    Application,
     Contact,
     DestinationRefused,
     DiscoveredOption,
     FieldSpec,
     Interview,
+    InterviewKind,
     InterviewOutcome,
+    InterviewRefused,
     LinkKind,
     RemoteItem,
     SyncLink,
@@ -85,6 +88,7 @@ from postulo.plugins.api import (
     reschedule_interview,
     save_phone_number,
     save_web_link,
+    schedule_interview,
     settle_interview,
 )
 
@@ -897,6 +901,74 @@ class DavSync:
 
     # ------------------------------------------------------------ pairing
 
+    def _make_interviews(self, run: Run, calendar, remote: dict[str, str]) -> None:
+        """Make the interview for each event a person paired with an application (#11).
+
+        An event is paired with an application on the *Pairing* page; the interview is
+        made here, through `schedule_interview` so that it has its timeline entry and its
+        reminder, and is then paired with the same event like any other: kept in step by
+        patching, never rebuilt. The interview's own link carries no collection, since the
+        application's link holds the event's key. The kind is *Other* until the person
+        changes it on the interview: nothing on the pairing page asks for one.
+        """
+        server, connection, report, canon = run.server, run.connection, run.report, run.canon
+        # Unpaired ones count: a person who unpaired an interview did not ask for a new one.
+        have = {link.uid for link in SyncLink.of_model(connection, Interview) if link.uid}
+        for link in SyncLink.of_model(connection, Application):
+            if not link.paired or link.remote_gone or link.uid in have:
+                continue
+            href = canon(link.remote_href) if link.remote_href else ""
+            if not href or not server.within(calendar.href, href):
+                continue  # not on this calendar: not this run's to read
+            if href not in remote:
+                continue  # the event is gone: the pairing waits, and nothing is made
+            application = link.target
+            if application is None:
+                continue
+
+            def make(link=link, href=href, application=application) -> None:
+                resource = server.get(href)
+                events = [e for e in text.text_to_events(resource.text) if not e.recurring]
+                event = next((e for e in events if e.uid == link.uid), None)
+                if event is None or not event.starts_at or not event.ends_at:
+                    report.skipped += 1
+                    report.notes.append(
+                        _(
+                            "“%(name)s” could not be made into an interview: its time "
+                            "cannot be read."
+                        )
+                        % {"name": (event.summary if event else href)[:120]}
+                    )
+                    return
+                try:
+                    interview = schedule_interview(
+                        application,
+                        kind=InterviewKind.OTHER,
+                        starts_at=event.starts_at,
+                        ends_at=event.ends_at if event.ends_at > event.starts_at else None,
+                        location=event.location[:500],
+                        actor=ACTOR,
+                    )
+                except InterviewRefused as refused:
+                    report.skipped += 1
+                    report.notes.append(
+                        _("“%(name)s” could not be made into an interview: %(why)s")
+                        % {"name": event.summary[:120], "why": refused}
+                    )
+                    return
+                SyncLink.bind(
+                    connection,
+                    interview,
+                    remote_href=href,
+                    uid=link.uid,
+                    etag=resource.etag,
+                    local_hash=digest(core_source(interview)),
+                    last_synced_at=run.now,
+                )
+                report.pulled += 1
+
+            run.each(link.uid, make)
+
     def remote_items(
         self, config: dict, search: str = "", kind: str = "", key: tuple[str, str] | None = None
     ) -> list[RemoteItem]:
@@ -907,7 +979,7 @@ class DavSync:
         events and events without a UID are not offered: the first are paired already, and an
         interview is one meeting. Nothing is written.
         """
-        if kind not in ("", "interview"):
+        if kind not in ("", "interview", "application"):
             return []
         client, server = dav.connect(config)
         with client:
@@ -960,7 +1032,7 @@ class DavSync:
                                 collection_label=collection.name or _tail(collection.href),
                                 href=href,
                                 detail=detail,
-                                kinds=("interview",),
+                                kinds=("interview", "application"),
                             ),
                         )
                     )
@@ -1371,6 +1443,7 @@ class DavSync:
         server, connection, report = run.server, run.connection, run.report
         owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
         remote = server.etags(calendar.href)
+        self._make_interviews(run, calendar, remote)
         links = {link.object_id: link for link in SyncLink.of_model(connection, Interview)}
         held = run.held(links, calendar)
         interviews = {

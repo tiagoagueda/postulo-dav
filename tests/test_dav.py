@@ -2154,7 +2154,7 @@ def test_events_from_elsewhere_are_offered_for_pairing_and_postulos_own_are_not(
     DavSync().sync(connection, connection.full_config)  # Postulo's own event is there now
     found = DavSync().remote_items(connection.full_config)
     assert [(i.uid, i.label, i.kinds) for i in found] == [
-        ("phone-ev-1@example.org", "Conversa com a Aperture", ("interview",))
+        ("phone-ev-1@example.org", "Conversa com a Aperture", ("interview", "application"))
     ]
     assert found[0].href == f"{BASE}{made.href}" and found[0].collection == f"{BASE}{CALENDAR_PATH}"
     assert DavSync().remote_items(connection.full_config, search="aperture")
@@ -2284,3 +2284,65 @@ def test_the_patch_changes_only_what_it_is_given_and_nothing_else():
     # An alarm's own DESCRIPTION and TRIGGER are not touched, and the UID is not either.
     assert "TRIGGER:-PT15M" in patched and "UID:x@example.org" in patched
     assert text.text_to_events(patched)[0].description == "Bring the portfolio"
+
+
+# ------------------------- an event paired with an application becomes its interview (#11)
+
+
+def pair_with_application(connection, application, uid="phone-ev-1@example.org"):
+    from postulo.plugins import pairing
+
+    (item,) = DavSync().remote_items(
+        connection.full_config, kind="application", key=(f"{BASE}{CALENDAR_PATH}", uid)
+    )
+    assert "application" in item.kinds
+    return pairing.pair(connection, item, application)
+
+
+def test_an_event_paired_with_an_application_becomes_an_interview_kept_in_step(
+    made, connection, application
+):
+    made.enforce_uid = True
+    href = CALENDAR_PATH + "phone.ics"
+    made.add(href, phone_event("phone-ev-1@example.org", next_week(14)))
+    pair_with_application(connection, application)
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.error == "" and report.pulled == 1
+    interview = Interview.objects.get(application=application)
+    assert interview.starts_at == next_week(14) and interview.location == "Lisboa"
+    assert interview.kind == "other" and interview.reminder_id
+    # A second run makes nothing more, and writes nothing to the event.
+    made.log.clear()
+    DavSync().sync(connection, connection.full_config)
+    assert Interview.objects.filter(application=application).count() == 1
+    assert not [m for m, _p in made.log if m in ("PUT", "DELETE")]
+    # Moved here: the event is patched, UID and the rest kept.
+    reschedule_interview(interview, starts_at=next_week(16), ends_at=next_week(17), actor="test")
+    DavSync().sync(connection, connection.full_config)
+    body, _etag = made.resources[href]
+    assert "UID:phone-ev-1@example.org" in body and "SUMMARY;LANGUAGE=pt-BR:" in body
+    assert f"DTSTART:{next_week(16).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}" in body
+    assert Interview.objects.filter(application=application).count() == 1
+
+
+def test_an_unpaired_application_link_makes_no_interview(made, connection, application):
+    made.add(CALENDAR_PATH + "phone.ics", phone_event("phone-ev-1@example.org", next_week(14)))
+    from postulo.plugins import pairing
+
+    pairing.unpair(pair_with_application(connection, application))
+    DavSync().sync(connection, connection.full_config)
+    assert not Interview.objects.filter(application=application).exists()
+
+
+def test_an_event_with_no_readable_time_is_noted_and_makes_nothing(made, connection, application):
+    body = re.sub(
+        r"DT(START|END):\d{8}T\d{6}Z",
+        r"DT\1;VALUE=DATE:20261201",
+        phone_event("phone-ev-1@example.org", next_week(14)),
+    )
+    made.add(CALENDAR_PATH + "phone.ics", body)
+    made.add(CALENDAR_PATH + "ok.ics", phone_event("ok@example.org", next_week(9)))
+    pair_with_application(connection, application, uid="phone-ev-1@example.org")
+    report = DavSync().sync(connection, connection.full_config)
+    assert "could not be made into an interview" in report.summary()
+    assert not Interview.objects.exists()
