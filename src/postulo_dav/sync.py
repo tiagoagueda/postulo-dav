@@ -85,6 +85,7 @@ from postulo.plugins.api import (
     event_lines,
     get_or_create_company,
     get_or_create_department,
+    person_card,
     phone_number_is_taken,
     primary_phone_number,
     primary_web_link,
@@ -137,6 +138,8 @@ TOLERATED = (DavError, DatabaseError, ValidationError, ValueError, AlreadyPaired
 
 #: A UID Postulo itself wrote for a contact: ``contact-<pk>-<owner>@postulo``.
 POSTULO_CARD_UID = re.compile(r"^contact-\d+-\d+@postulo$")
+#: ...and for a company's card Postulo wrote (#10).
+COMPANY_CARD_UID = re.compile(r"^company-\d+-\d+@postulo$")
 
 
 #: A UID Postulo minted for an interview: ``<uuid>@postulo``. Any other UID on a paired event
@@ -235,6 +238,15 @@ class Run:
     report: SyncReport
     read_only: bool
     now: dt.datetime = field(default_factory=timezone.now)
+    #: What goes out, per kind of record (#10): contacts by default, as ever; companies and the
+    #: person's own card only when switched on.
+    send_contacts: bool = True
+    send_companies: bool = False
+    send_own_card: bool = False
+    #: The vCard version the address book takes, for the cards Postulo writes.
+    vcard: str = "4.0"
+    #: Records left unsent because their kind is switched off, for the report.
+    unsent: int = 0
 
     @property
     def owner(self):
@@ -639,6 +651,46 @@ class DavSync:
                         "calendar. Only those are read or written, and a mode set here is "
                         "Postulo's word, not the server's lock: an app password cannot be "
                         "narrowed to one collection. Whole collections sync."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "send_contacts",
+                str(_("Send contacts")),
+                type="choice",
+                required=False,
+                default="all",
+                choices=(("all", str(_("All of them"))), ("none", str(_("None")))),
+                help=str(
+                    _(
+                        "Which contacts get a card in the address book. Cards already there "
+                        "stay, and nothing more is sent to them while this is off."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "send_companies",
+                str(_("Send companies")),
+                type="boolean",
+                required=False,
+                default=False,
+                help=str(
+                    _(
+                        "Write each company as a card of its own (a company card, with its "
+                        "name and website), kept in step with the company."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "send_own_card",
+                str(_("Send my own card")),
+                type="boolean",
+                required=False,
+                default=False,
+                help=str(
+                    _(
+                        "Write your own details to a card of its own, one way: a change on the "
+                        "phone never reaches your profile."
                     )
                 ),
             ),
@@ -1250,7 +1302,15 @@ class DavSync:
         errors: list[str] = []
         client, server = dav.connect(config)
         with client:
-            run = Run(server, connection, report, read_only)
+            run = Run(
+                server,
+                connection,
+                report,
+                read_only,
+                send_contacts=config.get("send_contacts") != "none",
+                send_companies=bool(config.get("send_companies")),
+                send_own_card=bool(config.get("send_own_card")),
+            )
             try:
                 chosen = self._resolve(server, config, report.notes)
             except AuthenticationRefused as error:
@@ -1307,6 +1367,7 @@ class DavSync:
     def _sync_contacts(self, run: Run, book) -> None:
         server, connection, report = run.server, run.connection, run.report
         owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
+        run.vcard = book.vcard
         remote = server.etags(book.href)
         # Links flagged remote_gone are kept in the map: they say "the person removed
         # this from the address book", and the record must not be pushed back.
@@ -1338,7 +1399,8 @@ class DavSync:
         # A card paired with a company is that company's, and is never adopted as a contact.
         companies = {
             canon(link.remote_href)
-            for link in SyncLink.of_model(connection, Company)
+            for model in (Company, type(owner))
+            for link in SyncLink.of_model(connection, model)
             if link.remote_href
         }
 
@@ -1477,13 +1539,14 @@ class DavSync:
             other = card_made_elsewhere(link, contact, owner)
             source = card_hash(card, other)
             if link is None:
-                if read_only:
+                if read_only or not run.send_contacts:
                     report.skipped += 1
+                    run.unsent += 0 if read_only else 1
                     return
                 href = urljoin(book.href, f"{uuid.uuid4()}.vcf")
                 etag = server.put(
                     href,
-                    text.card_to_text(card, prodid=PRODID, rev=now),
+                    text.card_to_text(card, prodid=PRODID, rev=now, version=run.vcard),
                     "text/vcard; charset=utf-8",
                 )
                 links[contact.pk] = SyncLink.bind(
@@ -1577,8 +1640,9 @@ class DavSync:
                     report.pulled += 1
                     return
             if local_changed:
-                if read_only:
+                if read_only or not run.send_contacts:
                     report.skipped += 1
+                    run.unsent += 0 if read_only else 1
                     return
                 try:
                     if other:
@@ -1586,7 +1650,7 @@ class DavSync:
                     else:
                         etag = server.put(
                             link.remote_href,
-                            text.card_to_text(card, prodid=PRODID, rev=now),
+                            text.card_to_text(card, prodid=PRODID, rev=now, version=run.vcard),
                             "text/vcard; charset=utf-8",
                             etag=link.etag,
                         )
@@ -1684,6 +1748,12 @@ class DavSync:
             run.each(card.name, adopt)
 
         self._sync_company_cards(run, book, remote)
+        self._send_own_card(run, book, remote)
+        if run.unsent:
+            report.notes.append(
+                _("%(count)d records were not sent, because sending that kind is switched off.")
+                % {"count": run.unsent}
+            )
 
     def _sync_company_cards(self, run: Run, book, remote: dict[str, str]) -> None:
         """Keep each company a person paired with a card in step: name and website (#8).
@@ -1697,6 +1767,37 @@ class DavSync:
         now, read_only = run.now, run.read_only
         links = {link.object_id: link for link in SyncLink.of_model(connection, Company)}
         held = run.held(links, book)
+        own_companies = Company.objects.for_user(run.owner).filter(owner=run.owner)
+
+        def make(company) -> None:
+            uid = f"company-{company.pk}-{run.owner.pk}@postulo"
+            href = urljoin(book.href, f"{uuid.uuid4()}.vcf")
+            card = text.Card(uid=uid, name=company.name, org=company.name, url=company.website)
+            etag = server.put(
+                href,
+                text.card_to_text(card, prodid=PRODID, rev=now, version=run.vcard, org=True),
+                "text/vcard; charset=utf-8",
+            )
+            links[company.pk] = SyncLink.bind(
+                connection,
+                company,
+                remote_href=canon(href),
+                uid=uid,
+                etag=etag,
+                local_hash=digest(f"{company.name}\n{company.website}"),
+                last_synced_at=now,
+            )
+            remote[canon(href)] = etag
+            report.pushed += 1
+
+        # Companies go out as cards of their own when that is switched on; when it is off,
+        # the cards and their links stay and nothing more is pushed (#10).
+        for company in own_companies:
+            if company.pk in links:
+                continue
+            if read_only or not run.send_companies:
+                continue
+            run.each(company.name, lambda company=company: make(company))
 
         def one(link) -> None:
             company = link.target
@@ -1755,8 +1856,10 @@ class DavSync:
                     return
                 link.etag = resource.etag
             if local_changed:
-                if read_only:
+                ours = bool(COMPANY_CARD_UID.match(link.uid or ""))
+                if read_only or (ours and not run.send_companies):
                     report.skipped += 1
+                    run.unsent += 0 if read_only else 1
                     return
                 resource = resource or server.get(link.remote_href)
                 changes = card_changes(card, text.text_to_card(resource.text))
@@ -1786,6 +1889,105 @@ class DavSync:
             if not link.paired or link.remote_gone or pk in held:
                 continue
             run.each(str(link.uid)[:60], lambda link=link: one(link))
+
+        # A company deleted here takes its twin with it only when Postulo wrote that card; a
+        # card somebody else made is unpaired and left (#8, #10).
+        gone = {
+            link.object_id: link
+            for link in links.values()
+            if link.target is None and link.object_id not in held
+        }
+        for link in gone.values():
+            if (
+                link.paired
+                and not read_only
+                and COMPANY_CARD_UID.match(link.uid or "")
+                and canon(link.remote_href) in remote
+            ):
+                try:
+                    if drop_twin(server, link, report, CARD_KEPT):
+                        report.removed += 1
+                except DavError as error:
+                    run.skip(_tail(link.remote_href), error)
+                    continue
+            link.delete()
+
+    def _send_own_card(self, run: Run, book, remote: dict[str, str]) -> None:
+        """Write the person's own details to a card of their own, one way (#10).
+
+        A new card Postulo makes in the chosen book, from the core's `person_card`: name,
+        sign-in address, headline, the primary number and the first link. It is never read
+        back into the profile, and a change made on the phone is overwritten by the next one
+        made here. Nothing is sent while it is switched off, and the card stays.
+        """
+        server, connection, report, canon = run.server, run.connection, run.report, run.canon
+        owner, now = run.owner, run.now
+        link = SyncLink.for_record(connection, owner)
+        if link is not None and not link.paired:
+            return
+        if not run.send_own_card:
+            return
+        if run.read_only:
+            report.skipped += 1
+            return
+        person = person_card(owner)
+        name = f"{person.given_name} {person.family_name}".strip()
+        if not name:
+            report.notes.append(_("Your own card was not sent: your profile has no name."))
+            return
+        number = next((n.number for n in person.numbers if n.is_primary), "") or next(
+            (n.number for n in person.numbers), ""
+        )
+        card = text.Card(
+            uid=f"you-{owner.pk}@postulo",
+            name=name,
+            title=person.headline,
+            email=person.email,
+            phone=number,
+            url=next((link_row.url for link_row in person.links), ""),
+        )
+        source = digest(card.digest_source())
+        names = (person.given_name, person.family_name)
+        body = text.card_to_text(card, prodid=PRODID, rev=now, version=run.vcard, own_name=names)
+
+        def write() -> None:
+            nonlocal link
+            if link is None:
+                href = urljoin(book.href, f"{uuid.uuid4()}.vcf")
+                etag = server.put(href, body, "text/vcard; charset=utf-8")
+                SyncLink.bind(
+                    connection,
+                    owner,
+                    remote_href=canon(href),
+                    uid=card.uid,
+                    etag=etag,
+                    local_hash=source,
+                    last_synced_at=now,
+                )
+                report.pushed += 1
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
+                link.remote_gone = True
+                link.save(update_fields=["remote_gone", "updated_at"])
+                report.removed += 1
+                report.notes.append(_("Your own card was removed from the address book; kept."))
+                return
+            if link.remote_gone or (link.local_hash == source and remote[href] == link.etag):
+                return
+            try:
+                # One way: what is on the card now, a change made on the phone included, is
+                # replaced; the ETag just listed keeps the write conditional.
+                etag = server.put(
+                    link.remote_href, body, "text/vcard; charset=utf-8", etag=remote[href]
+                )
+            except Conflict:
+                return  # changed again since it was listed: the next run writes over it
+            link.etag, link.local_hash, link.last_synced_at = etag, source, now
+            link.save()
+            report.pushed += 1
+
+        run.each(_("your own card"), write)
 
     # -------------------------------------------------------- interviews
 

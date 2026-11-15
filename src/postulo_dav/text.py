@@ -177,11 +177,36 @@ class Card:
         )
 
 
-def card_to_text(card: Card, *, prodid: str, rev: dt.datetime) -> str:
-    lines = ["BEGIN:VCARD", "VERSION:4.0", f"PRODID:{prodid}", f"UID:{without_controls(card.uid)}"]
+def card_to_text(
+    card: Card,
+    *,
+    prodid: str,
+    rev: dt.datetime,
+    version: str = "4.0",
+    org: bool = False,
+    own_name: tuple[str, str] | None = None,
+) -> str:
+    """A card, as Postulo writes one it made.
+
+    ``version`` is the book's (``3.0`` where it lists no 4.0, RFC 6352 §6.2.2). ``org`` is a
+    company's card: ``KIND:org`` in 4.0 (RFC 6350 §6.1.4), Apple's ``X-ABShowAs:COMPANY`` in
+    3.0, with no ``N``. ``own_name`` is the given and family name of the person's own card,
+    the one card whose name does split.
+    """
+    lines = [
+        "BEGIN:VCARD",
+        f"VERSION:{version}",
+        f"PRODID:{prodid}",
+        f"UID:{without_controls(card.uid)}",
+    ]
     lines.append(f"FN:{escape(card.name)}")
-    family, _, given = card.name.strip().rpartition(" ")
-    lines.append(f"N:{escape(given)};{escape(family)};;;")
+    if org:
+        lines.append("KIND:org" if version == "4.0" else "X-ABShowAs:COMPANY")
+    elif own_name is not None:
+        lines.append(f"N:{escape(own_name[1])};{escape(own_name[0])};;;")
+    else:
+        family, _, given = card.name.strip().rpartition(" ")
+        lines.append(f"N:{escape(given)};{escape(family)};;;")
     if card.org:
         lines.append(f"ORG:{escape(card.org)}")
     if card.title:

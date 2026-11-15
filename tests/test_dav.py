@@ -102,6 +102,12 @@ class FakeDav:
         if "components" in meta:
             comps = "".join(f'<cal:comp name="{c}"/>' for c in meta["components"])
             props += f"<cal:supported-calendar-component-set>{comps}</cal:supported-calendar-component-set>"  # noqa: E501
+        if "versions" in meta:
+            kinds = "".join(
+                f'<c:address-data-type content-type="text/vcard" version="{v}"/>'
+                for v in meta["versions"]
+            )
+            props += f"<c:supported-address-data>{kinds}</c:supported-address-data>"
         if "privileges" in meta:
             privs = "".join(
                 f"<d:privilege><d:{name}/></d:privilege>" for name in meta["privileges"]
@@ -2604,3 +2610,115 @@ def test_a_card_outside_the_chosen_book_cannot_be_imported(made, connection):
             connection, collection=f"{BASE}{BOOK}", uid="x-1", kind="contact", pair=False
         )
     assert not Contact.objects.filter(name="Somebody Personal").exists()
+
+
+# ------------------------------------- choosing what goes out (#10)
+
+
+def with_config(connection, **extra):
+    connection.config = {**connection.config, **extra}
+    connection.save()
+    return connection.full_config
+
+
+def test_an_existing_connection_sends_all_its_contacts_and_nothing_more(
+    made, connection, recruiter, company
+):
+    report = sync(connection)
+    assert report.pushed == 1
+    assert [b for b in cards(made).values() if "KIND:org" in b or "X-ABShowAs" in b] == []
+
+
+def test_contacts_can_be_switched_off_and_the_run_says_how_many_were_left(
+    made, connection, recruiter
+):
+    full = with_config(connection, send_contacts="none")
+    report = DavSync().sync(connection, full)
+    assert report.pushed == 0 and "1 records were not sent" in report.summary()
+    assert not cards(made)
+
+
+def test_switching_contacts_off_leaves_the_cards_and_adopts_none_of_them(
+    made, connection, recruiter
+):
+    sync(connection)
+    (href,) = cards(made)
+    recruiter.role = "Founder"
+    recruiter.save()
+    full = with_config(connection, send_contacts="none")
+    made.log.clear()
+    report = DavSync().sync(connection, full)
+    assert href in made.resources and "TITLE:Founder" not in made.resources[href][0]
+    assert not [m for m, _p in made.log if m in ("PUT", "DELETE")]
+    assert Contact.objects.count() == 1 and "not sent" in report.summary()
+
+
+def test_a_company_goes_out_as_a_kind_org_card_in_a_vcard_4_book(made, connection, company):
+    full = with_config(connection, send_companies=True, send_contacts="none")
+    company.website = "https://aperture.example.org"
+    company.save()
+    report = DavSync().sync(connection, full)
+    assert report.pushed == 1
+    (body,) = cards(made).values()
+    assert "VERSION:4.0" in body and "KIND:org" in body and "FN:Aperture Science" in body
+    assert "URL:https://aperture.example.org" in body and "\nN:" not in body
+    assert "X-ABShowAs" not in body
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+    # A card Postulo made for a company that is deleted here goes with it.
+    company.delete()
+    DavSync().sync(connection, full)
+    assert not cards(made)
+
+
+def test_a_book_that_lists_only_vcard_3_gets_vcard_3_and_x_abshowas(made, connection, company):
+    made.collections[BOOK]["versions"] = ["3.0"]
+    full = with_config(connection, send_companies=True, send_contacts="none")
+    DavSync().sync(connection, full)
+    (body,) = cards(made).values()
+    assert "VERSION:3.0" in body and "X-ABShowAs:COMPANY" in body and "KIND:org" not in body
+
+
+def test_switching_companies_off_leaves_their_cards_and_pushes_nothing_more(
+    made, connection, company
+):
+    full = with_config(connection, send_companies=True, send_contacts="none")
+    DavSync().sync(connection, full)
+    off = with_config(connection, send_companies=False, send_contacts="none")
+    company.website = "https://changed.example.org"
+    company.save()
+    made.log.clear()
+    report = DavSync().sync(connection, off)
+    assert len(cards(made)) == 1 and "changed.example.org" not in next(iter(cards(made).values()))
+    assert not [m for m, _p in made.log if m in ("PUT", "DELETE")]
+    assert "not sent" in report.summary()
+
+
+def test_the_own_card_is_written_one_way_and_never_read_back(made, connection, user):
+    user.first_name, user.last_name = "Ana", "Silva"
+    user.save()
+    full = with_config(connection, send_own_card=True, send_contacts="none")
+    report = DavSync().sync(connection, full)
+    assert report.pushed == 1
+    (href, (body, _etag)) = (
+        next(iter(cards(made).items()))[0],
+        made.resources[next(iter(cards(made)))],
+    )
+    assert (
+        "FN:Ana Silva" in body
+        and "N:Silva;Ana;;;" in body
+        and "EMAIL;TYPE=work:ana@example.org" in body
+    )
+    # Changed on the phone: it is overwritten here, and nothing reaches the profile.
+    made.add(href, body.replace("Ana Silva", "Somebody Else"))
+    DavSync().sync(connection, full)
+    user.refresh_from_db()
+    assert user.first_name == "Ana" and user.email == "ana@example.org"
+    assert Contact.objects.count() == 0  # never adopted as a contact
+    assert "FN:Ana Silva" in made.resources[href][0]
+
+
+def test_the_own_card_is_off_by_default(made, connection, user):
+    user.first_name = "Ana"
+    user.save()
+    sync(connection)
+    assert not cards(made)

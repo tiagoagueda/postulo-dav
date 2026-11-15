@@ -69,9 +69,10 @@ _HOMES = (
 )
 _COLLECTIONS = (
     '<?xml version="1.0" encoding="utf-8"?>'
-    '<d:propfind xmlns:d="DAV:" xmlns:cal="urn:ietf:params:xml:ns:caldav"><d:prop>'
+    '<d:propfind xmlns:d="DAV:" xmlns:cal="urn:ietf:params:xml:ns:caldav" '
+    'xmlns:c="urn:ietf:params:xml:ns:carddav"><d:prop>'
     "<d:resourcetype/><d:displayname/><cal:supported-calendar-component-set/>"
-    "<d:current-user-privilege-set/></d:prop></d:propfind>"
+    "<c:supported-address-data/><d:current-user-privilege-set/></d:prop></d:propfind>"
 )
 _ETAGS = (
     '<?xml version="1.0" encoding="utf-8"?>'
@@ -172,6 +173,13 @@ class Collection:
     components: tuple[str, ...] = ()
     #: What the account may do here (RFC 3744 §5.4), or ``None`` when the server does not say.
     privileges: frozenset[str] | None = None
+    #: The vCard versions an address book takes (RFC 6352 §6.2.2); empty when it says nothing.
+    versions: tuple[str, ...] = ()
+
+    @property
+    def vcard(self) -> str:
+        """The vCard version to write: 4.0, unless the book lists versions and not that one."""
+        return "3.0" if self.versions and "4.0" not in self.versions else "4.0"
 
     @property
     def accepts_events(self) -> bool:
@@ -458,7 +466,14 @@ class Server:
                 for privilege in privilege_set.findall(f"{{{DAV}}}privilege")
                 for child in privilege
             )
-        return Collection(href, name, kind, components, privileges)
+        versions = tuple(
+            (kind_node.get("version") or "").strip()
+            for kind_node in response.findall(
+                f".//{{{CARD}}}supported-address-data/{{{CARD}}}address-data-type"
+            )
+            if (kind_node.get("content-type") or "text/vcard").lower() == "text/vcard"
+        )
+        return Collection(href, name, kind, components, privileges, versions)
 
     def collections(self, home: str) -> list[Collection]:
         tree = self.propfind(home, _COLLECTIONS, "1", discovery=True)

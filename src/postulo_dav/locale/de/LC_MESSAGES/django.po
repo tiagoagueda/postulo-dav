@@ -33,6 +33,11 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "%(count)d records were not sent, because sending that kind is switched off."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s wurde auf einem anderen Gerät aus dem Kalender entfernt; hier behalten."
 
@@ -66,6 +71,10 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "All of them"
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -181,6 +190,10 @@ msgid "Never write to the server — not even to make the address book or the ca
 msgstr "Nie auf den Server schreiben – nicht einmal, um das Adressbuch oder den Kalender anzulegen. Kontakte und Vorstellungsgespräche kommen weiterhin herein; nichts geht hinaus."
 
 #: src/postulo_dav/sync.py
+msgid "None"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
 msgstr ""
 
@@ -220,6 +233,18 @@ msgstr "„Nur lesen“ ist eingeschaltet, daher wird nichts angelegt: Legen Sie
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Send companies"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Send contacts"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Send my own card"
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -361,6 +386,30 @@ msgstr ""
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Benutzername"
+
+#: src/postulo_dav/sync.py
+msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "your own card"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Your own card was not sent: your profile has no name."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Your own card was removed from the address book; kept."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
