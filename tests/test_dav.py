@@ -580,6 +580,60 @@ def test_a_deletion_on_the_phone_never_deletes_here(server, connection, recruite
     assert report.summary() == "nothing to do", "a record removed on purpose is not pushed back"
 
 
+def test_an_unpaired_contact_is_neither_written_nor_pulled_nor_adopted(
+    server, connection, recruiter
+):
+    DavSync().sync(connection, connection.full_config)
+    (href,) = cards(server)
+    SyncLink.unbind(connection, recruiter)
+    recruiter.role = "Founder"
+    recruiter.save()
+    body, _ = server.resources[href]
+    server.resources[href] = (body.replace("ORG:Aperture Science", "ORG:Aperture Labs"), '"p-2"')
+    puts = [m for m, p in server.log if m == "PUT"]
+
+    report = DavSync().sync(connection, connection.full_config)
+
+    assert [m for m, p in server.log if m == "PUT"] == puts, "nothing was written to the twin"
+    assert report.pushed == 0 and report.pulled == 0
+    recruiter.refresh_from_db()
+    assert recruiter.company.name == "Aperture Science", "nothing came in from the twin"
+    assert Contact.objects.count() == 1, "the card was not adopted as a second contact"
+    assert SyncLink.for_record(connection, recruiter).paired is False
+
+
+def test_an_unpaired_contact_is_not_paired_again_when_its_card_goes(server, connection, recruiter):
+    DavSync().sync(connection, connection.full_config)
+    SyncLink.unbind(connection, recruiter)
+    server.resources.clear()
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.pushed == 0 and cards(server) == {}, "an unpaired contact is not pushed anew"
+    assert SyncLink.for_record(connection, recruiter).paired is False
+
+
+def test_an_unpaired_contact_deleted_here_leaves_its_card_alone(server, connection, recruiter):
+    DavSync().sync(connection, connection.full_config)
+    SyncLink.unbind(connection, recruiter)
+    recruiter.delete()
+    DavSync().sync(connection, connection.full_config)
+    assert server.delete_conditions == [], "the card of an unpaired contact is not deleted"
+    assert SyncLink.objects.count() == 0
+
+
+def test_an_unpaired_interview_is_not_written(server, connection, application):
+    interview = schedule_interview(application, kind="video", starts_at=next_week())
+    DavSync().sync(connection, connection.full_config)
+    SyncLink.unbind(connection, interview)
+    puts = [m for m, p in server.log if m == "PUT"]
+    interview.notes = "Bring a laptop"
+    interview.save()
+    server.resources.clear()
+    report = DavSync().sync(connection, connection.full_config)
+    assert [m for m, p in server.log if m == "PUT"] == puts
+    assert report.pushed == 0 and events(server) == {}
+    assert SyncLink.for_record(connection, interview).paired is False
+
+
 def test_a_deletion_here_takes_the_twin_with_it(server, connection, recruiter):
     DavSync().sync(connection, connection.full_config)
     (href,) = cards(server)

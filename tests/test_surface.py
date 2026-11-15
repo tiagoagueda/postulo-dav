@@ -48,6 +48,7 @@ def test_the_surface_is_what_this_plugin_actually_uses():
 @pytest.mark.parametrize(
     "name",
     [
+        "AlreadyPaired",
         "Contact",
         "Interview",
         "InterviewOutcome",

@@ -62,6 +62,7 @@ from django.utils.translation import gettext_lazy
 # risked. postulo/postulo#229 put them on it, and `tests/test_surface.py` holds this file
 # to the line.
 from postulo.plugins.api import (
+    AlreadyPaired,
     Contact,
     DestinationRefused,
     FieldSpec,
@@ -111,7 +112,7 @@ NAME_LENGTH = 200
 
 #: What one resource may fail with without ending the run: the server refusing it, or the
 #: database refusing what it said. The first is a sentence; the second is not worth one.
-TOLERATED = (DavError, DatabaseError, ValidationError, ValueError)
+TOLERATED = (DavError, DatabaseError, ValidationError, ValueError, AlreadyPaired)
 
 #: A UID Postulo itself wrote for a contact: ``contact-<pk>-<owner>@postulo``.
 POSTULO_CARD_UID = re.compile(r"^contact-\d+-\d+@postulo$")
@@ -721,6 +722,7 @@ class DavSync:
             for link in links.values()
             if link.remote_href
             and link.object_id in contacts
+            and link.paired
             and not link.remote_gone
             and remote.get(canon(link.remote_href), link.etag) != link.etag
         ]
@@ -737,7 +739,7 @@ class DavSync:
         # Pair: a twin that moved is found again by its UID, never by its address (#7).
         for link in list(links.values()):
             contact = contacts.get(link.object_id)
-            if contact is None or not link.uid:
+            if contact is None or not link.uid or not link.paired:
                 continue
             if canon(link.remote_href) in remote and not link.remote_gone:
                 continue
@@ -793,21 +795,24 @@ class DavSync:
             uid = card.uid if card.uid and len(card.uid) <= UID_LENGTH else default_uid
             mine = digest(card_for(contact, owner, uid).digest_source())
             same = digest(card.digest_source()) == mine
-            links[contact.pk] = SyncLink.bind(
-                connection,
-                contact,
-                remote_href=found,
-                uid=uid,
-                etag=resource.etag if same else "",
-                local_hash=mine if same else "",
-                last_synced_at=now if same else None,
-            )
+            try:
+                links[contact.pk] = SyncLink.bind(
+                    connection,
+                    contact,
+                    remote_href=found,
+                    uid=uid,
+                    etag=resource.etag if same else "",
+                    local_hash=mine if same else "",
+                    last_synced_at=now if same else None,
+                )
+            except AlreadyPaired:
+                continue  # that card is another contact's by now: leave both alone
 
         # Local records: push new and changed ones; notice twins that vanished.
         def one(contact: Contact) -> None:
             link = links.get(contact.pk)
-            if link is not None and link.remote_gone:
-                return  # removed from the address book on purpose; leave it removed
+            if link is not None and (link.remote_gone or not link.paired):
+                return  # removed from the address book on purpose, or unpaired: leave it
             card = card_for(contact, owner, link.uid if link else "")
             source = digest(card.digest_source())
             if link is None:
@@ -939,7 +944,7 @@ class DavSync:
             link = links.get(contact.pk)
             if link is None:
                 return False
-            if link.remote_gone:
+            if link.remote_gone or not link.paired:
                 return True
             try:
                 href = canon(link.remote_href)
@@ -963,7 +968,7 @@ class DavSync:
                 continue
             if link.object_id in existing:
                 continue  # no longer visible to this person, but not deleted: not ours to drop
-            if not read_only and canon(link.remote_href) in remote:
+            if link.paired and not read_only and canon(link.remote_href) in remote:
                 try:
                     if drop_twin(server, link, report, CARD_KEPT):
                         report.removed += 1
@@ -1044,7 +1049,7 @@ class DavSync:
         wanted = any(pk not in links for pk in interviews) or any(
             canon(link.remote_href) not in remote or link.remote_gone
             for pk, link in links.items()
-            if pk in interviews
+            if pk in interviews and link.paired
         )
         # Every event this run will read, asked for in a few multiget REPORTs rather than a
         # GET each (#45): those no link claims when they are wanted, and the twins whose
@@ -1055,6 +1060,7 @@ class DavSync:
             canon(link.remote_href)
             for pk, link in links.items()
             if pk in interviews
+            and link.paired
             and link.remote_href
             and not link.remote_gone
             and remote.get(canon(link.remote_href), link.etag) != link.etag
@@ -1071,6 +1077,8 @@ class DavSync:
         # whose event is already there is paired with it instead of being pushed again (#7).
         for pk, interview in interviews.items():
             link = links.get(pk)
+            if link is not None and not link.paired:
+                continue  # unpaired on purpose: not paired again by its UID
             if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
                 continue
             found = next(
@@ -1081,16 +1089,19 @@ class DavSync:
             resource, events = cache[found]
             event = next(e for e in events if e.uid == interview.uid)
             same = event_source(event) == core_source(interview)
-            links[pk] = SyncLink.bind(
-                connection,
-                interview,
-                remote_href=found,
-                uid=interview.uid,
-                etag=resource.etag if same else "",
-                local_hash=digest(interview_source(interview)) if same else "",
-                last_synced_at=now if same else None,
-                remote_gone=False,
-            )
+            try:
+                links[pk] = SyncLink.bind(
+                    connection,
+                    interview,
+                    remote_href=found,
+                    uid=interview.uid,
+                    etag=resource.etag if same else "",
+                    local_hash=digest(interview_source(interview)) if same else "",
+                    last_synced_at=now if same else None,
+                    remote_gone=False,
+                )
+            except AlreadyPaired:
+                continue  # that event is another interview's by now: leave both alone
             if link is not None:
                 report.notes.append(
                     _("An interview moved to another address on the calendar; still paired.")
@@ -1129,8 +1140,8 @@ class DavSync:
         def one(interview: Interview) -> None:
             pk = interview.pk
             link = links.get(pk)
-            if link is not None and link.remote_gone:
-                return  # removed from the calendar on purpose; leave it removed
+            if link is not None and (link.remote_gone or not link.paired):
+                return  # removed from the calendar on purpose, or unpaired: leave it
             source = digest(interview_source(interview))
             if link is None:
                 if read_only:
@@ -1237,7 +1248,7 @@ class DavSync:
             if link.object_id not in interviews:
                 if link.object_id in existing:
                     continue  # merely too old for the window; leave the calendar alone
-                if not read_only and canon(link.remote_href) in remote:
+                if link.paired and not read_only and canon(link.remote_href) in remote:
                     try:
                         if drop_twin(server, link, report, EVENT_KEPT):
                             report.removed += 1
