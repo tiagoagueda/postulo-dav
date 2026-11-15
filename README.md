@@ -60,6 +60,18 @@ as the interview's notes, and a later push keeps it. Interviews from the last ni
 are in the calendar. An event created on the phone stays on the phone: nothing links it to
 an application, and a job tracker must not invent one. Recurring events are ignored.
 
+**Pairing an event made elsewhere with an interview.** On the connection's *Pairing* page
+a person pairs an event from the chosen calendar (found with a `calendar-query` over the
+interviews' window and a year ahead; repeating events and Postulo's own are not offered)
+with one of their interviews. Postulo's own event for that interview is then deleted, with
+`If-Match`, so the meeting is not shown twice. The event keeps its `UID` and is patched,
+never rebuilt: only its times, place and a cancellation are exchanged, both ways. Its
+summary, description, link, attendees, alarms and any parameter such as `LANGUAGE` stay as
+written, and its description is never taken for the notes. An event with an `ORGANIZER` is a
+scheduling object (RFC 6638 §3) and is read, never written. Deleting the interview unpairs
+it; the event stays. Making an interview *from* an event, and whole-day events, are not
+done yet (#11).
+
 **Pairing.** A card or an event is paired with its record by its `UID`, with the
 address as a cache. Postulo never changes a `UID` it did not write, so a card created on the
 phone keeps its own; a card moved to another address on the server is found again by it; and

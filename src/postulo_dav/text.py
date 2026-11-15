@@ -240,6 +240,10 @@ class Event:
     status: str = ""
     last_modified: dt.datetime | None = None
     recurring: bool = False
+    #: Whether the event names an ORGANIZER: a scheduling object, which a write may make the
+    #: server message the other participants about, or refuse (RFC 6638 §3), so it is read
+    #: and never written (#11).
+    organizer: bool = False
     #: Why a moment could not be read as an instant, if it could not: ``floating``, ``date``
     #: or ``zone:<name>``. The event's times are then ``None``, and an interview is never
     #: moved on a guess (#24).
@@ -310,7 +314,103 @@ def text_to_events(text: str) -> list[Event]:
             current.last_modified = parse_stamp(prop.value)
         elif prop.name == "RRULE":
             current.recurring = True
+        elif prop.name == "ORGANIZER":
+            current.organizer = True
     return events
+
+
+#: The properties of an event that :func:`patch_event` may replace; no other is touched.
+_PATCHED = frozenset({"DTSTART", "DTEND", "DURATION", "LOCATION", "STATUS", "LAST-MODIFIED"})
+
+
+def patch_event(
+    source: str,
+    uid: str,
+    *,
+    starts_at: dt.datetime | None = None,
+    ends_at: dt.datetime | None = None,
+    location: str | None = None,
+    status: str | None = None,
+    modified: dt.datetime,
+) -> str | None:
+    """The document with the VEVENT ``uid`` changed in only the properties given, or ``None``.
+
+    An event somebody else made is patched, never rebuilt (#11): its UID, summary,
+    description, link, attendees, alarms, parameters such as ``LANGUAGE`` and anything this
+    does not know about come back as they were, and only the times, the place and the status
+    that were handed in are replaced. Times are written in UTC, and a ``DURATION`` the event
+    carried goes when its times are written. ``None`` for an argument leaves that property
+    alone; ``location=""`` removes it. ``None`` is returned when no event has that UID.
+    """
+    lines = unfold(source)
+    start = end = None
+    depth = 0
+    for index, line in enumerate(lines):
+        prop = parse_line(line)
+        if prop is None:
+            continue
+        value = prop.value.strip().upper()
+        if prop.name == "BEGIN":
+            if value == "VEVENT" and depth == 1:
+                start = index
+            depth += 1
+        elif prop.name == "END":
+            depth -= 1
+            if value == "VEVENT" and start is not None and depth == 1:
+                inner = lines[start + 1 : index]
+                if _own_uid(inner) == uid:
+                    end = index
+                    break
+                start = None
+    if start is None or end is None:
+        return None
+    replaced = set()
+    if starts_at is not None and ends_at is not None:
+        replaced |= {"DTSTART", "DTEND", "DURATION"}
+    if location is not None:
+        replaced.add("LOCATION")
+    if status is not None:
+        replaced.add("STATUS")
+    replaced.add("LAST-MODIFIED")
+    kept: list[str] = []
+    nested = 0
+    for line in lines[start + 1 : end]:
+        prop = parse_line(line)
+        name = prop.name if prop is not None else ""
+        if name == "BEGIN":
+            nested += 1
+        elif name == "END":
+            nested -= 1
+            kept.append(line)
+            continue
+        if nested == 0 and name in replaced and name in _PATCHED:
+            continue
+        kept.append(line)
+    added = []
+    if starts_at is not None and ends_at is not None:
+        added += [f"DTSTART:{stamp(starts_at)}", f"DTEND:{stamp(ends_at)}"]
+    if location:
+        added.append("LOCATION:" + escape(location))
+    if status:
+        added.append(f"STATUS:{status}")
+    added.append(f"LAST-MODIFIED:{stamp(modified)}")
+    return render(lines[: start + 1] + kept + added + lines[end:])
+
+
+def _own_uid(inner: list[str]) -> str:
+    """The UID of an event given the lines inside it: an alarm's lines are not the event's."""
+    nested = 0
+    for line in inner:
+        prop = parse_line(line)
+        if prop is None:
+            continue
+        if prop.name == "BEGIN":
+            nested += 1
+        elif prop.name == "END":
+            nested -= 1
+        elif nested == 0 and prop.name == "UID":
+            return prop.value.strip()
+    return ""
 
 
 # ------------------------------------------------------------------- times

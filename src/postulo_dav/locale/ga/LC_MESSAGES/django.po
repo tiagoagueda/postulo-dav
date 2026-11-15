@@ -44,6 +44,10 @@ msgid "(no company)"
 msgstr "(gan chuideachta)"
 
 #: src/postulo_dav/sync.py
+msgid "(no title)"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Athraíodh teagmhálaí a scriosadh anseo ar an bhfón ón sioncronú deireanach. Fágadh an cárta sa leabhar seoltaí, agus tiocfaidh sé ar ais mar theagmhálaí ar an gcéad rith eile."
 
@@ -214,6 +218,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr "Seoladh an fhreastalaí"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

@@ -40,6 +40,10 @@ msgid "(no company)"
 msgstr "(tidak ada perusahaan)"
 
 #: src/postulo_dav/sync.py
+msgid "(no title)"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Kontak yang dihapus di sini telah diubah di ponsel sejak sinkronisasi terakhir. Kartunya dibiarkan di buku alamat, dan akan kembali sebagai kontak pada proses berikutnya."
 
@@ -216,6 +220,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr "Alamat server"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

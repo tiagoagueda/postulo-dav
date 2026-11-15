@@ -107,6 +107,16 @@ _MULTIGET = {
 }
 
 
+_QUERY = (
+    '<?xml version="1.0" encoding="utf-8"?>'
+    '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">'
+    "<d:prop><d:getetag/><c:calendar-data/></d:prop>"
+    '<c:filter><c:comp-filter name="VCALENDAR"><c:comp-filter name="VEVENT">'
+    '<c:time-range start="{start}" end="{end}"/>'
+    "</c:comp-filter></c:comp-filter></c:filter></c:calendar-query>"
+)
+
+
 class DavError(Exception):
     """The server answered, and the answer was no. The message is for the person.
 
@@ -629,6 +639,54 @@ class Server:
                     continue
                 if len(data.text.encode("utf-8")) > RESOURCE_LIMIT:
                     continue  # get() refuses it with a sentence
+                etag_node = propstat.find(f".//{{{DAV}}}getetag")
+                etag = (etag_node.text or "").strip() if etag_node is not None else ""
+                found[href] = Resource(data.text, etag)
+        return found
+
+    def query_events(self, collection: str, start: str, end: str) -> dict[str, Resource]:
+        """The events of ``collection`` that fall in a time range, as canonical href → Resource.
+
+        One ``calendar-query`` REPORT with a ``time-range`` (RFC 4791 §7.8, ``start`` and
+        ``end`` as UTC stamps like ``20261201T000000Z``), so the server narrows the answer
+        and nothing is listed whole. Only what is under the collection is taken from it.
+        An answer over its size is an error, not a part of one.
+        """
+        response, answer = self._send(
+            "REPORT",
+            collection,
+            limit=MULTIGET_LIMIT,
+            content=_QUERY.format(start=start, end=end).encode(),
+            headers={"Content-Type": "application/xml; charset=utf-8", "Depth": "1"},
+        )
+        if response.status_code != 207:
+            raise _refusal(response)
+        try:
+            tree = ElementTree.fromstring(answer)
+        except ElementTree.ParseError as error:
+            raise DavError(
+                _("The server's answer could not be read: %(error)s") % {"error": error}
+            ) from error
+        found: dict[str, Resource] = {}
+        for node in tree.iter(f"{{{DAV}}}response"):
+            href_node = node.find(f"{{{DAV}}}href")
+            if href_node is None or not href_node.text:
+                continue
+            try:
+                href = self.canonical(href_node.text.strip())
+            except DavError:
+                continue  # another host's
+            if not self.within(collection, href):
+                continue
+            for propstat in node.findall(f"{{{DAV}}}propstat"):
+                status = propstat.find(f"{{{DAV}}}status")
+                if status is not None and " 200 " not in f"{status.text or ''} ":
+                    continue
+                data = propstat.find(f".//{{{CAL}}}calendar-data")
+                if data is None or not data.text:
+                    continue
+                if len(data.text.encode("utf-8")) > RESOURCE_LIMIT:
+                    continue
                 etag_node = propstat.find(f".//{{{DAV}}}getetag")
                 etag = (etag_node.text or "").strip() if etag_node is not None else ""
                 found[href] = Resource(data.text, etag)

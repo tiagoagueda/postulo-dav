@@ -26,6 +26,7 @@ from postulo.plugins import registry, syncing
 from postulo.plugins.api import (
     LinkKind,
     primary_phone_number,
+    reschedule_interview,
     save_phone_number,
     save_web_link,
 )
@@ -86,6 +87,8 @@ class FakeDav:
         self.multiget = True
         #: How many hrefs each multiget REPORT asked for.
         self.multigets: list[int] = []
+        #: The collection of every calendar-query REPORT (RFC 4791 §7.8).
+        self.queries: list[str] = []
 
     @staticmethod
     def _collection_props(meta: dict) -> str:
@@ -188,6 +191,18 @@ class FakeDav:
             return httpx.Response(404)
 
         if method == "REPORT":
+            if "calendar-query" in body:
+                self.queries.append(path)
+                rows = [
+                    (
+                        href,
+                        f"<d:getetag>{etag}</d:getetag>"
+                        f"<cal:calendar-data>{escape(text_)}</cal:calendar-data>",
+                    )
+                    for href, (text_, etag) in self.resources.items()
+                    if href.startswith(path) and href.endswith(".ics")
+                ]
+                return _multistatus(rows)
             if not self.multiget or "-multiget" not in body:
                 return httpx.Response(405)
             data = "c:address-data" if "addressbook-multiget" in body else "cal:calendar-data"
@@ -2080,3 +2095,192 @@ def test_test_names_what_it_found_by_address(made, connection):
 def test_the_form_has_a_discovered_field_with_two_modes():
     (spec,) = [f for f in DavSync().config_fields() if f.name == "collections"]
     assert spec.type == "discovered" and [m for m, _l in spec.modes] == ["read", "readwrite"]
+
+
+# ------------------------------- pairing an event made elsewhere with an interview (#11)
+
+
+def phone_event(uid: str, when: dt.datetime, *, organizer: bool = False, extra: str = "") -> str:
+    start = when.astimezone(dt.UTC)
+    lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Phone//EN",
+        "BEGIN:VEVENT",
+        f"UID:{uid}",
+        f"DTSTART:{start:%Y%m%dT%H%M%SZ}",
+        f"DTEND:{start + dt.timedelta(hours=1):%Y%m%dT%H%M%SZ}",
+        "SUMMARY;LANGUAGE=pt-BR:Conversa com a Aperture",
+        "LOCATION;LANGUAGE=pt-BR:Lisboa",
+        "DESCRIPTION:Bring the portfolio",
+        "URL:https://meet.example.org/abc",
+        "ATTENDEE;CN=Cave:mailto:cave@example.org",
+        "X-VENDOR-THING:keep me",
+        "BEGIN:VALARM",
+        "ACTION:DISPLAY",
+        "DESCRIPTION:Ring ring",
+        "TRIGGER:-PT15M",
+        "END:VALARM",
+    ]
+    if organizer:
+        lines.append("ORGANIZER:mailto:boss@example.org")
+    lines += [extra] if extra else []
+    lines += ["END:VEVENT", "END:VCALENDAR"]
+    return "\r\n".join(lines) + "\r\n"
+
+
+def pair_with_phone_event(connection, interview, uid="phone-ev-1@example.org"):
+    from postulo.plugins import pairing
+
+    (item,) = DavSync().remote_items(connection.full_config, key=(f"{BASE}{CALENDAR_PATH}", uid))
+    return pairing.pair(connection, item, interview)
+
+
+@pytest.fixture
+def phone(made, connection, application):
+    """An interview, and an event the phone made on the same calendar, not yet paired."""
+    interview = schedule_interview(application, kind="video", starts_at=next_week(9))
+    interview.notes = "My own preparation"
+    interview.save()
+    href = CALENDAR_PATH + "phone.ics"
+    made.add(href, phone_event("phone-ev-1@example.org", next_week(14)))
+    made.href = href
+    return interview
+
+
+def test_events_from_elsewhere_are_offered_for_pairing_and_postulos_own_are_not(
+    made, connection, application, phone
+):
+    DavSync().sync(connection, connection.full_config)  # Postulo's own event is there now
+    found = DavSync().remote_items(connection.full_config)
+    assert [(i.uid, i.label, i.kinds) for i in found] == [
+        ("phone-ev-1@example.org", "Conversa com a Aperture", ("interview",))
+    ]
+    assert found[0].href == f"{BASE}{made.href}" and found[0].collection == f"{BASE}{CALENDAR_PATH}"
+    assert DavSync().remote_items(connection.full_config, search="aperture")
+    assert not DavSync().remote_items(connection.full_config, search="nothing like it")
+    assert not DavSync().remote_items(connection.full_config, kind="contact")
+    assert made.queries == [CALENDAR_PATH] * 3  # a calendar-query each, never a full listing
+
+
+def test_a_paired_event_keeps_its_uid_and_everything_postulo_does_not_own(made, connection, phone):
+    made.enforce_uid = True
+    DavSync().sync(connection, connection.full_config)
+    pair_with_phone_event(connection, phone)
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.error == ""
+    phone.refresh_from_db()
+    assert phone.starts_at == next_week(14)  # the event's time came in
+    assert phone.notes == "My own preparation"  # its description is not the interview's notes
+    # Postulo's own event for it is gone, so that the meeting is not shown twice.
+    assert [h for h in events(made)] == [made.href]
+
+    made.log.clear()
+    reschedule_interview(phone, starts_at=next_week(16), ends_at=next_week(17), actor="test")
+    phone.location = "Porto"
+    phone.save()
+    report = DavSync().sync(connection, connection.full_config)
+    assert report.error == "" and report.pushed == 1
+    body, _etag = made.resources[made.href]
+    assert "UID:phone-ev-1@example.org" in body
+    assert f"DTSTART:{next_week(16).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}" in body
+    assert "LOCATION:Porto" in body
+    # Everything Postulo does not own comes back as it was, parameters included.
+    for kept in (
+        "SUMMARY;LANGUAGE=pt-BR:Conversa com a Aperture",
+        "DESCRIPTION:Bring the portfolio",
+        "URL:https://meet.example.org/abc",
+        "ATTENDEE;CN=Cave:mailto:cave@example.org",
+        "X-VENDOR-THING:keep me",
+        "TRIGGER:-PT15M",
+        "DESCRIPTION:Ring ring",
+    ):
+        assert kept in body
+    assert "METHOD" not in body and "@postulo" not in body
+    assert [m for m, _p in made.log if m == "PUT"] == ["PUT"]
+
+
+def test_a_language_parameter_on_a_paired_event_survives_a_push(made, connection, phone):
+    DavSync().sync(connection, connection.full_config)
+    pair_with_phone_event(connection, phone)
+    DavSync().sync(connection, connection.full_config)
+    reschedule_interview(phone, starts_at=next_week(18), ends_at=next_week(19), actor="test")
+    DavSync().sync(connection, connection.full_config)
+    body, _etag = made.resources[made.href]
+    assert "LOCATION;LANGUAGE=pt-BR:Lisboa" in body  # a place nobody changed is not rewritten
+    assert "SUMMARY;LANGUAGE=pt-BR:Conversa com a Aperture" in body
+
+
+def test_a_paired_event_moved_on_the_phone_moves_the_interview_and_not_its_notes(
+    made, connection, phone
+):
+    DavSync().sync(connection, connection.full_config)
+    pair_with_phone_event(connection, phone)
+    DavSync().sync(connection, connection.full_config)
+    body, _etag = made.resources[made.href]
+    moved = (
+        body.replace(
+            f"DTSTART:{next_week(14).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}",
+            f"DTSTART:{next_week(15).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}",
+        )
+        .replace(
+            f"DTEND:{next_week(15).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}",
+            f"DTEND:{next_week(16).astimezone(dt.UTC):%Y%m%dT%H%M%SZ}",
+        )
+        .replace("Bring the portfolio", "Something else entirely")
+    )
+    made.add(made.href, moved)
+    report = DavSync().sync(connection, connection.full_config)
+    phone.refresh_from_db()
+    assert report.pulled == 1 and phone.starts_at == next_week(15)
+    assert phone.notes == "My own preparation"
+
+
+def test_an_event_with_an_organizer_is_never_written_to(made, connection, phone):
+    made.add(made.href, phone_event("phone-ev-1@example.org", next_week(14), organizer=True))
+    DavSync().sync(connection, connection.full_config)
+    pair_with_phone_event(connection, phone)
+    DavSync().sync(connection, connection.full_config)
+    reschedule_interview(phone, starts_at=next_week(16), ends_at=next_week(17), actor="test")
+    made.log.clear()
+    report = DavSync().sync(connection, connection.full_config)
+    assert "organizer" in report.summary()
+    assert not [m for m, p in made.log if m in ("PUT", "DELETE") and p == made.href]
+    again = DavSync().sync(connection, connection.full_config)
+    assert "organizer" not in again.summary()  # said once, not on every run
+
+
+def test_deleting_the_interview_unpairs_it_and_leaves_the_event(made, connection, phone):
+    DavSync().sync(connection, connection.full_config)
+    pair_with_phone_event(connection, phone)
+    DavSync().sync(connection, connection.full_config)
+    phone.delete()
+    made.log.clear()
+    DavSync().sync(connection, connection.full_config)
+    assert made.href in made.resources
+    assert not [m for m, _p in made.log if m == "DELETE"]
+    assert not SyncLink.objects.filter(connection=connection, uid="phone-ev-1@example.org")
+
+
+def test_a_read_only_calendar_pairs_and_pulls_but_never_writes(made, connection, phone):
+    full = choose_hrefs(connection, {CALENDAR_PATH: "read"})
+    pair_with_phone_event(connection, phone)
+    DavSync().sync(connection, full)
+    phone.refresh_from_db()
+    assert phone.starts_at == next_week(14)
+    reschedule_interview(phone, starts_at=next_week(16), ends_at=next_week(17), actor="test")
+    made.log.clear()
+    DavSync().sync(connection, full)
+    assert not [m for m, _p in made.log if m in ("PUT", "DELETE")]
+
+
+def test_the_patch_changes_only_what_it_is_given_and_nothing_else():
+    source = phone_event("x@example.org", next_week(14))
+    patched = text.patch_event(source, "x@example.org", location="", modified=next_week(1))
+    assert "LOCATION" not in patched
+    assert (
+        text.patch_event(source, "other@example.org", location="x", modified=next_week(1)) is None
+    )
+    # An alarm's own DESCRIPTION and TRIGGER are not touched, and the UID is not either.
+    assert "TRIGGER:-PT15M" in patched and "UID:x@example.org" in patched
+    assert text.text_to_events(patched)[0].description == "Bring the portfolio"

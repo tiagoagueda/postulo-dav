@@ -41,6 +41,10 @@ msgid "(no company)"
 msgstr "(sense empresa)"
 
 #: src/postulo_dav/sync.py
+msgid "(no title)"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Un contacte suprimit aquí s'havia modificat al telèfon des de l'última sincronització. La targeta s'ha deixat a la llibreta d'adreces, i tornarà com a contacte a la propera execució."
 
@@ -211,6 +215,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr "Adreça del servidor"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format

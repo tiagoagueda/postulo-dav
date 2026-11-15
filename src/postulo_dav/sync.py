@@ -70,6 +70,7 @@ from postulo.plugins.api import (
     Interview,
     InterviewOutcome,
     LinkKind,
+    RemoteItem,
     SyncLink,
     SyncReport,
     TestResult,
@@ -126,6 +127,28 @@ TOLERATED = (DavError, DatabaseError, ValidationError, ValueError, AlreadyPaired
 
 #: A UID Postulo itself wrote for a contact: ``contact-<pk>-<owner>@postulo``.
 POSTULO_CARD_UID = re.compile(r"^contact-\d+-\d+@postulo$")
+
+
+#: A UID Postulo minted for an interview: ``<uuid>@postulo``. Any other UID on a paired event
+#: is somebody else's, and the event is patched and never rebuilt (#11).
+POSTULO_UID = re.compile(r"@postulo$")
+#: How far ahead the events offered for pairing reach.
+PAIRING_AHEAD = dt.timedelta(days=365)
+
+
+def made_elsewhere(link, interview=None) -> bool:
+    """Whether the twin of ``link`` is an event somebody else made (#11).
+
+    Postulo's own events carry the interview's UID. A pairing the person made by hand with an
+    event from the phone or a colleague carries that event's own, which is kept as it is: a
+    write to such an event is a patch of the properties Postulo owns, never a rebuilt event
+    (RFC 4791 §5.3.2.1 forbids changing its UID), and deleting the interview unpairs it
+    rather than delete an event Postulo did not make.
+    """
+    uid = link.uid or ""
+    if interview is not None:
+        return bool(uid) and uid != interview.uid
+    return bool(uid) and not POSTULO_UID.search(uid)
 
 
 def digest(source: str) -> str:
@@ -445,8 +468,18 @@ def _problem(event: text.Event) -> str:
 
 
 def apply_event(
-    interview: Interview, event: text.Event, report: SyncReport, block: str = ""
+    interview: Interview,
+    event: text.Event,
+    report: SyncReport,
+    block: str = "",
+    *,
+    notes: bool = True,
 ) -> None:
+    """Take from the event what a calendar may change; ``notes=False`` leaves the notes alone.
+
+    An event somebody else made exchanges times, place and cancellation only: its
+    description is theirs, and is never taken for the interview's notes (#11).
+    """
     kind = interview.get_kind_display()
     if event.starts_at and event.ends_at:
         if event.ends_at > event.starts_at:
@@ -471,7 +504,7 @@ def apply_event(
     if event.location != interview.location:
         interview.location = event.location[:500]
         changed.append("location")
-    written = free_text(event.description, block)
+    written = free_text(event.description, block) if notes else ""
     if written and written not in interview.notes:
         # What was typed on the phone is the person's own: added to the notes, or taking
         # the place of the notes it extends, and the same text is never added twice.
@@ -861,6 +894,77 @@ class DavSync:
                             ),
                         )
         return {"collections": list(options.values())}
+
+    # ------------------------------------------------------------ pairing
+
+    def remote_items(
+        self, config: dict, search: str = "", kind: str = "", key: tuple[str, str] | None = None
+    ) -> list[RemoteItem]:
+        """Events a person may pair with an interview, from the chosen calendar (#11).
+
+        Asked live, and answered from one ``calendar-query`` with a time range (RFC 4791
+        §7.8): the interviews' own window, and a year ahead. Events Postulo made, repeating
+        events and events without a UID are not offered: the first are paired already, and an
+        interview is one meeting. Nothing is written.
+        """
+        if kind not in ("", "interview"):
+            return []
+        client, server = dav.connect(config)
+        with client:
+            notes: list[str] = []
+            chosen = self._resolve(server, config, notes)
+            if chosen is not None:
+                picked = chosen.get(CALENDAR)
+                collection = picked[0] if picked else None
+            else:
+                collection = self._collection(server, config, CALENDAR, create=False)
+            if collection is None:
+                return []
+            now = timezone.now()
+            found = server.query_events(
+                collection.href, text.stamp(now - HISTORY), text.stamp(now + PAIRING_AHEAD)
+            )
+            where = server.canonical(collection.href)
+            if key is not None and server.canonical(key[0]) != where:
+                return []
+            words = search.strip().casefold()
+            items: list[tuple[dt.datetime, RemoteItem]] = []
+            for href, resource in found.items():
+                for event in text.text_to_events(resource.text):
+                    if event.recurring or not event.uid or POSTULO_UID.search(event.uid):
+                        continue
+                    if key is not None and event.uid != key[1]:
+                        continue
+                    if words and words not in f"{event.summary} {event.location}".casefold():
+                        continue
+                    when = (
+                        event.starts_at.astimezone(timezone.get_current_timezone())
+                        if event.starts_at
+                        else None
+                    )
+                    detail = " · ".join(
+                        part
+                        for part in (
+                            when.strftime("%Y-%m-%d %H:%M") if when else "",
+                            event.location,
+                        )
+                        if part
+                    )
+                    items.append(
+                        (
+                            event.starts_at or now,
+                            RemoteItem(
+                                collection=where,
+                                uid=event.uid,
+                                label=event.summary or str(_("(no title)")),
+                                collection_label=collection.name or _tail(collection.href),
+                                href=href,
+                                detail=detail,
+                                kinds=("interview",),
+                            ),
+                        )
+                    )
+            return [item for _when, item in sorted(items, key=lambda pair: pair[0])]
 
     # -------------------------------------------------------------- sync
 
@@ -1333,22 +1437,31 @@ class DavSync:
                 continue  # unpaired on purpose, or paired outside the chosen calendar
             if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
                 continue
-            found = next(
-                (h for h in strangers() if any(e.uid == interview.uid for e in cache[h][1])), None
+            twin = (
+                link.uid if link is not None and made_elsewhere(link, interview) else interview.uid
             )
+            found = next((h for h in strangers() if any(e.uid == twin for e in cache[h][1])), None)
             if found is None or len(found) > HREF_LENGTH:
                 continue
             resource, events = cache[found]
-            event = next(e for e in events if e.uid == interview.uid)
+            event = next(e for e in events if e.uid == twin)
             same = event_source(event) == core_source(interview)
             try:
                 links[pk] = SyncLink.bind(
                     connection,
                     interview,
                     remote_href=found,
-                    uid=interview.uid,
+                    uid=twin,
                     etag=resource.etag if same else "",
-                    local_hash=digest(interview_source(interview)) if same else "",
+                    local_hash=(
+                        digest(
+                            core_source(interview)
+                            if twin != interview.uid
+                            else interview_source(interview)
+                        )
+                        if same
+                        else ""
+                    ),
                     last_synced_at=now if same else None,
                     remote_gone=False,
                 )
@@ -1389,6 +1502,67 @@ class DavSync:
                 etag=etag,
             )
 
+        def patch(interview: Interview, link, known: dav.Resource | None) -> str | None:
+            """Write what changed here into an event somebody else made; its new ETag.
+
+            Only the times, the place and a cancellation are written, into the event as it is
+            now, so that everything else in it survives. ``None`` when nothing may be written:
+            an event with an ORGANIZER is a scheduling object and is never written to (#11).
+            """
+            resource = known or server.get(link.remote_href)
+            events = [e for e in text.text_to_events(resource.text) if not e.recurring]
+            event = next((e for e in events if e.uid == link.uid), None)
+            if event is None:
+                report.skipped += 1
+                return None
+            if event.organizer:
+                report.notes.append(
+                    _(
+                        "The %(kind)s is paired with an event that has an organizer, so it is "
+                        "read from the calendar and never written to it."
+                    )
+                    % {"kind": interview.get_kind_display()}
+                )
+                return None
+            changes: dict = {}
+            ends = interview.ends_at or interview.starts_at + dt.timedelta(hours=1)
+            if (
+                event.starts_at
+                and event.ends_at
+                and (interview.starts_at != event.starts_at or ends != event.ends_at)
+            ):
+                changes.update(starts_at=interview.starts_at, ends_at=ends)
+            if interview.location != event.location:
+                changes["location"] = interview.location
+            if calendar_status(interview) == "CANCELLED" and event.status != "CANCELLED":
+                changes["status"] = "CANCELLED"
+            if not changes:
+                return resource.etag
+            patched = text.patch_event(resource.text, link.uid, modified=now, **changes)
+            if patched is None:
+                report.skipped += 1
+                return None
+            return server.put(
+                link.remote_href, patched, "text/calendar; charset=utf-8", etag=resource.etag
+            )
+
+        def drop_own(interview: Interview, link) -> None:
+            """Take Postulo's own event for an interview off the calendar, once the interview is
+            paired with another, so that the meeting is not shown twice (#11).
+
+            Its address is the one Postulo names its events by, and only an address no link
+            claims is touched; the DELETE carries ``If-Match``.
+            """
+            own = canon(urljoin(calendar.href, f"{interview.uid.split('@')[0]}.ics"))
+            if own == canon(link.remote_href) or own not in remote or own in linked():
+                return
+            try:
+                server.delete(own, etag=remote[own])
+            except Conflict:
+                return  # edited since it was listed: left, and looked at on the next run
+            del remote[own]
+            report.removed += 1
+
         def one(interview: Interview) -> None:
             pk = interview.pk
             link = links.get(pk)
@@ -1396,7 +1570,12 @@ class DavSync:
                 return  # paired with something outside the chosen calendar
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the calendar on purpose, or unpaired: leave it
-            source = digest(interview_source(interview))
+            other = link is not None and made_elsewhere(link, interview)
+            # What is compared, for an event somebody else made, is only what a calendar
+            # may change: the notes and Postulo's own lines are not exchanged with it.
+            source = digest(core_source(interview) if other else interview_source(interview))
+            if other and not read_only:
+                drop_own(interview, link)
             if link is None:
                 if read_only:
                     report.skipped += 1
@@ -1435,7 +1614,8 @@ class DavSync:
             known = None
             if remote_changed:
                 resource, events = read(link.remote_href)
-                incoming = next((e for e in events if e.uid == interview.uid), None) or (
+                twin = link.uid if other else interview.uid
+                incoming = next((e for e in events if e.uid == twin), None) or (
                     events[0] if events else None
                 )
                 if incoming is None:
@@ -1468,10 +1648,14 @@ class DavSync:
                             body=core_source(interview).replace("\n", " · "),
                             actor=ACTOR,
                         )
-                    apply_event(interview, incoming, report, postulo_block(interview))
+                    apply_event(
+                        interview, incoming, report, postulo_block(interview), notes=not other
+                    )
                     interview.refresh_from_db()
                     link.etag = resource.etag
-                    link.local_hash = digest(interview_source(interview))
+                    link.local_hash = digest(
+                        core_source(interview) if other else interview_source(interview)
+                    )
                     link.last_synced_at = now
                     link.save()
                     report.pulled += 1
@@ -1481,7 +1665,14 @@ class DavSync:
                     report.skipped += 1
                     return
                 try:
-                    etag = push(interview, link.remote_href, known=known, etag=link.etag)
+                    if other:
+                        etag = patch(interview, link, known)
+                        if etag is None:  # nothing may be written there: remembered, not repeated
+                            link.local_hash = source
+                            link.save(update_fields=["local_hash", "updated_at"])
+                            return
+                    else:
+                        etag = push(interview, link.remote_href, known=known, etag=link.etag)
                 except Conflict:
                     report.notes.append(
                         str(_("An interview changed on both sides at once; next run decides."))
@@ -1502,7 +1693,12 @@ class DavSync:
             if link.object_id not in interviews:
                 if link.object_id in existing:
                     continue  # merely too old for the window; leave the calendar alone
-                if link.paired and not read_only and canon(link.remote_href) in remote:
+                if (
+                    link.paired
+                    and not read_only
+                    and not made_elsewhere(link)
+                    and canon(link.remote_href) in remote
+                ):
                     try:
                         if drop_twin(server, link, report, EVENT_KEPT):
                             report.removed += 1
