@@ -16,8 +16,24 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "%(count)d collection chosen"
+msgid_plural "%(count)d collections chosen"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "%(count)d events on the calendar are not from Postulo and were left alone."
 msgstr "%(count)d من أحداث التقويم ليست من Postulo، وتُركت كما هي."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -32,9 +48,21 @@ msgstr "(بلا شركة)"
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "جهة اتصال حُذفت هنا كانت قد عُدّلت على الهاتف منذ آخر مزامنة. تُركت البطاقة في دفتر العناوين، وستعود جهة اتصال في التشغيل التالي."
 
+#: src/postulo_dav/dav.py
+msgid "A request outside the chosen collections was not sent."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "Address book"
 msgstr "دفتر العناوين"
+
+#: src/postulo_dav/sync.py
+msgid "address book"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Address books"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -55,6 +83,14 @@ msgstr "نُقلت مقابلة إلى عنوان آخر في التقويم؛ �
 #: src/postulo_dav/sync.py
 msgid "Calendar"
 msgstr "التقويم"
+
+#: src/postulo_dav/sync.py
+msgid "calendar"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Calendars"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -83,9 +119,18 @@ msgid "Changed on the phone, but changed here later; kept ours."
 msgstr "عُدّل على الهاتف، لكنه عُدّل هنا لاحقًا؛ احتُفظ بنسختنا."
 
 #: src/postulo_dav/sync.py
+msgid "Collections"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
-msgid "Found the address book “%(book)s” and the calendar “%(calendar)s”."
-msgstr "تم العثور على دفتر العناوين «%(book)s» والتقويم «%(calendar)s»."
+msgid "Found the %(what)s “%(name)s” (%(how)s)."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -113,16 +158,22 @@ msgid "its time zone “%(zone)s” is not known here"
 msgstr "منطقته الزمنية «%(zone)s» غير معروفة هنا"
 
 #: src/postulo_dav/sync.py
-msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this address book is touched."
-msgstr "تُنشئه أول مزامنة على الخادم إن لم يكن موجودًا، ما لم يكن وضع القراءة فقط مفعّلًا. لا يُمَس إلا دفتر العناوين هذا."
+#, python-format
+msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
+msgstr ""
 
-#: src/postulo_dav/sync.py
-msgid "Made on the server by the first sync if it is not there, unless read only is on. Only this calendar is touched."
-msgstr "تُنشئه أول مزامنة على الخادم إن لم يكن موجودًا، ما لم يكن وضع القراءة فقط مفعّلًا. لا يُمَس إلا هذا التقويم."
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book or the calendar. Contacts and interviews still come in; nothing goes out."
 msgstr "عدم الكتابة إلى الخادم أبدًا — ولا حتى لإنشاء دفتر العناوين أو التقويم. تظل جهات الاتصال والمقابلات تصل؛ ولا يخرج شيء."
+
+#: src/postulo_dav/sync.py
+msgid "None of the chosen collections is on the server."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -132,6 +183,18 @@ msgstr "عبر http:// تمر كلمة المرور في الشبكة دون ت�
 #: src/postulo_dav/sync.py
 msgid "Password or app password"
 msgstr "كلمة المرور أو كلمة مرور التطبيق"
+
+#: src/postulo_dav/sync.py
+msgid "Press Look on the server, then choose one address book and one calendar. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Read and write"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "read and write"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -144,6 +207,10 @@ msgstr "للقراءة فقط"
 #: src/postulo_dav/sync.py
 msgid "Read only is on, so nothing is made: create it on the server, or name one that is already there."
 msgstr "وضع القراءة فقط مفعّل، لذا لا يُنشأ شيء: أنشئه على الخادم، أو حدّد واحدًا موجودًا بالفعل."
+
+#: src/postulo_dav/sync.py
+msgid "Read only on the server"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -166,8 +233,18 @@ msgstr "يجب أن يبدأ العنوان بالبادئة https:// — مثل
 
 #: src/postulo_dav/sync.py
 #, python-format
+msgid "The calendar “%(name)s” does not take events, so it was not used."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
 msgid "The calendar “%(name)s” is not on the server."
 msgstr "التقويم «%(name)s» غير موجود على الخادم."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -177,6 +254,11 @@ msgstr "ستُنشئ أول مزامنة ما هو ناقص."
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "ردّ الخادم برمز HTTP %(status)d على %(method)s %(path)s."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The server does not let you write to “%(name)s”: read only."
+msgstr ""
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -190,6 +272,10 @@ msgstr "لا يحدّد الخادم المجلد الرئيسي لدفاتر ا
 #, python-format
 msgid "The server does not say where the %(kind)s account is."
 msgstr "لا يوضّح الخادم مكان حساب %(kind)s."
+
+#: src/postulo_dav/sync.py
+msgid "The server does not say whether it may be written"
+msgstr ""
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -224,9 +310,27 @@ msgstr "كان ردّ الخادم على %(path)s كبيرًا جدًا أو ب
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
 msgstr "تعذّر استخدام وقت %(kind)s في التقويم (%(why)s)، لذا لم يُنقل."
 
+#: src/postulo_dav/dav.py
+#, python-format
+msgid "This collection is read only here, so a %(method)s was not sent."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "اسم المستخدم"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(href)s” could not be read: %(error)s"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -237,6 +341,16 @@ msgstr "عُدّل «%(name)s» على الجانبين في الوقت نفسه
 #, python-format
 msgid "“%(name)s” changed on both sides, and the card from the phone gives no time: the phone's version was taken."
 msgstr "عُدّل «%(name)s» على الجانبين، وبطاقة الهاتف لا تذكر وقتًا: اعتُمدت نسخة الهاتف."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is not a calendar."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s” is not an address book."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format

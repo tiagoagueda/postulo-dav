@@ -69,7 +69,9 @@ _HOMES = (
 )
 _COLLECTIONS = (
     '<?xml version="1.0" encoding="utf-8"?>'
-    '<d:propfind xmlns:d="DAV:"><d:prop><d:resourcetype/><d:displayname/></d:prop></d:propfind>'
+    '<d:propfind xmlns:d="DAV:" xmlns:cal="urn:ietf:params:xml:ns:caldav"><d:prop>'
+    "<d:resourcetype/><d:displayname/><cal:supported-calendar-component-set/>"
+    "<d:current-user-privilege-set/></d:prop></d:propfind>"
 )
 _ETAGS = (
     '<?xml version="1.0" encoding="utf-8"?>'
@@ -124,8 +126,22 @@ class Conflict(DavError):
     """The record changed on the server since it was last read (412)."""
 
 
+class Ambiguous(DavError):
+    """Two collections answer to one name (#13)."""
+
+
 class TooLarge(DavError):
     """The answer was over its size limit, or too slow, and was not read."""
+
+
+#: What each mode lets a request be (#13). Reading includes the listing and the multiget
+#: REPORT, which only read; the two writes are the only verbs that change a resource.
+READ, READ_WRITE = "read", "readwrite"
+_READING = frozenset({"GET", "HEAD", "OPTIONS", "PROPFIND", "REPORT"})
+_WRITING = frozenset({"PUT", "DELETE"})
+#: What a request that is not held to a chosen collection may be: finding the account and
+#: its collections, and making the one the person asked to have made.
+_DISCOVERY = frozenset({"PROPFIND", "MKCOL", "MKCALENDAR"})
 
 
 @dataclass(frozen=True)
@@ -133,6 +149,28 @@ class Collection:
     href: str
     name: str
     kind: str  # ADDRESSBOOK or CALENDAR
+    #: The component types a calendar accepts (RFC 4791 §5.2.3); empty when it says nothing,
+    #: which means all of them.
+    components: tuple[str, ...] = ()
+    #: What the account may do here (RFC 3744 §5.4), or ``None`` when the server does not say.
+    privileges: frozenset[str] | None = None
+
+    @property
+    def accepts_events(self) -> bool:
+        return self.kind == CALENDAR and (not self.components or "VEVENT" in self.components)
+
+    @property
+    def writable(self) -> bool | None:
+        """Whether the account may add and change resources here; ``None`` if not told.
+
+        Only ``bind`` with ``write-content`` counts (RFC 3744 §3.9, §3.4), or ``write`` and
+        ``all``, which contain them. ``write-properties`` is not enough: Nextcloud grants it
+        on a share that is read only.
+        """
+        if self.privileges is None:
+            return None
+        names = self.privileges
+        return bool({"all", "write"} & names or {"bind", "write-content"} <= names)
 
 
 @dataclass(frozen=True)
@@ -174,6 +212,10 @@ class Server:
         self.auth = httpx.BasicAuth(username, password)
         parts = urlsplit(self.base)
         self.origin = (parts.scheme.lower(), (parts.hostname or "").lower(), parts.port)
+        #: The collections this connection is held to, as the path of each with a slash at
+        #: the end, and the mode it may be used in (#13). Nothing is chosen until
+        #: :meth:`allow` says so, and a request outside what is chosen is not sent.
+        self.scopes: dict[str, str] = {}
 
     # ------------------------------------------------------------- plumbing
 
@@ -210,8 +252,53 @@ class Server:
         path = quote(unquote(parts.path), safe="/")
         return f"{parts.scheme}://{parts.netloc}{path}"
 
+    def _root(self, href: str) -> str:
+        path = quote(unquote(urlsplit(self.absolute(href)).path), safe="/")
+        return path.rstrip("/") + "/"
+
+    def allow(self, href: str, mode: str) -> None:
+        """Hold this connection's requests to ``href``, in ``mode``: READ or READ_WRITE."""
+        self.scopes[self._root(href)] = READ_WRITE if mode == READ_WRITE else READ
+
+    def within(self, collection: str, href: str) -> bool:
+        """Whether ``href`` is ``collection`` or something under it, on this server."""
+        try:
+            root, path = (
+                self._root(collection),
+                quote(unquote(urlsplit(self.absolute(href)).path), safe="/"),
+            )
+        except DavError:
+            return False
+        return ".." not in path.split("/") and (path.rstrip("/") + "/").startswith(root)
+
+    def _held(self, method: str, url: str, *, discovery: bool) -> None:
+        """Refuse a request this connection was not given: the one guard (#13).
+
+        Every request passes here, each hop of a redirect included, before it is sent. Only
+        discovery (a PROPFIND, or making the collection that was asked for) is exempt; the
+        rest must be under a chosen collection, with a verb its mode allows. The origin was
+        held by :meth:`absolute` already.
+        """
+        if discovery:
+            if method in _DISCOVERY:
+                return
+            raise DavError(_("A request outside the chosen collections was not sent."))
+        path = quote(unquote(urlsplit(url).path), safe="/")
+        if ".." not in path.split("/"):
+            wanted = path.rstrip("/") + "/"
+            for root, mode in self.scopes.items():
+                if wanted.startswith(root):
+                    allowed = _READING | _WRITING if mode == READ_WRITE else _READING
+                    if method in allowed:
+                        return
+                    raise DavError(
+                        _("This collection is read only here, so a %(method)s was not sent.")
+                        % {"method": method}
+                    )
+        raise DavError(_("A request outside the chosen collections was not sent."))
+
     def _send(
-        self, method: str, href: str, *, limit: int, **kwargs
+        self, method: str, href: str, *, limit: int, discovery: bool = False, **kwargs
     ) -> tuple[httpx.Response, bytes]:
         """One request, its answer read to ``limit`` bytes and to a deadline, and no further.
 
@@ -221,6 +308,7 @@ class Server:
         url = self.absolute(href)
         deadline = deadline_in(TOTAL_SECONDS)
         for _hop in range(MAX_REDIRECTS + 1):
+            self._held(method, url, discovery=discovery)
             with (
                 until(deadline),
                 self.client.stream(
@@ -253,10 +341,11 @@ class Server:
         response, _body = self._send(method, href, limit=SMALL_LIMIT, **kwargs)
         return response
 
-    def propfind(self, href: str, body: str, depth: str) -> ElementTree:
+    def propfind(self, href: str, body: str, depth: str, *, discovery: bool = False) -> ElementTree:
         response, answer = self._send(
             "PROPFIND",
             href,
+            discovery=discovery,
             limit=LISTING_LIMIT,
             content=body.encode(),
             headers={"Depth": depth, "Content-Type": "application/xml; charset=utf-8"},
@@ -283,7 +372,7 @@ class Server:
         """
         for start in ("", f"/.well-known/{well_known}", "/"):
             try:
-                tree = self.propfind(start, _PRINCIPAL, "0")
+                tree = self.propfind(start, _PRINCIPAL, "0", discovery=True)
             except AuthenticationRefused:
                 raise
             except DavError:
@@ -296,52 +385,116 @@ class Server:
             _("The server does not say where the %(kind)s account is.") % {"kind": well_known}
         )
 
-    def home(self, principal: str, kind: str) -> str:
-        tree = self.propfind(principal, _HOMES, "0")
+    def homes(self, principal: str, kind: str) -> list[str]:
+        """Every home set the principal names for ``kind``, first the server's first."""
+        tree = self.propfind(principal, _HOMES, "0", discovery=True)
         tag = (
             f"{{{CARD}}}addressbook-home-set"
             if kind == ADDRESSBOOK
             else f"{{{CAL}}}calendar-home-set"
         )
+        found: list[str] = []
         for node in tree.iter(tag):
-            inner = node.find(f"{{{DAV}}}href")
-            if inner is not None and inner.text:
-                return self.absolute(inner.text.strip())
+            for inner in node.findall(f"{{{DAV}}}href"):
+                if not inner.text:
+                    continue
+                try:
+                    home = self.absolute(inner.text.strip())
+                except DavError:
+                    continue  # another host's: not a home this connection may use
+                if home not in found:
+                    found.append(home)
+        if found:
+            return found
         if kind == ADDRESSBOOK:
             raise DavError(_("The server does not name an address book home."))
         raise DavError(_("The server does not name a calendar home."))
 
+    def home(self, principal: str, kind: str) -> str:
+        return self.homes(principal, kind)[0]
+
+    @staticmethod
+    def _collection_of(response, href: str) -> Collection | None:
+        types = response.find(f".//{{{DAV}}}resourcetype")
+        if types is None:
+            return None
+        if types.find(f"{{{CARD}}}addressbook") is not None:
+            kind = ADDRESSBOOK
+        elif types.find(f"{{{CAL}}}calendar") is not None:
+            kind = CALENDAR
+        else:
+            return None
+        name_node = response.find(f".//{{{DAV}}}displayname")
+        name = (name_node.text or "").strip() if name_node is not None else ""
+        components = tuple(
+            (comp.get("name") or "").upper()
+            for comp in response.findall(
+                f".//{{{CAL}}}supported-calendar-component-set/{{{CAL}}}comp"
+            )
+        )
+        privileges = None
+        privilege_set = response.find(f".//{{{DAV}}}current-user-privilege-set")
+        if privilege_set is not None:
+            privileges = frozenset(
+                child.tag.rsplit("}", 1)[-1]
+                for privilege in privilege_set.findall(f"{{{DAV}}}privilege")
+                for child in privilege
+            )
+        return Collection(href, name, kind, components, privileges)
+
     def collections(self, home: str) -> list[Collection]:
-        tree = self.propfind(home, _COLLECTIONS, "1")
+        tree = self.propfind(home, _COLLECTIONS, "1", discovery=True)
         found: list[Collection] = []
         for response in tree.iter(f"{{{DAV}}}response"):
             href_node = response.find(f"{{{DAV}}}href")
             if href_node is None or not href_node.text:
                 continue
-            types = response.find(f".//{{{DAV}}}resourcetype")
-            if types is None:
-                continue
-            if types.find(f"{{{CARD}}}addressbook") is not None:
-                kind = ADDRESSBOOK
-            elif types.find(f"{{{CAL}}}calendar") is not None:
-                kind = CALENDAR
-            else:
-                continue
-            name_node = response.find(f".//{{{DAV}}}displayname")
-            name = (name_node.text or "").strip() if name_node is not None else ""
             try:
                 href = self.absolute(href_node.text.strip())
             except DavError:
                 continue  # another host's: not a collection this connection may use
-            found.append(Collection(href, name, kind))
+            collection = self._collection_of(response, href)
+            if collection is not None:
+                found.append(collection)
         return found
 
-    def find_collection(self, home: str, name: str, kind: str) -> Collection | None:
-        """The collection called ``name`` under ``home``, or ``None``. Reads only."""
-        for collection in self.collections(home):
-            if collection.kind == kind and collection.name.strip().lower() == name.strip().lower():
-                return collection
+    def describe(self, href: str) -> Collection | None:
+        """The one collection at ``href``, asked about as discovery, or ``None`` if gone.
+
+        Asked before the collection is allowed, since what it is decides whether it is
+        used at all. ``None`` when the server has nothing there, or something that is not an address
+        book or a calendar: a chosen collection that vanished is reported, never made again.
+        """
+        try:
+            tree = self.propfind(href, _COLLECTIONS, "0", discovery=True)
+        except DavError as error:
+            if error.status in (404, 410):
+                return None
+            raise
+        for response in tree.iter(f"{{{DAV}}}response"):
+            return self._collection_of(response, self.absolute(href))
         return None
+
+    def find_collection(self, home: str, name: str, kind: str) -> Collection | None:
+        """The collection called ``name`` under ``home``, or ``None``. Reads only.
+
+        A name two collections share is refused rather than guessed at: a name is not an
+        identity, and the first of two is somebody else's as often as it is the one meant (#13).
+        """
+        found = [
+            c
+            for c in self.collections(home)
+            if c.kind == kind and c.name.strip().lower() == name.strip().lower()
+        ]
+        if len(found) > 1:
+            raise Ambiguous(
+                _(
+                    "More than one collection is called “%(name)s”. Choose one of them, by "
+                    "its address, instead of by name."
+                )
+                % {"name": name}
+            )
+        return found[0] if found else None
 
     def create_collection(self, home: str, name: str, kind: str) -> Collection:
         """Make the collection called ``name`` under ``home``. Writes to the server."""
@@ -351,6 +504,7 @@ class Server:
             response = self.request(
                 "MKCOL",
                 href,
+                discovery=True,
                 content=_MKADDRESSBOOK.format(name=_xml(name)).encode(),
                 headers={"Content-Type": "application/xml; charset=utf-8"},
             )
@@ -358,6 +512,7 @@ class Server:
             response = self.request(
                 "MKCALENDAR",
                 href,
+                discovery=True,
                 content=_MKCALENDAR.format(name=_xml(name)).encode(),
                 headers={"Content-Type": "application/xml; charset=utf-8"},
             )

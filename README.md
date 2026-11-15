@@ -32,12 +32,13 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 | --- | --- |
 | Server address | The server's root, e.g. `https://cloud.example.org`, or the address of its DAV service where it lives under a path, e.g. `https://example.org/dav.php/`: that address is asked first, then `/.well-known/carddav` and `caldav`, then the root. It must be `https://`: the password goes over the wire, and only a machine on your own network may be reached over plain `http://`. |
 | Username, password | An app password where the server offers one. Stored encrypted. |
-| Address book, Calendar | Both default to *Postulo*; made by the first sync if they are not there, never in read-only mode. |
+| Collections | Press *Look on the server*, then choose one address book and one calendar from the list, each *Read only* or *Read and write*. They are kept by their address, so renaming one on the server changes nothing. A share the account may not write (it must hold `bind` and `write-content`; `write-properties` alone is what Nextcloud grants on a read-only share) offers only *Read only*; a server that does not say is offered writing, with a note. One of each kind per connection: add another connection for a second. |
+| Address book, Calendar | Used only while no collection is chosen above, so a connection made before that keeps working. Both default to *Postulo*: a name or an address; made by the first sync if they are not there, never in read-only mode and never when it is an address. The whole collection syncs, and a name two collections share is refused. |
 | Read only | Contacts and interviews still come in; nothing goes out — not even a new address book. |
 | Run | Every 15 minutes to once a day. The scheduler honours it; *Sync now* runs at once. |
 
-Press *Test*: it signs in, discovers the two homes and says which of the two collections
-are already there. It makes neither — the first sync does that. Then subscribe the phone
+Press *Test*: it signs in and says which collections it found, by name and address, and in
+what mode. It makes neither — the first sync does that. Then subscribe the phone
 to the *Postulo* address book and calendar the way you would to any other.
 
 ## What travels
@@ -68,7 +69,14 @@ writes `%40` for `@`) is read the same as one that does not.
 
 **What the server may send.** The password goes only to the host in the address you typed:
 an address in a listing, a redirect or a principal that names another host is not followed,
-and nothing outside the collection is read or written. An answer is read to a size (2 MB
+and nothing outside the chosen collection is read or written: one guard holds every request,
+a redirect hop included, to the collections you chose and to the verbs their mode allows
+(only finding the account and its collections, and making a requested collection, are
+exempt). A collection that vanished from the server is reported, never made again. A record
+paired with something outside the choice is left alone and counted. The modes are Postulo's
+word, not the server's lock: an app password cannot be narrowed to one collection on
+Nextcloud, Fastmail or iCloud. For real confinement use an account that receives only the
+shares you want, Radicale's rights file, or a sub-account on the storage. An answer is read to a size (2 MB
 for a listing, 256 KB for a card or an event) and to a minute in all; a card that is too
 large, too slow or not readable is skipped with a note, and the next one is read. So is one
 whose date, number, address or name does not fit. A time zone Postulo cannot resolve, a

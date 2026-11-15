@@ -51,7 +51,7 @@ from django.core.exceptions import ValidationError
 from django.db import DatabaseError, transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy, ngettext
 
 # One import, and it is a promise. Everything this plugin needs from Postulo is on
 # `postulo.plugins.api` and stays working across a minor release; anything else in
@@ -65,6 +65,7 @@ from postulo.plugins.api import (
     AlreadyPaired,
     Contact,
     DestinationRefused,
+    DiscoveredOption,
     FieldSpec,
     Interview,
     InterviewOutcome,
@@ -87,7 +88,16 @@ from postulo.plugins.api import (
 )
 
 from . import __version__, dav, text
-from .dav import ADDRESSBOOK, CALENDAR, AuthenticationRefused, Conflict, DavError, Server
+from .dav import (
+    ADDRESSBOOK,
+    CALENDAR,
+    READ,
+    READ_WRITE,
+    AuthenticationRefused,
+    Conflict,
+    DavError,
+    Server,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -171,6 +181,29 @@ class Run:
     def canon(self, href: str) -> str:
         return self.server.canonical(href)
 
+    def held(self, links: dict, collection) -> set[int]:
+        """The records paired with something outside ``collection``: not this run's to touch.
+
+        A connection pointed at another collection than the one it first used leaves such
+        links behind. Their twins are neither pushed to, nor deleted, nor taken for
+        removed, and the report counts them (#13).
+        """
+        outside = {
+            pk
+            for pk, link in links.items()
+            if link.remote_href and not self.server.within(collection.href, link.remote_href)
+        }
+        if outside:
+            self.report.skipped += len(outside)
+            self.report.notes.append(
+                _(
+                    "%(count)d records are paired with something outside the chosen "
+                    "collection and were left alone."
+                )
+                % {"count": len(outside)}
+            )
+        return outside
+
     def skip(self, name: str, error: BaseException) -> None:
         """One resource that could not be handled: counted, named, and the run goes on."""
         self.report.skipped += 1
@@ -186,6 +219,11 @@ class Run:
                 work()
         except TOLERATED as error:
             self.skip(name, error)
+
+
+def _is_href(name: str) -> bool:
+    """Whether what was typed for a collection is its address and not its name."""
+    return name.startswith(("/", "https://", "http://"))
 
 
 def _tail(href: str) -> str:
@@ -492,10 +530,13 @@ class DavSync:
                 str(_("Address book")),
                 type="text",
                 default="Postulo",
+                required=False,
                 help=str(
                     _(
-                        "Made on the server by the first sync if it is not there, unless read "
-                        "only is on. Only this address book is touched."
+                        "Used only while no collection is chosen below. A name or an address "
+                        "of an address book; one that is not there is made by the first sync, "
+                        "unless read only is on. The whole address book syncs, and a name two "
+                        "address books share is refused."
                     )
                 ),
             ),
@@ -504,10 +545,28 @@ class DavSync:
                 str(_("Calendar")),
                 type="text",
                 default="Postulo",
+                required=False,
                 help=str(
                     _(
-                        "Made on the server by the first sync if it is not there, unless read "
-                        "only is on. Only this calendar is touched."
+                        "Used only while no collection is chosen below. A name or an address "
+                        "of a calendar; one that is not there is made by the first sync, "
+                        "unless read only is on. The whole calendar syncs, and a name two "
+                        "calendars share is refused."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "collections",
+                str(_("Collections")),
+                type="discovered",
+                required=False,
+                modes=((READ, str(_("Read only"))), (READ_WRITE, str(_("Read and write")))),
+                help=str(
+                    _(
+                        "Press Look on the server, then choose one address book and one "
+                        "calendar. Only those are read or written, and a mode set here is "
+                        "Postulo's word, not the server's lock: an app password cannot be "
+                        "narrowed to one collection. Whole collections sync."
                     )
                 ),
             ),
@@ -528,9 +587,19 @@ class DavSync:
 
     def summary(self, config: dict) -> str:
         parts = [str(config.get("url", "")).rstrip("/")]
-        parts.append(
-            f"{config.get('addressbook') or 'Postulo'} · {config.get('calendar') or 'Postulo'}"
-        )
+        if self._chosen(config):
+            parts.append(
+                ngettext(
+                    "%(count)d collection chosen",
+                    "%(count)d collections chosen",
+                    len(self._chosen(config)),
+                )
+                % {"count": len(self._chosen(config))}
+            )
+        else:
+            parts.append(
+                f"{config.get('addressbook') or 'Postulo'} · {config.get('calendar') or 'Postulo'}"
+            )
         if config.get("read_only"):
             parts.append(str(_("read only")))
         return " · ".join(part for part in parts if part)
@@ -584,9 +653,13 @@ class DavSync:
     def test(self, config: dict) -> TestResult:
         """Sign in and look. *Test* reads: it never makes a collection (#2)."""
         read_only = bool(config.get("read_only"))
+        notes: list[str] = []
         try:
             client, server = dav.connect(config)
             with client:
+                chosen = self._resolve(server, config, notes)
+                if chosen is not None:
+                    return self._tested_choice(chosen, notes)
                 found = {
                     kind: self._collection(server, config, kind, create=False)
                     for kind in (ADDRESSBOOK, CALENDAR)
@@ -600,17 +673,38 @@ class DavSync:
         if not missing:
             return TestResult(
                 True,
-                str(_("Found the address book “%(book)s” and the calendar “%(calendar)s”."))
+                str(
+                    _(
+                        "Found the address book “%(book)s” (%(book_href)s) and the calendar "
+                        "“%(calendar)s” (%(calendar_href)s)."
+                    )
+                )
                 % {
                     "book": found[ADDRESSBOOK].name,
+                    "book_href": urlsplit(found[ADDRESSBOOK].href).path,
                     "calendar": found[CALENDAR].name,
+                    "calendar_href": urlsplit(found[CALENDAR].href).path,
                 },
             )
         sentences = [self._missing_sentence(config, kind) for kind in missing]
         # Signing in worked, which is what *Test* is for; what is missing is only a
         # problem the sync cannot solve when it is forbidden to write.
-        sentences.append(str(READ_ONLY_TAIL if read_only else FIRST_SYNC_TAIL))
+        if any(not _is_href(self._name(config, kind)) for kind in missing):
+            sentences.append(str(READ_ONLY_TAIL if read_only else FIRST_SYNC_TAIL))
         return TestResult(not read_only, " ".join(sentences))
+
+    def _tested_choice(self, chosen: dict, notes: list[str]) -> TestResult:
+        sentences = []
+        for kind, (collection, mode) in chosen.items():
+            what = _("address book") if kind == ADDRESSBOOK else _("calendar")
+            how = _("read only") if mode == READ else _("read and write")
+            sentences.append(
+                str(_("Found the %(what)s “%(name)s” (%(how)s)."))
+                % {"what": what, "name": collection.name or _tail(collection.href), "how": how}
+            )
+        if not chosen:
+            sentences.append(str(_("None of the chosen collections is on the server.")))
+        return TestResult(bool(chosen), " ".join([*sentences, *notes]))
 
     def _name(self, config: dict, kind: str) -> str:
         return str(config.get("addressbook" if kind == ADDRESSBOOK else "calendar") or "Postulo")
@@ -624,15 +718,149 @@ class DavSync:
     def _collection(
         self, server: Server, config: dict, kind: str, *, create: bool
     ) -> dav.Collection | None:
-        """The collection to work in. ``create=False`` looks, and never makes one."""
-        well_known = "carddav" if kind == ADDRESSBOOK else "caldav"
-        principal = server.principal(well_known)
-        home = server.home(principal, kind)
+        """The collection a name, or an address, stands for. ``create=False`` never makes one.
+
+        What a connection that chooses no collection does, as it always has; it is held to
+        the one it found, in the mode read only sets. An address is looked up and never
+        made: it names a collection that is there or is not.
+        """
+        mode = READ if config.get("read_only") else READ_WRITE
         name = self._name(config, kind)
-        found = server.find_collection(home, name, kind)
-        if found is not None or not create:
-            return found
-        return server.create_collection(home, name, kind)
+        if _is_href(name):
+            found = server.describe(name)
+            if found is not None and found.kind != kind:
+                raise DavError(
+                    _("“%(name)s” is not an address book.") % {"name": name}
+                    if kind == ADDRESSBOOK
+                    else _("“%(name)s” is not a calendar.") % {"name": name}
+                )
+        else:
+            well_known = "carddav" if kind == ADDRESSBOOK else "caldav"
+            principal = server.principal(well_known)
+            home = server.home(principal, kind)
+            found = server.find_collection(home, name, kind)
+            if found is None and create:
+                found = server.create_collection(home, name, kind)
+        if found is not None:
+            server.allow(found.href, mode)
+        return found
+
+    # ------------------------------------------------------------ choosing
+
+    @staticmethod
+    def _chosen(config: dict) -> dict[str, str]:
+        """The collections the person chose, as address → mode; empty when none were."""
+        value = config.get("collections")
+        if not isinstance(value, dict):
+            return {}
+        return {
+            str(href): (READ_WRITE if mode == READ_WRITE else READ)
+            for href, mode in value.items()
+            if href and mode
+        }
+
+    def _resolve(
+        self, server: Server, config: dict, notes: list[str]
+    ) -> dict[str, tuple[dav.Collection, str]] | None:
+        """What was chosen, looked up by address: kind → (collection, mode); ``None`` if none.
+
+        Each address is asked about once. One that is no longer on the server is reported
+        and never made again. A mode of *read and write* the server does not allow is
+        lowered to *read*, with a word. Only the collections kept are allowed, so no
+        request goes to any other. One address book and one calendar are used at most.
+        """
+        wanted = self._chosen(config)
+        if not wanted:
+            return None
+        read_only = bool(config.get("read_only"))
+        found: dict[str, list[tuple[dav.Collection, str]]] = {ADDRESSBOOK: [], CALENDAR: []}
+        for href, mode in wanted.items():
+            try:
+                collection = server.describe(href)
+            except AuthenticationRefused:
+                raise
+            except DavError as error:
+                notes.append(
+                    str(_("“%(href)s” could not be read: %(error)s"))
+                    % {"href": href, "error": error}
+                )
+                continue
+            if collection is None:
+                notes.append(
+                    str(
+                        _(
+                            "The collection “%(href)s” is no longer on the server. It was "
+                            "not made again; choose another, or let it go."
+                        )
+                    )
+                    % {"href": href}
+                )
+                continue
+            if collection.kind == CALENDAR and not collection.accepts_events:
+                notes.append(
+                    str(_("The calendar “%(name)s” does not take events, so it was not used."))
+                    % {"name": collection.name or _tail(collection.href)}
+                )
+                continue
+            if mode == READ_WRITE and (read_only or collection.writable is False):
+                if not read_only:
+                    notes.append(
+                        str(_("The server does not let you write to “%(name)s”: read only."))
+                        % {"name": collection.name or _tail(collection.href)}
+                    )
+                mode = READ
+            found[collection.kind].append((collection, mode))
+        chosen: dict[str, tuple[dav.Collection, str]] = {}
+        for kind, entries in found.items():
+            if len(entries) > 1:
+                notes.append(
+                    str(
+                        _(
+                            "More than one %(what)s is chosen, and a connection syncs one: "
+                            "none was used. Add a connection for each, or let the others go."
+                        )
+                    )
+                    % {"what": _("address book") if kind == ADDRESSBOOK else _("calendar")}
+                )
+            elif entries:
+                collection, mode = entries[0]
+                server.allow(collection.href, mode)
+                chosen[kind] = (collection, mode)
+        return chosen
+
+    def discover(self, config: dict) -> dict[str, list[DiscoveredOption]]:
+        """What the server has to choose from: every address book and calendar of every home."""
+        options: dict[str, DiscoveredOption] = {}
+        client, server = dav.connect(config)
+        with client:
+            for kind, group in (
+                (ADDRESSBOOK, str(_("Address books"))),
+                (CALENDAR, str(_("Calendars"))),
+            ):
+                principal = server.principal("carddav" if kind == ADDRESSBOOK else "caldav")
+                for home in server.homes(principal, kind):
+                    for collection in server.collections(home):
+                        if collection.kind != kind or (
+                            kind == CALENDAR and not collection.accepts_events
+                        ):
+                            continue
+                        writable = collection.writable
+                        note = ""
+                        if writable is False:
+                            note = str(_("Read only on the server"))
+                        elif writable is None:
+                            note = str(_("The server does not say whether it may be written"))
+                        options.setdefault(
+                            collection.href,
+                            DiscoveredOption(
+                                collection.href,
+                                collection.name or _tail(collection.href),
+                                group=group,
+                                modes=(READ,) if writable is False else (),
+                                note=note,
+                            ),
+                        )
+        return {"collections": list(options.values())}
 
     # -------------------------------------------------------------- sync
 
@@ -643,6 +871,14 @@ class DavSync:
         client, server = dav.connect(config)
         with client:
             run = Run(server, connection, report, read_only)
+            try:
+                chosen = self._resolve(server, config, report.notes)
+            except AuthenticationRefused as error:
+                report.error = str(error)
+                return report
+            except httpx.HTTPError as error:
+                report.error = f"{type(error).__name__}: {error}"
+                return report
             for kind, half in (
                 (ADDRESSBOOK, self._sync_contacts),
                 (CALENDAR, self._sync_interviews),
@@ -650,14 +886,26 @@ class DavSync:
                 # Each half on its own: a server with no calendar home still gets the
                 # contacts, and one failing says so without stopping the other (#20).
                 try:
-                    # In read-only mode a missing collection is reported, not made: half a
-                    # sync still runs, and the person is told which half did not.
-                    collection = self._collection(server, config, kind, create=not read_only)
-                    if collection is None:
-                        report.notes.append(
-                            f"{self._missing_sentence(config, kind)} {READ_ONLY_TAIL}"
-                        )
-                        continue
+                    if chosen is not None:
+                        # What was chosen is all there is: a kind with nothing chosen is
+                        # not synced, and nothing is looked up or made by name.
+                        if kind not in chosen:
+                            continue
+                        collection, mode = chosen[kind]
+                        run.read_only = mode == READ
+                    else:
+                        # In read-only mode a missing collection is reported, not made:
+                        # half a sync still runs, and the person is told which half did not.
+                        collection = self._collection(server, config, kind, create=not read_only)
+                        run.read_only = read_only
+                        if collection is None:
+                            tail = (
+                                "" if _is_href(self._name(config, kind)) else f" {READ_ONLY_TAIL}"
+                            )
+                            report.notes.append(
+                                f"{self._missing_sentence(config, kind)}{tail if read_only else ''}"
+                            )
+                            continue
                     half(run, collection)
                 except AuthenticationRefused as error:
                     errors.append(str(error))
@@ -683,6 +931,7 @@ class DavSync:
         # Links flagged remote_gone are kept in the map: they say "the person removed
         # this from the address book", and the record must not be pushed back.
         links = {link.object_id: link for link in SyncLink.of_model(connection, Contact)}
+        held = run.held(links, book)
         # The numbers and the links are prefetched for the card's primaries: two queries a
         # run, where a core that reads the primary from prefetched rows (postulo/postulo#1171)
         # asked two per contact (#47). An older core still asks per contact, as before.
@@ -739,7 +988,7 @@ class DavSync:
         # Pair: a twin that moved is found again by its UID, never by its address (#7).
         for link in list(links.values()):
             contact = contacts.get(link.object_id)
-            if contact is None or not link.uid or not link.paired:
+            if contact is None or not link.uid or not link.paired or link.object_id in held:
                 continue
             if canon(link.remote_href) in remote and not link.remote_gone:
                 continue
@@ -811,6 +1060,8 @@ class DavSync:
         # Local records: push new and changed ones; notice twins that vanished.
         def one(contact: Contact) -> None:
             link = links.get(contact.pk)
+            if contact.pk in held:
+                return  # paired with something outside the chosen address book
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the address book on purpose, or unpaired: leave it
             card = card_for(contact, owner, link.uid if link else "")
@@ -944,7 +1195,7 @@ class DavSync:
             link = links.get(contact.pk)
             if link is None:
                 return False
-            if link.remote_gone or not link.paired:
+            if link.remote_gone or not link.paired or contact.pk in held:
                 return True
             try:
                 href = canon(link.remote_href)
@@ -1017,6 +1268,7 @@ class DavSync:
         owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
         remote = server.etags(calendar.href)
         links = {link.object_id: link for link in SyncLink.of_model(connection, Interview)}
+        held = run.held(links, calendar)
         interviews = {
             i.pk: i
             for i in Interview.objects.for_user(owner)
@@ -1049,7 +1301,7 @@ class DavSync:
         wanted = any(pk not in links for pk in interviews) or any(
             canon(link.remote_href) not in remote or link.remote_gone
             for pk, link in links.items()
-            if pk in interviews and link.paired
+            if pk in interviews and link.paired and pk not in held
         )
         # Every event this run will read, asked for in a few multiget REPORTs rather than a
         # GET each (#45): those no link claims when they are wanted, and the twins whose
@@ -1077,8 +1329,8 @@ class DavSync:
         # whose event is already there is paired with it instead of being pushed again (#7).
         for pk, interview in interviews.items():
             link = links.get(pk)
-            if link is not None and not link.paired:
-                continue  # unpaired on purpose: not paired again by its UID
+            if link is not None and (not link.paired or pk in held):
+                continue  # unpaired on purpose, or paired outside the chosen calendar
             if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
                 continue
             found = next(
@@ -1140,6 +1392,8 @@ class DavSync:
         def one(interview: Interview) -> None:
             pk = interview.pk
             link = links.get(pk)
+            if pk in held:
+                return  # paired with something outside the chosen calendar
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the calendar on purpose, or unpaired: leave it
             source = digest(interview_source(interview))

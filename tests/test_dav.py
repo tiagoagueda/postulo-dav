@@ -87,6 +87,25 @@ class FakeDav:
         #: How many hrefs each multiget REPORT asked for.
         self.multigets: list[int] = []
 
+    @staticmethod
+    def _collection_props(meta: dict) -> str:
+        """What a listing says of a collection: its type, its name, and optionally what the
+        account may do there (``privileges``) and which components it takes (``components``)."""
+        kind = "<c:addressbook/>" if meta["kind"] == ADDRESSBOOK else "<cal:calendar/>"
+        props = (
+            f"<d:resourcetype><d:collection/>{kind}</d:resourcetype>"
+            f"<d:displayname>{meta['name']}</d:displayname>"
+        )
+        if "components" in meta:
+            comps = "".join(f'<cal:comp name="{c}"/>' for c in meta["components"])
+            props += f"<cal:supported-calendar-component-set>{comps}</cal:supported-calendar-component-set>"  # noqa: E501
+        if "privileges" in meta:
+            privs = "".join(
+                f"<d:privilege><d:{name}/></d:privilege>" for name in meta["privileges"]
+            )
+            props += f"<d:current-user-privilege-set>{privs}</d:current-user-privilege-set>"
+        return props
+
     def _etag(self) -> str:
         self.counter += 1
         return f'"v{self.counter}"'
@@ -152,16 +171,10 @@ class FakeDav:
                 rows = [(path, "<d:resourcetype><d:collection/></d:resourcetype>")]
                 for href, meta in self.collections.items():
                     if href.startswith(path):
-                        kind = (
-                            "<c:addressbook/>" if meta["kind"] == ADDRESSBOOK else "<cal:calendar/>"
-                        )
-                        rows.append(
-                            (
-                                href,
-                                f"<d:resourcetype><d:collection/>{kind}</d:resourcetype><d:displayname>{meta['name']}</d:displayname>",
-                            )
-                        )
+                        rows.append((href, self._collection_props(meta)))
                 return _multistatus(rows)
+            if path in self.collections and depth == "0":
+                return _multistatus([(path, self._collection_props(self.collections[path]))])
             if path in self.collections and depth == "1":
                 rows = [(path, "<d:resourcetype><d:collection/></d:resourcetype>")]
                 for href, (_text, etag) in self.resources.items():
@@ -443,7 +456,10 @@ def test_test_in_read_only_says_nothing_will_be_made(server):
 def test_test_finds_the_collections_once_they_are_there(made):
     result = DavSync().test(CONFIG)
     assert result.ok
-    assert result.message == "Found the address book “Postulo” and the calendar “Postulo”."
+    assert result.message == (
+        "Found the address book “Postulo” (/dav/addressbooks/ana/postulo-contacts/) "
+        "and the calendar “Postulo” (/dav/calendars/ana/postulo-interviews/)."
+    )
 
 
 def test_the_first_sync_makes_the_collections_and_the_second_does_not(server, connection):
@@ -481,6 +497,7 @@ def test_a_wrong_password_is_a_sentence(server, user):
 def test_the_server_helper_writes_conditionally(server):
     with httpx.Client(transport=httpx.MockTransport(server.handler)) as client:
         dav = Server(BASE, "ana", "app-pw", client=client)
+        dav.allow("/dav/x/", dav_module.READ_WRITE)
         etag = dav.put("/dav/x/a.vcf", "BEGIN:VCARD\r\nEND:VCARD", "text/vcard")
         with pytest.raises(Conflict):
             dav.put("/dav/x/a.vcf", "again", "text/vcard")
@@ -1652,7 +1669,10 @@ def test_a_server_under_a_path_connects_from_the_address_typed(monkeypatch):
     monkeypatch.setattr(dav_module, "postulo_client", client)
     result = DavSync().test({**CONFIG, "url": f"{BASE}/baikal/dav/"})
     assert result.ok, result.message
-    assert result.message == "Found the address book “Postulo” and the calendar “Postulo”."
+    assert result.message == (
+        "Found the address book “Postulo” (/baikal/dav/addressbooks/ana/postulo-contacts/) "
+        "and the calendar “Postulo” (/baikal/dav/calendars/ana/postulo-interviews/)."
+    )
     assert under.root == [], "nothing was asked at the root of the host"
 
 
@@ -1833,3 +1853,230 @@ def test_an_interview_with_notes_and_a_reminder_moved_on_the_phone_keeps_its_not
     interview.refresh_from_db()
     assert interview.starts_at == later
     assert interview.notes == "Ask about the on-call rota", "the alarm's text did not replace them"
+
+
+# ------------------------------------- collections chosen by address, with a mode (#13)
+
+CONTACTS = "/dav/addressbooks/ana/contacts/"
+PERSONAL = "/dav/calendars/ana/personal/"
+DISCOVERY_PATHS = (
+    "/",
+    "/dav/",
+    "/dav/principals/ana/",
+    "/dav/addressbooks/ana/",
+    "/dav/calendars/ana/",
+    "/.well-known/carddav",
+    "/.well-known/caldav",
+)
+
+
+def choose_hrefs(connection, chosen: dict[str, str]) -> dict:
+    connection.config = {**connection.config, "collections": chosen}
+    connection.save()
+    return connection.full_config
+
+
+def requests_under(server: FakeDav, *roots: str) -> list[tuple[str, str]]:
+    return [(m, p) for m, p in server.log if p.startswith(roots)]
+
+
+def test_a_chosen_collection_is_used_by_address_and_nothing_else_is_asked(
+    made, connection, recruiter, application
+):
+    server = made
+    server.add(CONTACTS + "mine.vcf", vcard("personal-1", "Somebody Personal"))
+    server.add(PERSONAL + "private.ics", "BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n")
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    # The names typed match the person's own book and calendar: they must not be taken.
+    config = {**CONFIG, "addressbook": "Contacts", "calendar": "Personal"}
+    connection.config = {**config, "collections": {}}
+    full = choose_hrefs(connection, {BOOK: "readwrite", CALENDAR_PATH: "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.pushed == 2
+    assert not Contact.objects.filter(name="Somebody Personal").exists()
+    assert set(server.hosts) == {"cloud.example.org"}
+    # The homes are not listed, and nothing is asked outside the two collections.
+    assert not [(m, p) for m, p in server.log if p in DISCOVERY_PATHS]
+    assert all(p.startswith((BOOK, CALENDAR_PATH)) for _m, p in server.log), server.log
+    assert server.resources[PERSONAL + "private.ics"]
+    assert not requests_under(server, CONTACTS, PERSONAL)
+
+
+def test_hostile_hrefs_in_a_chosen_collection_get_no_request(made, connection, recruiter):
+    server = made
+    server.foreign_hrefs = [
+        "https://evil.example/dav/addressbooks/ana/postulo-contacts/x.vcf",
+        "http://cloud.example.org/dav/addressbooks/ana/postulo-contacts/y.vcf",
+        "/dav/addressbooks/ana/contacts/z.vcf",
+        "/dav/addressbooks/ana/postulo-contacts/../contacts/w.vcf",
+        "/dav/addressbooks/ana/postulo-contacts-evil/v.vcf",
+    ]
+    full = choose_hrefs(connection, {BOOK: "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert report.error == ""
+    assert set(server.hosts) == {"cloud.example.org"}
+    assert all(p.startswith(BOOK) for _m, p in server.log), server.log
+    assert Contact.objects.count() == 1  # the recruiter, and nothing adopted from a stranger
+
+
+def test_the_guard_sends_nothing_outside_the_chosen_collection_or_the_mode(server):
+    with httpx.Client(transport=httpx.MockTransport(server.handler)) as client:
+        dav = Server(BASE, "ana", "app-pw", client=client)
+        dav.allow(BOOK, dav_module.READ)
+        for method, path in (
+            ("PUT", BOOK + "a.vcf"),
+            ("DELETE", BOOK + "a.vcf"),
+            ("MKCOL", BOOK + "b/"),
+            ("MKCALENDAR", BOOK + "b/"),
+            ("GET", CONTACTS + "a.vcf"),
+            ("GET", BOOK + "../contacts/a.vcf"),
+            ("GET", "/dav/addressbooks/ana/postulo-contacts-evil/a.vcf"),
+            ("PROPPATCH", BOOK),
+        ):
+            with pytest.raises(dav_module.DavError):
+                dav.request(method, path)
+        assert server.log == []
+        assert dav.request("GET", BOOK + "a.vcf").status_code == 404
+        assert server.log == [("GET", BOOK + "a.vcf")]
+
+
+def test_a_collection_read_only_gets_no_write_and_no_mkcol(made, connection, recruiter):
+    server = made
+    server.add(BOOK + "phone.vcf", vcard("phone-1", "Gordon Freeman"))
+    full = choose_hrefs(connection, {BOOK: "read"})
+    report = DavSync().sync(connection, full)
+    assert report.error == ""
+    assert Contact.objects.filter(name="Gordon Freeman").exists()  # read: it comes in
+    assert report.pushed == 0
+    assert not [m for m, _p in server.log if m in ("PUT", "DELETE", "MKCOL", "MKCALENDAR")]
+
+
+def test_a_calendar_with_no_card_book_chosen_syncs_only_that_half(made, connection, recruiter):
+    server = made
+    full = choose_hrefs(connection, {CALENDAR_PATH: "readwrite"})
+    DavSync().sync(connection, full)
+    assert not requests_under(server, "/dav/addressbooks/")
+    assert not cards(server)
+
+
+def test_a_server_side_rename_changes_nothing(made, connection, recruiter):
+    server = made
+    full = choose_hrefs(connection, {BOOK: "readwrite"})
+    assert DavSync().sync(connection, full).pushed == 1
+    server.collections[BOOK]["name"] = "Renamed by somebody"
+    server.log.clear()
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.summary() == "nothing to do"
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+    assert not SyncLink.for_record(connection, recruiter).remote_gone
+
+
+def test_a_collection_that_vanished_is_reported_and_not_made_again(made, connection, recruiter):
+    server = made
+    full = choose_hrefs(connection, {BOOK: "readwrite"})
+    DavSync().sync(connection, full)
+    del server.collections[BOOK]
+    for href in list(server.resources):
+        del server.resources[href]
+    server.log.clear()
+    report = DavSync().sync(connection, full)
+    assert "no longer on the server" in report.summary()
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR", "PUT", "DELETE")]
+    assert not SyncLink.for_record(connection, recruiter).remote_gone  # nothing was concluded
+
+
+def test_a_share_that_is_read_only_is_not_offered_writing(made, connection):
+    server = made
+    # Nextcloud grants write-properties on a read-only share (bugzilla 2051561).
+    server.collections[BOOK]["privileges"] = ["read", "write-properties"]
+    server.collections[CALENDAR_PATH]["privileges"] = ["read", "bind", "write-content"]
+    found = DavSync().discover(CONFIG)["collections"]
+    by_value = {option.value: option for option in found}
+    assert by_value[f"{BASE}{BOOK}"].modes == (dav_module.READ,)
+    assert by_value[f"{BASE}{BOOK}"].note
+    assert by_value[f"{BASE}{CALENDAR_PATH}"].modes == ()
+    assert not [m for m, _p in server.log if m not in ("PROPFIND",)]
+
+
+def test_writing_chosen_for_a_read_only_collection_is_lowered_to_reading(
+    made, connection, recruiter
+):
+    server = made
+    server.collections[BOOK]["privileges"] = ["read", "write-properties"]
+    full = choose_hrefs(connection, {f"{BASE}{BOOK}": "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert "read only" in report.summary()
+    assert not [m for m, _p in server.log if m in ("PUT", "DELETE")]
+
+
+def test_discovery_lists_collections_that_take_events_and_leaves_task_lists_out(made, connection):
+    server = made
+    server.collections["/dav/calendars/ana/tasks/"] = {
+        "name": "Tasks",
+        "kind": CALENDAR,
+        "components": ["VTODO"],
+    }
+    found = DavSync().discover(CONFIG)["collections"]
+    labels = {(option.group, option.label) for option in found}
+    assert ("Address books", "Contacts") in labels and ("Calendars", "Personal") in labels
+    assert not [option for option in found if option.label == "Tasks"]
+    assert len({option.value for option in found}) == len(found)
+
+
+def test_two_collections_of_a_kind_chosen_are_refused_rather_than_guessed(made, connection):
+    server = made
+    full = choose_hrefs(connection, {BOOK: "readwrite", CONTACTS: "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert "More than one address book" in report.summary()
+    assert not cards(server)
+    assert not requests_under(server, BOOK + "x", CONTACTS + "x")
+
+
+def test_pairings_outside_a_new_choice_are_left_alone_and_counted(
+    made, connection, recruiter, application
+):
+    server = made
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    DavSync().sync(connection, connection.full_config)  # the first, by name
+    other = "/dav/addressbooks/ana/other-book/"
+    server.collections[other] = {"name": "Other", "kind": ADDRESSBOOK}
+    server.log.clear()
+    full = choose_hrefs(connection, {other: "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and "outside the chosen collection" in report.summary()
+    assert report.skipped == 1 and report.removed == 0 and report.pushed == 0
+    assert not SyncLink.for_record(connection, recruiter).remote_gone
+    assert not [m for m, _p in server.log if m in ("PUT", "DELETE", "MKCOL")]
+    assert not requests_under(server, BOOK)
+
+
+def test_a_name_two_collections_share_is_refused_at_test_and_at_each_run(server, connection):
+    server.collections["/dav/addressbooks/ana/second/"] = {"name": "Contacts", "kind": ADDRESSBOOK}
+    config = {**CONFIG, "addressbook": "Contacts"}
+    result = DavSync().test(config)
+    assert not result.ok and "More than one collection" in result.message
+    report = DavSync().sync(connection, {**connection.full_config, "addressbook": "Contacts"})
+    assert "More than one collection" in report.error
+    assert not [m for m, _p in server.log if m in ("PUT", "DELETE", "MKCOL")]
+
+
+def test_an_address_is_accepted_for_a_name_and_never_made(made, connection, recruiter):
+    server = made
+    config = {**connection.full_config, "addressbook": BOOK, "calendar": "/dav/calendars/ana/gone/"}
+    report = DavSync().sync(connection, config)
+    assert report.pushed == 1
+    assert "is not on the server" in report.summary()
+    assert not [m for m, _p in server.log if m in ("MKCOL", "MKCALENDAR")]
+
+
+def test_test_names_what_it_found_by_address(made, connection):
+    full = choose_hrefs(connection, {BOOK: "read", CALENDAR_PATH: "readwrite"})
+    result = DavSync().test(full)
+    assert result.ok
+    assert "address book" in result.message and "read only" in result.message
+    assert "calendar" in result.message and "read and write" in result.message
+
+
+def test_the_form_has_a_discovered_field_with_two_modes():
+    (spec,) = [f for f in DavSync().config_fields() if f.name == "collections"]
+    assert spec.type == "discovered" and [m for m, _l in spec.modes] == ["read", "readwrite"]
