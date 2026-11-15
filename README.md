@@ -35,6 +35,7 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 | Collections | Press *Look on the server*, then choose one address book, one calendar and one task list from the list, each *Read only* or *Read and write*. They are kept by their address, so renaming one on the server changes nothing. A share the account may not write (it must hold `bind` and `write-content`; `write-properties` alone is what Nextcloud grants on a read-only share) offers only *Read only*; a server that does not say is offered writing, with a note. One of each kind per connection: add another connection for a second. A task list is a calendar the server says takes tasks (`VTODO`) and not events, which is how a phone tells one: a calendar that takes both is a calendar here, and cannot hold the tasks. |
 | Address book, Calendar | Used only while no collection is chosen above, so a connection made before that keeps working. Both default to *Postulo*: a name or an address; made by the first sync if they are not there, never in read-only mode and never when it is an address. The whole collection syncs, and a name two collections share is refused. |
 | Task list | Used only while no collection is chosen above, and blank by default: **no task list is kept unless one is named or chosen**. A name or an address; a name that is not there is made by the first sync (as *postulo-tasks*, for tasks only), never in read-only mode, never by *Test* and never when it is an address. A server that keeps no tasks gets a note in the report and the rest of the run goes on. |
+| Tasks about applications | Off by default; needs a task list. On, each application also has up to two tasks of Postulo's own in it (see below). |
 | Send contacts | *All of them* (the default, and what every connection did before) or *None*. Cards already in the address book stay, nothing more is sent to them, and the run says how many were left. |
 | Send companies | Off by default. On, each company you own gets a card of its own: `KIND:org` in a vCard 4 book, `X-ABShowAs:COMPANY` (Apple's property, untried here) in a book whose `supported-address-data` lists no 4.0. Name and website travel, both ways; the notes do not. A company deleted here takes the card Postulo wrote with it; switching this off leaves the cards. |
 | Send my own card | Off by default. Writes your name, sign-in address, headline, primary number and first link to a new card Postulo makes in the chosen book, one way: a change on the phone is written over and never reaches your profile. |
@@ -80,10 +81,32 @@ due time and is not done; in any other list it is left alone and counted, and th
 it by hand on the *Pairing* page (which also makes a reminder from one), so that an errand never
 becomes a reminder by accident. A task deleted on the phone flags its link and the reminder
 stays; a reminder deleted here deletes a task Postulo made and cancels one the person's own
-phone made. Not done yet: tasks about an application (the apply and hear-back tasks, grouping),
-which wait on the next part of #12. By their documentation, and untried against any real server
+phone made. By their documentation, and untried against any real server
 here, Nextcloud, Radicale, Fastmail and DAVx5's task apps carry tasks; Google's CalDAV and
 upgraded iCloud Reminders do not.
+
+**An application's tasks (#12).** With *Tasks about applications* on, an application has two
+tasks that Postulo owns, each paired by the application's link in a slot of its own
+(`apply`, `reply`; the application's slot-less link stays its event's). *Apply to ROLE at
+COMPANY* exists while the application is a draft: its `DUE` is the deadline (a date), it is
+`COMPLETED` at `applied_at` and `CANCELLED` if the application was withdrawn unsent. *Hear back
+from COMPANY about ROLE* exists once it is sent: `COMPLETED` when it is accepted or rejected,
+`CANCELLED` when withdrawn or ghosted, and an offer, which is no ending, leaves it open.
+`PRIORITY` follows the application's, inverted as RFC 5545 §3.8.1.9 has it (high 1, normal 5,
+low 9), and `REFID` (RFC 9253) is the same on all of an application's tasks. What the
+application says is written; what is done to these tasks on the phone is undone on the next
+run (a tick cannot say which ending it was) — with one exception. **A tick on *Apply* is
+filed as a suggestion** (*Marked as applied in the task list*, the moment of the tick as
+`occurred_at`), never a status changed behind your back; accepting it moves the application
+to *Applied* and stamps `applied_at` with that moment. While it waits the tick stays; if you
+decline it, the next run unticks the task. A tick is one suggestion by task and moment, so
+the same tick is never filed twice, even after it was declined. A reminder about an
+application carries its `REFID` and sits under the application's open task by `RELATED-TO`
+(RFC 5545 §3.8.4.5), which some task apps draw as a subtask (Nextcloud Tasks does, by its
+documentation; the rest untried); and a task made in Postulo's own list under one of these
+becomes a reminder about that application. Reminders made on the phone are read, never the
+other way round: moving a reminder to another application on the phone does nothing here.
+"An update" (a timeline entry) is not a task: a reminder to chase one already is.
 
 **Pairing an event made elsewhere with an interview.** On the connection's *Pairing* page
 a person pairs an event from the chosen calendar (found with a `calendar-query` over the

@@ -77,6 +77,7 @@ from postulo.plugins.api import (
     LinkKind,
     Reminder,
     RemoteItem,
+    Suggestion,
     SyncLink,
     SyncReport,
     TestResult,
@@ -102,6 +103,7 @@ from postulo.plugins.api import (
     save_web_link,
     schedule_interview,
     settle_interview,
+    suggest,
     update_company,
     update_contact,
 )
@@ -263,6 +265,8 @@ class Run:
     vcard: str = "4.0"
     #: Records left unsent because their kind is switched off, for the report.
     unsent: int = 0
+    #: Whether an application gets its apply and hear-back tasks (#12).
+    milestones: bool = False
     #: Whether interviews go to a calendar this run: an interview's reminder is then its
     #: event's alarm already, and gets no task of its own (#12).
     events_on: bool = True
@@ -534,8 +538,79 @@ def event_source(event: text.Event) -> str:
 # --------------------------------------------------------------------- tasks
 
 
-def reminder_todo(reminder: Reminder, uid: str) -> text.Todo:
-    """The task a reminder is: what to do, by when, and whether it is done (#12)."""
+#: The two tasks an application may have, as slots of its link (#326): the one to send it, and
+#: the one to hear back about it.
+APPLY, REPLY = "apply", "reply"
+#: Where an application stands once it has been sent and nothing has ended it: the statuses a
+#: hear-back task is open in. An offer is not an ending, and leaves it open (#12).
+SENT_OPEN = frozenset(
+    {"applied", "acknowledged", "screening", "interviewing", "assessment", "offer"}
+)
+#: Postulo's priorities (low, normal, high) as RFC 5545 §3.8.1.9 numbers them: 1 is the
+#: highest and 9 the lowest, so the order is inverted.
+PRIORITIES = {1: 9, 2: 5, 3: 1}
+#: The UID of an application's milestone task, which Postulo makes: ``application-<pk>-<owner>-
+#: <slot>@postulo``. A task made on the phone *under* one is a reminder about that application.
+MILESTONE_UID = re.compile(r"^application-(\d+)-(\d+)-(apply|reply)@postulo$")
+
+
+def application_ref(owner_pk: int, application_pk: int) -> str:
+    """What the tasks of one application share: ``REFID``, RFC 9253 (#12)."""
+    return f"application-{application_pk}-{owner_pk}@postulo"
+
+
+def milestone_uid(owner_pk: int, application_pk: int, slot: str) -> str:
+    return f"application-{application_pk}-{owner_pk}-{slot}@postulo"
+
+
+def milestone_todo(application: Application, slot: str, uid: str, owner_pk: int) -> text.Todo:
+    """The task an application's milestone is, from the application as it stands (#12).
+
+    *Apply* is due its deadline, done at ``applied_at``, cancelled if the application was
+    withdrawn unsent. *Hear back* is done when the application is accepted or rejected and
+    cancelled when it is withdrawn or ghosted; an offer, which is no ending, leaves it open.
+    """
+    posting = application.posting
+    values = {"role": posting.title, "company": posting.company.name}
+    status, completed, due_day = "NEEDS-ACTION", None, None
+    if slot == APPLY:
+        summary = _("Apply to %(role)s at %(company)s") % values
+        due_day = application.deadline
+        if application.applied_at is not None:
+            status, completed = "COMPLETED", application.applied_at
+        elif application.status == "withdrawn":
+            status = "CANCELLED"
+    else:
+        summary = _("Hear back from %(company)s about %(role)s") % values
+        if application.status in ("accepted", "rejected"):
+            status = "COMPLETED"
+            completed = application.closed_at or application.updated_at
+        elif application.status in ("withdrawn", "ghosted"):
+            status = "CANCELLED"
+    return text.Todo(
+        uid=uid,
+        summary=summary[:250],
+        due_day=due_day,
+        status=status,
+        completed=completed,
+        priority=PRIORITIES.get(application.priority, 5),
+        refid=application_ref(owner_pk, application.pk),
+    )
+
+
+def milestone_moment(application: Application, slot: str, now: dt.datetime) -> dt.datetime:
+    """When a finished milestone was finished: what the ninety days are counted from."""
+    if slot == APPLY:
+        return application.applied_at or application.updated_at
+    return application.closed_at or application.updated_at
+
+
+def reminder_todo(reminder: Reminder, uid: str, refid: str = "", parent: str = "") -> text.Todo:
+    """The task a reminder is: what to do, by when, and whether it is done (#12).
+
+    A reminder about an application carries its ``REFID`` and sits under its open milestone
+    task by ``RELATED-TO`` (RFC 5545 §3.8.4.5), which Nextcloud Tasks draws as a subtask.
+    """
     done = reminder.done_at
     return text.Todo(
         uid=uid,
@@ -543,6 +618,8 @@ def reminder_todo(reminder: Reminder, uid: str) -> text.Todo:
         due=reminder.due_at,
         status="COMPLETED" if done else "NEEDS-ACTION",
         completed=done,
+        refid=refid,
+        parent=parent,
     )
 
 
@@ -567,18 +644,30 @@ def same_task(theirs: text.Todo, ours: text.Todo) -> bool:
     )
 
 
-def task_changes(ours: text.Todo, theirs: text.Todo) -> set[str]:
+def state_of(todo: text.Todo) -> str:
+    """Open, completed or cancelled: the three things a task's status says to Postulo."""
+    return "CANCELLED" if todo.status == "CANCELLED" else "COMPLETED" if todo.done else "OPEN"
+
+
+def task_changes(ours: text.Todo, theirs: text.Todo, *, strict: bool = False) -> set[str]:
     """The properties to write into the task on the server so that it says what ``ours`` says.
 
     Only what differs, and only what Postulo owns (#12). A task the phone *cancelled* and a
-    reminder done are the same fact, so the status is left as the phone wrote it.
+    reminder done are the same fact, so a reminder's status is left as the phone wrote it;
+    ``strict`` is for the tasks Postulo owns outright, which say which ending it was.
     """
     names: set[str] = set()
     if ours.summary != theirs.summary:
         names.add("SUMMARY")
-    if ours.due is not None and not same_due(theirs, ours.due):
+    if ours.due is not None:
+        if not same_due(theirs, ours.due):
+            names.add("DUE")
+    elif ours.due_day is not None:
+        if theirs.due_day != ours.due_day:
+            names.add("DUE")
+    elif strict and (theirs.due is not None or theirs.due_day is not None):
         names.add("DUE")
-    if ours.done != theirs.done:
+    if (state_of(ours) != state_of(theirs)) if strict else (ours.done != theirs.done):
         names.add("STATUS")
     elif (
         ours.done
@@ -587,11 +676,11 @@ def task_changes(ours: text.Todo, theirs: text.Todo) -> set[str]:
         != (theirs.completed and text.stamp(theirs.completed))
     ):
         names.add("COMPLETED")
-    if ours.priority != theirs.priority and ours.priority is not None:
+    if ours.priority is not None and ours.priority != theirs.priority:
         names.add("PRIORITY")
-    if ours.refid != theirs.refid and ours.refid:
+    if ours.refid and ours.refid != theirs.refid:
         names.add("REFID")
-    if ours.parent != theirs.parent and (ours.parent or theirs.parent):
+    if ours.parent != theirs.parent and (ours.parent or strict or theirs.parent):
         names.add("RELATED-TO")
     return names
 
@@ -769,6 +858,21 @@ class DavSync:
                         "of a task list to keep your reminders in; blank, and none is used. A "
                         "name that is not there is made by the first sync, unless read only is "
                         "on. Needs a server that keeps tasks."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "milestone_tasks",
+                str(_("Tasks about applications")),
+                type="boolean",
+                required=False,
+                default=False,
+                help=str(
+                    _(
+                        "Also keep two tasks for each application in the task list: one to "
+                        "apply, which ticking sends to you as a suggestion, and one to hear "
+                        "back, which closes when the application ends. Reminders about an "
+                        "application sit under its open task."
                     )
                 ),
             ),
@@ -1176,7 +1280,7 @@ class DavSync:
         # Unpaired ones count: a person who unpaired an interview did not ask for a new one.
         have = {link.uid for link in SyncLink.of_model(connection, Interview) if link.uid}
         for link in SyncLink.of_model(connection, Application):
-            if not link.paired or link.remote_gone or link.uid in have:
+            if link.slot or not link.paired or link.remote_gone or link.uid in have:
                 continue
             href = canon(link.remote_href) if link.remote_href else ""
             if not href or not server.within(calendar.href, href):
@@ -1570,6 +1674,7 @@ class DavSync:
                 send_contacts=config.get("send_contacts") != "none",
                 send_companies=bool(config.get("send_companies")),
                 send_own_card=bool(config.get("send_own_card")),
+                milestones=bool(config.get("milestone_tasks")),
             )
             try:
                 chosen = self._resolve(server, config, report.notes)
@@ -2616,7 +2721,7 @@ class DavSync:
     # ------------------------------------------------------------- tasks
 
     def _sync_tasks(self, run: Run, tasks) -> None:
-        """Reminders ↔ the task list, both ways (#12).
+        """Reminders and applications' milestones ↔ the task list, both ways (#12).
 
         A reminder is a task: ``SUMMARY``, ``DUE``, ``STATUS`` and ``COMPLETED`` are exchanged
         and nothing else is written, so what the phone keeps in a task (its description, its
@@ -2625,23 +2730,75 @@ class DavSync:
         the person's own reminders are kept: an interview's is its event's alarm already while
         events are on. A task made in a list Postulo made becomes a reminder; in any other list
         a person pairs it by hand, so that an errand never becomes one by accident.
+
+        An application may have two more, when that is switched on: *Apply* (its deadline, its
+        ``applied_at``) and *Hear back*. Postulo owns them: what the application says is
+        written, and a tick on the phone does not stick, but for one *Apply* tick, which is
+        filed as a suggestion for the person to accept.
         """
         server, connection, report = run.server, run.connection, run.report
         owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
         remote = server.etags(tasks.href)
         own_list = _tail(tasks.href) == OWN_TASK_LIST
         where = canon(tasks.href)
-        links = {
-            link.object_id: link
-            for link in SyncLink.of_model(connection, Reminder)
-            if not link.slot
-        }
+        task_links = [link for link in SyncLink.of_model(connection, Reminder)]
+        links = {link.object_id: link for link in task_links if not link.slot}
         held = run.held(links, tasks)
+        mlinks = {
+            (link.object_id, link.slot): link
+            for link in SyncLink.of_model(connection, Application)
+            if link.slot in (APPLY, REPLY)
+        }
+        mheld = run.held(mlinks, tasks)
         window = Reminder.objects.for_user(owner).filter(retired_at__isnull=True)
         window = window.filter(Q(done_at__isnull=True) | Q(done_at__gte=now - HISTORY))
         if run.events_on:
             window = window.exclude(interview__isnull=False)
         reminders = {r.pk: r for r in window}
+
+        # The applications' milestones, and so which task each application's reminders sit
+        # under: the one still open.
+        milestones: dict[tuple[int, str], tuple[Application, text.Todo]] = {}
+        if run.milestones or mlinks:
+            applications = Application.objects.filter(owner=owner).select_related(
+                "posting__company"
+            )
+            for application in applications:
+                for slot in (APPLY, REPLY):
+                    link = mlinks.get((application.pk, slot))
+                    if (application.pk, slot) in mheld:
+                        continue
+                    wanted = run.milestones and (
+                        (
+                            slot == APPLY
+                            and application.status == "draft"
+                            and not application.applied_at
+                        )
+                        or (slot == REPLY and application.status in SENT_OPEN)
+                    )
+                    if link is None and not wanted:
+                        continue
+                    uid = (
+                        link.uid
+                        if link is not None
+                        else milestone_uid(owner.pk, application.pk, slot)
+                    )
+                    ours = milestone_todo(application, slot, uid, owner.pk)
+                    if ours.done and milestone_moment(application, slot, now) < now - HISTORY:
+                        continue  # long finished: left where it is, as an old interview is
+                    milestones[(application.pk, slot)] = (application, ours)
+        opens = {pk: ours.uid for (pk, _slot), (_a, ours) in milestones.items() if not ours.done}
+
+        def todo_of(reminder: Reminder, uid: str) -> text.Todo:
+            if not reminder.application_id:
+                return reminder_todo(reminder, uid)
+            return reminder_todo(
+                reminder,
+                uid,
+                refid=application_ref(owner.pk, reminder.application_id),
+                parent=opens.get(reminder.application_id, ""),
+            )
+
         cache: dict[str, tuple[dav.Resource, list[text.Todo]]] = {}
         fetched: dict[str, dav.Resource] = {}
 
@@ -2656,7 +2813,11 @@ class DavSync:
             return cache[key]
 
         def linked() -> set[str]:
-            return {canon(link.remote_href) for link in links.values() if link.remote_href}
+            return {
+                canon(link.remote_href)
+                for link in [*links.values(), *mlinks.values()]
+                if link.remote_href
+            }
 
         def strangers() -> list[str]:
             claimed = linked()
@@ -2665,21 +2826,23 @@ class DavSync:
         # What no link claims is read when something might be theirs: any task in the list
         # Postulo made (it is where tasks are adopted from), a reminder with no twin yet, or
         # a twin gone from its address.
+        every = [(pk, link) for pk, link in links.items() if pk in reminders]
+        every += [(key, mlinks[key]) for key in milestones if key in mlinks]
         wanted = (
             own_list
             or any(pk not in links for pk in reminders)
+            or any(key not in mlinks for key in milestones)
             or any(
                 canon(link.remote_href) not in remote or link.remote_gone
-                for pk, link in links.items()
-                if pk in reminders and link.paired and pk not in held
+                for _key, link in every
+                if link.paired and _key not in held and _key not in mheld
             )
         )
         unclaimed = [h for h in remote if h not in linked()] if wanted else []
         moved = [
             canon(link.remote_href)
-            for pk, link in links.items()
-            if pk in reminders
-            and link.paired
+            for _key, link in every
+            if link.paired
             and link.remote_href
             and not link.remote_gone
             and remote.get(canon(link.remote_href), link.etag) != link.etag
@@ -2691,26 +2854,19 @@ class DavSync:
             except DavError as error:
                 run.skip(_tail(href), error)
 
-        # Pair: a twin that moved is found again by its UID, and a reminder whose task is
-        # already there (a connection deleted and added again) is paired, not pushed twice.
-        for pk, reminder in reminders.items():
-            link = links.get(pk)
-            if link is not None and (not link.paired or pk in held):
-                continue
-            if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
-                continue
-            twin = link.uid if link is not None and made_elsewhere(link, reminder) else reminder.uid
+        def pair(item, ours: text.Todo, twin: str, slot: str, existing) -> None:
+            """Pair ``item`` (a reminder or an application) with the task already there."""
             found = next((h for h in strangers() if any(t.uid == twin for t in cache[h][1])), None)
             if found is None or len(found) > HREF_LENGTH:
-                continue
+                return
             resource, todos = cache[found]
             todo = next(t for t in todos if t.uid == twin)
-            ours = reminder_todo(reminder, twin)
             same = same_task(todo, ours)
             try:
-                links[pk] = SyncLink.bind(
+                bound = SyncLink.bind(
                     connection,
-                    reminder,
+                    item,
+                    slot=slot,
                     collection=where,
                     remote_href=found,
                     uid=twin,
@@ -2720,13 +2876,34 @@ class DavSync:
                     remote_gone=False,
                 )
             except AlreadyPaired:
-                continue  # that task is another reminder's by now: leave both alone
-            if link is not None:
+                return  # that task is another record's by now: leave both alone
+            if slot:
+                mlinks[(item.pk, slot)] = bound
+            else:
+                links[item.pk] = bound
+            if existing is not None:
                 report.notes.append(_("A task moved to another address; still paired."))
 
-        def put_task(reminder: Reminder, uid: str, href: str, etag: str, known) -> str:
+        # Pair: a twin that moved is found again by its UID, and a record whose task is
+        # already there (a connection deleted and added again) is paired, not pushed twice.
+        for pk, reminder in reminders.items():
+            link = links.get(pk)
+            if link is not None and (not link.paired or pk in held):
+                continue
+            if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
+                continue
+            twin = link.uid if link is not None and made_elsewhere(link, reminder) else reminder.uid
+            pair(reminder, todo_of(reminder, twin), twin, "", link)
+        for (pk, slot), (application, ours) in milestones.items():
+            link = mlinks.get((pk, slot))
+            if link is not None and not link.paired:
+                continue
+            if link is not None and canon(link.remote_href) in remote and not link.remote_gone:
+                continue
+            pair(application, ours, ours.uid, slot, link)
+
+        def put_task(ours: text.Todo, href: str, etag: str, known, *, strict: bool = False) -> str:
             """Write the task: new whole, or the properties Postulo owns into the one there."""
-            ours = reminder_todo(reminder, uid)
             if not etag:
                 return server.put(
                     href,
@@ -2734,13 +2911,13 @@ class DavSync:
                     "text/calendar; charset=utf-8",
                 )
             current = known or server.get(href)
-            theirs = next((t for t in text.text_to_todos(current.text) if t.uid == uid), None)
+            theirs = next((t for t in text.text_to_todos(current.text) if t.uid == ours.uid), None)
             if theirs is None:
                 raise DavError(_("The task could not be read, so it was not changed."))
-            names = task_changes(ours, theirs)
+            names = task_changes(ours, theirs, strict=strict)
             if not names:
                 return current.etag
-            patched = text.patch_todo(current.text, uid, names, ours, modified=now)
+            patched = text.patch_todo(current.text, ours.uid, names, ours, modified=now)
             if patched is None:
                 raise DavError(_("The task could not be read, so it was not changed."))
             return server.put(href, patched, "text/calendar; charset=utf-8", etag=current.etag)
@@ -2753,13 +2930,14 @@ class DavSync:
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the list on purpose, or unpaired: leave it
             uid = link.uid if link is not None else reminder.uid
-            source = task_hash(reminder_todo(reminder, uid))
+            ours = todo_of(reminder, uid)
+            source = task_hash(ours)
             if link is None:
                 if read_only:
                     report.skipped += 1
                     return
                 href = urljoin(tasks.href, f"{reminder.uid.split('@')[0]}.ics")
-                etag = put_task(reminder, uid, href, "", None)
+                etag = put_task(ours, href, "", None)
                 links[pk] = SyncLink.bind(
                     connection,
                     reminder,
@@ -2797,7 +2975,7 @@ class DavSync:
                     report.skipped += 1
                     return
                 known = resource
-                if local_changed and same_task(incoming, reminder_todo(reminder, uid)):
+                if local_changed and same_task(incoming, ours):
                     # Both sides already say the same: nothing to merge, only to remember.
                     link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
                     link.save()
@@ -2821,7 +2999,7 @@ class DavSync:
                     apply_todo(reminder, incoming, report, now)
                     reminder.refresh_from_db()
                     link.etag = resource.etag
-                    link.local_hash = task_hash(reminder_todo(reminder, uid))
+                    link.local_hash = task_hash(todo_of(reminder, uid))
                     link.last_synced_at = now
                     link.save()
                     report.pulled += 1
@@ -2831,7 +3009,7 @@ class DavSync:
                     report.skipped += 1
                     return
                 try:
-                    etag = put_task(reminder, uid, link.remote_href, link.etag, known)
+                    etag = put_task(ours, link.remote_href, link.etag, known)
                 except Conflict:
                     report.notes.append(
                         _("A reminder changed on both sides at once; next run decides.")
@@ -2844,28 +3022,160 @@ class DavSync:
         for reminder in reminders.values():
             run.each(reminder.summary, lambda reminder=reminder: one(reminder))
 
-        # Links whose reminder is gone: the task goes with it when Postulo made it, and is
+        def tick(application: Application, link, incoming: text.Todo, resource) -> bool:
+            """A tick on an *Apply* task is a suggestion, never a status changed behind the
+            person's back. One suggestion per tick: the id is the task and the moment it
+            was ticked, so a tick undone and made again is a new one, and one already declined
+            is not filed again (the core never files one ``external_id`` twice). ``True`` when
+            this tick was declined, and the task is to be unticked."""
+            moment = incoming.completed or incoming.last_modified
+            marker = text.stamp(moment) if moment else resource.etag
+            suggestion, _new = suggest(
+                owner,
+                source=ACTOR,
+                external_id=f"{link.uid}:{marker}",
+                application=application,
+                summary=str(_("Marked as applied in the task list")),
+                occurred_at=min(moment, now) if moment else now,
+                suggested_status="applied",
+            )
+            return suggestion.status == "declined"
+
+        def mone(application: Application, slot: str, ours: text.Todo) -> None:
+            link = mlinks.get((application.pk, slot))
+            if link is not None and (link.remote_gone or not link.paired):
+                return  # removed from the list on purpose, or unpaired: leave it
+            source = task_hash(ours)
+            if link is None:
+                if read_only:
+                    report.skipped += 1
+                    return
+                href = urljoin(tasks.href, f"{ours.uid.split('@')[0]}.ics")
+                etag = put_task(ours, href, "", None)
+                mlinks[(application.pk, slot)] = SyncLink.bind(
+                    connection,
+                    application,
+                    slot=slot,
+                    collection=where,
+                    remote_href=canon(href),
+                    uid=ours.uid,
+                    etag=etag,
+                    local_hash=source,
+                    last_synced_at=now,
+                )
+                report.pushed += 1
+                return
+            href = canon(link.remote_href)
+            if href not in remote:
+                link.remote_gone = True
+                link.save(update_fields=["remote_gone", "updated_at"])
+                report.removed += 1
+                report.notes.append(
+                    _("The task “%(name)s” was removed from the task list; it is not made again.")
+                    % {"name": ours.summary[:120]}
+                )
+                return
+            known = None
+            names: set[str] = set()
+            if remote[href] != link.etag:
+                resource, todos = read(link.remote_href)
+                incoming = next((t for t in todos if t.uid == ours.uid), None) or (
+                    todos[0] if todos else None
+                )
+                if incoming is None:
+                    report.skipped += 1
+                    return
+                known = resource
+                if slot == APPLY and incoming.done and not ours.done:
+                    if not tick(application, link, incoming, resource):
+                        link.etag, link.last_synced_at = resource.etag, now
+                        link.save(update_fields=["etag", "last_synced_at", "updated_at"])
+                        report.pulled += 1
+                        return
+                # Anything else somebody did to the task is undone: the application says it.
+                names = task_changes(ours, incoming, strict=True)
+                if not names:
+                    link.etag, link.local_hash, link.last_synced_at = resource.etag, source, now
+                    link.save()
+                    return
+            if names or link.local_hash != source:
+                if read_only:
+                    report.skipped += 1
+                    return
+                try:
+                    etag = put_task(ours, link.remote_href, link.etag, known, strict=True)
+                except Conflict:
+                    report.notes.append(
+                        _("A task changed on both sides at once; next run decides.")
+                    )
+                    return
+                link.etag, link.local_hash, link.last_synced_at = etag, source, now
+                link.save()
+                report.pushed += 1
+
+        for (_pk, slot), (application, ours) in milestones.items():
+            run.each(ours.summary, lambda a=application, s=slot, t=ours: mone(a, s, t))
+
+        # An *Apply* tick the person declined is unticked on the next run, once.
+        if not read_only:
+            declined = {
+                external_id.rsplit(":", 1)[0]: reviewed_at
+                for external_id, reviewed_at in Suggestion.objects.filter(
+                    owner=owner,
+                    source=ACTOR,
+                    status="declined",
+                    external_id__startswith="application-",
+                ).values_list("external_id", "reviewed_at")
+                if reviewed_at is not None
+            }
+            for (_pk, slot), (application, ours) in milestones.items():
+                link = mlinks.get((application.pk, slot))
+                if slot != APPLY or link is None or ours.done or not link.paired:
+                    continue
+                when = declined.get(link.uid)
+                if when is None or when <= (
+                    link.last_synced_at or dt.datetime.min.replace(tzinfo=dt.UTC)
+                ):
+                    continue
+
+                def untick(application=application, ours=ours, link=link) -> None:
+                    try:
+                        link.etag = put_task(ours, link.remote_href, link.etag, None, strict=True)
+                    except Conflict:
+                        return  # changed again since: the next run looks at it
+                    link.last_synced_at = now
+                    link.save()
+                    report.pushed += 1
+
+                run.each(ours.summary, untick)
+
+        # Links whose record is gone: the task goes with it when Postulo made it, and is
         # cancelled when the person's own phone did (#12). One further than the window: a
         # reminder merely too old for it is left alone, as an interview is.
-        unseen = [link.object_id for link in links.values() if link.object_id not in reminders]
-        existing = set(Reminder.objects.filter(pk__in=unseen).values_list("pk", flat=True))
-        for link in list(links.values()):
-            if link.object_id in reminders or link.object_id in existing:
-                continue
-            if link.paired and not read_only and canon(link.remote_href) in remote:
-                try:
-                    if not made_elsewhere(link):
-                        if drop_twin(server, link, report, TASK_KEPT):
-                            report.removed += 1
-                    else:
-                        self._cancel_task(run, link)
-                except DavError as error:
-                    run.skip(_tail(link.remote_href), error)
+        def forget(links_of, model, current) -> None:
+            unseen = [link.object_id for link in links_of if link.object_id not in current]
+            existing = set(model.objects.filter(pk__in=unseen).values_list("pk", flat=True))
+            for link in links_of:
+                if link.object_id in current or link.object_id in existing:
                     continue
-            link.delete()
+                if link.paired and not read_only and canon(link.remote_href) in remote:
+                    try:
+                        if not made_elsewhere(link):
+                            if drop_twin(server, link, report, TASK_KEPT):
+                                report.removed += 1
+                        else:
+                            self._cancel_task(run, link)
+                    except DavError as error:
+                        run.skip(_tail(link.remote_href), error)
+                        continue
+                link.delete()
+
+        forget(list(links.values()), Reminder, reminders)
+        forget(list(mlinks.values()), Application, {pk for pk, _slot in milestones})
 
         # Tasks that appeared in the list from elsewhere: a reminder each, in a list Postulo
-        # made; left alone, and counted, in any other (#12).
+        # made, about the application whose task it was made under; left alone, and counted,
+        # in any other (#12).
         left = 0
         for href in [h for h in remote if h not in linked()]:
             if not own_list or href not in cache:
@@ -2893,10 +3203,15 @@ class DavSync:
                 continue
 
             def adopt(href=href, resource=resource, todo=todo) -> None:
+                parent = MILESTONE_UID.match(todo.parent)
+                about = None
+                if parent and int(parent.group(2)) == owner.pk:
+                    about = Application.objects.filter(owner=owner, pk=int(parent.group(1))).first()
                 reminder = create_reminder(
                     owner,
                     summary=todo.summary,
                     due=todo.due or todo.due_day,
+                    application=about,
                     actor=ACTOR,
                 )
                 SyncLink.bind(
@@ -2906,7 +3221,7 @@ class DavSync:
                     remote_href=href,
                     uid=todo.uid,
                     etag=resource.etag,
-                    local_hash=task_hash(reminder_todo(reminder, todo.uid)),
+                    local_hash=task_hash(todo_of(reminder, todo.uid)),
                     last_synced_at=now,
                 )
                 report.pulled += 1

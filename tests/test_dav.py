@@ -3081,3 +3081,237 @@ def test_a_task_is_offered_for_pairing_and_made_a_reminder_by_hand(made, connect
             kind="reminder",
             pair=False,
         )
+
+
+# --------------------------------- an application's apply and hear-back tasks (#12)
+
+
+@pytest.fixture
+def draft(user, company):
+    posting = JobPosting.objects.create(owner=user, company=company, title="Test Engineer")
+    return Application.objects.create(
+        owner=user,
+        posting=posting,
+        status=Status.DRAFT,
+        priority=3,
+        deadline=dt.date(2099, 6, 30),
+    )
+
+
+def with_milestones(connection, **extra):
+    return with_tasks(connection, milestone_tasks=True, **extra)
+
+
+def milestone(fake, which: str, root=TASKS_PATH) -> str:
+    (body,) = [b for h, b in tasks(fake, root).items() if h.endswith(f"-{which}.ics")]
+    return body
+
+
+def test_a_draft_has_an_apply_task_with_its_deadline_and_priority(listed, connection, draft):
+    full = with_milestones(connection)
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.pushed == 1
+    body = milestone(listed, "apply")
+    assert "SUMMARY:Apply to Test Engineer at Aperture Science" in body
+    assert "DUE;VALUE=DATE:20990630" in body and "PRIORITY:1" in body  # high is 1 (RFC 5545)
+    assert f"REFID:application-{draft.pk}-{draft.owner_id}@postulo" in body
+    assert "STATUS:NEEDS-ACTION" in body
+    link = SyncLink.for_record(connection, draft, "apply")
+    assert link.uid == f"application-{draft.pk}-{draft.owner_id}-apply@postulo"
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+
+
+def test_no_application_task_is_made_unless_it_is_switched_on(listed, connection, draft):
+    DavSync().sync(connection, with_tasks(connection))
+    assert not tasks(listed)
+
+
+def test_a_tick_on_apply_files_one_suggestion_and_accepting_stamps_the_moment(
+    listed, connection, draft, user
+):
+    from postulo.applications.models import Suggestion
+    from postulo.applications.suggestions import accept
+
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    href = next(h for h in tasks(listed) if h.endswith("-apply.ics"))
+    body = listed.resources[href][0]
+    moment = (timezone.now() - dt.timedelta(days=1)).replace(microsecond=0)
+    ticked = body.replace(
+        "STATUS:NEEDS-ACTION", f"STATUS:COMPLETED\r\nCOMPLETED:{text.stamp(moment)}"
+    )
+    listed.add(href, ticked)
+    for _run in range(3):
+        DavSync().sync(connection, full)
+    (suggestion,) = Suggestion.objects.filter(owner=user)
+    assert suggestion.suggested_status == "applied" and suggestion.application == draft
+    assert suggestion.occurred_at == moment and suggestion.source == "dav"
+    draft.refresh_from_db()
+    assert draft.status == Status.DRAFT, "nothing is changed behind the person's back"
+    assert "STATUS:COMPLETED" in listed.resources[href][0], "the tick stays while it waits"
+    accept(suggestion)
+    draft.refresh_from_db()
+    assert draft.status == Status.APPLIED and draft.applied_at == moment
+    DavSync().sync(connection, full)
+    assert f"COMPLETED:{text.stamp(moment)}" in listed.resources[href][0]
+    # Reply now exists, and nothing is left to do.
+    assert "SUMMARY:Hear back from Aperture Science about Test Engineer" in milestone(
+        listed, "reply"
+    )
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+
+
+def test_a_declined_tick_is_unticked_on_the_next_run_and_not_filed_again(
+    listed, connection, draft, user
+):
+    from postulo.applications.models import Suggestion
+    from postulo.applications.suggestions import decline
+
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    href = next(h for h in tasks(listed) if h.endswith("-apply.ics"))
+    body = listed.resources[href][0]
+    moment = text.stamp(timezone.now() - dt.timedelta(hours=2))
+    ticked = body.replace("STATUS:NEEDS-ACTION", f"STATUS:COMPLETED\r\nCOMPLETED:{moment}")
+    listed.add(href, ticked)
+    DavSync().sync(connection, full)
+    decline(Suggestion.objects.get(owner=user))
+    DavSync().sync(connection, full)
+    assert "STATUS:NEEDS-ACTION" in listed.resources[href][0]
+    assert "COMPLETED:" not in listed.resources[href][0]
+    # The same tick made again is the same suggestion, which is not filed twice and is
+    # unticked again; a tick at another moment is a new one.
+    listed.add(href, ticked)
+    DavSync().sync(connection, full)
+    assert Suggestion.objects.filter(owner=user).count() == 1
+    assert "STATUS:NEEDS-ACTION" in listed.resources[href][0]
+    later = text.stamp(timezone.now() - dt.timedelta(hours=1))
+    listed.add(href, body.replace("STATUS:NEEDS-ACTION", f"STATUS:COMPLETED\r\nCOMPLETED:{later}"))
+    DavSync().sync(connection, full)
+    assert Suggestion.objects.filter(owner=user).count() == 2
+
+
+def test_hear_back_closes_as_the_application_ends_and_a_tick_does_not_stick(
+    listed, connection, application, user
+):
+    from postulo.applications.services import change_status
+
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)  # an application that was sent: hear back, no apply
+    href = next(h for h in tasks(listed) if h.endswith("-reply.ics"))
+    assert not [h for h in tasks(listed) if h.endswith("-apply.ics")]
+    body = listed.resources[href][0]
+    assert "STATUS:NEEDS-ACTION" in body and "PRIORITY:5" in body
+    # Ticked on the phone: the application did not end, so the next push undoes it.
+    listed.add(href, body.replace("STATUS:NEEDS-ACTION", "STATUS:COMPLETED"))
+    DavSync().sync(connection, full)
+    assert "STATUS:NEEDS-ACTION" in listed.resources[href][0]
+    # An offer is not an ending.
+    change_status(application, "offer", actor="")
+    DavSync().sync(connection, full)
+    assert "STATUS:NEEDS-ACTION" in listed.resources[href][0]
+    change_status(application, "rejected", actor="")
+    DavSync().sync(connection, full)
+    assert "STATUS:COMPLETED" in listed.resources[href][0]
+    # An ending the phone cannot tell from another: pushed one way.
+    listed.add(href, listed.resources[href][0].replace("STATUS:COMPLETED", "STATUS:CANCELLED"))
+    DavSync().sync(connection, full)
+    assert "STATUS:COMPLETED" in listed.resources[href][0]
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+
+
+def test_hear_back_is_cancelled_when_ghosted_and_apply_when_withdrawn_unsent(
+    listed, connection, application, draft
+):
+    from postulo.applications.services import change_status
+
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    change_status(application, "ghosted", actor="")
+    change_status(draft, "withdrawn", actor="")
+    DavSync().sync(connection, full)
+    assert "STATUS:CANCELLED" in milestone(listed, "reply")
+    apply_body = [b for h, b in tasks(listed).items() if h.endswith("-apply.ics")][0]
+    assert "STATUS:CANCELLED" in apply_body and "COMPLETED:" not in apply_body
+
+
+def test_reminders_about_an_application_sit_under_its_open_task(listed, connection, draft, user):
+    reminder = make_reminder(user, "Chase them", application=draft)
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    ref = f"application-{draft.pk}-{user.pk}@postulo"
+    apply_uid = f"application-{draft.pk}-{user.pk}-apply@postulo"
+    body = next(b for h, b in tasks(listed).items() if reminder.uid.split("@")[0] in h)
+    assert f"REFID:{ref}" in body and f"RELATED-TO:{apply_uid}" in body
+    # Sent: its open task is now hear-back, and the reminder moves under it.
+    from postulo.applications.services import change_status
+
+    change_status(draft, "applied", actor="")
+    DavSync().sync(connection, full)
+    body = next(b for h, b in tasks(listed).items() if reminder.uid.split("@")[0] in h)
+    assert f"RELATED-TO:{apply_uid.replace('-apply', '-reply')}" in body
+    assert "RELATED-TO:" + apply_uid not in body
+
+
+def test_a_task_made_under_an_applications_task_is_a_reminder_about_it(
+    listed, connection, draft, user
+):
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    apply_uid = f"application-{draft.pk}-{user.pk}-apply@postulo"
+    listed.add(
+        TASKS_PATH + "under.ics",
+        task_text("under-1", "Update my CV", extra=f"RELATED-TO:{apply_uid}\r\n"),
+    )
+    DavSync().sync(connection, full)
+    reminder = Reminder.objects.get(summary="Update my CV")
+    assert reminder.application == draft
+    # Somebody else's application is not one: the task is a reminder about none.
+    listed.add(
+        TASKS_PATH + "other.ics",
+        task_text(
+            "other-1", "Stranger", extra=f"RELATED-TO:application-{draft.pk}-9999-apply@postulo\r\n"
+        ),
+    )
+    DavSync().sync(connection, full)
+    assert Reminder.objects.get(summary="Stranger").application is None
+
+
+def test_a_task_deleted_on_the_phone_is_not_made_again_and_a_deleted_application_takes_its_links(
+    listed, connection, draft
+):
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    href = next(iter(tasks(listed)))
+    del listed.resources[href]
+    report = DavSync().sync(connection, full)
+    assert report.removed == 1 and "not made again" in report.summary()
+    assert SyncLink.for_record(connection, draft, "apply").remote_gone
+    assert not tasks(listed), "it is not made again"
+    draft.delete()
+    DavSync().sync(connection, full)
+    assert not SyncLink.objects.filter(connection=connection, slot="apply")
+
+
+def test_a_deleted_application_takes_the_tasks_postulo_made(listed, connection, draft):
+    full = with_milestones(connection)
+    DavSync().sync(connection, full)
+    assert len(tasks(listed)) == 1
+    draft.delete()
+    DavSync().sync(connection, full)
+    assert not tasks(listed) and not SyncLink.objects.filter(connection=connection, slot="apply")
+
+
+def test_an_applications_tasks_and_its_event_pairing_do_not_meet(listed, connection, application):
+    """A link in a slot is a task's; the application's own (slot-less) link is its event's."""
+    listed.add(CALENDAR_PATH + "phone.ics", phone_event("phone-ev-1@example.org", next_week(14)))
+    pair_with_application(connection, application)
+    full = with_milestones(connection)
+    report = DavSync().sync(connection, full)
+    assert report.error == ""
+    assert Interview.objects.filter(application=application).count() == 1
+    assert SyncLink.objects.filter(connection=connection, slot="reply").count() == 1
+    assert SyncLink.for_record(connection, application).uid == "phone-ev-1@example.org"
+    DavSync().sync(connection, full)
+    assert Interview.objects.filter(application=application).count() == 1
+    assert len(tasks(listed)) == 1, "the interview's reminder is its event's alarm, no task"

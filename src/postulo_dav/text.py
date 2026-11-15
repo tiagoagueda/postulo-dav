@@ -568,7 +568,7 @@ class Todo:
             [
                 self.summary,
                 stamp(self.due) if self.due else (self.due_day.isoformat() if self.due_day else ""),
-                "done" if self.done else "open",
+                "cancelled" if self.status == "CANCELLED" else "done" if self.done else "open",
                 stamp(self.completed) if self.completed else "",
                 str(self.priority or ""),
                 self.refid,
@@ -652,6 +652,8 @@ def todo_lines(todo: Todo, *, modified: dt.datetime) -> list[str]:
     lines = [f"SUMMARY:{escape(todo.summary)}"]
     if todo.due is not None:
         lines.append(f"DUE:{stamp(todo.due)}")
+    elif todo.due_day is not None:
+        lines.append(f"DUE;VALUE=DATE:{todo.due_day:%Y%m%d}")
     if todo.priority:
         lines.append(f"PRIORITY:{todo.priority}")
     if todo.refid:

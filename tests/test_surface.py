@@ -55,6 +55,8 @@ def test_the_surface_is_what_this_plugin_actually_uses():
         "LinkKind",
         "Reminder",
         "RemoteItem",
+        "Suggestion",
+        "suggest",
         "SyncLink",
         "calendar_status",
         "change_reminder",

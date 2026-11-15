@@ -77,6 +77,10 @@ msgid "A request outside the chosen collections was not sent."
 msgstr ""
 
 #: src/postulo_dav/sync.py
+msgid "A task changed on both sides at once; next run decides."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
 msgstr ""
 
@@ -97,6 +101,10 @@ msgid "All of them"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
 msgstr "Eit app-passord der tenaren tilbyr det. Lagra kryptert."
 
@@ -111,6 +119,11 @@ msgstr "Eit intervju som vart sletta her, var endra på telefonen sidan førre s
 #: src/postulo_dav/sync.py
 msgid "An interview moved to another address on the calendar; still paired."
 msgstr "Eit intervju vart flytta til ei anna adresse i kalenderen; framleis kopla saman."
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "Apply to %(role)s at %(company)s"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -175,6 +188,11 @@ msgid "From the card “%(name)s”: %(details)s"
 msgstr ""
 
 #: src/postulo_dav/sync.py
+#, python-format
+msgid "Hear back from %(company)s about %(role)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "it could not be saved here"
 msgstr "det kunne ikkje lagrast her"
 
@@ -198,6 +216,10 @@ msgstr "tida kan ikkje lesast"
 #, python-format
 msgid "its time zone “%(zone)s” is not known here"
 msgstr "tidssona «%(zone)s» er ikkje kjend her"
+
+#: src/postulo_dav/sync.py
+msgid "Marked as applied in the task list"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -289,6 +311,10 @@ msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+msgid "Tasks about applications"
 msgstr ""
 
 #: src/postulo_dav/sync.py
@@ -438,6 +464,11 @@ msgstr ""
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "The task “%(name)s” was removed from the task list; it is not made again."
 msgstr ""
 
 #: src/postulo_dav/sync.py
