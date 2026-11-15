@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 05:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Slovenian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sl/>\n"
 "Language: sl\n"
@@ -18,10 +18,10 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Izbrana je %(count)d zbirka"
+msgstr[1] "Izbrani sta %(count)d zbirki"
+msgstr[2] "Izbrane so %(count)d zbirke"
+msgstr[3] "Izbranih je %(count)d zbirk"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -31,21 +31,21 @@ msgstr "Dogodki v koledarju, ki niso iz Postula, so ostali nedotaknjeni: %(count
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d zapisov je povezanih z nečim zunaj izbrane zbirke in niso bili spremenjeni."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d zapisov ni bilo poslanih, ker je pošiljanje te vrste izklopljeno."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%(count)d naloga na seznamu nalog ni iz Postula in je bila pustena pri miru."
+msgstr[1] "%(count)d nalogi na seznamu nalog nista iz Postula in sta bili pusteni pri miru."
+msgstr[2] "%(count)d naloge na seznamu nalog niso iz Postula in so bile pustene pri miru."
+msgstr[3] "%(count)d nalog na seznamu nalog ni iz Postula in so bile pustene pri miru."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -58,11 +58,11 @@ msgstr "(brez podjetja)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(brez naslova)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Kartice ni mogoče spremeniti v to."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -70,27 +70,27 @@ msgstr "Stik, izbrisan tukaj, je bil od zadnje sinhronizacije spremenjen v telef
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Opomnik se je hkrati spremenil na obeh straneh; odloči naslednji zagon."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Opomnik, izbrisan tukaj, se je od zadnje sinhronizacije spremenil na telefonu. Naloga je ostala na seznamu nalog."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Zahteva zunaj izbranih zbirk ni bila poslana."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Naloga se je hkrati spremenila na obeh straneh; odloči naslednji zagon."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Naloga je bila premaknjena na drug naslov; še vedno je povezana."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "imenik"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -98,15 +98,15 @@ msgstr "Imenik"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Imeniki"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Vse"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Na seznamu nalog hrani tudi dve nalogi za vsako prijavo: eno za oddajo prijave, katere odkljukanje vam pošlje predlog, in eno za odgovor, ki se zapre, ko se prijava konča. Opomniki o prijavi so pod njeno odprto nalogo."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -127,11 +127,11 @@ msgstr "Razgovor se je v koledarju preselil na drug naslov; še vedno je povezan
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Prijava na delovno mesto %(role)s v podjetju %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "koledar"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -139,7 +139,7 @@ msgstr "Koledar"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Koledarji"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -169,32 +169,32 @@ msgstr "Spremenjeno v telefonu, a pozneje spremenjeno tukaj; ohranjena je tukaj�
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Zbirke"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Najdeno: %(what)s „%(name)s“ (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Najden imenik „%(book)s“ (%(book_href)s) in koledar „%(calendar)s“ (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Najden seznam nalog „%(name)s“ (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Iz kartice „%(name)s“: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Odgovor podjetja %(company)s glede delovnega mesta %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -223,29 +223,29 @@ msgstr "njegov časovni pas »%(zone)s« tukaj ni znan"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Na seznamu nalog označeno kot oddano"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Izbranih je več elementov vrste „%(what)s“, povezava pa sinhronizira samo enega: noben ni bil uporabljen. Dodajte povezavo za vsakega ali pustite druge."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Več zbirk se imenuje „%(name)s“. Izberite eno od njih po naslovu namesto po imenu."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Nikoli ne piši na strežnik – niti za ustvarjanje imenika, koledarja ali seznama nalog. Stiki, razgovori in opomniki še vedno prihajajo; nič ne odhaja."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Brez"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Nobena od izbranih zbirk ni na strežniku."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -257,16 +257,17 @@ msgid "Password or app password"
 msgstr "Geslo ali geslo za aplikacije"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Pritisnite Poišči na strežniku in nato izberite en imenik, en koledar in en seznam nalog. Samo ti se berejo ali pišejo, način, nastavljen tukaj, pa je beseda Postula, ne ključavnica strežnika: geslo aplikacije ni mogoče omejiti na eno zbirko. Sinhronizirajo se cele zbirke."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Branje in pisanje"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "branje in pisanje"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -282,24 +283,24 @@ msgstr "Vklopljeno je samo branje, zato se nič ne ustvari: ustvarite ga na stre
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Na strežniku samo za branje"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Opomniki niso bili sinhronizirani: seznama nalog ni bilo mogoče uporabiti. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Pošlji podjetja"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Pošlji stike"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Pošlji mojo kartico"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -307,40 +308,40 @@ msgstr "Naslov strežnika"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "seznam nalog"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Seznam nalog"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Seznami nalog"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Naloge o prijavah"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Ta kartica se je spremenila, odkar je bila navedena."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Te kartice ni v izbranem imeniku."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Ta naloga se je spremenila, odkar je bila navedena."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Te naloge ni na izbranem seznamu nalog."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "Element „%(kind)s“ je povezan z dogodkom, ki ima organizatorja, zato se bere iz koledarja in se vanj nikoli ne piše."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -360,7 +361,7 @@ msgstr "Naslov se mora začeti s https:// — na primer %(example)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Koledar „%(name)s“ ne sprejema dogodkov, zato ni bil uporabljen."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -369,20 +370,20 @@ msgstr "Koledarja »%(name)s« ni na strežniku."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Kartice ni bilo mogoče prebrati, zato ni bila spremenjena."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Kartica nima imena, iz katerega bi nastalo podjetje."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Kartica nima imena, iz katerega bi nastal stik."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Zbirke „%(href)s“ ni več na strežniku. Ni bila ustvarjena znova; izberite drugo ali jo pustite."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -396,7 +397,7 @@ msgstr "Strežnik je na %(method)s %(path)s odgovoril s HTTP %(status)d."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Strežnik ne dovoli pisanja v „%(name)s“: samo za branje."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -415,7 +416,7 @@ msgstr "Strežnik ne pove, kje je račun %(kind)s."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Strežnik ne pove, ali je vanj dovoljeno pisati"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -433,7 +434,7 @@ msgstr "Strežnik je zavrnil uporabniško ime ali geslo."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Strežnik ni hotel ustvariti seznama nalog, zato morda ne hrani nalog."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -451,31 +452,31 @@ msgstr "Odgovor strežnika za %(path)s je bil prevelik ali prepočasen, zato ni 
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Naloge ni bilo mogoče prebrati, zato ni bila spremenjena."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Naloga za „%(name)s“ je bila odstranjena s seznama nalog; opomnik je bil ohranjen."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Naloga nima roka, iz katerega bi nastal opomnik."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Seznama nalog „%(name)s“ ni na strežniku."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Naloga „%(name)s“ nima roka, zato iz nje ni nastal opomnik."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Naloga „%(name)s“ je bila odstranjena s seznama nalog; ne bo ustvarjena znova."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -485,24 +486,24 @@ msgstr "%(kind)s v koledarju ima čas, ki ga ni bilo mogoče uporabiti (%(why)s)
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Časa naloge „%(name)s“ ni bilo mogoče uporabiti (%(why)s), zato opomnik ni bil premaknjen."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Ta zbirka je tukaj samo za branje, zato zahteva %(method)s ni bila poslana."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Uporabljeno samo, dokler spodaj ni izbrana nobena zbirka. Ime ali naslov koledarja; tisti, ki ga ni, ustvari prva sinhronizacija, razen če je vklopljeno samo za branje. Sinhronizira se celoten koledar, ime, ki ga imata dva koledarja, pa je zavrnjeno."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Uporabljeno samo, dokler spodaj ni izbrana nobena zbirka. Ime ali naslov seznama nalog, v katerem hranite opomnike; če je prazno, ni uporabljen noben. Ime, ki ga ni, ustvari prva sinhronizacija, razen če je vklopljeno samo za branje. Potrebuje strežnik, ki hrani naloge."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Uporabljeno samo, dokler spodaj ni izbrana nobena zbirka. Ime ali naslov imenika; tisti, ki ga ni, ustvari prva sinhronizacija, razen če je vklopljeno samo za branje. Sinhronizira se celoten imenik, ime, ki ga imata dva imenika, pa je zavrnjeno."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -510,37 +511,37 @@ msgstr "Uporabniško ime"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Kateri stiki dobijo kartico v imeniku. Kartice, ki so že tam, ostanejo in nič več se jim ne pošilja, dokler je to izklopljeno."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Vsako podjetje zapiši kot svojo kartico (kartico podjetja z imenom in spletnim mestom), usklajeno s podjetjem."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Svoje podatke zapiši na svojo kartico, enosmerno: sprememba na telefonu nikoli ne doseže vašega profila."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "vaša kartica"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Vaša kartica ni bila poslana: vaš profil nima imena."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Vaša kartica je bila odstranjena iz imenika; ohranjena."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "„%(href)s“ ni bilo mogoče prebrati: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "„%(name)s“ se je spremenil tukaj, a se je pozneje spremenil na telefonu; vzeta je njihova različica."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -555,32 +556,32 @@ msgstr "»%(name)s« je bil spremenjen na obeh straneh, vizitka iz telefona pa n
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "„%(name)s“ se je spremenil na telefonu, a se je pozneje spremenil tukaj; ohranjena je naša različica."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "„%(name)s“ ni bilo mogoče spremeniti v razgovor: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "„%(name)s“ ni bilo mogoče spremeniti v razgovor: časa ni mogoče prebrati."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "„%(name)s“ ni koledar."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "„%(name)s“ ni seznam nalog."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "„%(name)s“ ni imenik."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -595,7 +596,7 @@ msgstr "»%(name)s« se je na strežniku preselil na drug naslov; še vedno je p
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "„%(name)s“ ni bilo spremenjeno iz kartice: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

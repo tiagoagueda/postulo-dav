@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 23:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Georgian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ka/>\n"
 "Language: ka\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "არჩეულია %(count)d კოლექცია"
+msgstr[1] "არჩეულია %(count)d კოლექცია"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -27,21 +27,21 @@ msgid "%(count)d events on the calendar are not from Postulo and were left alone
 msgstr "კალენდარში %(count)d მოვლენა Postulo-დან არ არის და ხელუხლებლად დარჩა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d ჩანაწერი დაწყვილებულია არჩეული კოლექციის გარეთ არსებულ რამესთან და უცვლელი დარჩა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d ჩანაწერი არ გაიგზავნა, რადგან ამ სახეობის გაგზავნა გამორთულია."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "დავალებების სიაში %(count)d დავალება არ არის Postulo-დან და უცვლელი დარჩა."
+msgstr[1] "დავალებების სიაში %(count)d დავალება არ არის Postulo-დან და უცვლელი დარჩა."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(კომპანიის გარეშე)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(სათაურის გარეშე)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "ბარათიდან ამის შექმნა შეუძლებელია."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,28 @@ msgstr "აქ წაშლილი კონტაქტი ბოლო ს�
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "შეხსენება ორივე მხარეს ერთდროულად შეიცვალა; გადაწყვეტს შემდეგი გაშვება."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "აქ წაშლილი შეხსენება ბოლო სინქრონიზაციის შემდეგ ტელეფონზე შეცვლილი იყო. დავალება დარჩა დავალებების სიაში."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "არჩეული კოლექციების გარეთ მოთხოვნა არ გაიგზავნა."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "დავალება ორივე მხარეს ერთდროულად შეიცვალა; გადაწყვეტს შემდეგი გაშვება."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "დავალება სხვა მისამართზე გადავიდა; კვლავ დაწყვილებულია."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "მისამართების წიგნი"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +95,16 @@ msgstr "მისამართების წიგნი"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "მისამართების წიგნები"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "ყველა"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "ასევე შეინახეთ ორი დავალება თითოეული განაცხადისთვის დავალებების სიაში: ერთი განაცხადის გასაგზავნად, რომლის მონიშვნა გამოგიგზავნით შემოთავაზებას, და ერთი პასუხის მოსასმენად, რომელიც იკეტება, როცა განაცხადი მთავრდება. განაცხადის შეხსენებები მისი ღია დავალების ქვეშაა."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +125,11 @@ msgstr "გასაუბრება კალენდარში სხვ�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "განაცხადის გაგზავნა პოზიციაზე %(role)s კომპანიაში %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "კალენდარი"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +137,7 @@ msgstr "კალენდარი"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "კალენდრები"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +167,32 @@ msgstr "შეიცვალა ტელეფონზე, მაგრამ
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "კოლექციები"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "ნაპოვნია: %(what)s „%(name)s“ (%(how)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "ნაპოვნია მისამართების წიგნი „%(book)s“ (%(book_href)s) და კალენდარი „%(calendar)s“ (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "ნაპოვნია დავალებების სია „%(name)s“ (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "ბარათიდან „%(name)s“: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "პასუხის მიღება კომპანიისგან %(company)s პოზიციის %(role)s შესახებ"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +221,30 @@ msgstr "მისი დროის სარტყელი „%(zone)s“ ა
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "დავალებების სიაში მონიშნულია, როგორც გაგზავნილი"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "არჩეულია ერთზე მეტი ელემენტი (%(what)s), ხოლო კავშირი ერთს ასინქრონებს: არცერთი არ გამოყენებულა. დაამატეთ კავშირი თითოეულისთვის ან დანარჩენები მიატოვეთ."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "ერთზე მეტ კოლექციას ჰქვია „%(name)s“. აირჩიეთ ერთ-ერთი მისამართით და არა სახელით."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "სერვერზე არასოდეს ჩაწერა, მისამართების წიგნის, კალენდრის ან დავალებების სიის შესაქმნელადაც კი. კონტაქტები, გასაუბრებები და შეხსენებები კვლავ შემოდის; არაფერი გადის."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "არცერთი"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "არჩეული კოლექციებიდან არცერთი არ არის სერვერზე."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -253,16 +256,17 @@ msgid "Password or app password"
 msgstr "პაროლი ან აპლიკაციის პაროლი"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "დააჭირეთ სერვერზე მოძებნა-ს, შემდეგ აირჩიეთ ერთი მისამართების წიგნი, ერთი კალენდარი და ერთი დავალებების სია. მხოლოდ ისინი იკითხება ან იწერება, ხოლო აქ დაყენებული რეჟიმი Postulo-ს სიტყვაა და არა სერვერის ჩაკეტვა: აპლიკაციის პაროლის ერთ კოლექციაზე შეზღუდვა შეუძლებელია. სინქრონიზდება მთელი კოლექციები."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "წაკითხვა და ჩაწერა"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "წაკითხვა და ჩაწერა"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +282,24 @@ msgstr "„მხოლოდ წასაკითხი“ ჩართულ�
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "სერვერზე მხოლოდ წაკითხვისთვის"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "შეხსენებები არ დასინქრონდა: დავალებების სიის გამოყენება ვერ მოხერხდა. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "კომპანიების გაგზავნა"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "კონტაქტების გაგზავნა"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "ჩემი საკუთარი ბარათის გაგზავნა"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +307,40 @@ msgstr "სერვერის მისამართი"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "დავალებების სია"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "დავალებების სია"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "დავალებების სიები"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "დავალებები განაცხადების შესახებ"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "ეს ბარათი შეიცვალა სიაში ჩამოთვლის შემდეგ."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "ეს ბარათი არჩეულ მისამართების წიგნში არ არის."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "ეს დავალება შეიცვალა სიაში ჩამოთვლის შემდეგ."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "ეს დავალება არჩეულ დავალებების სიაში არ არის."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "„%(kind)s“ დაწყვილებულია მოვლენასთან, რომელსაც ჰყავს ორგანიზატორი, ამიტომ იგი კალენდრიდან იკითხება და მასში არასოდეს იწერება."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -354,9 +358,9 @@ msgid "The address must start with https:// — for example %(example)s."
 msgstr "მისამართი უნდა იწყებოდეს https:// პრეფიქსით — მაგ., %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "კალენდარი „%(name)s“ მოვლენებს არ იღებს, ამიტომ არ გამოყენებულა."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +369,20 @@ msgstr "კალენდარი „%(name)s“ სერვერზე ა�
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "ბარათის წაკითხვა ვერ მოხერხდა, ამიტომ იგი არ შეცვლილა."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "ბარათს არ აქვს სახელი, რომლისგანაც კომპანია შეიქმნებოდა."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "ბარათს არ აქვს სახელი, რომლისგანაც კონტაქტი შეიქმნებოდა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "კოლექცია „%(href)s“ აღარ არის სერვერზე. იგი თავიდან არ შექმნილა; აირჩიეთ სხვა ან მიატოვეთ."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +396,7 @@ msgstr "სერვერმა უპასუხა HTTP %(status)d მოთ
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "სერვერი არ გაძლევთ „%(name)s“-ში ჩაწერის უფლებას: მხოლოდ წაკითხვისთვისაა."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -411,7 +415,7 @@ msgstr "სერვერი არ ამბობს, სად არის 
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "სერვერი არ ამბობს, შეიძლება თუ არა მასში ჩაწერა"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -428,8 +432,9 @@ msgid "The server refused the user name or password."
 msgstr "სერვერმა მომხმარებლის სახელი ან პაროლი უარყო."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "სერვერმა დავალებების სიის შექმნა არ ისურვა, ამიტომ შესაძლოა დავალებებს არ ინახავდეს."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -447,31 +452,31 @@ msgstr "სერვერის პასუხი %(path)s-ისთვის 
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "დავალების წაკითხვა ვერ მოხერხდა, ამიტომ იგი არ შეცვლილა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "დავალება „%(name)s“-ისთვის ამოიშალა დავალებების სიიდან; შეხსენება შენარჩუნდა."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "დავალებას არ აქვს ვადა, რომლისგანაც შეხსენება შეიქმნებოდა."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "დავალებების სია „%(name)s“ სერვერზე არ არის."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "დავალებას „%(name)s“ ვადა არ აქვს, ამიტომ მისგან შეხსენება არ შექმნილა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "დავალება „%(name)s“ ამოიშალა დავალებების სიიდან; იგი თავიდან არ იქმნება."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -479,64 +484,70 @@ msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so 
 msgstr "კალენდარში %(kind)s-ის დროის გამოყენება ვერ მოხერხდა (%(why)s), ამიტომ არ გადატანილა."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "დავალების „%(name)s“ დროის გამოყენება ვერ მოხერხდა (%(why)s), ამიტომ შეხსენება არ გადატანილა."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "ეს კოლექცია აქ მხოლოდ წაკითხვისთვისაა, ამიტომ %(method)s მოთხოვნა არ გაიგზავნა."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "გამოიყენება მხოლოდ მაშინ, როცა ქვემოთ კოლექცია არჩეული არ არის. კალენდრის სახელი ან მისამართი; თუ ის არ არსებობს, იქმნება პირველი სინქრონიზაციისას, თუ მხოლოდ წაკითხვა ჩართული არ არის. სინქრონიზდება მთელი კალენდარი, ხოლო სახელი, რომელიც ორ კალენდარს აქვს, უარიყოფა."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "გამოიყენება მხოლოდ მაშინ, როცა ქვემოთ კოლექცია არჩეული არ არის. დავალებების სიის სახელი ან მისამართი, სადაც თქვენი შეხსენებები შეინახება; ცარიელი ნიშნავს, რომ არცერთი არ გამოიყენება. არარსებული სახელი იქმნება პირველი სინქრონიზაციისას, თუ მხოლოდ წაკითხვა ჩართული არ არის. საჭიროა სერვერი, რომელიც დავალებებს ინახავს."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "გამოიყენება მხოლოდ მაშინ, როცა ქვემოთ კოლექცია არჩეული არ არის. მისამართების წიგნის სახელი ან მისამართი; თუ ის არ არსებობს, იქმნება პირველი სინქრონიზაციისას, თუ მხოლოდ წაკითხვა ჩართული არ არის. სინქრონიზდება მთელი მისამართების წიგნი, ხოლო სახელი, რომელიც ორ მისამართების წიგნს აქვს, უარიყოფა."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "მომხმარებლის სახელი"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "რომელ კონტაქტებს აქვთ ბარათი მისამართების წიგნში. უკვე არსებული ბარათები რჩება და სანამ ეს გამორთულია, მათ მეტი არაფერი ეგზავნებათ."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "თითოეული კომპანიის ცალკე ბარათად ჩაწერა (კომპანიის ბარათი სახელითა და ვებსაიტით), კომპანიასთან შეთანხმებული."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "თქვენი საკუთარი მონაცემების ცალკე ბარათზე ჩაწერა ერთი მიმართულებით: ტელეფონზე ცვლილება თქვენს პროფილს არასოდეს აღწევს."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "თქვენი საკუთარი ბარათი"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "თქვენი საკუთარი ბარათი არ გაიგზავნა: თქვენს პროფილს სახელი არ აქვს."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "თქვენი საკუთარი ბარათი ამოიშალა მისამართების წიგნიდან; შენარჩუნდა."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "„%(href)s“-ის წაკითხვა ვერ მოხერხდა: %(error)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "„%(name)s“ აქ შეიცვალა, მაგრამ მოგვიანებით ტელეფონზეც შეიცვალა; აღებულია მათი ვერსია."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,34 +560,34 @@ msgid "“%(name)s” changed on both sides, and the card from the phone gives n
 msgstr "„%(name)s“ ორივე მხარეს შეიცვალა, ტელეფონიდან მიღებული ბარათი კი დროს არ მიუთითებს: აღებულია ტელეფონის ვერსია."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "„%(name)s“ ტელეფონზე შეიცვალა, მაგრამ მოგვიანებით აქაც შეიცვალა; შენარჩუნდა ჩვენი ვერსია."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "„%(name)s“-ის გასაუბრებად გადაქცევა ვერ მოხერხდა: %(why)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "„%(name)s“-ის გასაუბრებად გადაქცევა ვერ მოხერხდა: მისი დროის წაკითხვა შეუძლებელია."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "„%(name)s“ არ არის კალენდარი."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "„%(name)s“ არ არის დავალებების სია."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "„%(name)s“ არ არის მისამართების წიგნი."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -591,7 +602,7 @@ msgstr "„%(name)s“ სერვერზე სხვა მისამა�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "„%(name)s“ არ შეცვლილა ბარათის მიხედვით: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

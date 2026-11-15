@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 05:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:45+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Catalan <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ca/>\n"
 "Language: ca\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d col·lecció triada"
+msgstr[1] "%(count)d col·leccions triades"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "%(count)d esdeveniments del calendari no són de Postulo i no s'han toca
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d registres estan aparellats amb alguna cosa fora de la col·lecció triada i s'han deixat tal com eren."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d registres no s'han enviat, perquè l'enviament d'aquest tipus està desactivat."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d tasca de la llista de tasques no és de Postulo i s'ha deixat tal com era."
+msgstr[1] "%(count)d tasques de la llista de tasques no són de Postulo i s'han deixat tal com eren."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -54,11 +54,11 @@ msgstr "(sense empresa)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(sense títol)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Una targeta no es pot convertir en això."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "Un contacte suprimit aquí s'havia modificat al telèfon des de l'últim
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Un recordatori ha canviat als dos costats alhora; decidirà la propera execució."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Un recordatori eliminat aquí havia canviat al telèfon des de l'última sincronització. La tasca s'ha deixat a la llista de tasques."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "No s'ha enviat una sol·licitud fora de les col·leccions triades."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Una tasca ha canviat als dos costats alhora; decidirà la propera execució."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Una tasca s'ha mogut a una altra adreça; continua aparellada."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "llibreta d'adreces"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,15 @@ msgstr "Llibreta d'adreces"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Llibretes d'adreces"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Totes"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Desa també dues tasques per a cada candidatura a la llista de tasques: una per presentar-la, que en marcar-la us envia un suggeriment, i una per rebre resposta, que es tanca quan acaba la candidatura. Els recordatoris sobre una candidatura queden sota la seva tasca oberta."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +123,11 @@ msgstr "Una entrevista s'ha traslladat a una altra adreça del calendari; contin
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Presenta candidatura a %(role)s a %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "calendari"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +135,7 @@ msgstr "Calendari"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Calendaris"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +165,32 @@ msgstr "Modificat al telèfon, però després modificat aquí; s'ha mantingut la
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Col·leccions"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "S'ha trobat %(what)s «%(name)s» (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "S'han trobat la llibreta d'adreces «%(book)s» (%(book_href)s) i el calendari «%(calendar)s» (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "S'ha trobat la llista de tasques «%(name)s» (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "De la targeta «%(name)s»: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Rep resposta de %(company)s sobre %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +219,29 @@ msgstr "la seva zona horària «%(zone)s» no és coneguda aquí"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Marcada com a presentada a la llista de tasques"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Hi ha més d'un element de tipus «%(what)s» triat, i una connexió en sincronitza només un: no s'ha usat cap. Afegiu una connexió per a cadascun o deixeu els altres."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Més d'una col·lecció es diu «%(name)s». Trieu-ne una per la seva adreça, en lloc del nom."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "No escriguis mai al servidor, ni tan sols per crear la llibreta d'adreces, el calendari o la llista de tasques. Els contactes, les entrevistes i els recordatoris continuen entrant; no en surt res."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Cap de les col·leccions triades és al servidor."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -254,15 +254,15 @@ msgstr "Contrasenya o contrasenya d'aplicació"
 
 #: src/postulo_dav/sync.py
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Premeu Cerca al servidor i trieu una llibreta d'adreces, un calendari i una llista de tasques. Només es llegeixen o s'escriuen aquests, i un mode definit aquí és paraula de Postulo, no un bloqueig del servidor: una contrasenya d'aplicació no es pot limitar a una sola col·lecció. Se sincronitzen col·leccions senceres."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Lectura i escriptura"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "lectura i escriptura"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +278,24 @@ msgstr "El mode de només lectura està activat, de manera que no es crea res: c
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Només de lectura al servidor"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "No s'han sincronitzat els recordatoris: no s'ha pogut usar la llista de tasques. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Envia les empreses"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Envia els contactes"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Envia la meva targeta"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +303,40 @@ msgstr "Adreça del servidor"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "llista de tasques"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Llista de tasques"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Llistes de tasques"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Tasques sobre candidatures"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Aquesta targeta ha canviat des que es va llistar."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Aquesta targeta no és a la llibreta d'adreces triada."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Aquesta tasca ha canviat des que es va llistar."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Aquesta tasca no és a la llista de tasques triada."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "L'element (%(kind)s) està aparellat amb un esdeveniment que té organitzador, de manera que es llegeix del calendari i mai no s'hi escriu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -356,7 +356,7 @@ msgstr "L'adreça ha de començar per https://; per exemple, %(example)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "El calendari «%(name)s» no admet esdeveniments, així que no s'ha usat."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +365,20 @@ msgstr "El calendari «%(name)s» no és al servidor."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "No s'ha pogut llegir la targeta, així que no s'ha canviat."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "La targeta no té nom amb què crear una empresa."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "La targeta no té nom amb què crear un contacte."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "La col·lecció «%(href)s» ja no és al servidor. No s'ha tornat a crear; trieu-ne una altra o deixeu-la."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +392,7 @@ msgstr "El servidor ha respost HTTP %(status)d a %(method)s %(path)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "El servidor no us deixa escriure a «%(name)s»: només de lectura."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +409,7 @@ msgstr "El servidor no indica on és el compte de %(kind)s."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "El servidor no diu si s'hi pot escriure"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +427,7 @@ msgstr "El servidor ha rebutjat el nom d'usuari o la contrasenya."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "El servidor no ha volgut crear una llista de tasques, així que potser no guarda tasques."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +445,31 @@ msgstr "La resposta del servidor per a %(path)s era massa gran o massa lenta, i 
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "No s'ha pogut llegir la tasca, així que no s'ha canviat."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "La tasca de «%(name)s» s'ha eliminat de la llista de tasques; el recordatori s'ha conservat."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "La tasca no té data de venciment amb què crear un recordatori."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "La llista de tasques «%(name)s» no és al servidor."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "La tasca «%(name)s» no té data de venciment, així que no s'ha convertit en recordatori."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "La tasca «%(name)s» s'ha eliminat de la llista de tasques; no es torna a crear."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -479,24 +479,24 @@ msgstr "No s'ha pogut fer servir l'hora de l'element del calendari (%(kind)s) (%
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "No s'ha pogut usar l'hora de la tasca «%(name)s» (%(why)s), així que no s'ha mogut el recordatori."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Aquesta col·lecció és només de lectura aquí, així que no s'ha enviat %(method)s."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Només s'usa mentre no hi hagi cap col·lecció triada a sota. Un nom o una adreça d'un calendari; si no existeix, la primera sincronització el crea, tret que el només de lectura estigui activat. Se sincronitza tot el calendari, i es refusa un nom que comparteixin dos calendaris."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Només s'usa mentre no hi hagi cap col·lecció triada a sota. Un nom o una adreça d'una llista de tasques on desar els recordatoris; en blanc, no se'n fa servir cap. Un nom que no existeix el crea la primera sincronització, tret que el només de lectura estigui activat. Cal un servidor que desi tasques."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Només s'usa mentre no hi hagi cap col·lecció triada a sota. Un nom o una adreça d'una llibreta d'adreces; si no existeix, la primera sincronització la crea, tret que el només de lectura estigui activat. Se sincronitza tota la llibreta, i es refusa un nom que comparteixin dues llibretes."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +504,37 @@ msgstr "Nom d'usuari"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Quins contactes tenen una targeta a la llibreta d'adreces. Les targetes que ja hi són es queden, i no se'ls envia res més mentre això estigui desactivat."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Escriu cada empresa com a targeta pròpia (una targeta d'empresa, amb el seu nom i el seu lloc web), mantinguda al dia amb l'empresa."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Escriu les vostres dades a una targeta pròpia, en un sol sentit: un canvi al telèfon no arriba mai al vostre perfil."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "la vostra targeta"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "No s'ha enviat la vostra targeta: el vostre perfil no té nom."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "La vostra targeta s'ha eliminat de la llibreta d'adreces; es conserva."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "No s'ha pogut llegir «%(href)s»: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "«%(name)s» ha canviat aquí, però després ha canviat al telèfon; s'ha pres el d'allà."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +549,32 @@ msgstr "«%(name)s» ha canviat als dos costats i la targeta del telèfon no ind
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "«%(name)s» ha canviat al telèfon, però després ha canviat aquí; s'ha conservat el nostre."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "«%(name)s» no s'ha pogut convertir en una entrevista: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "«%(name)s» no s'ha pogut convertir en una entrevista: no se'n pot llegir l'hora."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "«%(name)s» no és un calendari."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "«%(name)s» no és una llista de tasques."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "«%(name)s» no és una llibreta d'adreces."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +589,7 @@ msgstr "«%(name)s» s'ha traslladat a una altra adreça del servidor; continua 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "«%(name)s» no s'ha canviat a partir de la targeta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

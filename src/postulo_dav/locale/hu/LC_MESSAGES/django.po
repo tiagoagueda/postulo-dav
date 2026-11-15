@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-22 21:54+0000\n"
-"Last-Translator: Administrator <weblate@tiagoagueda.com>\n"
+"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Hungarian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d gyűjtemény kiválasztva"
+msgstr[1] "%(count)d gyűjtemény kiválasztva"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "%(count)d naptáresemény nem a Postulóból származik, ezért érintet
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d rekord párosítva van valamivel a kiválasztott gyűjteményen kívül, ezért érintetlenül maradt."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d rekord nem lett elküldve, mert az ilyen típus küldése ki van kapcsolva."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "A feladatlistában %(count)d feladat nem a Postulo-tól származik, és érintetlenül maradt."
+msgstr[1] "A feladatlistában %(count)d feladat nem a Postulo-tól származik, és érintetlenül maradt."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(nincs cég)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(nincs cím)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Egy kártyából nem lehet ilyet készíteni."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "Az itt törölt kapcsolattartót a legutóbbi szinkronizálás óta mód
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Egy emlékeztető egyszerre változott meg mindkét oldalon; a következő futtatás dönt."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Egy itt törölt emlékeztető megváltozott a telefonon az utolsó szinkronizálás óta. A feladat a feladatlistában maradt."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "A kiválasztott gyűjteményeken kívüli kérés nem lett elküldve."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Egy feladat egyszerre változott meg mindkét oldalon; a következő futtatás dönt."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Egy feladat másik címre került; még mindig párosítva van."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "címjegyzék"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,15 @@ msgstr "Címjegyzék"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Címjegyzékek"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Mind"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Tartson a feladatlistában minden jelentkezéshez két feladatot is: egyet a jelentkezéshez, amelynek kipipálása javaslatként elküldi Önnek, és egyet a válasz megvárásához, amely lezárul, amikor a jelentkezés véget ér. A jelentkezéssel kapcsolatos emlékeztetők a nyitott feladata alatt vannak."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +123,11 @@ msgstr "Egy interjú másik címre került a naptárban; továbbra is párosítv
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Jelentkezés a(z) %(role)s pozícióra a(z) %(company)s cégnél"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "naptár"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +135,7 @@ msgstr "Naptár"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Naptárak"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +165,32 @@ msgstr "A telefonon módosult, de később itt is módosították; az itteni vá
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Gyűjtemények"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Megtalálva: %(what)s „%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Megtalálva a(z) „%(book)s” címjegyzék (%(book_href)s) és a(z) „%(calendar)s” naptár (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Megtalálva a(z) „%(name)s” feladatlista (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "A(z) „%(name)s” kártyáról: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Válasz kérése a(z) %(company)s cégtől a(z) %(role)s pozíciót illetően"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +219,29 @@ msgstr "az időzónája („%(zone)s”) itt nem ismert"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Jelentkezettként megjelölve a feladatlistában"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Egynél több %(what)s van kiválasztva, és egy kapcsolat csak egyet szinkronizál: egyiket sem használta. Adjon hozzá egy kapcsolatot mindegyikhez, vagy hagyja ki a többit."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Egynél több gyűjtemény neve „%(name)s”. Válasszon egyet közülük a címe alapján a neve helyett."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Soha ne írjon a kiszolgálóra, még a címjegyzék, a naptár vagy a feladatlista létrehozásához sem. A kapcsolattartók, interjúk és emlékeztetők továbbra is beérkeznek; semmi nem megy ki."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "A kiválasztott gyűjtemények egyike sincs a kiszolgálón."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -254,15 +254,15 @@ msgstr "Jelszó vagy alkalmazásjelszó"
 
 #: src/postulo_dav/sync.py
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Nyomja meg a Keresés a kiszolgálón gombot, majd válasszon egy címjegyzéket, egy naptárat és egy feladatlistát. Csak ezeket olvassa vagy írja a rendszer, és az itt beállított mód a Postulo szava, nem a kiszolgáló zárja: egy alkalmazásjelszó nem korlátozható egyetlen gyűjteményre. Teljes gyűjtemények szinkronizálódnak."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Olvasás és írás"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "olvasás és írás"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +278,24 @@ msgstr "A csak olvasható mód be van kapcsolva, így semmi sem jön létre: hoz
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Csak olvasható a kiszolgálón"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Az emlékeztetők nem lettek szinkronizálva: a feladatlista nem volt használható. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Cégek küldése"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Kapcsolattartók küldése"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Saját kártyám küldése"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +303,40 @@ msgstr "Kiszolgáló címe"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "feladatlista"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Feladatlista"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Feladatlisták"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Jelentkezésekkel kapcsolatos feladatok"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Ez a kártya megváltozott a listázása óta."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Ez a kártya nincs a kiválasztott címjegyzékben."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Ez a feladat megváltozott a listázása óta."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Ez a feladat nincs a kiválasztott feladatlistában."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "A(z) „%(kind)s” egy szervezővel rendelkező eseménnyel van párosítva, ezért a naptárból olvasódik, és soha nem íródik oda."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -356,7 +356,7 @@ msgstr "A címnek a https:// előtaggal kell kezdődnie — például: %(example
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "A(z) „%(name)s” naptár nem fogad eseményeket, ezért nem lett használva."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +365,20 @@ msgstr "A(z) „%(name)s” naptár nem található a kiszolgálón."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "A kártyát nem sikerült beolvasni, ezért nem lett módosítva."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "A kártyának nincs neve, amelyből céget lehetne készíteni."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "A kártyának nincs neve, amelyből kapcsolattartót lehetne készíteni."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "A(z) „%(href)s” gyűjtemény már nincs a kiszolgálón. Nem lett újra létrehozva; válasszon egy másikat, vagy hagyja ki."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +392,7 @@ msgstr "A kiszolgáló HTTP %(status)d választ adott erre: %(method)s %(path)s.
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "A kiszolgáló nem engedi, hogy írjon a(z) „%(name)s” gyűjteménybe: csak olvasható."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +409,7 @@ msgstr "A kiszolgáló nem adja meg, hol található a fiók (%(kind)s)."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "A kiszolgáló nem mondja meg, hogy írható-e"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +427,7 @@ msgstr "A kiszolgáló elutasította a felhasználónevet vagy a jelszót."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "A kiszolgáló nem hozott létre feladatlistát, ezért lehet, hogy nem tárol feladatokat."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +445,31 @@ msgstr "A kiszolgáló %(path)s útvonalra adott válasza túl nagy vagy túl la
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "A feladatot nem sikerült beolvasni, ezért nem lett módosítva."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "A(z) „%(name)s” feladata el lett távolítva a feladatlistából; az emlékeztető megmaradt."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "A feladatnak nincs határideje, amelyből emlékeztetőt lehetne készíteni."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "A(z) „%(name)s” feladatlista nincs a kiszolgálón."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "A(z) „%(name)s” feladatnak nincs határideje, ezért nem lett belőle emlékeztető."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "A(z) „%(name)s” feladat el lett távolítva a feladatlistából; nem jön létre újra."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -479,24 +479,24 @@ msgstr "%(kind)s: a naptárbeli időpontja nem volt használható (%(why)s), ez�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "A(z) „%(name)s” feladat időpontja nem volt használható (%(why)s), ezért az emlékeztető nem lett áthelyezve."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Ez a gyűjtemény itt csak olvasható, ezért egy %(method)s kérés nem lett elküldve."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Csak addig használatos, amíg lent nincs gyűjtemény kiválasztva. Egy naptár neve vagy címe; ha nincs ilyen, az első szinkronizálás létrehozza, hacsak a csak olvasható mód nincs bekapcsolva. A teljes naptár szinkronizálódik, és az a név, amelyen két naptár osztozik, elutasításra kerül."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Csak addig használatos, amíg lent nincs gyűjtemény kiválasztva. Egy feladatlista neve vagy címe, amelyben az emlékeztetőit tárolja; üresen egyiket sem használja. A nem létező nevet az első szinkronizálás hozza létre, hacsak a csak olvasható mód nincs bekapcsolva. Olyan kiszolgáló kell hozzá, amely feladatokat tárol."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Csak addig használatos, amíg lent nincs gyűjtemény kiválasztva. Egy címjegyzék neve vagy címe; ha nincs ilyen, az első szinkronizálás létrehozza, hacsak a csak olvasható mód nincs bekapcsolva. A teljes címjegyzék szinkronizálódik, és az a név, amelyen két címjegyzék osztozik, elutasításra kerül."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +504,37 @@ msgstr "Felhasználónév"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Mely kapcsolattartók kapnak kártyát a címjegyzékben. A már ott lévő kártyák maradnak, és amíg ez ki van kapcsolva, nem kapnak több adatot."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Minden céget külön kártyaként ír ki (egy cégkártyaként, a nevével és a weboldalával), a céggel összhangban tartva."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Saját adatait külön kártyára írja ki, egy irányban: a telefonon végzett módosítás soha nem jut el a profiljába."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "a saját kártyája"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "A saját kártyája nem lett elküldve: a profiljának nincs neve."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "A saját kártyája el lett távolítva a címjegyzékből; megtartva."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "A(z) „%(href)s” nem olvasható be: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "A(z) „%(name)s” itt megváltozott, de később a telefonon is megváltozott; az övék lett átvéve."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +549,32 @@ msgstr "„%(name)s” mindkét oldalon módosult, és a telefonról érkező n�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "A(z) „%(name)s” a telefonon megváltozott, de később itt is megváltozott; a miénk maradt meg."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "A(z) „%(name)s” nem alakítható interjúvá: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "A(z) „%(name)s” nem alakítható interjúvá: az időpontja nem olvasható be."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "A(z) „%(name)s” nem naptár."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "A(z) „%(name)s” nem feladatlista."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "A(z) „%(name)s” nem címjegyzék."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +589,7 @@ msgstr "„%(name)s” másik címre került a kiszolgálón; továbbra is páro
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "A(z) „%(name)s” nem lett módosítva a kártya alapján: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

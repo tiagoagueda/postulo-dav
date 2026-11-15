@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-25 05:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -18,7 +18,7 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
+msgstr[0] "已選擇 %(count)d 個集合"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -28,18 +28,18 @@ msgstr "行事曆上有 %(count)d 個活動不是來自 Postulo，已保持原�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "有 %(count)d 筆記錄與所選集合之外的內容配對，已維持原樣。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "有 %(count)d 筆記錄未傳送，因為該類記錄的傳送已關閉。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
+msgstr[0] "工作清單中有 %(count)d 項工作不是來自 Postulo，已維持原樣。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -52,11 +52,11 @@ msgstr "（無公司）"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "（無標題）"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "名片無法轉換為此類型。"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -64,27 +64,27 @@ msgstr "此處刪除的一位聯絡人，在上次同步後已在手機上變更
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "一則提醒在兩邊同時被變更；由下次執行決定。"
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "在此處刪除的一則提醒，自上次同步以來已在手機上被變更。該工作已保留在工作清單中。"
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "所選集合之外的一個請求未傳送。"
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "一項工作在兩邊同時被變更；由下次執行決定。"
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "一項工作被移到另一個位址；仍保持配對。"
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "通訊錄"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -92,15 +92,15 @@ msgstr "通訊錄"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "通訊錄"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "全部"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "同時在工作清單中為每份應徵保留兩項工作：一項用於投遞，勾選後會向你傳送一則建議；一項用於等待回覆，應徵結束時關閉。有關某份應徵的提醒位於其未完成的工作之下。"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -121,11 +121,11 @@ msgstr "一場面試在行事曆上移到了另一個位址；仍保持配對。
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "向 %(company)s 應徵 %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "行事曆"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -133,7 +133,7 @@ msgstr "行事曆"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "行事曆"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -163,32 +163,32 @@ msgstr "在手機上變更過，但之後又在此處變更；已保留此處的
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "集合"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "已找到%(what)s「%(name)s」（%(how)s）。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "已找到通訊錄「%(book)s」（%(book_href)s）與行事曆「%(calendar)s」（%(calendar_href)s）。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "已找到工作清單「%(name)s」（%(href)s）。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "來自名片「%(name)s」：%(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "等待 %(company)s 就 %(role)s 回覆"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -217,29 +217,29 @@ msgstr "此處無法辨識其時區「%(zone)s」"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "已在工作清單中標記為已應徵"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "所選的「%(what)s」不只一個，而一個連線只同步一個：均未使用。請為每個新增一個連線，或捨棄其餘的。"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "有多個集合名為「%(name)s」。請以位址而非名稱選擇其中一個。"
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "絕不寫入伺服器——即使是為了建立通訊錄、行事曆或工作清單。聯絡人、面試與提醒仍會匯入；不會有任何內容送出。"
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "所選的集合都不在伺服器上。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -251,16 +251,17 @@ msgid "Password or app password"
 msgstr "密碼或應用程式密碼"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "按「在伺服器上尋找」，然後選擇一個通訊錄、一個行事曆與一個工作清單。只會讀取或寫入這些，且此處設定的模式只是 Postulo 的約定，並非伺服器的鎖：應用程式專用密碼無法限定到單一集合。同步的是整個集合。"
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "讀寫"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "讀寫"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -276,24 +277,24 @@ msgstr "已開啟唯讀，因此不會建立任何項目：請在伺服器上建
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "在伺服器上唯讀"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "提醒未同步：工作清單無法使用。%(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "傳送公司"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "傳送聯絡人"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "傳送我自己的名片"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -301,40 +302,40 @@ msgstr "伺服器網址"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "工作清單"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "工作清單"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "工作清單"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "有關應徵的工作"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "該名片自列出後已有變更。"
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "該名片不在所選的通訊錄中。"
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "該工作自列出後已有變更。"
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "該工作不在所選的工作清單中。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "該%(kind)s與一個有主辦人的活動配對，因此只從行事曆讀取，從不寫入行事曆。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -354,7 +355,7 @@ msgstr "網址必須以 https:// 開頭，例如 %(example)s。"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "行事曆「%(name)s」不接受活動，因此未使用。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -363,20 +364,20 @@ msgstr "伺服器上沒有行事曆「%(name)s」。"
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "無法讀取該名片，因此未做變更。"
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "該名片沒有可用來建立公司的名稱。"
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "該名片沒有可用來建立聯絡人的名稱。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "集合「%(href)s」已不在伺服器上。未重新建立；請選擇其他集合，或捨棄它。"
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -390,7 +391,7 @@ msgstr "伺服器對 %(method)s %(path)s 回應了 HTTP %(status)d。"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "伺服器不允許寫入「%(name)s」：唯讀。"
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -407,7 +408,7 @@ msgstr "伺服器未說明 %(kind)s 帳號的位置。"
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "伺服器未說明是否可以寫入"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -425,7 +426,7 @@ msgstr "伺服器拒絕了使用者名稱或密碼。"
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "伺服器不肯建立工作清單，因此可能不儲存工作。"
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -443,31 +444,31 @@ msgstr "伺服器對 %(path)s 的回應太大或太慢，因此未讀取。"
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "無法讀取該工作，因此未做變更。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "「%(name)s」的工作已從工作清單中移除；提醒已保留。"
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "該工作沒有到期時間，無法據此建立提醒。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "工作清單「%(name)s」不在伺服器上。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "工作「%(name)s」沒有到期時間，因此未建立提醒。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "工作「%(name)s」已從工作清單中移除；不會重新建立。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -477,24 +478,24 @@ msgstr "無法使用行事曆上 %(kind)s 的時間（%(why)s），因此未移�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "無法使用工作「%(name)s」的時間（%(why)s），因此未移動提醒。"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "此集合在此處為唯讀，因此未傳送 %(method)s 請求。"
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "僅在下方未選擇任何集合時使用。填入行事曆的名稱或位址；不存在的行事曆會在首次同步時建立，除非已開啟唯讀。整個行事曆都會同步，兩個行事曆共用的名稱會被拒絕。"
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "僅在下方未選擇任何集合時使用。填入用來存放提醒的工作清單的名稱或位址；留空則不使用任何工作清單。不存在的名稱會在首次同步時建立，除非已開啟唯讀。需要支援儲存工作的伺服器。"
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "僅在下方未選擇任何集合時使用。填入通訊錄的名稱或位址；不存在的通訊錄會在首次同步時建立，除非已開啟唯讀。整個通訊錄都會同步，兩個通訊錄共用的名稱會被拒絕。"
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -502,37 +503,37 @@ msgstr "使用者名稱"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "哪些聯絡人會在通訊錄中有一張名片。已有的名片會保留，此項關閉期間不再向它們傳送任何內容。"
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "將每家公司寫成一張獨立的名片（公司名片，含名稱與網站），並與公司保持同步。"
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "將你自己的資料單向寫入一張獨立的名片：手機上的變更永遠不會進入你的個人檔案。"
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "你自己的名片"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "你自己的名片未傳送：你的個人檔案沒有姓名。"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "你自己的名片已從通訊錄中移除；已保留。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "無法讀取「%(href)s」：%(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "「%(name)s」在此處被變更，但之後又在手機上被變更；採用了對方的版本。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -547,32 +548,32 @@ msgstr "「%(name)s」在兩端都有變更，且來自手機的名片未提供�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "「%(name)s」在手機上被變更，但之後又在此處被變更；保留了我方的版本。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "無法將「%(name)s」轉換為面試：%(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "無法將「%(name)s」轉換為面試：無法讀取其時間。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "「%(name)s」不是行事曆。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "「%(name)s」不是工作清單。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "「%(name)s」不是通訊錄。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -587,7 +588,7 @@ msgstr "「%(name)s」已移到伺服器上的另一個位址；仍保持配對�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "未依名片變更「%(name)s」：%(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

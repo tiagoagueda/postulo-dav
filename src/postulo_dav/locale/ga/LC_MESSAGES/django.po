@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 05:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:45+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Irish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ga/>\n"
 "Language: ga\n"
@@ -15,14 +15,14 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "%(count)d bailiúchán roghnaithe"
+msgstr[1] "%(count)d bailiúchán roghnaithe"
+msgstr[2] "%(count)d bailiúchán roghnaithe"
+msgstr[3] "%(count)d bailiúchán roghnaithe"
+msgstr[4] "%(count)d bailiúchán roghnaithe"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -30,24 +30,24 @@ msgid "%(count)d events on the calendar are not from Postulo and were left alone
 msgstr "Níor tháinig %(count)d imeacht ar an bhféilire ó Postulo agus fágadh mar a bhí siad."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "Tá %(count)d taifead péireáilte le rud éigin lasmuigh den bhailiúchán roghnaithe agus fágadh gan athrú iad."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "Níor seoladh %(count)d taifead, toisc go bhfuil seoladh an chineáil sin múchta."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh gan athrú é."
+msgstr[1] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh gan athrú iad."
+msgstr[2] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh gan athrú iad."
+msgstr[3] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh gan athrú iad."
+msgstr[4] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh gan athrú iad."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -60,39 +60,45 @@ msgstr "(gan chuideachta)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(gan teideal)"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Ní féidir cárta a dhéanamh de sin."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Athraíodh teagmhálaí a scriosadh anseo ar an bhfón ón sioncronú deireanach. Fágadh an cárta sa leabhar seoltaí, agus tiocfaidh sé ar ais mar theagmhálaí ar an gcéad rith eile."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Athraíodh meabhrúchán ar an dá thaobh ag an am céanna; socróidh an chéad rith eile."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Bhí meabhrúchán a scriosadh anseo athraithe ar an bhfón ó rinneadh an sioncronú deireanach. Fágadh an tasc sa liosta tascanna."
 
 #: src/postulo_dav/dav.py
+#, fuzzy
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Níor seoladh iarraidh lasmuigh de na bailiúcháin roghnaithe."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Athraíodh tasc ar an dá thaobh ag an am céanna; socróidh an chéad rith eile."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Aistríodh tasc chuig seoladh eile; péireáilte fós."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "leabhar seoltaí"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -100,15 +106,16 @@ msgstr "Leabhar seoltaí"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Leabhair seoltaí"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Iad ar fad"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Coinnigh dhá thasc freisin do gach iarratas sa liosta tascanna: ceann chun iarratas a dhéanamh, a sheolann moladh chugat nuair a chuireann tú tic leis, agus ceann chun freagra a fháil, a dhúnann nuair a chríochnaíonn an t-iarratas. Suíonn meabhrúcháin faoi iarratas faoina thasc oscailte."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -127,13 +134,13 @@ msgid "An interview moved to another address on the calendar; still paired."
 msgstr "Bogadh agallamh chuig seoladh eile san fhéilire; tá sé péireáilte fós."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Déan iarratas ar %(role)s ag %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "féilire"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -141,7 +148,7 @@ msgstr "Féilire"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Féilirí"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -171,32 +178,32 @@ msgstr "Athraithe ar an bhfón, ach athraithe anseo níos déanaí; coinníodh �
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Bailiúcháin"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Aimsíodh: %(what)s “%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Aimsíodh an leabhar seoltaí “%(book)s” (%(book_href)s) agus an féilire “%(calendar)s” (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Aimsíodh an liosta tascanna “%(name)s” (%(href)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Ón gcárta “%(name)s”: %(details)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Faigh freagra ó %(company)s faoi %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -224,30 +231,32 @@ msgid "its time zone “%(zone)s” is not known here"
 msgstr "níl a chrios ama “%(zone)s” ar eolas anseo"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Marcáilte mar iarratas déanta sa liosta tascanna"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Tá níos mó ná %(what)s amháin roghnaithe, agus ní shioncronaíonn nasc ach ceann amháin: níor úsáideadh aon cheann. Cuir nasc leis do gach ceann, nó lig do na cinn eile imeacht."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Tá níos mó ná bailiúchán amháin darb ainm “%(name)s”. Roghnaigh ceann acu de réir a sheoladh in ionad a ainm."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Ná scríobh chuig an bhfreastalaí go deo, fiú chun an leabhar seoltaí, an féilire nó an liosta tascanna a chruthú. Tagann teagmhálaithe, agallaimh agus meabhrúcháin isteach i gcónaí; ní théann aon rud amach."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Ceann ar bith"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Níl aon cheann de na bailiúcháin roghnaithe ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -259,16 +268,17 @@ msgid "Password or app password"
 msgstr "Pasfhocal nó pasfhocal aipe"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Brúigh Cuardaigh ar an bhfreastalaí, ansin roghnaigh leabhar seoltaí amháin, féilire amháin agus liosta tascanna amháin. Ní léitear ná ní scríobhtar ach iad sin, agus is focal Postulo é modh a shocraítear anseo, ní glas an fhreastalaí: ní féidir pasfhocal aip a theorannú do bhailiúchán amháin. Sioncronaítear bailiúcháin iomlána."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Léamh agus scríobh"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "léamh agus scríobh"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -284,24 +294,24 @@ msgstr "Tá “Inléite amháin” ar siúl, mar sin ní chruthaítear aon rud: 
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Léamh amháin ar an bhfreastalaí"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Níor sioncronaíodh meabhrúcháin: níorbh fhéidir an liosta tascanna a úsáid. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Seol cuideachtaí"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Seol teagmhálaithe"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Seol mo chárta féin"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -309,40 +319,45 @@ msgstr "Seoladh an fhreastalaí"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "liosta tascanna"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Liosta tascanna"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Liostaí tascanna"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Tascanna faoi iarratais"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Tá an cárta sin athraithe ó liostáladh é."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Níl an cárta sin sa leabhar seoltaí roghnaithe."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Tá an tasc sin athraithe ó liostáladh é."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Níl an tasc sin sa liosta tascanna roghnaithe."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "Tá an %(kind)s péireáilte le himeacht a bhfuil eagraí aige, mar sin léitear ón bhféilire é agus ní scríobhtar chuige é go deo."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -360,9 +375,9 @@ msgid "The address must start with https:// — for example %(example)s."
 msgstr "Caithfidh an seoladh tosú le https:// — mar shampla %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Ní ghlacann an féilire “%(name)s” le himeachtaí, mar sin níor úsáideadh é."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -370,21 +385,24 @@ msgid "The calendar “%(name)s” is not on the server."
 msgstr "Níl an féilire “%(name)s” ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Níorbh fhéidir an cárta a léamh, mar sin níor athraíodh é."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Níl aon ainm ar an gcárta chun cuideachta a dhéanamh de."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Níl aon ainm ar an gcárta chun teagmhálaí a dhéanamh de."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Níl an bailiúchán “%(href)s” ar an bhfreastalaí a thuilleadh. Níor cruthaíodh arís é; roghnaigh ceann eile, nó lig dó imeacht."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -396,9 +414,9 @@ msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
 msgstr "D'fhreagair an freastalaí HTTP %(status)d do %(method)s %(path)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Ní ligeann an freastalaí duit scríobh chuig “%(name)s”: léamh amháin."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -416,8 +434,9 @@ msgid "The server does not say where the %(kind)s account is."
 msgstr "Ní insíonn an freastalaí cá bhfuil an cuntas %(kind)s."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Ní deir an freastalaí an bhfuil cead scríobh air"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -434,8 +453,9 @@ msgid "The server refused the user name or password."
 msgstr "Dhiúltaigh an freastalaí an t-ainm úsáideora nó an pasfhocal."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Níor mhaith leis an bhfreastalaí liosta tascanna a dhéanamh, mar sin b’fhéidir nach gcoinníonn sé tascanna."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -453,32 +473,34 @@ msgid "The server's answer for %(path)s was too large or too slow, and was not r
 msgstr "Bhí freagra an fhreastalaí do %(path)s rómhór nó rómhall, agus níor léadh é."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Níorbh fhéidir an tasc a léamh, mar sin níor athraíodh é."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Baineadh an tasc do “%(name)s” den liosta tascanna; coinníodh an meabhrúchán."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Níl aon dáta dlite ar an tasc chun meabhrúchán a dhéanamh de."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Níl an liosta tascanna “%(name)s” ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Níl aon dáta dlite ar an tasc “%(name)s”, mar sin ní dhearnadh meabhrúchán de."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Baineadh an tasc “%(name)s” den liosta tascanna; ní dhéantar arís é."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -486,64 +508,72 @@ msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so 
 msgstr "Níorbh fhéidir am an %(kind)s ar an bhféilire a úsáid (%(why)s), mar sin níor bogadh é."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Níorbh fhéidir am an taisc “%(name)s” a úsáid (%(why)s), mar sin níor aistríodh an meabhrúchán."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Tá an bailiúchán seo léamh amháin anseo, mar sin níor seoladh %(method)s."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Úsáidtear é seo ach amháin nuair nach bhfuil aon bhailiúchán roghnaithe thíos. Ainm nó seoladh féilire; mura bhfuil sé ann, cruthaíonn an chéad sioncronú é, mura bhfuil léamh amháin ar siúl. Sioncronaítear an féilire iomlán, agus diúltaítear d’ainm a roinneann dhá fhéilire."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Úsáidtear é seo ach amháin nuair nach bhfuil aon bhailiúchán roghnaithe thíos. Ainm nó seoladh liosta tascanna chun do mheabhrúcháin a choinneáil; folamh, agus ní úsáidtear aon cheann. Cruthaíonn an chéad sioncronú ainm nach bhfuil ann, mura bhfuil léamh amháin ar siúl. Teastaíonn freastalaí a choinníonn tascanna."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Úsáidtear é seo ach amháin nuair nach bhfuil aon bhailiúchán roghnaithe thíos. Ainm nó seoladh leabhair seoltaí; mura bhfuil sé ann, cruthaíonn an chéad sioncronú é, mura bhfuil léamh amháin ar siúl. Sioncronaítear an leabhar seoltaí iomlán, agus diúltaítear d’ainm a roinneann dhá leabhar seoltaí."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Ainm úsáideora"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Cé acu teagmhálaithe a gheobhaidh cárta sa leabhar seoltaí. Fanann na cártaí atá ann cheana, agus ní sheoltar tada eile chucu fad a bheidh sé seo múchta."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Scríobh gach cuideachta mar chárta dá cuid féin (cárta cuideachta, lena hainm agus a suíomh gréasáin), coinnithe in oiriúint don chuideachta."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Scríobh do shonraí féin chuig cárta dá chuid féin, in aon treo amháin: ní shroicheann athrú ar an bhfón do phróifíl go deo."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "do chárta féin"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Níor seoladh do chárta féin: níl aon ainm ar do phróifíl."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Baineadh do chárta féin den leabhar seoltaí; coinníodh é."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "Níorbh fhéidir “%(href)s” a léamh: %(error)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Athraíodh “%(name)s” anseo, ach athraíodh ar an bhfón níos déanaí é; glacadh leis an leagan ón bhfón."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -556,34 +586,34 @@ msgid "“%(name)s” changed on both sides, and the card from the phone gives n
 msgstr "Athraíodh “%(name)s” ar an dá thaobh, agus ní thugann an cárta ón bhfón aon am: glacadh le leagan an fhóin."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Athraíodh “%(name)s” ar an bhfón, ach athraíodh anseo níos déanaí é; coinníodh ár leagan féin."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "Níorbh fhéidir “%(name)s” a dhéanamh d’agallamh: %(why)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "Níorbh fhéidir “%(name)s” a dhéanamh d’agallamh: ní féidir a am a léamh."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "Ní féilire é “%(name)s”."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "Ní liosta tascanna é “%(name)s”."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "Ní leabhar seoltaí é “%(name)s”."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -596,9 +626,9 @@ msgid "“%(name)s” moved to another address on the server; still paired."
 msgstr "Bogadh “%(name)s” chuig seoladh eile ar an bhfreastalaí; tá sé péireáilte fós."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "Níor athraíodh “%(name)s” ón gcárta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

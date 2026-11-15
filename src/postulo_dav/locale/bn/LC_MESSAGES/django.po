@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-30 23:16+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Bengali <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/bn/>\n"
 "Language: bn\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)dটি সংগ্রহ নির্বাচিত"
+msgstr[1] "%(count)dটি সংগ্রহ নির্বাচিত"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "ক্যালেন্ডারের %(count)dটি ইভেন্�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)dটি রেকর্ড নির্বাচিত সংগ্রহের বাইরের কিছুর সঙ্গে যুক্ত এবং সেগুলো যেমন ছিল তেমনই রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)dটি রেকর্ড পাঠানো হয়নি, কারণ ওই ধরনের পাঠানো বন্ধ করা আছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "কাজের তালিকার %(count)dটি কাজ Postulo-র নয় এবং সেটি যেমন ছিল তেমনই রাখা হয়েছে।"
+msgstr[1] "কাজের তালিকার %(count)dটি কাজ Postulo-র নয় এবং সেগুলো যেমন ছিল তেমনই রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(কোনো কোম্পানি নেই)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(শিরোনাম নেই)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "একটি কার্ড থেকে এটি বানানো যায় না।"
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "এখানে মোছা একটি পরিচিতি শে�
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "একটি অনুস্মারক দুই দিকেই একই সময়ে বদলেছে; পরের রান সিদ্ধান্ত নেবে।"
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "এখানে মুছে ফেলা একটি অনুস্মারক শেষ সিঙ্কের পর ফোনে বদলানো হয়েছিল। কাজটি কাজের তালিকায় রেখে দেওয়া হয়েছে।"
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "নির্বাচিত সংগ্রহের বাইরের একটি অনুরোধ পাঠানো হয়নি।"
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "একটি কাজ দুই দিকেই একই সময়ে বদলেছে; পরের রান সিদ্ধান্ত নেবে।"
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "একটি কাজ অন্য ঠিকানায় সরানো হয়েছে; এটি এখনো যুক্ত আছে।"
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "ঠিকানা বই"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,16 @@ msgstr "ঠিকানা বই"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "ঠিকানা বইগুলো"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "সবগুলো"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "কাজের তালিকায় প্রতিটি আবেদনের জন্য দুটি করে কাজও রাখুন: একটি আবেদন করার জন্য, যেটি টিক দিলে আপনার কাছে একটি পরামর্শ আসে, আর একটি উত্তর শোনার জন্য, যেটি আবেদন শেষ হলে বন্ধ হয়। আবেদন নিয়ে অনুস্মারক এর খোলা কাজের নিচে থাকে।"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +124,11 @@ msgstr "একটি সাক্ষাৎকার ক্যালেন্ড�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "%(company)s-এ %(role)s পদে আবেদন করুন"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "ক্যালেন্ডার"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +136,7 @@ msgstr "ক্যালেন্ডার"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "ক্যালেন্ডারগুলো"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +166,32 @@ msgstr "ফোনে পরিবর্তন করা হয়েছিল, �
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "সংগ্রহগুলো"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "%(what)s “%(name)s” পাওয়া গেছে (%(how)s)।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "ঠিকানা বই “%(book)s” (%(book_href)s) এবং ক্যালেন্ডার “%(calendar)s” (%(calendar_href)s) পাওয়া গেছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "কাজের তালিকা “%(name)s” (%(href)s) পাওয়া গেছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "“%(name)s” কার্ড থেকে: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "%(role)s নিয়ে %(company)s-এর উত্তর শুনুন"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +220,29 @@ msgstr "এর সময় অঞ্চল “%(zone)s” এখানে প�
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "কাজের তালিকায় আবেদন করা হয়েছে বলে চিহ্নিত"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "একাধিক %(what)s নির্বাচিত, অথচ একটি সংযোগ একটিই সিঙ্ক করে: কোনোটিই ব্যবহার করা হয়নি। প্রতিটির জন্য একটি সংযোগ যোগ করুন, অথবা বাকিগুলো বাদ দিন।"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "একাধিক সংগ্রহের নাম “%(name)s”। নামের বদলে ঠিকানা দিয়ে তাদের একটি বেছে নিন।"
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "সার্ভারে কখনো লিখবেন না, এমনকি ঠিকানা বই, ক্যালেন্ডার বা কাজের তালিকা বানানোর জন্যও নয়। পরিচিতি, সাক্ষাৎকার ও অনুস্মারক তবুও আসে; কিছুই বাইরে যায় না।"
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "কোনোটিই নয়"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "নির্বাচিত সংগ্রহগুলোর কোনোটিই সার্ভারে নেই।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -253,16 +254,17 @@ msgid "Password or app password"
 msgstr "পাসওয়ার্ড বা অ্যাপ পাসওয়ার্ড"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "সার্ভারে খুঁজুন চাপুন, তারপর একটি ঠিকানা বই, একটি ক্যালেন্ডার ও একটি কাজের তালিকা বেছে নিন। শুধু সেগুলোই পড়া বা লেখা হয়, এবং এখানে ঠিক করা মোড Postulo-র কথা, সার্ভারের তালা নয়: অ্যাপ পাসওয়ার্ড একটি সংগ্রহে সীমিত করা যায় না। পুরো সংগ্রহ সিঙ্ক হয়।"
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "পড়া ও লেখা"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "পড়া ও লেখা"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +280,24 @@ msgstr "কেবল পঠনযোগ্য চালু আছে, তাই 
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "সার্ভারে শুধু পড়ার জন্য"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "অনুস্মারক সিঙ্ক হয়নি: কাজের তালিকা ব্যবহার করা যায়নি। %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "কোম্পানি পাঠান"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "পরিচিতি পাঠান"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "আমার নিজের কার্ড পাঠান"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +305,40 @@ msgstr "সার্ভারের ঠিকানা"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "কাজের তালিকা"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "কাজের তালিকা"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "কাজের তালিকাগুলো"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "আবেদন নিয়ে কাজ"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "তালিকাভুক্ত হওয়ার পর সেই কার্ডটি বদলে গেছে।"
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "সেই কার্ডটি নির্বাচিত ঠিকানা বইয়ে নেই।"
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "তালিকাভুক্ত হওয়ার পর সেই কাজটি বদলে গেছে।"
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "সেই কাজটি নির্বাচিত কাজের তালিকায় নেই।"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "%(kind)s এমন একটি ইভেন্টের সঙ্গে যুক্ত যার আয়োজক আছে, তাই এটি ক্যালেন্ডার থেকে পড়া হয় এবং কখনো সেখানে লেখা হয় না।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -356,7 +358,7 @@ msgstr "ঠিকানাটি অবশ্যই https:// দিয়ে শ
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "“%(name)s” ক্যালেন্ডার ইভেন্ট নেয় না, তাই এটি ব্যবহার করা হয়নি।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +367,20 @@ msgstr "ক্যালেন্ডার “%(name)s” সার্ভার�
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "কার্ডটি পড়া যায়নি, তাই এটি বদলানো হয়নি।"
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "কার্ডটিতে কোম্পানি বানানোর মতো কোনো নাম নেই।"
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "কার্ডটিতে পরিচিতি বানানোর মতো কোনো নাম নেই।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "“%(href)s” সংগ্রহটি আর সার্ভারে নেই। এটি আবার বানানো হয়নি; অন্য একটি বেছে নিন, অথবা এটি বাদ দিন।"
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +394,7 @@ msgstr "সার্ভার %(method)s %(path)s-এর জন্য HTTP %(sta
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "সার্ভার আপনাকে “%(name)s”-এ লিখতে দেয় না: শুধু পড়ার জন্য।"
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +411,7 @@ msgstr "%(kind)s অ্যাকাউন্টটি কোথায় তা 
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "সার্ভার জানায় না এতে লেখা যাবে কি না"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +429,7 @@ msgstr "সার্ভার ব্যবহারকারীর নাম ব
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "সার্ভার কাজের তালিকা বানাতে চায়নি, তাই এটি হয়তো কাজ রাখে না।"
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +447,31 @@ msgstr "%(path)s-এর জন্য সার্ভারের উত্তর
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "কাজটি পড়া যায়নি, তাই এটি বদলানো হয়নি।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "“%(name)s”-এর কাজটি কাজের তালিকা থেকে সরানো হয়েছে; অনুস্মারকটি রেখে দেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "কাজটির অনুস্মারক বানানোর মতো কোনো শেষ সময় নেই।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "কাজের তালিকা “%(name)s” সার্ভারে নেই।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "“%(name)s” কাজটির কোনো শেষ সময় নেই, তাই এটিকে অনুস্মারক বানানো হয়নি।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "“%(name)s” কাজটি কাজের তালিকা থেকে সরানো হয়েছে; এটি আর বানানো হবে না।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -479,24 +481,26 @@ msgstr "ক্যালেন্ডারে %(kind)s-এর সময় ব্
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "“%(name)s” কাজটির সময় ব্যবহার করা যায়নি (%(why)s), তাই অনুস্মারকটি সরানো হয়নি।"
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "এই সংগ্রহটি এখানে শুধু পড়ার জন্য, তাই একটি %(method)s পাঠানো হয়নি।"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "নিচে কোনো সংগ্রহ নির্বাচিত না থাকলেই শুধু ব্যবহৃত হয়। একটি ক্যালেন্ডারের নাম বা ঠিকানা; যেটি নেই, সেটি প্রথম সিঙ্কে বানানো হয়, যদি না “শুধু পড়ার জন্য” চালু থাকে। পুরো ক্যালেন্ডারটি সিঙ্ক হয় এবং দুটি ক্যালেন্ডারের একই নাম প্রত্যাখ্যাত হয়।"
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "নিচে কোনো সংগ্রহ নির্বাচিত না থাকলেই শুধু ব্যবহৃত হয়। আপনার অনুস্মারক রাখার একটি কাজের তালিকার নাম বা ঠিকানা; ফাঁকা থাকলে কোনোটিই ব্যবহৃত হয় না। যে নাম নেই সেটি প্রথম সিঙ্কে বানানো হয়, যদি না “শুধু পড়ার জন্য” চালু থাকে। এমন একটি সার্ভার দরকার যা কাজ রাখে।"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "নিচে কোনো সংগ্রহ নির্বাচিত না থাকলেই শুধু ব্যবহৃত হয়। একটি ঠিকানা বইয়ের নাম বা ঠিকানা; যেটি নেই, সেটি প্রথম সিঙ্কে বানানো হয়, যদি না “শুধু পড়ার জন্য” চালু থাকে। পুরো ঠিকানা বইটি সিঙ্ক হয় এবং দুটি ঠিকানা বইয়ের একই নাম প্রত্যাখ্যাত হয়।"
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +508,37 @@ msgstr "ব্যবহারকারীর নাম"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "কোন পরিচিতিরা ঠিকানা বইয়ে কার্ড পাবে। যে কার্ডগুলো ইতিমধ্যে সেখানে আছে সেগুলো থাকবে, এবং এটি বন্ধ থাকলে সেগুলোতে আর কিছু পাঠানো হবে না।"
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "প্রতিটি কোম্পানিকে আলাদা কার্ড হিসেবে লিখুন (নাম ও ওয়েবসাইটসহ একটি কোম্পানি কার্ড), কোম্পানির সঙ্গে মিল রেখে হালনাগাদ রাখা হয়।"
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "আপনার নিজের তথ্য একটি আলাদা কার্ডে লিখুন, শুধু একদিকে: ফোনে করা পরিবর্তন কখনো আপনার প্রোফাইলে পৌঁছায় না।"
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "আপনার নিজের কার্ড"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "আপনার নিজের কার্ড পাঠানো হয়নি: আপনার প্রোফাইলে কোনো নাম নেই।"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "আপনার নিজের কার্ড ঠিকানা বই থেকে সরানো হয়েছে; রেখে দেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "“%(href)s” পড়া যায়নি: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "“%(name)s” এখানে বদলেছে, কিন্তু পরে ফোনে বদলেছে; তাদেরটা নেওয়া হয়েছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +553,32 @@ msgstr "“%(name)s” উভয় দিকেই পরিবর্তিত 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "“%(name)s” ফোনে বদলেছে, কিন্তু পরে এখানে বদলেছে; আমাদেরটা রাখা হয়েছে।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "“%(name)s” সাক্ষাৎকারে রূপান্তর করা যায়নি: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "“%(name)s” সাক্ষাৎকারে রূপান্তর করা যায়নি: এর সময় পড়া যাচ্ছে না।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "“%(name)s” কোনো ক্যালেন্ডার নয়।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "“%(name)s” কোনো কাজের তালিকা নয়।"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "“%(name)s” কোনো ঠিকানা বই নয়।"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +593,7 @@ msgstr "“%(name)s” সার্ভারে অন্য একটি ঠি
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "“%(name)s” কার্ড থেকে বদলানো হয়নি: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 23:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Ukrainian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/uk/>\n"
 "Language: uk\n"
@@ -18,9 +18,9 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Вибрано колекцій: %(count)d"
+msgstr[1] "Вибрано колекцій: %(count)d"
+msgstr[2] "Вибрано колекцій: %(count)d"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -30,20 +30,20 @@ msgstr "Подій у календарі, що не з Postulo і залишил
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "Записів, пов’язаних із чимось поза вибраною колекцією, яких залишено як є: %(count)d."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "Записів, які не надіслано, бо надсилання цього виду вимкнено: %(count)d."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(count)d завдання у списку завдань не з Postulo, його залишено як є."
+msgstr[1] "%(count)d завдання у списку завдань не з Postulo, їх залишено як є."
+msgstr[2] "%(count)d завдань у списку завдань не з Postulo, їх залишено як є."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -56,11 +56,11 @@ msgstr "(без компанії)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(без назви)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Картку не можна перетворити на це."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -68,27 +68,27 @@ msgstr "Контакт, видалений тут, було змінено на 
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Нагадування змінилося з обох боків одночасно; вирішить наступний запуск."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Нагадування, видалене тут, було змінено на телефоні після останньої синхронізації. Завдання залишено у списку завдань."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Запит поза вибраними колекціями не надіслано."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Завдання змінилося з обох боків одночасно; вирішить наступний запуск."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Завдання перенесено на іншу адресу; воно й далі пов’язане."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "адресна книга"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -96,15 +96,15 @@ msgstr "Адресна книга"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Адресні книги"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Усі"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Також зберігати у списку завдань по два завдання на кожну заявку: одне, щоб подати заявку, позначення якого надсилає вам пропозицію, і одне, щоб дочекатися відповіді, яке закривається, коли заявка завершується. Нагадування про заявку розташовані під її відкритим завданням."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -125,11 +125,11 @@ msgstr "Співбесіда перемістилася на іншу адрес
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Подати заявку на %(role)s у %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "календар"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -137,7 +137,7 @@ msgstr "Календар"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Календарі"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -167,32 +167,32 @@ msgstr "Змінено на телефоні, але пізніше змінен
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Колекції"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Знайдено: %(what)s «%(name)s» (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Знайдено адресну книгу «%(book)s» (%(book_href)s) і календар «%(calendar)s» (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Знайдено список завдань «%(name)s» (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "З картки «%(name)s»: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Дочекатися відповіді від %(company)s щодо %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -221,29 +221,29 @@ msgstr "її часовий пояс «%(zone)s» тут невідомий"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Позначено у списку завдань як подане"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Вибрано більше одного елемента виду «%(what)s», а одне з’єднання синхронізує лише один: жоден не використано. Додайте з’єднання для кожного або залиште решту."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Кілька колекцій називаються «%(name)s». Виберіть одну з них за адресою, а не за назвою."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Ніколи не записувати на сервер — навіть щоб створити адресну книгу, календар чи список завдань. Контакти, співбесіди й нагадування й далі надходять; нічого не йде назовні."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Немає"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Жодної з вибраних колекцій немає на сервері."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -255,16 +255,17 @@ msgid "Password or app password"
 msgstr "Пароль або пароль застосунку"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Натисніть «Шукати на сервері», а потім виберіть одну адресну книгу, один календар і один список завдань. Читаються або записуються лише вони, а режим, заданий тут, — це слово Postulo, а не замок сервера: пароль застосунку не можна звузити до однієї колекції. Синхронізуються колекції цілком."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Читання й запис"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "читання й запис"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -280,24 +281,24 @@ msgstr "Увімкнено «Лише читання», тому нічого н
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Лише для читання на сервері"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Нагадування не синхронізовано: список завдань не вдалося використати. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Надсилати компанії"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Надсилати контакти"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Надіслати мою власну картку"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -305,40 +306,40 @@ msgstr "Адреса сервера"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "список завдань"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Список завдань"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Списки завдань"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Завдання про заявки"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Ця картка змінилася відтоді, як її внесли до списку."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Цієї картки немає у вибраній адресній книзі."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Це завдання змінилося відтоді, як його внесли до списку."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Цього завдання немає у вибраному списку завдань."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "Елемент «%(kind)s» пов’язано з подією, що має організатора, тому його читають із календаря, а не записують до нього."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -358,7 +359,7 @@ msgstr "Адреса має починатися з https:// — наприкл�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Календар «%(name)s» не приймає події, тому його не використано."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -367,20 +368,20 @@ msgstr "Календаря «%(name)s» немає на сервері."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Картку не вдалося прочитати, тому її не змінено."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "У картки немає імені, з якого можна створити компанію."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "У картки немає імені, з якого можна створити контакт."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Колекції «%(href)s» більше немає на сервері. Її не створено знову; виберіть іншу або залиште."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -394,7 +395,7 @@ msgstr "Сервер відповів HTTP %(status)d для %(method)s %(path)s
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Сервер не дозволяє записувати до «%(name)s»: лише для читання."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -411,7 +412,7 @@ msgstr "Сервер не повідомляє, де розташований о
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Сервер не повідомляє, чи можна записувати"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -429,7 +430,7 @@ msgstr "Сервер відхилив ім’я користувача або п
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Сервер не став створювати список завдань, тож, можливо, не зберігає завдань."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -447,31 +448,31 @@ msgstr "Відповідь сервера для %(path)s була завели�
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Завдання не вдалося прочитати, тому його не змінено."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Завдання для «%(name)s» видалено зі списку завдань; нагадування збережено."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "У завдання немає строку, з якого можна створити нагадування."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Списку завдань «%(name)s» немає на сервері."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "У завдання «%(name)s» немає строку, тому нагадування не створено."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Завдання «%(name)s» видалено зі списку завдань; воно не створюється знову."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -481,24 +482,24 @@ msgstr "%(kind)s у календарі: час неможливо викорис
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Час завдання «%(name)s» не вдалося використати (%(why)s), тому нагадування не перенесено."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Ця колекція тут лише для читання, тому запит %(method)s не надіслано."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Використовується, лише поки нижче не вибрано жодної колекції. Назва або адреса календаря; відсутній календар створює перша синхронізація, якщо не ввімкнено «лише для читання». Синхронізується весь календар, а назву, спільну для двох календарів, відхиляють."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Використовується, лише поки нижче не вибрано жодної колекції. Назва або адреса списку завдань, у якому зберігати ваші нагадування; якщо порожньо, жоден не використовується. Відсутню назву створює перша синхронізація, якщо не ввімкнено «лише для читання». Потрібен сервер, що зберігає завдання."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Використовується, лише поки нижче не вибрано жодної колекції. Назва або адреса адресної книги; відсутню книгу створює перша синхронізація, якщо не ввімкнено «лише для читання». Синхронізується вся адресна книга, а назву, спільну для двох адресних книг, відхиляють."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -506,37 +507,37 @@ msgstr "Ім’я користувача"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Які контакти отримують картку в адресній книзі. Картки, що вже там є, залишаються, і їм більше нічого не надсилається, поки це вимкнено."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Записувати кожну компанію як окрему картку (картку компанії з назвою та вебсайтом), що тримається в узгодженні з компанією."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Записувати ваші власні дані в окрему картку, в один бік: зміна на телефоні ніколи не потрапляє у ваш профіль."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "ваша власна картка"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Вашу власну картку не надіслано: у вашому профілі немає імені."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Вашу власну картку видалено з адресної книги; збережено."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "«%(href)s» не вдалося прочитати: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "«%(name)s» змінилося тут, але пізніше змінилося на телефоні; взято їхню версію."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -551,32 +552,32 @@ msgstr "«%(name)s» змінено з обох боків, а картка з �
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "«%(name)s» змінилося на телефоні, але пізніше змінилося тут; збережено нашу версію."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "«%(name)s» не вдалося перетворити на співбесіду: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "«%(name)s» не вдалося перетворити на співбесіду: час неможливо прочитати."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "«%(name)s» не є календарем."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "«%(name)s» не є списком завдань."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "«%(name)s» не є адресною книгою."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -591,7 +592,7 @@ msgstr "«%(name)s» переміщено на іншу адресу на сер
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "«%(name)s» не змінено за карткою: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

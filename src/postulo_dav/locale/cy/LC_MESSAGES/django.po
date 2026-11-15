@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 21:42+0000\n"
+"PO-Revision-Date: 2026-11-15 21:45+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Welsh <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/cy/>\n"
 "Language: cy\n"
@@ -15,13 +15,13 @@ msgstr ""
 "X-Generator: postulo scripts/messages.py\n"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%(count)d casgliad wedi'i ddewis"
+msgstr[1] "%(count)d gasgliad wedi'u dewis"
+msgstr[2] "%(count)d chasgliad wedi'u dewis"
+msgstr[3] "%(count)d casgliad wedi'u dewis"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,23 +29,23 @@ msgid "%(count)d events on the calendar are not from Postulo and were left alone
 msgstr "Nid yw %(count)d digwyddiad ar y calendr yn dod o Postulo, a gadawyd llonydd iddynt."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "Mae %(count)d cofnod wedi'u paru â rhywbeth y tu allan i'r casgliad a ddewiswyd ac fe'u gadawyd yn llonydd."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "Ni anfonwyd %(count)d cofnod, oherwydd bod anfon y math hwnnw wedi'i ddiffodd."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Nid yw %(count)d tasg yn y rhestr dasgau o Postulo ac fe'i gadawyd yn llonydd."
+msgstr[1] "Nid yw %(count)d dasg yn y rhestr dasgau o Postulo ac fe'u gadawyd yn llonydd."
+msgstr[2] "Nid yw %(count)d thasg yn y rhestr dasgau o Postulo ac fe'u gadawyd yn llonydd."
+msgstr[3] "Nid yw %(count)d tasg yn y rhestr dasgau o Postulo ac fe'u gadawyd yn llonydd."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -58,11 +58,11 @@ msgstr "(dim cwmni)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(dim teitl)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Ni ellir gwneud cerdyn yn hynny."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -70,27 +70,28 @@ msgstr "Roedd cyswllt a ddilëwyd yma wedi'i newid ar y ffôn ers y cysoni diwet
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Newidiodd nodyn atgoffa ar y ddwy ochr ar yr un pryd; bydd y rhediad nesaf yn penderfynu."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Roedd nodyn atgoffa a ddilewyd yma wedi newid ar y ffôn ers y cysoniad diwethaf. Gadawyd y dasg yn y rhestr dasgau."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Ni anfonwyd cais y tu allan i'r casgliadau a ddewiswyd."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Newidiodd tasg ar y ddwy ochr ar yr un pryd; bydd y rhediad nesaf yn penderfynu."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Symudwyd tasg i gyfeiriad arall; mae'n dal wedi'i pharu."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "llyfr cyfeiriadau"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -98,15 +99,16 @@ msgstr "Llyfr cyfeiriadau"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Llyfrau cyfeiriadau"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Pob un"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Cadw dwy dasg hefyd ar gyfer pob cais yn y rhestr dasgau: un i ymgeisio, y mae ei thicio yn anfon awgrym atoch, ac un i glywed yn ôl, sy'n cau pan ddaw'r cais i ben. Mae nodiadau atgoffa am gais o dan ei dasg agored."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -127,11 +129,11 @@ msgstr "Symudodd cyfweliad i gyfeiriad arall ar y calendr; mae'n dal wedi'i baru
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Ymgeisio am %(role)s yn %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "calendr"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -139,7 +141,7 @@ msgstr "Calendr"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Calendrau"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -169,32 +171,32 @@ msgstr "Newidiwyd ar y ffôn, ond newidiwyd yma yn ddiweddarach; cadwyd ein fers
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Casgliadau"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Cafwyd hyd i'r %(what)s “%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Cafwyd hyd i'r llyfr cyfeiriadau “%(book)s” (%(book_href)s) a'r calendr “%(calendar)s” (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Cafwyd hyd i'r rhestr dasgau “%(name)s” (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "O'r cerdyn “%(name)s”: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Clywed yn ôl gan %(company)s am %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -223,29 +225,30 @@ msgstr "nid yw ei gylchfa amser “%(zone)s” yn hysbys yma"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Wedi'i nodi fel un yr ymgeisiwyd amdani yn y rhestr dasgau"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Mae mwy nag un %(what)s wedi'i ddewis, ac mae cysylltiad yn cysoni un: ni ddefnyddiwyd yr un. Ychwanegwch gysylltiad ar gyfer pob un, neu gadewch y lleill."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Mae mwy nag un casgliad o'r enw “%(name)s”. Dewiswch un ohonynt, yn ôl ei gyfeiriad yn hytrach na'i enw."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Peidio byth ag ysgrifennu i'r gweinydd, hyd yn oed i wneud y llyfr cyfeiriadau, y calendr na'r rhestr dasgau. Mae cysylltiadau, cyfweliadau a nodiadau atgoffa yn dal i ddod i mewn; nid oes dim yn mynd allan."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Dim"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Nid yw'r un o'r casgliadau a ddewiswyd ar y gweinydd."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -257,16 +260,17 @@ msgid "Password or app password"
 msgstr "Cyfrinair neu gyfrinair ap"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Pwyswch Chwilio ar y gweinydd, yna dewiswch un llyfr cyfeiriadau, un calendr ac un rhestr dasgau. Dim ond y rheini a ddarllenir neu a ysgrifennir, ac mae modd a osodir yma yn air Postulo, nid yn glo ar y gweinydd: ni ellir cyfyngu cyfrinair ap i un casgliad. Caiff casgliadau cyfan eu cysoni."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Darllen ac ysgrifennu"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "darllen ac ysgrifennu"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -282,24 +286,24 @@ msgstr "Mae Darllen yn unig ymlaen, felly ni chaiff dim ei greu: crëwch ef ar y
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Darllen yn unig ar y gweinydd"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Ni chysonwyd y nodiadau atgoffa: ni ellid defnyddio'r rhestr dasgau. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Anfon cwmnïau"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Anfon cysylltiadau"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Anfon fy ngherdyn fy hun"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -307,40 +311,40 @@ msgstr "Cyfeiriad y gweinydd"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "rhestr dasgau"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Rhestr dasgau"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Rhestrau tasgau"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Tasgau am geisiadau"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Mae'r cerdyn hwnnw wedi newid ers iddo gael ei restru."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Nid yw'r cerdyn hwnnw yn y llyfr cyfeiriadau a ddewiswyd."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Mae'r dasg honno wedi newid ers iddi gael ei rhestru."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Nid yw'r dasg honno yn y rhestr dasgau a ddewiswyd."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "Mae'r eitem (%(kind)s) wedi'i pharu â digwyddiad sydd â threfnydd, felly caiff ei darllen o'r calendr ac ni chaiff byth ei hysgrifennu iddo."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -360,7 +364,7 @@ msgstr "Rhaid i'r cyfeiriad ddechrau gyda https:// — er enghraifft %(example)s
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Nid yw'r calendr “%(name)s” yn derbyn digwyddiadau, felly ni chafodd ei ddefnyddio."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -369,20 +373,20 @@ msgstr "Nid yw'r calendr “%(name)s” ar y gweinydd."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Ni ellid darllen y cerdyn, felly ni chafodd ei newid."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Does gan y cerdyn ddim enw i wneud cwmni ohono."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Does gan y cerdyn ddim enw i wneud cyswllt ohono."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Nid yw'r casgliad “%(href)s” ar y gweinydd mwyach. Ni chafodd ei wneud eto; dewiswch un arall, neu gadewch iddo fynd."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -396,7 +400,7 @@ msgstr "Atebodd y gweinydd HTTP %(status)d ar gyfer %(method)s %(path)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Nid yw'r gweinydd yn gadael i chi ysgrifennu i “%(name)s”: darllen yn unig."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -413,7 +417,7 @@ msgstr "Nid yw'r gweinydd yn dweud ble mae'r cyfrif %(kind)s."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Nid yw'r gweinydd yn dweud a ellir ysgrifennu ato"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -431,7 +435,7 @@ msgstr "Gwrthododd y gweinydd yr enw defnyddiwr neu'r cyfrinair."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Ni wnaeth y gweinydd restr dasgau, felly efallai nad yw'n cadw tasgau."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -449,31 +453,31 @@ msgstr "Roedd ateb y gweinydd ar gyfer %(path)s yn rhy fawr neu'n rhy araf, ac n
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Ni ellid darllen y dasg, felly ni chafodd ei newid."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Tynnwyd y dasg ar gyfer “%(name)s” o'r rhestr dasgau; cadwyd y nodyn atgoffa."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Does gan y dasg ddim amser dyledus i wneud nodyn atgoffa ohono."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Nid yw'r rhestr dasgau “%(name)s” ar y gweinydd."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Does gan y dasg “%(name)s” ddim amser dyledus, felly ni wnaed nodyn atgoffa ohoni."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Tynnwyd y dasg “%(name)s” o'r rhestr dasgau; ni chaiff ei gwneud eto."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -483,62 +487,68 @@ msgstr "Nid oedd modd defnyddio amser y %(kind)s ar y calendr (%(why)s), felly n
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Ni ellid defnyddio amser y dasg “%(name)s” (%(why)s), felly ni symudwyd y nodyn atgoffa."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Mae'r casgliad hwn yn darllen yn unig yma, felly ni anfonwyd %(method)s."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Defnyddir yn unig tra nad oes casgliad wedi'i ddewis isod. Enw neu gyfeiriad calendr; caiff un nad yw yno ei wneud gan y cysoniad cyntaf, oni bai bod darllen yn unig ymlaen. Caiff y calendr cyfan ei gysoni, a gwrthodir enw y mae dau galendr yn ei rannu."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Defnyddir yn unig tra nad oes casgliad wedi'i ddewis isod. Enw neu gyfeiriad rhestr dasgau i gadw eich nodiadau atgoffa ynddi; gwag, ac ni ddefnyddir yr un. Caiff enw nad yw yno ei wneud gan y cysoniad cyntaf, oni bai bod darllen yn unig ymlaen. Mae angen gweinydd sy'n cadw tasgau."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Defnyddir yn unig tra nad oes casgliad wedi'i ddewis isod. Enw neu gyfeiriad llyfr cyfeiriadau; caiff un nad yw yno ei wneud gan y cysoniad cyntaf, oni bai bod darllen yn unig ymlaen. Caiff y llyfr cyfeiriadau cyfan ei gysoni, a gwrthodir enw y mae dau lyfr cyfeiriadau yn ei rannu."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Enw defnyddiwr"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Pa gysylltiadau sy'n cael cerdyn yn y llyfr cyfeiriadau. Mae'r cardiau sydd yno eisoes yn aros, ac ni anfonir dim mwy atynt tra bo hyn wedi'i ddiffodd."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Ysgrifennu pob cwmni fel cerdyn ei hun (cerdyn cwmni, gyda'i enw a'i wefan), wedi'i gadw i gyd-fynd â'r cwmni."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Ysgrifennu eich manylion eich hun i gerdyn ei hun, un ffordd: ni fydd newid ar y ffôn byth yn cyrraedd eich proffil."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "eich cerdyn eich hun"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Ni anfonwyd eich cerdyn eich hun: nid oes gan eich proffil enw."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Tynnwyd eich cerdyn eich hun o'r llyfr cyfeiriadau; fe'i cadwyd."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "Ni ellid darllen “%(href)s”: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Newidiodd “%(name)s” yma, ond newidiodd ar y ffôn yn ddiweddarach; cymerwyd eu fersiwn nhw."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -553,32 +563,32 @@ msgstr "Newidiodd “%(name)s” ar y ddwy ochr, ac nid yw'r cerdyn o'r ffôn yn
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Newidiodd “%(name)s” ar y ffôn, ond newidiodd yma yn ddiweddarach; cadwyd ein fersiwn ni."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "Ni ellid gwneud “%(name)s” yn gyfweliad: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "Ni ellid gwneud “%(name)s” yn gyfweliad: ni ellir darllen ei amser."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "Nid calendr yw “%(name)s”."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "Nid rhestr dasgau yw “%(name)s”."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "Nid llyfr cyfeiriadau yw “%(name)s”."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -593,7 +603,7 @@ msgstr "Symudodd “%(name)s” i gyfeiriad arall ar y gweinydd; mae'n dal wedi'
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "Ni newidiwyd “%(name)s” o'r cerdyn: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

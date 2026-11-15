@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 23:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Luxembourgish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/lb/>\n"
 "Language: lb\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Sammlung ausgewielt"
+msgstr[1] "%(count)d Sammlunge ausgewielt"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -27,21 +27,21 @@ msgid "%(count)d events on the calendar are not from Postulo and were left alone
 msgstr "%(count)d Evenementer am Kalenner sinn net vum Postulo a goufen a Rou gelooss."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d Aträg sinn un eppes ausserhalb vun der ausgewielter Sammlung gekoppelt a goufe gelooss."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d Aträg goufen net geschéckt, well d'Schécke vun där Aart ausgeschalt ass."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Tâche an der Tâchelëscht ass net vu Postulo a gouf gelooss."
+msgstr[1] "%(count)d Tâchen an der Tâchelëscht sinn net vu Postulo a goufe gelooss."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(keng Firma)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(keen Titel)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Aus enger Kaart kann dat net gemaach ginn."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,28 @@ msgstr "E Kontakt, deen hei geläscht gouf, war zënter der leschter Synchronisa
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Eng Erënnerung huet sech op béide Säite gläichzäiteg geännert; den nächste Lafe entscheet."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Eng Erënnerung, déi hei geläscht gouf, war um Telefon geännert ginn, zënter der leschter Synchronisatioun. D'Tâche gouf an der Tâchelëscht gelooss."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Eng Ufro ausserhalb vun den ausgewielte Sammlunge gouf net geschéckt."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Eng Tâche huet sech op béide Säite gläichzäiteg geännert; den nächste Lafe entscheet."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Eng Tâche gouf op eng aner Adress geréckelt; ëmmer nach gekoppelt."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "Adressbuch"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +95,16 @@ msgstr "Adressbuch"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Adressbicher"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "All"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Haalt och zwou Tâchen fir all Kandidatur an der Tâchelëscht: eng fir sech ze bewerben, déi beim Ofhaken Iech e Virschlag schéckt, an eng fir eng Äntwert ofzewaarden, déi sech zougeet, wann d'Kandidatur ofgeschloss ass. Erënnerunge fir eng Kandidatur sti ënner hirer oppener Tâche."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +125,11 @@ msgstr "En Entretien ass am Kalenner op eng aner Adress geplënnert; nach ëmmer
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Op %(role)s bei %(company)s bewerben"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "Kalenner"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +137,7 @@ msgstr "Kalenner"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Kalenneren"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +167,32 @@ msgstr "Um Telefon geännert, mä méi spéit hei geännert; eis Versioun behale
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Sammlungen"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "%(what)s „%(name)s“ fonnt (%(how)s)."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "D'Adressbuch „%(book)s“ (%(book_href)s) an de Kalenner „%(calendar)s“ (%(calendar_href)s) goufe fonnt."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "D'Tâchelëscht „%(name)s“ (%(href)s) gouf fonnt."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Vun der Kaart „%(name)s“: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Äntwert vun %(company)s iwwer %(role)s ofwaarden"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +221,30 @@ msgstr "seng Zäitzon „%(zone)s“ ass hei net bekannt"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "An der Tâchelëscht als beworben markéiert"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Méi wéi een Element (%(what)s) ass ausgewielt, an eng Verbindung synchroniséiert een: keen gouf benotzt. Füügt eng Verbindung fir all eenzel derbäi, oder loosst déi anerer fale."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Méi wéi eng Sammlung heescht „%(name)s“. Wielt eng dovunner no der Adress aus, amplaz no dem Numm."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Ni um Server schreiwen, och net fir d'Adressbuch, de Kalenner oder d'Tâchelëscht ze erstellen. Kontakter, Entretiens an Erënnerunge kommen nach eran; näischt geet eraus."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Keng"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Keng vun den ausgewielte Sammlunge ass um Server."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -253,16 +256,17 @@ msgid "Password or app password"
 msgstr "Passwuert oder App-Passwuert"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Dréckt op Um Server nokucken, a wielt dann een Adressbuch, ee Kalenner an eng Tâchelëscht. Nëmmen déi gi gelies oder geschriwwen, an e Modus, deen hei agestallt ass, ass dem Postulo säi Wuert, net de Spär vum Server: e Passwuert fir eng App kann net op eng Sammlung beschränkt ginn. Ganz Sammlunge gi synchroniséiert."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Liesen a schreiwen"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "liesen a schreiwen"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +282,24 @@ msgstr "„Nëmme liesen“ ass ugeschalt, dofir gëtt näischt ugeluecht: leet 
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Um Server nëmme liesbar"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "D'Erënnerunge goufen net synchroniséiert: d'Tâchelëscht konnt net benotzt ginn. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Firme schécken"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Kontakter schécken"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Meng eege Kaart schécken"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +307,40 @@ msgstr "Serveradress"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "Tâchelëscht"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Tâchelëscht"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Tâchelëschten"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Tâchen iwwer Kandidaturen"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Déi Kaart huet sech geännert, zënter se opgelëscht gouf."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Déi Kaart ass net am ausgewielten Adressbuch."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Déi Tâche huet sech geännert, zënter se opgelëscht gouf."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Déi Tâche ass net an der ausgewielter Tâchelëscht."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "„%(kind)s“ ass mat engem Event verbonnen, deen en Organisateur huet, dofir gëtt et aus dem Kalenner gelies a ni dran geschriwwen."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -354,9 +358,9 @@ msgid "The address must start with https:// — for example %(example)s."
 msgstr "D'Adress muss mat https:// ufänken — zum Beispill %(example)s."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "De Kalenner „%(name)s“ hëlt keng Eventer un, dofir gouf en net benotzt."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +369,20 @@ msgstr "De Kalenner „%(name)s“ ass net um Server."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "D'Kaart konnt net gelies ginn, dofir gouf se net geännert."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "D'Kaart huet keen Numm, fir eng Firma doraus ze maachen."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "D'Kaart huet keen Numm, fir e Kontakt doraus ze maachen."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "D'Sammlung „%(href)s“ ass net méi um Server. Si gouf net nei erstallt; wielt eng aner, oder loosst se fale."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +396,7 @@ msgstr "De Server huet HTTP %(status)d fir %(method)s %(path)s geäntwert."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "De Server léisst Iech net an „%(name)s“ schreiwen: nëmme liesbar."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +413,7 @@ msgstr "De Server seet net, wou de %(kind)s-Kont ass."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "De Server seet net, ob et geschriwwe ka ginn"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -426,8 +430,9 @@ msgid "The server refused the user name or password."
 msgstr "De Server huet de Benotzernumm oder d'Passwuert refuséiert."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "De Server wollt keng Tâchelëscht erstellen, dofir späichert en der vläicht keng Tâchen."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +450,31 @@ msgstr "D'Äntwert vum Server fir %(path)s war ze grouss oder ze lues a gouf net
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "D'Tâche konnt net gelies ginn, dofir gouf se net geännert."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "D'Tâche fir „%(name)s“ gouf aus der Tâchelëscht ewechgeholl; d'Erënnerung gouf behalen."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "D'Tâche huet keng Frist, fir eng Erënnerung doraus ze maachen."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "D'Tâchelëscht „%(name)s“ ass net um Server."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "D'Tâche „%(name)s“ huet keng Frist, dofir gouf keng Erënnerung doraus gemaach."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "D'Tâche „%(name)s“ gouf aus der Tâchelëscht ewechgeholl; si gëtt net nei erstallt."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -477,64 +482,70 @@ msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so 
 msgstr "D'Zäit vun %(kind)s am Kalenner konnt net benotzt ginn (%(why)s), dofir gouf et net iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "D'Zäit vun der Tâche „%(name)s“ konnt net benotzt ginn (%(why)s), dofir gouf d'Erënnerung net verréckelt."
 
 #: src/postulo_dav/dav.py
-#, python-format
+#, fuzzy, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Dës Sammlung ass hei nëmme liesbar, dofir gouf eng %(method)s-Ufro net geschéckt."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Gëtt nëmme benotzt, soulaang ënnendrënner keng Sammlung ausgewielt ass. En Numm oder eng Adress vun engem Kalenner; ee Kalenner, deen et net gëtt, gëtt bei der éischter Synchronisatioun erstallt, ausser nëmme liesbar ass un. De ganze Kalenner gëtt synchroniséiert, an en Numm, deen zwee Kalenneren deelen, gëtt refuséiert."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Gëtt nëmme benotzt, soulaang ënnendrënner keng Sammlung ausgewielt ass. En Numm oder eng Adress vun enger Tâchelëscht, an där Är Erënnerunge bleiwen; eidel heescht, datt keng benotzt gëtt. En Numm, deen et net gëtt, gëtt bei der éischter Synchronisatioun erstallt, ausser nëmme liesbar ass un. Brauch e Server, deen Tâchen späichert."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Gëtt nëmme benotzt, soulaang ënnendrënner keng Sammlung ausgewielt ass. En Numm oder eng Adress vun engem Adressbuch; een, dat et net gëtt, gëtt bei der éischter Synchronisatioun erstallt, ausser nëmme liesbar ass un. D'ganzt Adressbuch gëtt synchroniséiert, an en Numm, deen zwee Adressbicher deelen, gëtt refuséiert."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Benotzernumm"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Wéi eng Kontakter eng Kaart am Adressbuch kréien. Kaarten, déi scho do sinn, bleiwen, a näischt méi gëtt dohinner geschéckt, soulaang dëst aus ass."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "All Firma als eege Kaart schreiwen (eng Firmekaart, mat Numm a Websäit), synchron mat der Firma gehal."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Är eege Detailer op eng eege Kaart schreiwen, an eng Richtung: eng Ännerung um Telefon erreecht ni Äre Profil."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "Är eege Kaart"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Är eege Kaart gouf net geschéckt: Äre Profil huet keen Numm."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Är eege Kaart gouf aus dem Adressbuch ewechgeholl; behalen."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "„%(href)s“ konnt net gelies ginn: %(error)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "„%(name)s“ huet sech hei geännert, awer méi spéit um Telefon; hir Versioun gouf geholl."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -547,34 +558,34 @@ msgid "“%(name)s” changed on both sides, and the card from the phone gives n
 msgstr "„%(name)s“ gouf op béide Säite geännert, an d'Kaart vum Telefon gëtt keng Zäit un: d'Versioun vum Telefon gouf iwwerholl."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "„%(name)s“ huet sech um Telefon geännert, awer méi spéit hei; eis Versioun gouf behalen."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "„%(name)s“ konnt net an en Entretien ëmgewandelt ginn: %(why)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "„%(name)s“ konnt net an en Entretien ëmgewandelt ginn: seng Zäit kann net gelies ginn."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "„%(name)s“ ass kee Kalenner."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "„%(name)s“ ass keng Tâchelëscht."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "„%(name)s“ ass kee Adressbuch."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +600,7 @@ msgstr "„%(name)s“ ass um Server op eng aner Adress geplënnert; nach ëmmer
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "„%(name)s“ gouf net no der Kaart geännert: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-23 12:46+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Indonesian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/id/>\n"
 "Language: id\n"
@@ -18,7 +18,7 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
+msgstr[0] "%(count)d koleksi dipilih"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -28,18 +28,18 @@ msgstr "%(count)d acara di kalender bukan dari Postulo dan dibiarkan apa adanya.
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d rekaman dipasangkan dengan sesuatu di luar koleksi yang dipilih dan dibiarkan apa adanya."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d rekaman tidak dikirim, karena pengiriman jenis itu dimatikan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
+msgstr[0] "%(count)d tugas di daftar tugas bukan dari Postulo dan dibiarkan apa adanya."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -52,11 +52,11 @@ msgstr "(tidak ada perusahaan)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(tanpa judul)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Sebuah kartu tidak dapat dijadikan itu."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -64,27 +64,27 @@ msgstr "Kontak yang dihapus di sini telah diubah di ponsel sejak sinkronisasi te
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Sebuah pengingat berubah di kedua sisi sekaligus; proses berikutnya yang menentukan."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Sebuah pengingat yang dihapus di sini telah diubah di ponsel sejak sinkronisasi terakhir. Tugasnya dibiarkan di daftar tugas."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Permintaan di luar koleksi yang dipilih tidak dikirim."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Sebuah tugas berubah di kedua sisi sekaligus; proses berikutnya yang menentukan."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Sebuah tugas dipindahkan ke alamat lain; masih dipasangkan."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "buku alamat"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -92,15 +92,15 @@ msgstr "Buku alamat"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Buku alamat"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Semuanya"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Simpan juga dua tugas untuk setiap lamaran di daftar tugas: satu untuk melamar, yang jika dicentang akan mengirimkan saran kepada Anda, dan satu untuk menunggu kabar, yang ditutup saat lamaran berakhir. Pengingat tentang sebuah lamaran berada di bawah tugasnya yang terbuka."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -122,11 +122,11 @@ msgstr "Sebuah wawancara pindah ke alamat lain pada kalender; masih dipasangkan.
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Melamar sebagai %(role)s di %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -134,7 +134,7 @@ msgstr "Kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -164,32 +164,32 @@ msgstr "Diubah di ponsel, tetapi kemudian diubah di sini; versi kami yang dipert
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Koleksi"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Ditemukan: %(what)s “%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Ditemukan buku alamat “%(book)s” (%(book_href)s) dan kalender “%(calendar)s” (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Ditemukan daftar tugas “%(name)s” (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Dari kartu “%(name)s”: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Menunggu kabar dari %(company)s tentang %(role)s"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -223,29 +223,29 @@ msgstr "zona waktunya \"%(zone)s\" tidak dikenal di sini"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Ditandai sudah dilamar di daftar tugas"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Lebih dari satu %(what)s dipilih, dan satu koneksi hanya menyinkronkan satu: tidak ada yang digunakan. Tambahkan koneksi untuk masing-masing, atau biarkan yang lain."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Lebih dari satu koleksi bernama “%(name)s”. Pilih salah satunya berdasarkan alamatnya, bukan berdasarkan nama."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Jangan pernah menulis ke server, bahkan untuk membuat buku alamat, kalender, atau daftar tugas. Kontak, wawancara, dan pengingat tetap masuk; tidak ada yang keluar."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Tidak ada"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Tidak ada satu pun koleksi yang dipilih yang ada di server."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -258,15 +258,15 @@ msgstr "Kata sandi atau kata sandi aplikasi"
 
 #: src/postulo_dav/sync.py
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Tekan Cari di server, lalu pilih satu buku alamat, satu kalender, dan satu daftar tugas. Hanya itu yang dibaca atau ditulis, dan mode yang ditetapkan di sini adalah janji Postulo, bukan kunci dari server: kata sandi aplikasi tidak dapat dibatasi ke satu koleksi. Koleksi disinkronkan secara utuh."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Baca dan tulis"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "baca dan tulis"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -282,24 +282,24 @@ msgstr "Mode hanya baca aktif, jadi tidak ada yang dibuat: buatlah di server, at
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Hanya-baca di server"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Pengingat tidak disinkronkan: daftar tugas tidak dapat digunakan. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Kirim perusahaan"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Kirim kontak"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Kirim kartu saya sendiri"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -307,40 +307,40 @@ msgstr "Alamat server"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "daftar tugas"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Daftar tugas"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Daftar tugas"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Tugas tentang lamaran"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Kartu itu telah berubah sejak dicantumkan."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Kartu itu tidak ada di buku alamat yang dipilih."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Tugas itu telah berubah sejak dicantumkan."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Tugas itu tidak ada di daftar tugas yang dipilih."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "%(kind)s dipasangkan dengan acara yang memiliki penyelenggara, jadi dibaca dari kalender dan tidak pernah ditulis ke sana."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -360,7 +360,7 @@ msgstr "Alamat harus diawali dengan https:// — misalnya %(example)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Kalender “%(name)s” tidak menerima acara, jadi tidak digunakan."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -369,20 +369,20 @@ msgstr "Kalender “%(name)s” tidak ada di server."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Kartu tidak dapat dibaca, jadi tidak diubah."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Kartu tidak memiliki nama untuk dijadikan perusahaan."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Kartu tidak memiliki nama untuk dijadikan kontak."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Koleksi “%(href)s” tidak lagi ada di server. Koleksi itu tidak dibuat ulang; pilih yang lain, atau biarkan."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -396,7 +396,7 @@ msgstr "Server menjawab HTTP %(status)d untuk %(method)s %(path)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Server tidak mengizinkan Anda menulis ke “%(name)s”: hanya-baca."
 
 #: src/postulo_dav/dav.py
 #, fuzzy
@@ -415,7 +415,7 @@ msgstr "Server tidak mengatakan dimana akun %(kind)s."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Server tidak menyebutkan apakah boleh ditulis"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -434,7 +434,7 @@ msgstr "Server menolak nama pengguna atau kata sandi."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Server tidak mau membuat daftar tugas, jadi mungkin tidak menyimpan tugas."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -453,31 +453,31 @@ msgstr "Jawaban server untuk %(path)s terlalu besar atau terlalu lambat, dan tid
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Tugas tidak dapat dibaca, jadi tidak diubah."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Tugas untuk “%(name)s” dihapus dari daftar tugas; pengingatnya dipertahankan."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Tugas tidak memiliki tenggat untuk dijadikan pengingat."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Daftar tugas “%(name)s” tidak ada di server."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Tugas “%(name)s” tidak memiliki tenggat, jadi tidak dijadikan pengingat."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Tugas “%(name)s” dihapus dari daftar tugas; tidak dibuat ulang."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -487,24 +487,24 @@ msgstr "Waktu %(kind)s di kalender tidak dapat digunakan (%(why)s), sehingga tid
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Waktu tugas “%(name)s” tidak dapat digunakan (%(why)s), jadi pengingat tidak dipindahkan."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Koleksi ini hanya-baca di sini, jadi permintaan %(method)s tidak dikirim."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Hanya digunakan selama tidak ada koleksi yang dipilih di bawah. Nama atau alamat sebuah kalender; jika belum ada, sinkronisasi pertama akan membuatnya, kecuali hanya-baca diaktifkan. Seluruh kalender disinkronkan, dan nama yang dipakai bersama oleh dua kalender ditolak."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Hanya digunakan selama tidak ada koleksi yang dipilih di bawah. Nama atau alamat daftar tugas untuk menyimpan pengingat Anda; kosongkan, maka tidak ada yang digunakan. Nama yang belum ada dibuat oleh sinkronisasi pertama, kecuali hanya-baca diaktifkan. Memerlukan server yang menyimpan tugas."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Hanya digunakan selama tidak ada koleksi yang dipilih di bawah. Nama atau alamat sebuah buku alamat; jika belum ada, sinkronisasi pertama akan membuatnya, kecuali hanya-baca diaktifkan. Seluruh buku alamat disinkronkan, dan nama yang dipakai bersama oleh dua buku alamat ditolak."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -512,37 +512,37 @@ msgstr "Nama pengguna"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Kontak mana yang mendapat kartu di buku alamat. Kartu yang sudah ada tetap, dan tidak ada lagi yang dikirim ke kartu itu selama ini dimatikan."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Tulis setiap perusahaan sebagai kartu tersendiri (kartu perusahaan, dengan nama dan situs webnya), yang dijaga tetap selaras dengan perusahaan."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Tulis detail Anda sendiri ke kartu tersendiri, satu arah: perubahan di ponsel tidak pernah sampai ke profil Anda."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "kartu Anda sendiri"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Kartu Anda sendiri tidak dikirim: profil Anda tidak memiliki nama."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Kartu Anda sendiri dihapus dari buku alamat; dipertahankan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "“%(href)s” tidak dapat dibaca: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "“%(name)s” berubah di sini, tetapi kemudian berubah di ponsel; versi ponsel yang dipakai."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -557,32 +557,32 @@ msgstr "\"%(name)s\" berubah di kedua sisi, dan kartu dari telepon tidak memberi
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "“%(name)s” berubah di ponsel, tetapi kemudian berubah di sini; versi kami yang dipertahankan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "“%(name)s” tidak dapat dijadikan wawancara: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "“%(name)s” tidak dapat dijadikan wawancara: waktunya tidak dapat dibaca."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "“%(name)s” bukan kalender."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "“%(name)s” bukan daftar tugas."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "“%(name)s” bukan buku alamat."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -597,7 +597,7 @@ msgstr "\"%(name)s\" pindah ke alamat lain di server; masih dipasangkan."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "“%(name)s” tidak diubah dari kartu: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

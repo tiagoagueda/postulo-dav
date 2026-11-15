@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 05:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Swedish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sv/>\n"
 "Language: sv\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d samling vald"
+msgstr[1] "%(count)d samlingar valda"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "%(count)d händelser i kalendern kommer inte från Postulo och lämnades
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d poster är kopplade till något utanför den valda samlingen och lämnades orörda."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d poster skickades inte, eftersom det slaget är avstängt för sändning."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d uppgift i uppgiftslistan kommer inte från Postulo och lämnades orörd."
+msgstr[1] "%(count)d uppgifter i uppgiftslistan kommer inte från Postulo och lämnades orörda."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(inget företag)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(ingen titel)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Ett kort kan inte göras om till det."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "En kontakt som raderades här hade ändrats på telefonen sedan den sena
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "En påminnelse ändrades på båda sidor samtidigt; nästa körning avgör."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "En påminnelse som raderades här hade ändrats på telefonen sedan senaste synkroniseringen. Uppgiften lämnades kvar i uppgiftslistan."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "En begäran utanför de valda samlingarna skickades inte."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "En uppgift ändrades på båda sidor samtidigt; nästa körning avgör."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "En uppgift flyttades till en annan adress; fortfarande kopplad."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "adressbok"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,15 @@ msgstr "Adressbok"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Adressböcker"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Alla"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Behåll också två uppgifter för varje ansökan i uppgiftslistan: en för att ansöka, som när den bockas av skickar dig ett förslag, och en för att få svar, som stängs när ansökan avslutas. Påminnelser om en ansökan ligger under dess öppna uppgift."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +123,11 @@ msgstr "En intervju flyttades till en annan adress i kalendern; fortfarande ihop
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Ansök som %(role)s hos %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +135,7 @@ msgstr "Kalender"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Kalendrar"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +165,32 @@ msgstr "Ändrad på telefonen, men ändrad här senare; vår version behölls."
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Samlingar"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Hittade %(what)s ”%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Hittade adressboken ”%(book)s” (%(book_href)s) och kalendern ”%(calendar)s” (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Hittade uppgiftslistan ”%(name)s” (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Från kortet ”%(name)s”: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Få svar från %(company)s om %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +219,29 @@ msgstr "dess tidszon ”%(zone)s” är okänd här"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Markerad som sökt i uppgiftslistan"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Fler än en av slaget %(what)s är vald, och en anslutning synkar bara en: ingen användes. Lägg till en anslutning för var och en, eller släpp de andra."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Fler än en samling heter ”%(name)s”. Välj en av dem med dess adress i stället för med namn."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Skriv aldrig till servern – inte ens för att skapa adressboken, kalendern eller uppgiftslistan. Kontakter, intervjuer och påminnelser kommer fortfarande in; inget går ut."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Ingen av de valda samlingarna finns på servern."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -253,16 +253,17 @@ msgid "Password or app password"
 msgstr "Lösenord eller applösenord"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Tryck på Titta på servern och välj sedan en adressbok, en kalender och en uppgiftslista. Bara de läses eller skrivs, och ett läge som ställs in här är Postulos ord, inte serverns lås: ett applösenord kan inte begränsas till en samling. Hela samlingar synkas."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Läsa och skriva"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "läsa och skriva"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +279,24 @@ msgstr "Skrivskyddet är på, så ingenting skapas: skapa den på servern, eller
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Skrivskyddad på servern"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Påminnelser synkades inte: uppgiftslistan kunde inte användas. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Skicka företag"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Skicka kontakter"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Skicka mitt eget kort"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +304,40 @@ msgstr "Serveradress"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "uppgiftslista"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Uppgiftslista"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Uppgiftslistor"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Uppgifter om ansökningar"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Det kortet har ändrats sedan det listades."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Det kortet finns inte i den valda adressboken."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Den uppgiften har ändrats sedan den listades."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Den uppgiften finns inte i den valda uppgiftslistan."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "%(kind)s är kopplad till en händelse som har en arrangör, så den läses från kalendern och skrivs aldrig till den."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -356,7 +357,7 @@ msgstr "Adressen måste börja med https:// – till exempel %(example)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Kalendern ”%(name)s” tar inte emot händelser, så den användes inte."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +366,20 @@ msgstr "Kalendern ”%(name)s” finns inte på servern."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Kortet kunde inte läsas, så det ändrades inte."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Kortet har inget namn att göra ett företag av."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Kortet har inget namn att göra en kontakt av."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Samlingen ”%(href)s” finns inte längre på servern. Den skapades inte på nytt; välj en annan, eller släpp den."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +393,7 @@ msgstr "Servern svarade HTTP %(status)d för %(method)s %(path)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Servern tillåter inte att du skriver till ”%(name)s”: skrivskyddad."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +410,7 @@ msgstr "Servern anger inte var %(kind)s-kontot finns."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Servern anger inte om det går att skriva"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +428,7 @@ msgstr "Servern nekade användarnamnet eller lösenordet."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Servern ville inte skapa en uppgiftslista, så den kanske inte kan lagra uppgifter."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +446,31 @@ msgstr "Serverns svar för %(path)s var för stort eller för långsamt, och lä
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Uppgiften kunde inte läsas, så den ändrades inte."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Uppgiften för ”%(name)s” togs bort från uppgiftslistan; påminnelsen behölls."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Uppgiften har ingen förfallotid att göra en påminnelse av."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Uppgiftslistan ”%(name)s” finns inte på servern."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Uppgiften ”%(name)s” har ingen förfallotid, så ingen påminnelse gjordes."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Uppgiften ”%(name)s” togs bort från uppgiftslistan; den skapas inte på nytt."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -479,24 +480,24 @@ msgstr "Tiden för %(kind)s i kalendern kunde inte användas (%(why)s), så den 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Tiden för uppgiften ”%(name)s” kunde inte användas (%(why)s), så påminnelsen flyttades inte."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Den här samlingen är skrivskyddad här, så en %(method)s skickades inte."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Används bara så länge ingen samling är vald nedan. Ett namn eller en adress till en kalender; en som inte finns skapas vid första synkroniseringen, om inte skrivskyddat är på. Hela kalendern synkas, och ett namn som två kalendrar delar nekas."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Används bara så länge ingen samling är vald nedan. Ett namn eller en adress till en uppgiftslista att förvara dina påminnelser i; tomt betyder att ingen används. Ett namn som inte finns skapas vid första synkroniseringen, om inte skrivskyddat är på. Kräver en server som lagrar uppgifter."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Används bara så länge ingen samling är vald nedan. Ett namn eller en adress till en adressbok; en som inte finns skapas vid första synkroniseringen, om inte skrivskyddat är på. Hela adressboken synkas, och ett namn som två adressböcker delar nekas."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +505,37 @@ msgstr "Användarnamn"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Vilka kontakter som får ett kort i adressboken. Kort som redan finns ligger kvar, och inget mer skickas till dem så länge det här är av."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Skriv varje företag som ett eget kort (ett företagskort, med namn och webbplats), hållet i takt med företaget."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Skriv dina egna uppgifter till ett eget kort, enkelriktat: en ändring på telefonen når aldrig din profil."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "ditt eget kort"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Ditt eget kort skickades inte: din profil har inget namn."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Ditt eget kort togs bort från adressboken; behållet."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "”%(href)s” kunde inte läsas: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "”%(name)s” ändrades här, men ändrades senare på telefonen; deras version gällde."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +550,32 @@ msgstr "”%(name)s” ändrades på båda sidor, och kortet från telefonen ang
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "”%(name)s” ändrades på telefonen, men ändrades senare här; vår version behölls."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "”%(name)s” kunde inte göras om till en intervju: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "”%(name)s” kunde inte göras om till en intervju: tiden går inte att läsa."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "”%(name)s” är ingen kalender."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "”%(name)s” är ingen uppgiftslista."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "”%(name)s” är ingen adressbok."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +590,7 @@ msgstr "”%(name)s” flyttades till en annan adress på servern; fortfarande i
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "”%(name)s” ändrades inte utifrån kortet: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

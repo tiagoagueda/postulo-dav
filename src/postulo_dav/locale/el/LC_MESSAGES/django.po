@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 03:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:45+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Greek <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/el/>\n"
 "Language: el\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d συλλογή επιλέχθηκε"
+msgstr[1] "%(count)d συλλογές επιλέχθηκαν"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "%(count)d συμβάντα στο ημερολόγιο δεν προέρ
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d εγγραφές έχουν αντιστοιχιστεί με κάτι εκτός της επιλεγμένης συλλογής και παρέμειναν ως είχαν."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d εγγραφές δεν στάλθηκαν, επειδή η αποστολή αυτού του είδους είναι απενεργοποιημένη."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d εργασία στη λίστα εργασιών δεν προέρχεται από το Postulo και παρέμεινε ως είχε."
+msgstr[1] "%(count)d εργασίες στη λίστα εργασιών δεν προέρχονται από το Postulo και παρέμειναν ως είχαν."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -54,11 +54,11 @@ msgstr "(χωρίς εταιρεία)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(χωρίς τίτλο)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Μια κάρτα δεν μπορεί να γίνει αυτό."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "Μια επαφή που διαγράφηκε εδώ είχε αλλάξ
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Μια υπενθύμιση άλλαξε και στις δύο πλευρές ταυτόχρονα· θα αποφασίσει η επόμενη εκτέλεση."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Μια υπενθύμιση που διαγράφηκε εδώ είχε αλλάξει στο τηλέφωνο από τον τελευταίο συγχρονισμό. Η εργασία παρέμεινε στη λίστα εργασιών."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Ένα αίτημα εκτός των επιλεγμένων συλλογών δεν στάλθηκε."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Μια εργασία άλλαξε και στις δύο πλευρές ταυτόχρονα· θα αποφασίσει η επόμενη εκτέλεση."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Μια εργασία μετακινήθηκε σε άλλη διεύθυνση· παραμένει αντιστοιχισμένη."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "βιβλίο διευθύνσεων"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,15 @@ msgstr "Βιβλίο διευθύνσεων"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Βιβλία διευθύνσεων"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Όλα"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Διατήρηση και δύο εργασιών για κάθε αίτηση στη λίστα εργασιών: μία για την υποβολή, που όταν την τσεκάρετε σας στέλνει πρόταση, και μία για την ανταπόκριση, που κλείνει όταν τελειώσει η αίτηση. Οι υπενθυμίσεις για μια αίτηση βρίσκονται κάτω από την ανοιχτή εργασία της."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +123,11 @@ msgstr "Μια συνέντευξη μεταφέρθηκε σε άλλη διε�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "Αίτηση για %(role)s στην εταιρεία %(company)s"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "ημερολόγιο"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +135,7 @@ msgstr "Ημερολόγιο"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Ημερολόγια"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +165,32 @@ msgstr "Άλλαξε στο τηλέφωνο, αλλά άλλαξε αργότε
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Συλλογές"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "Βρέθηκε το στοιχείο %(what)s «%(name)s» (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "Βρέθηκαν το βιβλίο διευθύνσεων «%(book)s» (%(book_href)s) και το ημερολόγιο «%(calendar)s» (%(calendar_href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "Βρέθηκε η λίστα εργασιών «%(name)s» (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "Από την κάρτα «%(name)s»: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "Ανταπόκριση από την εταιρεία %(company)s για %(role)s"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +219,29 @@ msgstr "η ζώνη ώρας του «%(zone)s» δεν είναι γνωστή 
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Σημειώθηκε ως υποβληθείσα στη λίστα εργασιών"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Έχει επιλεγεί περισσότερο από ένα στοιχείο τύπου «%(what)s» και μια σύνδεση συγχρονίζει μόνο ένα: δεν χρησιμοποιήθηκε κανένα. Προσθέστε μια σύνδεση για καθένα ή αφήστε τα υπόλοιπα."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Περισσότερες από μία συλλογές ονομάζονται «%(name)s». Επιλέξτε μία από αυτές με τη διεύθυνσή της αντί για το όνομα."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Να μην γράφεται ποτέ στον διακομιστή, ούτε για τη δημιουργία του βιβλίου διευθύνσεων, του ημερολογίου ή της λίστας εργασιών. Οι επαφές, οι συνεντεύξεις και οι υπενθυμίσεις εξακολουθούν να έρχονται· τίποτα δεν στέλνεται."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Καμία"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Καμία από τις επιλεγμένες συλλογές δεν βρίσκεται στον διακομιστή."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -254,15 +254,15 @@ msgstr "Κωδικός πρόσβασης ή κωδικός εφαρμογής"
 
 #: src/postulo_dav/sync.py
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Πατήστε Αναζήτηση στον διακομιστή και επιλέξτε ένα βιβλίο διευθύνσεων, ένα ημερολόγιο και μια λίστα εργασιών. Μόνο αυτά διαβάζονται ή γράφονται και μια λειτουργία που ορίζεται εδώ είναι λόγος του Postulo, όχι κλείδωμα του διακομιστή: ένας κωδικός εφαρμογής δεν μπορεί να περιοριστεί σε μία συλλογή. Συγχρονίζονται ολόκληρες συλλογές."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Ανάγνωση και εγγραφή"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "ανάγνωση και εγγραφή"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +278,24 @@ msgstr "Είναι ενεργή η «μόνο ανάγνωση», οπότε δ�
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Μόνο για ανάγνωση στον διακομιστή"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Οι υπενθυμίσεις δεν συγχρονίστηκαν: η λίστα εργασιών δεν μπόρεσε να χρησιμοποιηθεί. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Αποστολή εταιρειών"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Αποστολή επαφών"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Αποστολή της δικής μου κάρτας"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +303,40 @@ msgstr "Διεύθυνση διακομιστή"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "λίστα εργασιών"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Λίστα εργασιών"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Λίστες εργασιών"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Εργασίες για αιτήσεις"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Αυτή η κάρτα άλλαξε από τότε που εμφανίστηκε στη λίστα."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Αυτή η κάρτα δεν βρίσκεται στο επιλεγμένο βιβλίο διευθύνσεων."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Αυτή η εργασία άλλαξε από τότε που εμφανίστηκε στη λίστα."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Αυτή η εργασία δεν βρίσκεται στην επιλεγμένη λίστα εργασιών."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "Το στοιχείο (%(kind)s) είναι αντιστοιχισμένο με μια εκδήλωση που έχει διοργανωτή, γι' αυτό διαβάζεται από το ημερολόγιο και δεν γράφεται ποτέ σε αυτό."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -356,7 +356,7 @@ msgstr "Η διεύθυνση πρέπει να αρχίζει με https:// —
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "Το ημερολόγιο «%(name)s» δεν δέχεται εκδηλώσεις, γι' αυτό δεν χρησιμοποιήθηκε."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +365,20 @@ msgstr "Το ημερολόγιο «%(name)s» δεν υπάρχει στον δ
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Η κάρτα δεν μπόρεσε να διαβαστεί, γι' αυτό δεν άλλαξε."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Η κάρτα δεν έχει όνομα για να δημιουργηθεί εταιρεία."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Η κάρτα δεν έχει όνομα για να δημιουργηθεί επαφή."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "Η συλλογή «%(href)s» δεν υπάρχει πια στον διακομιστή. Δεν δημιουργήθηκε ξανά· επιλέξτε άλλη ή αφήστε την."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +392,7 @@ msgstr "Ο διακομιστής απάντησε HTTP %(status)d για %(meth
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Ο διακομιστής δεν σας επιτρέπει να γράψετε στο «%(name)s»: μόνο για ανάγνωση."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +409,7 @@ msgstr "Ο διακομιστής δεν αναφέρει πού βρίσκετ�
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Ο διακομιστής δεν λέει αν επιτρέπεται η εγγραφή σε αυτήν"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +427,7 @@ msgstr "Ο διακομιστής αρνήθηκε το όνομα χρήστη 
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Ο διακομιστής δεν δημιούργησε λίστα εργασιών, οπότε ίσως δεν διατηρεί εργασίες."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +445,31 @@ msgstr "Η απάντηση του διακομιστή για το %(path)s ή�
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Η εργασία δεν μπόρεσε να διαβαστεί, γι' αυτό δεν άλλαξε."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "Η εργασία για το «%(name)s» αφαιρέθηκε από τη λίστα εργασιών· η υπενθύμιση διατηρήθηκε."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Η εργασία δεν έχει προθεσμία για να δημιουργηθεί υπενθύμιση."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "Η λίστα εργασιών «%(name)s» δεν βρίσκεται στον διακομιστή."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "Η εργασία «%(name)s» δεν έχει προθεσμία, γι' αυτό δεν έγινε υπενθύμιση."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "Η εργασία «%(name)s» αφαιρέθηκε από τη λίστα εργασιών· δεν δημιουργείται ξανά."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -479,24 +479,24 @@ msgstr "Η ώρα του στοιχείου του ημερολογίου (%(kin
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "Η ώρα της εργασίας «%(name)s» δεν μπόρεσε να χρησιμοποιηθεί (%(why)s), γι' αυτό η υπενθύμιση δεν μετακινήθηκε."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Αυτή η συλλογή είναι εδώ μόνο για ανάγνωση, γι' αυτό δεν στάλθηκε %(method)s."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Χρησιμοποιείται μόνο όσο δεν έχει επιλεγεί συλλογή παρακάτω. Ένα όνομα ή μια διεύθυνση ημερολογίου· αν δεν υπάρχει, δημιουργείται από τον πρώτο συγχρονισμό, εκτός αν είναι ενεργό το «μόνο για ανάγνωση». Συγχρονίζεται ολόκληρο το ημερολόγιο και ένα όνομα που μοιράζονται δύο ημερολόγια απορρίπτεται."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Χρησιμοποιείται μόνο όσο δεν έχει επιλεγεί συλλογή παρακάτω. Ένα όνομα ή μια διεύθυνση λίστας εργασιών για τις υπενθυμίσεις σας· αν μείνει κενό, δεν χρησιμοποιείται καμία. Ένα όνομα που δεν υπάρχει δημιουργείται από τον πρώτο συγχρονισμό, εκτός αν είναι ενεργό το «μόνο για ανάγνωση». Χρειάζεται διακομιστή που διατηρεί εργασίες."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Χρησιμοποιείται μόνο όσο δεν έχει επιλεγεί συλλογή παρακάτω. Ένα όνομα ή μια διεύθυνση βιβλίου διευθύνσεων· αν δεν υπάρχει, δημιουργείται από τον πρώτο συγχρονισμό, εκτός αν είναι ενεργό το «μόνο για ανάγνωση». Συγχρονίζεται ολόκληρο το βιβλίο διευθύνσεων και ένα όνομα που μοιράζονται δύο βιβλία διευθύνσεων απορρίπτεται."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +504,37 @@ msgstr "Όνομα χρήστη"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Ποιες επαφές αποκτούν κάρτα στο βιβλίο διευθύνσεων. Οι κάρτες που υπάρχουν ήδη παραμένουν και δεν στέλνεται τίποτα άλλο σε αυτές όσο αυτό είναι απενεργοποιημένο."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Εγγραφή κάθε εταιρείας ως ξεχωριστής κάρτας (μια κάρτα εταιρείας, με το όνομα και τον ιστότοπό της), συγχρονισμένης με την εταιρεία."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Εγγραφή των δικών σας στοιχείων σε ξεχωριστή κάρτα, με μία κατεύθυνση: μια αλλαγή στο τηλέφωνο δεν φτάνει ποτέ στο προφίλ σας."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "η δική σας κάρτα"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Η δική σας κάρτα δεν στάλθηκε: το προφίλ σας δεν έχει όνομα."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Η δική σας κάρτα αφαιρέθηκε από το βιβλίο διευθύνσεων· διατηρείται."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "Το «%(href)s» δεν μπόρεσε να διαβαστεί: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "Το «%(name)s» άλλαξε εδώ, αλλά άλλαξε αργότερα στο τηλέφωνο· κρατήθηκε η έκδοσή του."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +549,32 @@ msgstr "Το «%(name)s» άλλαξε και στις δύο πλευρές, κ
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "Το «%(name)s» άλλαξε στο τηλέφωνο, αλλά άλλαξε αργότερα εδώ· κρατήθηκε η δική μας."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "Το «%(name)s» δεν μπόρεσε να γίνει συνέντευξη: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "Το «%(name)s» δεν μπόρεσε να γίνει συνέντευξη: η ώρα της δεν μπορεί να διαβαστεί."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "Το «%(name)s» δεν είναι ημερολόγιο."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "Το «%(name)s» δεν είναι λίστα εργασιών."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "Το «%(name)s» δεν είναι βιβλίο διευθύνσεων."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +589,7 @@ msgstr "Το «%(name)s» μεταφέρθηκε σε άλλη διεύθυνσ�
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "Το «%(name)s» δεν άλλαξε από την κάρτα: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-10-24 23:02+0000\n"
+"PO-Revision-Date: 2026-11-15 21:46+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Turkish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/tr/>\n"
 "Language: tr\n"
@@ -18,8 +18,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d collection chosen"
 msgid_plural "%(count)d collections chosen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d koleksiyon seçildi"
+msgstr[1] "%(count)d koleksiyon seçildi"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -29,19 +29,19 @@ msgstr "Takvimdeki %(count)d etkinlik Postulo'dan gelmiyor, bu yüzden onlara do
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records are paired with something outside the chosen collection and were left alone."
-msgstr ""
+msgstr "%(count)d kayıt, seçilen koleksiyonun dışındaki bir şeyle eşleşmiş durumda ve olduğu gibi bırakıldı."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d records were not sent, because sending that kind is switched off."
-msgstr ""
+msgstr "%(count)d kayıt gönderilmedi, çünkü o türün gönderilmesi kapalı."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "%(count)d task in the task list is not from Postulo and was left alone."
 msgid_plural "%(count)d tasks in the task list are not from Postulo and were left alone."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Görev listesindeki %(count)d görev Postulo’dan değil ve olduğu gibi bırakıldı."
+msgstr[1] "Görev listesindeki %(count)d görev Postulo’dan değil ve olduğu gibi bırakıldı."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -54,11 +54,11 @@ msgstr "(şirket yok)"
 
 #: src/postulo_dav/sync.py
 msgid "(no title)"
-msgstr ""
+msgstr "(başlıksız)"
 
 #: src/postulo_dav/sync.py
 msgid "A card cannot be made into that."
-msgstr ""
+msgstr "Bir kart buna dönüştürülemez."
 
 #: src/postulo_dav/sync.py
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
@@ -66,27 +66,27 @@ msgstr "Burada silinen bir kişi, son eşitlemeden bu yana telefonda değiştiri
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Bir hatırlatma iki tarafta aynı anda değişti; bir sonraki çalıştırma karar verir."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
-msgstr ""
+msgstr "Burada silinen bir hatırlatma, son eşitlemeden sonra telefonda değiştirilmişti. Görev, görev listesinde bırakıldı."
 
 #: src/postulo_dav/dav.py
 msgid "A request outside the chosen collections was not sent."
-msgstr ""
+msgstr "Seçilen koleksiyonların dışındaki bir istek gönderilmedi."
 
 #: src/postulo_dav/sync.py
 msgid "A task changed on both sides at once; next run decides."
-msgstr ""
+msgstr "Bir görev iki tarafta aynı anda değişti; bir sonraki çalıştırma karar verir."
 
 #: src/postulo_dav/sync.py
 msgid "A task moved to another address; still paired."
-msgstr ""
+msgstr "Bir görev başka bir adrese taşındı; hâlâ eşleşmiş durumda."
 
 #: src/postulo_dav/sync.py
 msgid "address book"
-msgstr ""
+msgstr "adres defteri"
 
 #: src/postulo_dav/sync.py
 msgid "Address book"
@@ -94,15 +94,15 @@ msgstr "Adres defteri"
 
 #: src/postulo_dav/sync.py
 msgid "Address books"
-msgstr ""
+msgstr "Adres defterleri"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
-msgstr ""
+msgstr "Hepsi"
 
 #: src/postulo_dav/sync.py
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
-msgstr ""
+msgstr "Görev listesinde her başvuru için ayrıca iki görev tutun: biri başvurmak için, işaretlenmesi size bir öneri gönderir; diğeri yanıt almak için, başvuru bittiğinde kapanır. Bir başvuruyla ilgili hatırlatmalar açık görevinin altında yer alır."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -123,11 +123,11 @@ msgstr "Bir görüşme takvimde başka bir adrese taşındı; eşleşmesi sürü
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
-msgstr ""
+msgstr "%(company)s şirketinde %(role)s için başvur"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
-msgstr ""
+msgstr "takvim"
 
 #: src/postulo_dav/sync.py
 msgid "Calendar"
@@ -135,7 +135,7 @@ msgstr "Takvim"
 
 #: src/postulo_dav/sync.py
 msgid "Calendars"
-msgstr ""
+msgstr "Takvimler"
 
 #: src/postulo_dav/sync.py
 msgid "Cancelled on the calendar."
@@ -165,32 +165,32 @@ msgstr "Telefonda değişti, ama sonra burada da değişti; buradaki korundu."
 
 #: src/postulo_dav/sync.py
 msgid "Collections"
-msgstr ""
+msgstr "Koleksiyonlar"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
-msgstr ""
+msgstr "%(what)s bulundu: “%(name)s” (%(how)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the address book “%(book)s” (%(book_href)s) and the calendar “%(calendar)s” (%(calendar_href)s)."
-msgstr ""
+msgstr "“%(book)s” adres defteri (%(book_href)s) ile “%(calendar)s” takvimi (%(calendar_href)s) bulundu."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the task list “%(name)s” (%(href)s)."
-msgstr ""
+msgstr "“%(name)s” görev listesi bulundu (%(href)s)."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "From the card “%(name)s”: %(details)s"
-msgstr ""
+msgstr "“%(name)s” kartından: %(details)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
-msgstr ""
+msgstr "%(company)s şirketinden %(role)s hakkında yanıt al"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -219,29 +219,29 @@ msgstr "“%(zone)s” saat dilimi burada bilinmiyor"
 
 #: src/postulo_dav/sync.py
 msgid "Marked as applied in the task list"
-msgstr ""
+msgstr "Görev listesinde başvuruldu olarak işaretlendi"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "More than one %(what)s is chosen, and a connection syncs one: none was used. Add a connection for each, or let the others go."
-msgstr ""
+msgstr "Birden fazla %(what)s seçili ve bir bağlantı yalnızca birini eşitler: hiçbiri kullanılmadı. Her biri için bir bağlantı ekleyin ya da diğerlerini bırakın."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "More than one collection is called “%(name)s”. Choose one of them, by its address, instead of by name."
-msgstr ""
+msgstr "Birden fazla koleksiyonun adı “%(name)s”. Adı yerine adresiyle bunlardan birini seçin."
 
 #: src/postulo_dav/sync.py
 msgid "Never write to the server — not even to make the address book, the calendar or the task list. Contacts, interviews and reminders still come in; nothing goes out."
-msgstr ""
+msgstr "Sunucuya asla yazma — adres defterini, takvimi veya görev listesini oluşturmak için bile. Kişiler, görüşmeler ve hatırlatmalar yine gelir; hiçbir şey dışarı gitmez."
 
 #: src/postulo_dav/sync.py
 msgid "None"
-msgstr ""
+msgstr "Yok"
 
 #: src/postulo_dav/sync.py
 msgid "None of the chosen collections is on the server."
-msgstr ""
+msgstr "Seçilen koleksiyonların hiçbiri sunucuda yok."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -253,16 +253,17 @@ msgid "Password or app password"
 msgstr "Parola ya da uygulama parolası"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Press Look on the server, then choose one address book, one calendar and one task list. Only those are read or written, and a mode set here is Postulo's word, not the server's lock: an app password cannot be narrowed to one collection. Whole collections sync."
-msgstr ""
+msgstr "Sunucuda ara düğmesine basın, sonra bir adres defteri, bir takvim ve bir görev listesi seçin. Yalnızca bunlar okunur veya yazılır; burada ayarlanan kip sunucunun kilidi değil, Postulo’nun sözüdür: bir uygulama parolası tek bir koleksiyonla sınırlanamaz. Koleksiyonların tamamı eşitlenir."
 
 #: src/postulo_dav/sync.py
 msgid "Read and write"
-msgstr ""
+msgstr "Okuma ve yazma"
 
 #: src/postulo_dav/sync.py
 msgid "read and write"
-msgstr ""
+msgstr "okuma ve yazma"
 
 #: src/postulo_dav/sync.py
 msgid "Read only"
@@ -278,24 +279,24 @@ msgstr "Salt okunur açık, bu yüzden hiçbir şey oluşturulmaz: onu sunucuda 
 
 #: src/postulo_dav/sync.py
 msgid "Read only on the server"
-msgstr ""
+msgstr "Sunucuda salt okunur"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "Reminders were not synced: the task list could not be used. %(why)s"
-msgstr ""
+msgstr "Hatırlatmalar eşitlenmedi: görev listesi kullanılamadı. %(why)s"
 
 #: src/postulo_dav/sync.py
 msgid "Send companies"
-msgstr ""
+msgstr "Şirketleri gönder"
 
 #: src/postulo_dav/sync.py
 msgid "Send contacts"
-msgstr ""
+msgstr "Kişileri gönder"
 
 #: src/postulo_dav/sync.py
 msgid "Send my own card"
-msgstr ""
+msgstr "Kendi kartımı gönder"
 
 #: src/postulo_dav/sync.py
 msgid "Server address"
@@ -303,40 +304,40 @@ msgstr "Sunucu adresi"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
-msgstr ""
+msgstr "görev listesi"
 
 #: src/postulo_dav/sync.py
 msgid "Task list"
-msgstr ""
+msgstr "Görev listesi"
 
 #: src/postulo_dav/sync.py
 msgid "Task lists"
-msgstr ""
+msgstr "Görev listeleri"
 
 #: src/postulo_dav/sync.py
 msgid "Tasks about applications"
-msgstr ""
+msgstr "Başvurularla ilgili görevler"
 
 #: src/postulo_dav/sync.py
 msgid "That card has changed since it was listed."
-msgstr ""
+msgstr "Bu kart listelendiğinden beri değişti."
 
 #: src/postulo_dav/sync.py
 msgid "That card is not in the chosen address book."
-msgstr ""
+msgstr "Bu kart seçilen adres defterinde değil."
 
 #: src/postulo_dav/sync.py
 msgid "That task has changed since it was listed."
-msgstr ""
+msgstr "Bu görev listelendiğinden beri değişti."
 
 #: src/postulo_dav/sync.py
 msgid "That task is not in the chosen task list."
-msgstr ""
+msgstr "Bu görev seçilen görev listesinde değil."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The %(kind)s is paired with an event that has an organizer, so it is read from the calendar and never written to it."
-msgstr ""
+msgstr "%(kind)s, düzenleyicisi olan bir etkinlikle eşleşmiş; bu yüzden takvimden okunur ve takvime asla yazılmaz."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -356,7 +357,7 @@ msgstr "Adres https:// ile başlamalıdır — örneğin %(example)s."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
-msgstr ""
+msgstr "“%(name)s” takvimi etkinlik kabul etmiyor, bu yüzden kullanılmadı."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -365,20 +366,20 @@ msgstr "“%(name)s” takvimi sunucuda yok."
 
 #: src/postulo_dav/sync.py
 msgid "The card could not be read, so it was not changed."
-msgstr ""
+msgstr "Kart okunamadı, bu yüzden değiştirilmedi."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a company of."
-msgstr ""
+msgstr "Kartta şirket oluşturmak için bir ad yok."
 
 #: src/postulo_dav/sync.py
 msgid "The card has no name to make a contact of."
-msgstr ""
+msgstr "Kartta kişi oluşturmak için bir ad yok."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The collection “%(href)s” is no longer on the server. It was not made again; choose another, or let it go."
-msgstr ""
+msgstr "“%(href)s” koleksiyonu artık sunucuda değil. Yeniden oluşturulmadı; başka birini seçin ya da bırakın."
 
 #: src/postulo_dav/sync.py
 msgid "The first sync will make what is missing."
@@ -392,7 +393,7 @@ msgstr "Sunucu %(method)s %(path)s isteğine HTTP %(status)d yanıtını verdi."
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The server does not let you write to “%(name)s”: read only."
-msgstr ""
+msgstr "Sunucu “%(name)s” içine yazmanıza izin vermiyor: salt okunur."
 
 #: src/postulo_dav/dav.py
 msgid "The server does not name a calendar home."
@@ -409,7 +410,7 @@ msgstr "Sunucu %(kind)s hesabının nerede olduğunu söylemiyor."
 
 #: src/postulo_dav/sync.py
 msgid "The server does not say whether it may be written"
-msgstr ""
+msgstr "Sunucu, yazılıp yazılamayacağını bildirmiyor"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -427,7 +428,7 @@ msgstr "Sunucu kullanıcı adını ya da parolayı reddetti."
 
 #: src/postulo_dav/sync.py
 msgid "The server would not make a task list, so it may not keep tasks."
-msgstr ""
+msgstr "Sunucu bir görev listesi oluşturmadı, bu yüzden görev tutmayabilir."
 
 #: src/postulo_dav/sync.py
 msgid "The server's address, e.g. https://cloud.example.org, or the address of its DAV service where it lives under a path, e.g. https://example.org/dav.php/. Postulo finds the address book and calendar homes from there."
@@ -445,31 +446,31 @@ msgstr "Sunucunun %(path)s için verdiği yanıt çok büyük ya da çok yavaşt
 
 #: src/postulo_dav/sync.py
 msgid "The task could not be read, so it was not changed."
-msgstr ""
+msgstr "Görev okunamadı, bu yüzden değiştirilmedi."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task for “%(name)s” was removed from the task list; the reminder was kept."
-msgstr ""
+msgstr "“%(name)s” görevi görev listesinden kaldırıldı; hatırlatma korundu."
 
 #: src/postulo_dav/sync.py
 msgid "The task has no due time to make a reminder of."
-msgstr ""
+msgstr "Görevin hatırlatma oluşturmak için bir bitiş zamanı yok."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task list “%(name)s” is not on the server."
-msgstr ""
+msgstr "“%(name)s” görev listesi sunucuda yok."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” has no due time, so it was not made a reminder."
-msgstr ""
+msgstr "“%(name)s” görevinin bitiş zamanı yok, bu yüzden hatırlatma oluşturulmadı."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
-msgstr ""
+msgstr "“%(name)s” görevi görev listesinden kaldırıldı; yeniden oluşturulmaz."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -479,24 +480,24 @@ msgstr "Takvimdeki %(kind)s zamanı kullanılamadı (%(why)s), bu nedenle taşı
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
-msgstr ""
+msgstr "“%(name)s” görevinin zamanı kullanılamadı (%(why)s), bu yüzden hatırlatma taşınmadı."
 
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
-msgstr ""
+msgstr "Bu koleksiyon burada salt okunur, bu yüzden bir %(method)s isteği gönderilmedi."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
-msgstr ""
+msgstr "Yalnızca aşağıda hiçbir koleksiyon seçilmediği sürece kullanılır. Bir takvimin adı veya adresi; orada olmayan bir takvim, salt okunur açık değilse ilk eşitlemede oluşturulur. Takvimin tamamı eşitlenir ve iki takvimin paylaştığı bir ad reddedilir."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a task list to keep your reminders in; blank, and none is used. A name that is not there is made by the first sync, unless read only is on. Needs a server that keeps tasks."
-msgstr ""
+msgstr "Yalnızca aşağıda hiçbir koleksiyon seçilmediği sürece kullanılır. Hatırlatmalarınızı tutacağınız bir görev listesinin adı veya adresi; boş bırakılırsa hiçbiri kullanılmaz. Orada olmayan bir ad, salt okunur açık değilse ilk eşitlemede oluşturulur. Görev tutan bir sunucu gerekir."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
-msgstr ""
+msgstr "Yalnızca aşağıda hiçbir koleksiyon seçilmediği sürece kullanılır. Bir adres defterinin adı veya adresi; orada olmayan bir adres defteri, salt okunur açık değilse ilk eşitlemede oluşturulur. Adres defterinin tamamı eşitlenir ve iki adres defterinin paylaştığı bir ad reddedilir."
 
 #: src/postulo_dav/sync.py
 msgid "Username"
@@ -504,37 +505,37 @@ msgstr "Kullanıcı adı"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
-msgstr ""
+msgstr "Hangi kişilerin adres defterinde bir kart alacağı. Orada olan kartlar kalır ve bu kapalıyken onlara başka bir şey gönderilmez."
 
 #: src/postulo_dav/sync.py
 msgid "Write each company as a card of its own (a company card, with its name and website), kept in step with the company."
-msgstr ""
+msgstr "Her şirketi, şirketle uyum içinde tutulan kendi kartı olarak yazın (adı ve web sitesiyle bir şirket kartı)."
 
 #: src/postulo_dav/sync.py
 msgid "Write your own details to a card of its own, one way: a change on the phone never reaches your profile."
-msgstr ""
+msgstr "Kendi bilgilerinizi kendi kartına tek yönlü yazın: telefondaki bir değişiklik profilinize asla ulaşmaz."
 
 #: src/postulo_dav/sync.py
 msgid "your own card"
-msgstr ""
+msgstr "kendi kartınız"
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was not sent: your profile has no name."
-msgstr ""
+msgstr "Kendi kartınız gönderilmedi: profilinizde ad yok."
 
 #: src/postulo_dav/sync.py
 msgid "Your own card was removed from the address book; kept."
-msgstr ""
+msgstr "Kendi kartınız adres defterinden kaldırıldı; korundu."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(href)s” could not be read: %(error)s"
-msgstr ""
+msgstr "“%(href)s” okunamadı: %(error)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed here, but changed on the phone later; took theirs."
-msgstr ""
+msgstr "“%(name)s” burada değişti, ama telefonda daha sonra değişti; onlarınki alındı."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -549,32 +550,32 @@ msgstr "“%(name)s” her iki tarafta da değişti ve telefondan gelen kartta z
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” changed on the phone, but changed here later; kept ours."
-msgstr ""
+msgstr "“%(name)s” telefonda değişti, ama burada daha sonra değişti; bizimki korundu."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: %(why)s"
-msgstr ""
+msgstr "“%(name)s” bir görüşmeye dönüştürülemedi: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” could not be made into an interview: its time cannot be read."
-msgstr ""
+msgstr "“%(name)s” bir görüşmeye dönüştürülemedi: saati okunamıyor."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a calendar."
-msgstr ""
+msgstr "“%(name)s” bir takvim değil."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not a task list."
-msgstr ""
+msgstr "“%(name)s” bir görev listesi değil."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” is not an address book."
-msgstr ""
+msgstr "“%(name)s” bir adres defteri değil."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -589,7 +590,7 @@ msgstr "“%(name)s” sunucuda başka bir adrese taşındı; eşleşmesi sürü
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s” was not changed from the card: %(why)s"
-msgstr ""
+msgstr "“%(name)s” karttan değiştirilmedi: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
