@@ -54,6 +54,11 @@ msgstr[4] "Ní ó Postulo atá %(count)d tasc sa liosta tascanna, agus fágadh g
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "Baineadh %(kind)s den fhéilire ar ghléas eile; coinníodh anseo é."
 
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "(no company)"
 msgstr "(gan chuideachta)"
@@ -71,6 +76,11 @@ msgstr "Ní féidir cárta a dhéanamh de sin."
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "Athraíodh teagmhálaí a scriosadh anseo ar an bhfón ón sioncronú deireanach. Fágadh an cárta sa leabhar seoltaí, agus tiocfaidh sé ar ais mar theagmhálaí ar an gcéad rith eile."
 
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 #, fuzzy
 msgid "A reminder changed on both sides at once; next run decides."
@@ -81,7 +91,7 @@ msgstr "Athraíodh meabhrúchán ar an dá thaobh ag an am céanna; socróidh an
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
 msgstr "Bhí meabhrúchán a scriosadh anseo athraithe ar an bhfón ó rinneadh an sioncronú deireanach. Fágadh an tasc sa liosta tascanna."
 
-#: src/postulo_dav/dav.py
+#: src/postulo_dav/dav.py src/postulo_dav/files.py
 #, fuzzy
 msgid "A request outside the chosen collections was not sent."
 msgstr "Níor seoladh iarraidh lasmuigh de na bailiúcháin roghnaithe."
@@ -109,6 +119,14 @@ msgid "Address books"
 msgstr "Leabhair seoltaí"
 
 #: src/postulo_dav/sync.py
+msgid "addresses"
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "All in the folder, with descriptive names"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "All of them"
 msgstr "Iad ar fad"
 
@@ -116,6 +134,10 @@ msgstr "Iad ar fad"
 #, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
 msgstr "Coinnigh dhá thasc freisin do gach iarratas sa liosta tascanna: ceann chun iarratas a dhéanamh, a sheolann moladh chugat nuair a chuireann tú tic leis, agus ceann chun freagra a fháil, a dhúnann nuair a chríochnaíonn an t-iarratas. Suíonn meabhrúcháin faoi iarratas faoina thasc oscailte."
+
+#: src/postulo_dav/sync.py
+msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -137,6 +159,10 @@ msgstr "Bogadh agallamh chuig seoladh eile san fhéilire; tá sé péireáilte f
 #, fuzzy, python-format
 msgid "Apply to %(role)s at %(company)s"
 msgstr "Déan iarratas ar %(role)s ag %(company)s"
+
+#: src/postulo_dav/store.py
+msgid "By company and role, each in its own folder"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -181,6 +207,14 @@ msgid "Collections"
 msgstr "Bailiúcháin"
 
 #: src/postulo_dav/sync.py
+msgid "Deadlines and dates"
+msgstr ""
+
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+msgid "Folder address"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
 msgstr "Aimsíodh: %(what)s “%(name)s” (%(how)s)."
@@ -204,6 +238,10 @@ msgstr "Ón gcárta “%(name)s”: %(details)s"
 #, fuzzy, python-format
 msgid "Hear back from %(company)s about %(role)s"
 msgstr "Faigh freagra ó %(company)s faoi %(role)s"
+
+#: src/postulo_dav/store.py
+msgid "How files are arranged"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -259,11 +297,15 @@ msgid "None of the chosen collections is on the server."
 msgstr "Níl aon cheann de na bailiúcháin roghnaithe ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
+msgid "numbers"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "Thar http:// téann an pasfhocal trasna an líonra gan chriptiú, agus ní seoladh ar do líonra féin é “%(host)s”. Úsáid https://."
 
-#: src/postulo_dav/sync.py
+#: src/postulo_dav/backup.py src/postulo_dav/store.py src/postulo_dav/sync.py
 msgid "Password or app password"
 msgstr "Pasfhocal nó pasfhocal aipe"
 
@@ -316,6 +358,14 @@ msgstr "Seol mo chárta féin"
 #: src/postulo_dav/sync.py
 msgid "Server address"
 msgstr "Seoladh an fhreastalaí"
+
+#: src/postulo_dav/backup.py
+msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -374,6 +424,10 @@ msgstr "Níl an leabhar seoltaí “%(name)s” ar an bhfreastalaí."
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "Caithfidh an seoladh tosú le https:// — mar shampla %(example)s."
 
+#: src/postulo_dav/backup.py
+msgid "The backup is not in the folder after the upload."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
@@ -408,6 +462,53 @@ msgstr "Níl an bailiúchán “%(href)s” ar an bhfreastalaí a thuilleadh. N�
 msgid "The first sync will make what is missing."
 msgstr "Cruthóidh an chéad sioncronú a bhfuil in easnamh."
 
+#: src/postulo_dav/files.py
+#, python-format
+msgid "The folder %(path)s could not be made: the folder above it is not there."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
+msgstr ""
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
+msgstr ""
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "The folder %(path)s is there, with %(count)d items in it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
+msgstr ""
+
+#: src/postulo_dav/files.py
+msgid "The folder is full: the server has no room for the file."
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
@@ -428,6 +529,10 @@ msgstr "Ní ainmníonn an freastalaí baile féilire."
 msgid "The server does not name an address book home."
 msgstr "Ní ainmníonn an freastalaí baile leabhar seoltaí."
 
+#: src/postulo_dav/backup.py
+msgid "The server does not say how big the file is, so it cannot confirm."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server does not say where the %(kind)s account is."
@@ -447,6 +552,10 @@ msgstr "Thagair an freastalaí do sheoladh lasmuigh dá chuid féin (%(host)s); 
 #, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "D’atreoraigh an freastalaí %(path)s an iomarca uaireanta."
+
+#: src/postulo_dav/files.py
+msgid "The server redirected an upload, which is not followed."
+msgstr ""
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -502,6 +611,10 @@ msgstr "Níl aon dáta dlite ar an tasc “%(name)s”, mar sin ní dhearnadh me
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
 msgstr "Baineadh an tasc “%(name)s” den liosta tascanna; ní dhéantar arís é."
 
+#: src/postulo_dav/backup.py
+msgid "The time for this upload ran out."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
@@ -512,10 +625,20 @@ msgstr "Níorbh fhéidir am an %(kind)s ar an bhféilire a úsáid (%(why)s), ma
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
 msgstr "Níorbh fhéidir am an taisc “%(name)s” a úsáid (%(why)s), mar sin níor aistríodh an meabhrúchán."
 
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+#, python-format
+msgid "There is room for %(size)s more."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
 msgstr "Tá an bailiúchán seo léamh amháin anseo, mar sin níor seoladh %(method)s."
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "Too many files already have the name %(name)s in that folder."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -532,9 +655,17 @@ msgstr "Úsáidtear é seo ach amháin nuair nach bhfuil aon bhailiúchán roghn
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
 msgstr "Úsáidtear é seo ach amháin nuair nach bhfuil aon bhailiúchán roghnaithe thíos. Ainm nó seoladh leabhair seoltaí; mura bhfuil sé ann, cruthaíonn an chéad sioncronú é, mura bhfuil léamh amháin ar siúl. Sioncronaítear an leabhar seoltaí iomlán, agus diúltaítear d’ainm a roinneann dhá leabhar seoltaí."
 
-#: src/postulo_dav/sync.py
+#: src/postulo_dav/backup.py src/postulo_dav/store.py src/postulo_dav/sync.py
 msgid "Username"
 msgstr "Ainm úsáideora"
+
+#: src/postulo_dav/sync.py
+msgid "web addresses"
+msgstr ""
+
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+msgid "WebDAV folder"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -639,6 +770,21 @@ msgstr "Baineadh “%(name)s” den leabhar seoltaí; coinnithe anseo."
 #, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "Fágadh “%(name)s” ar lár: %(reason)s"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the email on the card was not taken: %(why)s"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format

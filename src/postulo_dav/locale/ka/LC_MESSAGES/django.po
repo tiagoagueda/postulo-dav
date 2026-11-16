@@ -48,6 +48,11 @@ msgstr[1] "დავალებების სიაში %(count)d დავ
 msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s წაიშალა კალენდრიდან სხვა მოწყობილობაზე; აქ შენარჩუნდა."
 
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "(no company)"
 msgstr "(კომპანიის გარეშე)"
@@ -64,6 +69,11 @@ msgstr "ბარათიდან ამის შექმნა შეუძ
 msgid "A contact deleted here had been changed on the phone since the last sync. The card was left in the address book, and comes back as a contact on the next run."
 msgstr "აქ წაშლილი კონტაქტი ბოლო სინქრონიზაციის შემდეგ ტელეფონზე შეიცვალა. ბარათი მისამართების წიგნში დარჩა და შემდეგი გაშვებისას კონტაქტად დაბრუნდება."
 
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
 msgstr "შეხსენება ორივე მხარეს ერთდროულად შეიცვალა; გადაწყვეტს შემდეგი გაშვება."
@@ -73,7 +83,7 @@ msgstr "შეხსენება ორივე მხარეს ერთ
 msgid "A reminder deleted here had been changed on the phone since the last sync. The task was left in the task list."
 msgstr "აქ წაშლილი შეხსენება ბოლო სინქრონიზაციის შემდეგ ტელეფონზე შეცვლილი იყო. დავალება დარჩა დავალებების სიაში."
 
-#: src/postulo_dav/dav.py
+#: src/postulo_dav/dav.py src/postulo_dav/files.py
 msgid "A request outside the chosen collections was not sent."
 msgstr "არჩეული კოლექციების გარეთ მოთხოვნა არ გაიგზავნა."
 
@@ -98,6 +108,14 @@ msgid "Address books"
 msgstr "მისამართების წიგნები"
 
 #: src/postulo_dav/sync.py
+msgid "addresses"
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "All in the folder, with descriptive names"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 msgid "All of them"
 msgstr "ყველა"
 
@@ -105,6 +123,10 @@ msgstr "ყველა"
 #, fuzzy
 msgid "Also keep two tasks for each application in the task list: one to apply, which ticking sends to you as a suggestion, and one to hear back, which closes when the application ends. Reminders about an application sit under its open task."
 msgstr "ასევე შეინახეთ ორი დავალება თითოეული განაცხადისთვის დავალებების სიაში: ერთი განაცხადის გასაგზავნად, რომლის მონიშვნა გამოგიგზავნით შემოთავაზებას, და ერთი პასუხის მოსასმენად, რომელიც იკეტება, როცა განაცხადი მთავრდება. განაცხადის შეხსენებები მისი ღია დავალების ქვეშაა."
+
+#: src/postulo_dav/sync.py
+msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -126,6 +148,10 @@ msgstr "გასაუბრება კალენდარში სხვ�
 #, python-format
 msgid "Apply to %(role)s at %(company)s"
 msgstr "განაცხადის გაგზავნა პოზიციაზე %(role)s კომპანიაში %(company)s"
+
+#: src/postulo_dav/store.py
+msgid "By company and role, each in its own folder"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -170,6 +196,14 @@ msgid "Collections"
 msgstr "კოლექციები"
 
 #: src/postulo_dav/sync.py
+msgid "Deadlines and dates"
+msgstr ""
+
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+msgid "Folder address"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Found the %(what)s “%(name)s” (%(how)s)."
 msgstr "ნაპოვნია: %(what)s „%(name)s“ (%(how)s)."
@@ -193,6 +227,10 @@ msgstr "ბარათიდან „%(name)s“: %(details)s"
 #, python-format
 msgid "Hear back from %(company)s about %(role)s"
 msgstr "პასუხის მიღება კომპანიისგან %(company)s პოზიციის %(role)s შესახებ"
+
+#: src/postulo_dav/store.py
+msgid "How files are arranged"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -247,11 +285,15 @@ msgid "None of the chosen collections is on the server."
 msgstr "არჩეული კოლექციებიდან არცერთი არ არის სერვერზე."
 
 #: src/postulo_dav/sync.py
+msgid "numbers"
+msgstr ""
+
+#: src/postulo_dav/sync.py
 #, python-format
 msgid "Over http:// the password goes across the network in the clear, and “%(host)s” is not an address on your own network. Use https://."
 msgstr "http:// პროტოკოლით პაროლი ქსელში ღია სახით გადაიცემა, „%(host)s“ კი თქვენი საკუთარი ქსელის მისამართი არ არის. გამოიყენეთ https://."
 
-#: src/postulo_dav/sync.py
+#: src/postulo_dav/backup.py src/postulo_dav/store.py src/postulo_dav/sync.py
 msgid "Password or app password"
 msgstr "პაროლი ან აპლიკაციის პაროლი"
 
@@ -305,6 +347,14 @@ msgstr "ჩემი საკუთარი ბარათის გაგზ
 msgid "Server address"
 msgstr "სერვერის მისამართი"
 
+#: src/postulo_dav/backup.py
+msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 msgid "task list"
 msgstr "დავალებების სია"
@@ -357,6 +407,10 @@ msgstr "მისამართების წიგნი „%(name)s“ ს�
 msgid "The address must start with https:// — for example %(example)s."
 msgstr "მისამართი უნდა იწყებოდეს https:// პრეფიქსით — მაგ., %(example)s."
 
+#: src/postulo_dav/backup.py
+msgid "The backup is not in the folder after the upload."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The calendar “%(name)s” does not take events, so it was not used."
@@ -388,6 +442,53 @@ msgstr "კოლექცია „%(href)s“ აღარ არის სე
 msgid "The first sync will make what is missing."
 msgstr "რაც აკლია, პირველი სინქრონიზაცია შექმნის."
 
+#: src/postulo_dav/files.py
+#, python-format
+msgid "The folder %(path)s could not be made: the folder above it is not there."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
+msgstr ""
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
+msgstr ""
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "The folder %(path)s is there, with %(count)d items in it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+#, python-format
+msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
+msgstr ""
+
+#: src/postulo_dav/files.py
+msgid "The folder is full: the server has no room for the file."
+msgstr ""
+
+#: src/postulo_dav/store.py
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
+msgstr ""
+
+#: src/postulo_dav/backup.py
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server answered HTTP %(status)d for %(method)s %(path)s."
@@ -408,6 +509,10 @@ msgstr "სერვერი არ ასახელებს კალენ
 msgid "The server does not name an address book home."
 msgstr "სერვერი არ ასახელებს მისამართების წიგნის საწყის საქაღალდეს."
 
+#: src/postulo_dav/backup.py
+msgid "The server does not say how big the file is, so it cannot confirm."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, python-format
 msgid "The server does not say where the %(kind)s account is."
@@ -426,6 +531,10 @@ msgstr "სერვერმა მიუთითა მისამართ�
 #, python-format
 msgid "The server redirected %(path)s too many times."
 msgstr "სერვერმა %(path)s ძალიან ბევრჯერ გადაამისამართა."
+
+#: src/postulo_dav/files.py
+msgid "The server redirected an upload, which is not followed."
+msgstr ""
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -478,6 +587,10 @@ msgstr "დავალებას „%(name)s“ ვადა არ აქვ
 msgid "The task “%(name)s” was removed from the task list; it is not made again."
 msgstr "დავალება „%(name)s“ ამოიშალა დავალებების სიიდან; იგი თავიდან არ იქმნება."
 
+#: src/postulo_dav/backup.py
+msgid "The time for this upload ran out."
+msgstr ""
+
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
 msgid "The time of the %(kind)s on the calendar could not be used (%(why)s), so it was not moved."
@@ -488,10 +601,20 @@ msgstr "კალენდარში %(kind)s-ის დროის გამ
 msgid "The time of the task “%(name)s” could not be used (%(why)s), so the reminder was not moved."
 msgstr "დავალების „%(name)s“ დროის გამოყენება ვერ მოხერხდა (%(why)s), ამიტომ შეხსენება არ გადატანილა."
 
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+#, python-format
+msgid "There is room for %(size)s more."
+msgstr ""
+
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
 msgid "This collection is read only here, so a %(method)s was not sent."
 msgstr "ეს კოლექცია აქ მხოლოდ წაკითხვისთვისაა, ამიტომ %(method)s მოთხოვნა არ გაიგზავნა."
+
+#: src/postulo_dav/store.py
+#, python-format
+msgid "Too many files already have the name %(name)s in that folder."
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -508,9 +631,17 @@ msgstr "გამოიყენება მხოლოდ მაშინ, �
 msgid "Used only while no collection is chosen below. A name or an address of an address book; one that is not there is made by the first sync, unless read only is on. The whole address book syncs, and a name two address books share is refused."
 msgstr "გამოიყენება მხოლოდ მაშინ, როცა ქვემოთ კოლექცია არჩეული არ არის. მისამართების წიგნის სახელი ან მისამართი; თუ ის არ არსებობს, იქმნება პირველი სინქრონიზაციისას, თუ მხოლოდ წაკითხვა ჩართული არ არის. სინქრონიზდება მთელი მისამართების წიგნი, ხოლო სახელი, რომელიც ორ მისამართების წიგნს აქვს, უარიყოფა."
 
-#: src/postulo_dav/sync.py
+#: src/postulo_dav/backup.py src/postulo_dav/store.py src/postulo_dav/sync.py
 msgid "Username"
 msgstr "მომხმარებლის სახელი"
+
+#: src/postulo_dav/sync.py
+msgid "web addresses"
+msgstr ""
+
+#: src/postulo_dav/backup.py src/postulo_dav/store.py
+msgid "WebDAV folder"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -613,6 +744,21 @@ msgstr "„%(name)s“ მოიხსნა მისამართები�
 #, python-format
 msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "„%(name)s“ გამოტოვებულია: %(reason)s"
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
+msgstr ""
+
+#: src/postulo_dav/sync.py
+#, python-format
+msgid "“%(name)s”: the email on the card was not taken: %(why)s"
+msgstr ""
 
 #: src/postulo_dav/sync.py
 #, python-format
