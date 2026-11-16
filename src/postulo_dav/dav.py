@@ -68,6 +68,11 @@ _PRINCIPAL = (
     '<?xml version="1.0" encoding="utf-8"?>'
     '<d:propfind xmlns:d="DAV:"><d:prop><d:current-user-principal/></d:prop></d:propfind>'
 )
+_PRINCIPAL_ADDRESS = (
+    '<?xml version="1.0" encoding="utf-8"?>'
+    '<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:carddav"><d:prop>'
+    "<c:principal-address/></d:prop></d:propfind>"
+)
 _HOMES = (
     '<?xml version="1.0" encoding="utf-8"?>'
     '<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:carddav" '
@@ -441,6 +446,24 @@ class Server:
         raise DavError(
             _("The server does not say where the %(kind)s account is.") % {"kind": well_known}
         )
+
+    def principal_address(self, principal: str) -> str:
+        """The card the server says is the person's own (``CARDDAV:principal-address``,
+        RFC 6352 §7.1.2), as an absolute address, or nothing: few servers say (#8)."""
+        try:
+            tree = self.propfind(principal, _PRINCIPAL_ADDRESS, "0", discovery=True)
+        except AuthenticationRefused:
+            raise
+        except DavError:
+            return ""
+        for node in tree.iter(f"{{{CARD}}}principal-address"):
+            for inner in node.findall(f"{{{DAV}}}href"):
+                if inner.text:
+                    try:
+                        return self.absolute(inner.text.strip())
+                    except DavError:
+                        return ""
+        return ""
 
     def homes(self, principal: str, kind: str) -> list[str]:
         """Every home set the principal names for ``kind``, first the server's first."""

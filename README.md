@@ -48,10 +48,20 @@ to the *Postulo* address book and calendar the way you would to any other.
 
 ## What travels
 
-**Contacts ↔ vCard 4.0.** Name, company (`ORG`), role (`TITLE`), email, phone, LinkedIn
-(`URL`) and notes. A contact created on the phone in the *Postulo* address book becomes a
-contact here, under the company its `ORG` names or a *(no company)* holding company until
-you assign one.
+**Contacts ↔ vCard.** Name, company and department (`ORG:Company;Unit`), role (`TITLE`),
+email, phone, LinkedIn (`URL`) and notes; further numbers (`TEL`), further web addresses
+(`URL`) and postal addresses (`ADR`) as well. The card is written in the version the address
+book lists in `supported-address-data`: 4.0, or 3.0 where 4.0 is not listed (RFC 6352
+§6.2.2), without the 4.0-only `ADR` parameters. The department is the `ORG` unit only while
+*Employer structure* is on for you: while it is off, nothing of a department is read or
+written, and a unit on a card made elsewhere is left as it is. A contact created on the
+phone in the *Postulo* address book becomes a contact here, under the company its `ORG` names
+or a *(no company)* holding company until you assign one; its unit becomes its department.
+Numbers, web addresses and postal addresses from a card are **added** to the contact and
+none is ever removed (the core's rules still apply: a number another record holds, or an
+address its country's rules refuse, is a note in the run's report); the ones you add here
+are added to the card. A pull that moves a contact to another company leaves the old
+company's department behind.
 
 **Interviews ↔ VEVENT.** Start, end, *Kind: Role at Company* as the summary, the place or
 the call link, the people you are meeting and the application's link (when the instance
@@ -128,18 +138,24 @@ Events that belong to no application (an appointment with the employment office)
 paired yet: the core's Pairing page has no record kind for an appointment. Whole-day events
 (deadlines, closing dates) are not written to the calendar.
 
-**Pairing a card made elsewhere with a contact or a company.** On the connection's *Pairing*
-page a person finds a card of the chosen address book (one `addressbook-query` on its name,
-never the whole book) and pairs it with a contact, or with a company. A card marked
-`KIND:org` (or Apple's `X-ABShowAs:COMPANY`) is offered as a company. A card made elsewhere,
-including one adopted from the phone, is patched, never rebuilt: only the name, company (the
-first `ORG` component; a unit after it stays), title, first email, first number and web
-address are replaced, and its UID, version, photo, addresses, birthday, further numbers,
-`X-` properties and parameters such as `LANGUAGE` stay as written. Its `NOTE` is not
-exchanged either way: your notes are private and gather conflict records. Deleting the
-contact unpairs the card and leaves it; only a card Postulo wrote is deleted. A company
-paired with a card keeps name and website in step both ways. Departments, the account
-holder's own card and a vCard 3 step-down for the cards Postulo writes are not done yet.
+**Pairing a card made elsewhere with a contact, a company or yourself.** On the connection's
+*Pairing* page a person finds a card of the chosen address book (one `addressbook-query` on
+its name, never the whole book) and pairs it with a contact, a company, or *you*. A card
+marked `KIND:org` (or Apple's `X-ABShowAs:COMPANY`) is offered as a company only. *You* is the
+card the server names as yours (`CARDDAV:principal-address`, RFC 6352 §7.1.2, which few
+servers give); where the server names none, any card may be paired as yours. A card made
+elsewhere, including one adopted from the phone, is patched, never rebuilt: only the name,
+company and unit (the `ORG` components), title, first email, first number and web address
+are replaced, numbers, web addresses and postal addresses it lacks are added, and its UID,
+version, `KIND`, photo, birthday, other addresses and numbers, `X-` properties and
+parameters such as `LANGUAGE` stay as written. Its `NOTE` is not exchanged either way: your
+notes are private and gather conflict records. Deleting the contact unpairs the card and
+leaves it; only a card Postulo wrote is deleted. A company paired with a card keeps name and
+website in step both ways. **Your own card**, once paired and with *Send my own card* on, is
+written one way: your name, sign-in address, headline, first number and first link replace
+the card's, only to give a property a value (a blank here never blanks the phone's), and
+nothing on it is ever read back into your profile, so a phone cannot change your sign-in
+email or a number you verified.
 
 **Importing one card.** From the *Pairing* page a card of the chosen address book can be
 copied once into Postulo: as a **new company** (name from the card's `FN` for a company's

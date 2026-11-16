@@ -14,6 +14,14 @@ import re
 from dataclasses import dataclass, field
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+from postulo.plugins.api import (
+    VCard,
+    VCardAddress,
+    VCardRefused,
+    vcard_from_values,
+    vcards_from_text,
+)
+
 LINE_OCTETS = 75
 
 
@@ -168,13 +176,77 @@ class Card:
     #: ``org`` for a company's card: ``KIND:org`` (vCard 4, RFC 6350 §6.1.4) or Apple's
     #: ``X-ABShowAs:COMPANY``. Not part of what is compared, and not written (#8).
     kind: str = ""
-    #: The second ``ORG`` component, the unit (RFC 6350 §6.6.4): a department. Not compared.
+    #: The second ``ORG`` component, the unit (RFC 6350 §6.6.4): a department. Compared, and
+    #: written, only where ``sync_unit`` says so: a department is hidden while the person's
+    #: employer structure is off, and then nothing of it travels (#8).
     unit: str = ""
+    sync_unit: bool = False
+    #: The numbers after the first ``TEL`` and the addresses after the first ``URL``, and the
+    #: postal addresses (``ADR``), as plain values (#8). The first of each stays in ``phone``
+    #: and ``url``.
+    more_phones: tuple[str, ...] = ()
+    more_urls: tuple[str, ...] = ()
+    addresses: tuple[VCardAddress, ...] = ()
+    #: The ``VERSION`` a card was read as; never written from here.
+    version: str = field(default="", compare=False)
 
     def digest_source(self) -> str:
-        return "\n".join(
-            [self.name, self.org, self.title, self.email, self.phone, self.url, self.note]
-        )
+        parts = [self.name, self.org, self.title, self.email, self.phone, self.url, self.note]
+        # What is new is added only when there is some, so the digest of a card with a
+        # single number and no address stays what it was before cards carried more (#8).
+        if self.sync_unit and self.unit:
+            parts.append("unit:" + self.unit)
+        if self.more_phones:
+            parts.append("tel:" + "|".join(sorted(digits(n) for n in self.more_phones)))
+        if self.more_urls:
+            parts.append("url:" + "|".join(sorted(web_key(u) for u in self.more_urls)))
+        if self.addresses:
+            parts.append("adr:" + "|".join(sorted(address_key(a) for a in self.addresses)))
+        return "\n".join(parts)
+
+
+def digits(number: str) -> str:
+    """A number for comparing: its digits, and a leading ``+`` (so ``00`` is not ``+``)."""
+    text = number.strip().replace("tel:", "")
+    plus = "+" if text.startswith("+") else ""
+    return plus + "".join(ch for ch in text if ch.isdigit())
+
+
+def web_key(url: str) -> str:
+    return url.strip().lower().rstrip("/")
+
+
+def address_key(address: VCardAddress) -> str:
+    """An address for comparing: its parts, as words, case aside."""
+    parts = (
+        address.street,
+        address.postcode,
+        address.municipality,
+        address.region,
+        address.country,
+    )
+    return " / ".join(" ".join(part.lower().split()) for part in parts)
+
+
+def address_lines(addresses, version: str) -> list[str]:
+    """The ``ADR`` lines for ``addresses``, as the core writes them (one mapping, #660).
+
+    The core writes vCard 4.0; for a 3.0 book the 4.0-only parameters (``PREF`` as a number,
+    ``CC``) go, and the first preference is a ``TYPE`` the way 3.0 says it.
+    """
+    if not addresses:
+        return []
+    written = vcard_from_values(VCard(name="-", addresses=tuple(addresses)))
+    out = []
+    for line in unfold(written):
+        if not line.startswith("ADR"):
+            continue
+        if version != "4.0":
+            head, _, value = line.partition(":")
+            params = [p for p in head.split(";")[1:] if not p.startswith(("CC=", "PREF="))]
+            line = ";".join(["ADR", *params]) + ":" + value
+        out.append(line)
+    return out
 
 
 def card_to_text(
@@ -208,7 +280,8 @@ def card_to_text(
         family, _, given = card.name.strip().rpartition(" ")
         lines.append(f"N:{escape(given)};{escape(family)};;;")
     if card.org:
-        lines.append(f"ORG:{escape(card.org)}")
+        unit = f";{escape(card.unit)}" if card.sync_unit and card.unit else ""
+        lines.append(f"ORG:{escape(card.org)}{unit}")
     if card.title:
         lines.append(f"TITLE:{escape(card.title)}")
     if card.email:
@@ -216,8 +289,13 @@ def card_to_text(
         lines.append(f"EMAIL;TYPE=work:{without_controls(card.email)}")
     if card.phone:
         lines.append(f"TEL;TYPE=work,voice:{escape(card.phone)}")
+    for number in card.more_phones:
+        lines.append(f"TEL;TYPE=voice:{escape(number)}")
     if card.url:
         lines.append(f"URL:{without_controls(card.url)}")
+    for url in card.more_urls:
+        lines.append(f"URL:{without_controls(url)}")
+    lines.extend(address_lines(card.addresses, version))
     if card.note:
         lines.append(f"NOTE:{escape(card.note)}")
     lines.append(f"REV:{stamp(rev)}")
@@ -258,7 +336,28 @@ def text_to_card(text: str) -> Card:
             card.kind = "org"
         elif prop.name == "X-ABSHOWAS" and prop.value.strip().upper() == "COMPANY":
             card.kind = "org"
+        elif prop.name == "VERSION":
+            card.version = prop.value.strip()
+    _read_rows(card, text)
     return card
+
+
+def _read_rows(card: Card, text: str) -> None:
+    """The numbers, web addresses and postal addresses the core's reader finds (#660).
+
+    A card that reader refuses (a version it does not read) has none of them here either;
+    everything else about the card is read above and does not depend on it.
+    """
+    try:
+        read = vcards_from_text(text)
+    except (VCardRefused, ValueError):
+        return
+    if not read.cards:
+        return
+    one = read.cards[0]
+    card.more_phones = tuple(p.number for p in one.phones[1:])
+    card.more_urls = tuple(link.url for link in one.links if web_key(link.url) != web_key(card.url))
+    card.addresses = tuple(one.addresses)
 
 
 def _value_at(line: str) -> int:
@@ -272,7 +371,14 @@ def _value_at(line: str) -> int:
     return len(line)
 
 
-def patch_card(source: str, uid: str, changes: dict[str, str], *, rev: dt.datetime) -> str | None:
+def patch_card(
+    source: str,
+    uid: str,
+    changes: dict[str, str],
+    *,
+    rev: dt.datetime,
+    add: list[str] | None = None,
+) -> str | None:
     """The card ``uid`` with only the properties in ``changes`` replaced, or ``None``.
 
     A card somebody else made is patched, never rebuilt (#8): its UID, VERSION, KIND, photo,
@@ -280,7 +386,10 @@ def patch_card(source: str, uid: str, changes: dict[str, str], *, rev: dt.dateti
     parameter such as ``LANGUAGE`` come back as they were. ``changes`` maps ``FN``, ``ORG``
     (the company, the first component: a unit after it stays), ``TITLE``, ``EMAIL``, ``TEL``
     and ``URL`` to their new value, the first of each property is the one replaced, and an
-    empty value removes it. ``N`` is left as it is: a name does not split reliably.
+    empty value removes it. ``UNIT`` is the second ``ORG`` component, the department. ``N``
+    is left as it is: a name does not split reliably. ``add`` is whole lines to put in
+    beside what is there (a number, an address the card lacks): nothing is ever removed
+    for them.
     """
     lines = unfold(source)
     start = end = None
@@ -308,17 +417,25 @@ def patch_card(source: str, uid: str, changes: dict[str, str], *, rev: dt.dateti
         name = prop.name if prop is not None else ""
         if name == "REV":
             continue
-        if name in changes and name not in seen:
+        if name == "ORG" and name not in seen and ("ORG" in changes or "UNIT" in changes):
+            seen.add(name)
+            head = line[: _value_at(line)]
+            parts = _split_unquoted(prop.value, ";")
+            if "ORG" in changes:
+                parts[0] = escape(changes["ORG"])
+            if "UNIT" in changes:
+                parts = parts[:1] + ([escape(changes["UNIT"])] if changes["UNIT"] else [])
+            while len(parts) > 1 and not parts[-1]:
+                parts.pop()
+            if parts == [""]:
+                continue
+            out.append(head + ";".join(parts))
+            continue
+        if name in changes and name not in seen and name not in ("ORG", "UNIT"):
             seen.add(name)
             new = changes[name]
             head = line[: _value_at(line)]
-            if name == "ORG":
-                parts = _split_unquoted(prop.value, ";")
-                parts[0] = escape(new)
-                if not new and len(parts) == 1:
-                    continue
-                out.append(head + ";".join(parts))
-            elif not new:
+            if not new:
                 continue
             elif name in ("EMAIL", "URL"):
                 out.append(head + without_controls(new))
@@ -335,10 +452,15 @@ def patch_card(source: str, uid: str, changes: dict[str, str], *, rev: dt.dateti
         "URL": "URL:{}",
     }
     for name, template in added.items():
-        if name in changes and name not in seen and changes[name]:
+        if name == "ORG":
+            if "ORG" not in seen and changes.get("ORG"):
+                unit = f";{escape(changes['UNIT'])}" if changes.get("UNIT") else ""
+                out.append(f"ORG:{escape(changes['ORG'])}{unit}")
+        elif name in changes and name not in seen and changes[name]:
             value = changes[name]
             value = without_controls(value) if name in ("EMAIL", "URL") else escape(value)
             out.append(template.format(value))
+    out.extend(add or [])
     out.append(f"REV:{stamp(rev)}")
     return render(lines[: start + 1] + out + lines[end:])
 
