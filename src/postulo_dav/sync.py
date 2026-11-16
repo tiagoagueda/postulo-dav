@@ -1610,25 +1610,46 @@ class DavSync:
         )
 
     def _company_from(self, owner, card: text.Card, into):
-        """A company from a card: its name, website and, as notes, the numbers it carries.
+        """A company from a card: name, website, notes, locality, numbers and addresses.
 
         The name is the card's ``FN`` for a company's card, else the first ``ORG`` component.
         Matching an existing company is the person's call: what is filled is ``into``, and a
         new company is made only when none was given, by the name the core would match
-        (case aside). A card's numbers and emails, which a company has no place for yet
-        (postulo/postulo#329), go into its notes, under a line naming the card.
+        (case aside). Only blanks are filled: a website, a note and a location that the
+        company has are not replaced. ``ADR`` gives the free-text location (locality and
+        country) and the postal addresses; ``TEL`` the numbers. A company has no email, so
+        the card's email, and a number the core would not keep, go into its notes under a
+        line naming the card, so that nothing is lost silently (#9).
         """
         name = (card.name if card.kind == "org" else card.org or card.name)[:NAME_LENGTH]
         if not name.strip():
             raise DavError(_("The card has no name to make a company of."))
         company = into or get_or_create_company(owner, name, strict=True)
+        notes: list[str] = []
+        numbers = tuple(n for n in (card.phone, *card.more_phones) if n)
+        add_rows(company, replace(card, more_phones=numbers, more_urls=()), owner, notes)
+        kept = {text.digits(row.number) for row in numbers_for(company, owner)}
+        left = [n for n in numbers if text.digits(n) not in kept]
         changes: dict = {}
         site = web_address(card.url)
         if site and not company.website:
             changes["website"] = site
-        extras = [p for p in (card.phone, card.email) if p]
+        place = next(
+            (
+                ", ".join(p for p in (a.municipality, a.country) if p)
+                for a in card.addresses
+                if a.municipality
+            ),
+            "",
+        )
+        if place and not company.location:
+            changes["location"] = place[:200]
+        note = company.note_for(owner)
+        if not note.strip() and card.note.strip():
+            note = card.note.strip()
+            changes["notes"] = note
+        extras = [*left, *([card.email] if card.email else [])]
         if extras:
-            note = company.note_for(owner)
             line = _("From the card “%(name)s”: %(details)s") % {
                 "name": name,
                 "details": ", ".join(extras),
@@ -1637,7 +1658,7 @@ class DavSync:
                 changes["notes"] = f"{note}\n\n{line}".strip()
         if changes:
             update_company(company, actor=owner, via=ACTOR, **changes)
-            company.refresh_from_db()
+        company.refresh_from_db()
         return company
 
     def _contact_from(self, owner, card: text.Card, into):
@@ -1692,6 +1713,8 @@ class DavSync:
                 save_web_link(contact, owner, LinkKind.SOCIAL, url)
             except (ValidationError, ValueError):
                 pass  # an address the core will not keep is left out, as adoption does
+        # The further numbers and web addresses and the postal addresses, added.
+        add_rows(contact, card, owner, [])
         contact.refresh_from_db()
         return contact
 
