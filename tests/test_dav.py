@@ -2568,8 +2568,13 @@ def test_a_company_card_becomes_a_new_company_and_writes_nothing_to_the_server(
     company = import_card(connection, "acme-1", "company")
     assert Company.objects.get(name="Acme Corp") == company
     assert company.website == "https://acme.example.org"
+    from postulo.plugins.api import numbers_for
+
     note = company.note_for(user)
-    assert "+351 210 000 000" in note and "hello@acme.example.org" in note
+    # The number is a number of the company's now; only the email, which it has no place
+    # for, goes into the notes.
+    assert "hello@acme.example.org" in note
+    assert [n.number.replace(" ", "") for n in numbers_for(company, user)] == ["+351210000000"]
     assert not [m for m, _p in made.log if m not in ("PROPFIND", "GET", "REPORT")]
     assert not SyncLink.objects.filter(connection=connection)  # a one-off: nothing paired
 

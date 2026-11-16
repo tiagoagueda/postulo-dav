@@ -175,16 +175,21 @@ nothing on it is ever read back into your profile, so a phone cannot change your
 email or a number you verified.
 
 **Importing one card.** From the *Pairing* page a card of the chosen address book can be
-copied once into Postulo: as a **new company** (name from the card's `FN` for a company's
-card, else its first `ORG` component; website; its numbers and emails go into the notes,
-under a line naming the card, until a company can hold them), into an **existing company**
-or **existing contact** the person picked (only its blanks are filled, and nothing merges),
-or as a **contact** (name, title, one email, the primary number and web link; the `ORG` unit
-becomes its department where employer structure is on, and a card with no `ORG` gives a
-contact with no company). Records are written through Postulo's own services. An import
-alone writes nothing to the server; pairing it afterwards is the person's choice. Logos
-and photos are not imported, and the differences between a card and an existing company are
-not listed yet.
+copied once into Postulo, into a **new company**, an **existing company**, an **existing
+contact** or a **new contact**. For a company: the name (the card's `FN` for a company's
+card, else its first `ORG` component), website, `NOTE` as its notes, the locality and country
+of an `ADR` as its location, every `ADR` as a postal address and every `TEL` as a number; a
+company has no email, so the card's email, and a number the core would not keep, go into its
+notes under a line naming the card, and nothing is lost silently. An existing company or
+contact is only given what it lacks (its blanks are filled, a number or address is added
+beside the ones it has, nothing is overwritten and nothing merges). For a contact: name,
+title, one email, the primary number and web link, further numbers, web addresses and postal
+addresses; the `ORG` unit becomes its department where employer structure is on, and a card
+with no `ORG` gives a contact with no company. Records are written through Postulo's own
+services. An import alone writes nothing to the server; pairing it afterwards is the
+person's choice. Logos and photos are not imported (a logo needs a call the core does not
+offer), and the differences between a card and an existing company are not listed: the
+*Pairing* page has no place to show them.
 
 **Pairing.** A card or an event is paired with its record by its `UID`, with the
 address as a cache. Postulo never changes a `UID` it did not write, so a card created on the
