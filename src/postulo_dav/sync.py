@@ -63,6 +63,7 @@ from django.utils.translation import gettext_lazy, ngettext
 # risked. postulo/postulo#229 put them on it, and `tests/test_surface.py` holds this file
 # to the line.
 from postulo.plugins.api import (
+    AddressRow,
     AlreadyPaired,
     Application,
     Company,
@@ -75,13 +76,17 @@ from postulo.plugins.api import (
     InterviewOutcome,
     InterviewRefused,
     LinkKind,
+    LinkRow,
+    PhoneRow,
     Reminder,
     RemoteItem,
     Suggestion,
     SyncLink,
     SyncReport,
     TestResult,
+    VCardAddress,
     WriteRefused,
+    addresses_for,
     calendar_items,
     calendar_status,
     change_reminder,
@@ -93,6 +98,8 @@ from postulo.plugins.api import (
     event_lines,
     get_or_create_company,
     get_or_create_department,
+    links_for,
+    numbers_for,
     person_card,
     phone_number_is_taken,
     postpone_reminder,
@@ -102,7 +109,10 @@ from postulo.plugins.api import (
     reopen_reminder,
     reschedule_interview,
     save_phone_number,
+    save_phone_numbers,
+    save_postal_addresses,
     save_web_link,
+    save_web_links,
     schedule_interview,
     settle_interview,
     suggest,
@@ -212,7 +222,49 @@ def card_changes(card: text.Card, current: text.Card) -> dict[str, str]:
         "TEL": (card.phone, current.phone),
         "URL": (card.url, current.url),
     }
-    return {name: new for name, (new, old) in wanted.items() if new != old}
+    same = {"TEL": text.digits, "URL": text.web_key}
+    changed = {
+        name: new
+        for name, (new, old) in wanted.items()
+        if (same.get(name, str)(new) != same.get(name, str)(old))
+    }
+    # The unit: written when this side has one that differs, and cleared only when the
+    # company changed (the old unit was the old company's). A card with a unit this side
+    # does not know is left as it is (#8).
+    if card.sync_unit and (card.org or current.org) and card.unit != current.unit:
+        if card.unit or "ORG" in changed:
+            changed["UNIT"] = card.unit
+    return changed
+
+
+def card_additions(card: text.Card, current: text.Card, changes: dict[str, str]) -> list[str]:
+    """The lines of ``card`` the card on the server lacks: numbers, addresses, web addresses.
+
+    Added beside what is there and never replacing anything (#8): what the phone keeps and
+    this side does not know stays, and a number or address already on the card is not
+    written twice. ``changes`` is what `card_changes` found, since a first number or web
+    address that is replaced is not one the card still has.
+    """
+    have_numbers = {text.digits(n) for n in current.more_phones}
+    have_numbers.add(text.digits(card.phone if "TEL" in changes else current.phone))
+    have_urls = {text.web_key(u) for u in current.more_urls}
+    have_urls.add(text.web_key(card.url if "URL" in changes else current.url))
+    have_addresses = {text.address_key(a) for a in current.addresses}
+    lines: list[str] = []
+    for number in card.more_phones:
+        if text.digits(number) not in have_numbers:
+            have_numbers.add(text.digits(number))
+            lines.append(f"TEL;TYPE=voice:{text.escape(number)}")
+    for url in card.more_urls:
+        if text.web_key(url) not in have_urls:
+            have_urls.add(text.web_key(url))
+            lines.append(f"URL:{text.without_controls(url)}")
+    missing = []
+    for address in card.addresses:
+        if text.address_key(address) not in have_addresses:
+            have_addresses.add(text.address_key(address))
+            missing.append(address)
+    return lines + text.address_lines(missing, current.version or "4.0")
 
 
 def digest(source: str) -> str:
@@ -349,31 +401,94 @@ def _tail(href: str) -> str:
 # ------------------------------------------------------------------ contacts
 
 
-def card_for(contact: Contact, reader=None, uid: str = "") -> text.Card:
+class _NoProbe(Exception):
+    """Raised to roll the probe of `structure_on` back."""
+
+
+def structure_on(owner) -> bool:
+    """Whether departments are offered to ``owner`` (the core's *employer structure*).
+
+    The core keeps the answer off the plugin surface, and says it in the one place a plugin
+    can ask it: making a department is refused while the feature is off. So a company and a
+    department are made inside a transaction that is always rolled back, and the refusal,
+    or the lack of one, is the answer.
+    """
+    try:
+        with transaction.atomic():
+            company = get_or_create_company(owner, f"postulo-dav probe {uuid.uuid4().hex}")
+            get_or_create_department(company, "probe", actor=owner, via=ACTOR)
+            raise _NoProbe
+    except _NoProbe:
+        return True
+    except WriteRefused:
+        return False
+
+
+#: What the card's address kinds are, for an address row of the core to be told on it.
+_ADDRESS_KINDS = ("home", "work", "postal")
+
+
+def card_for(contact: Contact, reader=None, uid: str = "", units: bool = False) -> text.Card:
     """The card for ``contact`` as ``reader`` sees it: their own note, their own numbers.
 
     The note is each person's own since postulo/postulo#896: read for nobody, it raises. A
     queryset that read the contact with ``with_notes`` has set it already; otherwise it is
     asked for. ``uid`` is the identifier the card already has on the server, and is never
-    changed: a server may refuse a write that does (RFC 6352 §5.1, #7).
+    changed: a server may refuse a write that does (RFC 6352 §5.1, #7). ``units`` is whether
+    the person is offered departments: only then is the contact's department the card's
+    ``ORG`` unit (#8).
     """
     reader = reader or contact.owner
-    # A card carries one number and one address on the web; a contact holds several of
-    # each since Postulo 0.3, with one of each kind marked as the one to use. The card
-    # gets the primaries, which is what "the number" and "the LinkedIn" mean there now.
+    # A card carries a first number and a first address on the web, which are the primaries;
+    # the rest of the contact's numbers and links, and its postal addresses, follow them.
     number = primary_phone_number(contact)
     profile = primary_web_link(contact, LinkKind.SOCIAL)
     note = contact.notes if "notes" in contact.__dict__ else contact.note_for(reader)
+    first = number.number if number else ""
+    web = profile.url if profile else ""
     return text.Card(
         uid=uid or f"contact-{contact.pk}-{reader.pk}@postulo",
         name=contact.name,
         org=contact.company.name if contact.company_id else "",
         title=contact.role,
         email=contact.email,
-        phone=number.number if number else "",
-        url=profile.url if profile else "",
+        phone=first,
+        url=web,
         note=note,
+        unit=contact.department.name if units and contact.department_id else "",
+        sync_unit=units,
+        more_phones=tuple(
+            row.number for row in extra_numbers(contact, reader) if row.number != first
+        ),
+        more_urls=tuple(
+            row.url
+            for row in extra_links(contact, reader)
+            if text.web_key(row.url) != text.web_key(web)
+        ),
+        addresses=tuple(
+            VCardAddress(
+                street=row.street,
+                postcode=row.postcode,
+                municipality=row.municipality,
+                region=row.region,
+                country=row.country,
+                kind=row.kind if row.kind in _ADDRESS_KINDS else "",
+                primary=row.is_primary,
+            )
+            for row in contact.postal_addresses.all()
+        ),
     )
+
+
+def extra_numbers(contact: Contact, reader) -> tuple:
+    """The contact's numbers as ``reader`` is shown them, asked for only when there is more
+    than one: a contact with a single number costs no question here (#47)."""
+    return numbers_for(contact, reader) if len(contact.phone_numbers.all()) > 1 else ()
+
+
+def extra_links(contact: Contact, reader) -> tuple:
+    """The same for the web addresses: all of them, when there is more than the one."""
+    return links_for(contact, reader) if len(contact.web_links.all()) > 1 else ()
 
 
 def web_address(url: str) -> str:
@@ -390,22 +505,49 @@ def web_address(url: str) -> str:
     return ""
 
 
-def apply_card(contact: Contact, card: text.Card, owner, report: SyncReport | None = None) -> bool:
+def apply_card(
+    contact: Contact, card: text.Card, owner, report: SyncReport | None = None, units: bool = False
+) -> bool:
     """Write a card onto the contact. ``False`` if some of it could not be taken.
 
     Only what the card says is written: a card without a ``TEL`` leaves the number here
     alone, and one without a ``URL`` the link, because this plugin never deletes what the
-    core keeps (#26). A number another record holds is a note, never a failed run.
+    core keeps (#26). A number another record holds is a note, never a failed run. It goes
+    through the core's services with this plugin as the actor (#9): the contact, its
+    department (the ``ORG`` unit, while the person is offered departments, ``units``), and
+    its numbers, web addresses and postal addresses, which the card adds to and never
+    shortens.
     """
     notes = report.notes if report is not None else []
-    contact.name = (card.name or contact.name)[:NAME_LENGTH]
-    contact.role = card.title[:200]
-    contact.email = card.email[:254]
-    if card.org and (not contact.company_id or contact.company.name.lower() != card.org.lower()):
-        contact.company = get_or_create_company(owner, card.org[:NAME_LENGTH])
-    contact.save()
-    contact.write_note(owner, card.note)
+    changes: dict = {
+        "name": (card.name or contact.name)[:NAME_LENGTH],
+        "role": card.title[:200],
+        "email": card.email[:254],
+    }
+    company = contact.company if contact.company_id else None
+    if card.org and (company is None or company.name.lower() != card.org.lower()):
+        company = get_or_create_company(owner, card.org[:NAME_LENGTH])
+        changes["company"] = company
+    if units and card.unit and company is not None:
+        try:
+            changes["department"] = get_or_create_department(
+                company, card.unit[:120], actor=owner, via=ACTOR
+            )
+        except WriteRefused:
+            pass  # departments are switched off: nothing of one is written
     complete = True
+    try:
+        update_contact(contact, actor=owner, via=ACTOR, notes=card.note, **changes)
+    except WriteRefused as refused:
+        # The one thing a card may say that the core will not keep is its email: the rest
+        # is taken, and the person is told.
+        changes.pop("email")
+        complete = False
+        notes.append(
+            _("“%(name)s”: the email on the card was not taken: %(why)s")
+            % {"name": contact.name, "why": refused}
+        )
+        update_contact(contact, actor=owner, via=ACTOR, notes=card.note, **changes)
     # The number and the profile are rows of their own, written once the contact has a
     # key to hang them on. Only the primary of each is touched: the rest of what the
     # person keeps here is not the card's to lose.
@@ -451,7 +593,76 @@ def apply_card(contact: Contact, card: text.Card, owner, report: SyncReport | No
                     _("“%(name)s”: the web address on the card was not taken.")
                     % {"name": contact.name}
                 )
+    add_rows(contact, card, owner, notes)
     return complete
+
+
+class _Kept(Exception):
+    """Raised to roll back a rows call that would have dropped a row the person has."""
+
+
+def _added(holder, owner, existing, fresh, saver, notes, what: str) -> None:
+    """Make ``holder``'s rows ``existing`` plus ``fresh`` with ``saver``, and never fewer.
+
+    The core's rows calls make the rows they are handed the holder's rows, so a row that its
+    rules would now refuse (a number kept from before they were made) would be dropped with
+    the rest. That is never the card's to do: such a call is rolled back and told as a note.
+    A new row that is refused is a note, and the rest is saved.
+    """
+    try:
+        with transaction.atomic():
+            saved = saver(holder, [*existing, *fresh], actor=owner, via=ACTOR)
+            if any(refused.row in existing for refused in saved.refused):
+                raise _Kept
+    except _Kept:
+        notes.append(
+            _("“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost.")
+            % {"name": getattr(holder, "name", ""), "what": what}
+        )
+        return
+    for refused in saved.refused:
+        notes.append(
+            _("“%(name)s”: a number, address or web address on the card was not taken: %(why)s")
+            % {"name": getattr(holder, "name", ""), "why": refused.reason}
+        )
+
+
+def add_rows(holder, card: text.Card, owner, notes: list[str]) -> None:
+    """Give ``holder`` the numbers, web addresses and postal addresses ``card`` has and it lacks.
+
+    A row is added and no row is removed: what the person keeps here is not the card's to
+    lose. A row the core's rules refuse (a number another record holds, an address against
+    its country's rules) is a note and the rest is saved.
+    """
+    existing = tuple(numbers_for(holder, owner))
+    have = {text.digits(r.number) for r in existing}
+    fresh = [PhoneRow(n[:40].strip()) for n in card.more_phones if text.digits(n) not in have]
+    if fresh:
+        _added(holder, owner, existing, fresh, save_phone_numbers, notes, _("numbers"))
+    existing = tuple(links_for(holder, owner))
+    have = {text.web_key(r.url) for r in existing}
+    fresh = [
+        LinkRow(web_address(u)[:500], "website")
+        for u in card.more_urls
+        if text.web_key(u) not in have and web_address(u)
+    ]
+    if fresh:
+        _added(holder, owner, existing, fresh, save_web_links, notes, _("web addresses"))
+    existing = tuple(addresses_for(holder, owner))
+
+    def key(a) -> str:
+        return text.address_key(
+            VCardAddress(a.street, a.postcode, a.municipality, a.region, a.country)
+        )
+
+    have = {key(a) for a in existing}
+    fresh = [
+        AddressRow(a.street, a.postcode, a.municipality, a.region, a.country, a.kind)
+        for a in card.addresses
+        if key(a) not in have
+    ]
+    if fresh:
+        _added(holder, owner, existing, fresh, save_postal_addresses, notes, _("addresses"))
 
 
 # ---------------------------------------------------------------- interviews
@@ -1521,7 +1732,7 @@ class DavSync:
         items: list[RemoteItem] = []
         if kind in ("", "interview", "application"):
             items += self._event_items(config, search, kind, key)
-        if kind in ("", "contact", "company"):
+        if kind in ("", "contact", "company", "you"):
             items += self._card_items(config, search, kind, key)
         if kind in ("", "reminder"):
             items += self._task_items(config, search, key)
@@ -1598,6 +1809,13 @@ class DavSync:
             where = server.canonical(book.href)
             if key is not None and server.canonical(key[0]) != where:
                 return []
+            # The card the server names as the person's own is the one offered as *you*;
+            # where it names none, any card may be (RFC 6352 §7.1.2, #8).
+            try:
+                own = server.principal_address(server.principal("carddav"))
+            except DavError:
+                own = ""
+            own = server.canonical(own) if own else ""
             items = []
             for href, resource in server.query_cards(book.href, search).items():
                 card = text.text_to_card(resource.text)
@@ -1606,6 +1824,8 @@ class DavSync:
                 if key is not None and card.uid != key[1]:
                     continue
                 kinds = ("company",) if card.kind == "org" else ("contact", "company")
+                if card.kind != "org" and (not own or server.canonical(href) == own):
+                    kinds += ("you",)
                 if kind and kind not in kinds:
                     continue
                 items.append(
@@ -1783,6 +2003,12 @@ class DavSync:
         # this from the address book", and the record must not be pushed back.
         links = {link.object_id: link for link in SyncLink.of_model(connection, Contact)}
         held = run.held(links, book)
+        # A department is the card's ``ORG`` unit only while the person is offered them (#8).
+        units = structure_on(owner)
+
+        def cf(contact: Contact, uid: str = "") -> text.Card:
+            return card_for(contact, owner, uid, units=units)
+
         # The numbers and the links are prefetched for the card's primaries: two queries a
         # run, where a core that reads the primary from prefetched rows (postulo/postulo#1171)
         # asked two per contact (#47). An older core still asks per contact, as before.
@@ -1790,8 +2016,8 @@ class DavSync:
             c.pk: c
             for c in Contact.objects.visible_to(owner)
             .with_notes(owner)
-            .select_related("company")
-            .prefetch_related("phone_numbers", "web_links")
+            .select_related("company", "department")
+            .prefetch_related("phone_numbers", "web_links", "postal_addresses")
         }
         # A contact may be a group's, or shared to read: what comes in from the phone is
         # applied only to those the person may change (postulo/postulo#896).
@@ -1857,9 +2083,7 @@ class DavSync:
             if found is None or len(found) > HREF_LENGTH:
                 continue
             resource, card = cache[found]
-            same = digest(card.digest_source()) == digest(
-                card_for(contact, owner, link.uid).digest_source()
-            )
+            same = digest(card.digest_source()) == digest(cf(contact, link.uid).digest_source())
             link.remote_href, link.remote_gone = found, False
             link.etag = resource.etag if same else ""
             link.save(update_fields=["remote_href", "remote_gone", "etag", "updated_at"])
@@ -1903,7 +2127,7 @@ class DavSync:
                 continue
             resource, card = cache[found]
             uid = card.uid if card.uid and len(card.uid) <= UID_LENGTH else default_uid
-            mine = digest(card_for(contact, owner, uid).digest_source())
+            mine = digest(cf(contact, uid).digest_source())
             same = digest(card.digest_source()) == mine
             try:
                 links[contact.pk] = SyncLink.bind(
@@ -1925,10 +2149,12 @@ class DavSync:
             that its UID, version, kind, photo, address and the rest survive.
             """
             resource = server.get(link.remote_href)
-            changes = card_changes(card, text.text_to_card(resource.text))
-            if not changes:
+            current = text.text_to_card(resource.text)
+            changes = card_changes(card, current)
+            additions = card_additions(card, current, changes)
+            if not changes and not additions:
                 return resource.etag
-            patched = text.patch_card(resource.text, link.uid, changes, rev=now)
+            patched = text.patch_card(resource.text, link.uid, changes, rev=now, add=additions)
             if patched is None:
                 raise DavError(_("The card could not be read, so it was not changed."))
             return server.put(
@@ -1945,7 +2171,7 @@ class DavSync:
                 return  # paired with something outside the chosen address book
             if link is not None and (link.remote_gone or not link.paired):
                 return  # removed from the address book on purpose, or unpaired: leave it
-            card = card_for(contact, owner, link.uid if link else "")
+            card = cf(contact, link.uid if link else "")
             other = card_made_elsewhere(link, contact, owner)
             source = card_hash(card, other)
             if link is None:
@@ -2017,7 +2243,7 @@ class DavSync:
                     # the push: a skipped or failed one must not record it again (#21).
                     link.etag = resource.etag
                     link.save(update_fields=["etag", "updated_at"])
-                    card = card_for(contact, owner, link.uid)
+                    card = cf(contact, link.uid)
                     source = card_hash(card, other)
                     local_changed = True
                 else:
@@ -2038,12 +2264,12 @@ class DavSync:
                             )
                     if other:
                         incoming.note = card.note  # a card made elsewhere: no notes exchanged
-                    complete = apply_card(contact, incoming, owner, report)
+                    complete = apply_card(contact, incoming, owner, report, units)
                     if complete:
                         link.etag = resource.etag
                     # else the card is still seen as changed, and the note repeats until the
                     # two sides agree; a later edit here meets the conflict rule above (#26).
-                    link.local_hash = card_hash(card_for(contact, owner, link.uid), other)
+                    link.local_hash = card_hash(cf(contact, link.uid), other)
                     link.last_synced_at = now
                     link.uid = link.uid or card.uid
                     link.save()
@@ -2090,7 +2316,7 @@ class DavSync:
                 href = canon(link.remote_href)
                 if remote.get(href) != link.etag:
                     return False
-                card = card_for(contact, owner, link.uid)
+                card = cf(contact, link.uid)
             except TOLERATED:
                 return False
             return link.local_hash == card_hash(card, card_made_elsewhere(link, contact, owner))
@@ -2140,17 +2366,19 @@ class DavSync:
                 company = get_or_create_company(
                     owner, (card.org or str(HOLDING_COMPANY))[:NAME_LENGTH]
                 )
-                contact = Contact.objects.create(
-                    owner=owner, company=company, name=card.name[:NAME_LENGTH]
+                contact = create_contact(
+                    company, actor=owner, via=ACTOR, name=card.name[:NAME_LENGTH]
                 )
-                apply_card(contact, card, owner, report)
+                apply_card(contact, card, owner, report, units)
                 SyncLink.bind(
                     connection,
                     contact,
                     remote_href=href,
                     uid=card.uid,
                     etag=resource.etag,
-                    local_hash=digest(card_for(contact, owner, card.uid).digest_source()),
+                    local_hash=card_hash(
+                        cf(contact, card.uid), not POSTULO_CARD_UID.match(card.uid or "")
+                    ),
                     last_synced_at=now,
                 )
                 report.pulled += 1
@@ -2384,6 +2612,36 @@ class DavSync:
                 report.notes.append(_("Your own card was removed from the address book; kept."))
                 return
             if link.remote_gone or (link.local_hash == source and remote[href] == link.etag):
+                return
+            if link.uid != card.uid:
+                # A card the person paired as their own, made elsewhere: patched, never
+                # rebuilt, in the properties Postulo owns, and only to give them a value:
+                # what Postulo has nothing for stays as it is. Never read back.
+                if link.local_hash == source:
+                    return
+                resource = server.get(link.remote_href)
+                changes = {
+                    name: value
+                    for name, value in card_changes(card, text.text_to_card(resource.text)).items()
+                    if name in ("FN", "TITLE", "EMAIL", "TEL", "URL") and value
+                }
+                etag = resource.etag
+                if changes:
+                    patched = text.patch_card(resource.text, link.uid, changes, rev=now)
+                    if patched is None:
+                        raise DavError(_("The card could not be read, so it was not changed."))
+                    try:
+                        etag = server.put(
+                            link.remote_href,
+                            patched,
+                            "text/vcard; charset=utf-8",
+                            etag=resource.etag,
+                        )
+                    except Conflict:
+                        return
+                    report.pushed += 1
+                link.etag, link.local_hash, link.last_synced_at = etag, source, now
+                link.save()
                 return
             try:
                 # One way: what is on the card now, a change made on the phone included, is

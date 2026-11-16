@@ -2497,7 +2497,8 @@ def test_cards_are_offered_by_a_query_and_postulos_own_are_not(made, connection,
         "BEGIN:VCARD\r\nVERSION:4.0\r\nUID:acme-1\r\nKIND:org\r\nFN:Acme\r\nEND:VCARD\r\n",
     )
     found = DavSync().remote_items(connection.full_config, kind="contact")
-    assert [(i.uid, i.kinds) for i in found] == [("phone-uid-1", ("contact", "company"))]
+    # Where the server names no card as the person's own, any card may be offered as *you*.
+    assert [(i.uid, i.kinds) for i in found] == [("phone-uid-1", ("contact", "company", "you"))]
     assert sorted(
         i.uid for i in DavSync().remote_items(connection.full_config, kind="company")
     ) == ["acme-1", "phone-uid-1"]
