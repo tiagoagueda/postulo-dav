@@ -55,6 +55,8 @@ class FakeFiles:
         self.foreign: list[str] = []
         #: The size of the biggest single PUT that was accepted, to see that chunking happened.
         self.largest_put = 0
+        #: Bytes a plain PUT loses on the way to the disk, to see that the size is confirmed.
+        self.shorten = 0
         #: A server that does not send getcontentlength.
         self.no_length = False
         #: Chunked uploads in progress: id → {name: bytes}
@@ -145,7 +147,7 @@ class FakeFiles:
             if request.headers.get("If-None-Match") == "*" and path in self.files:
                 return httpx.Response(412)
             etag = self._etag()
-            self.files[path] = (body, etag)
+            self.files[path] = (body[: len(body) - self.shorten], etag)
             self.largest_put = max(self.largest_put, len(body))
             if self.lose_reply:
                 self.lose_reply -= 1
