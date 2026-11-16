@@ -103,7 +103,7 @@ class DavBackup:
                 help=str(
                     _(
                         "The folder's full address, which has to exist. On Nextcloud: "
-                        "https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. "
+                        "https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. "
                         "Use a folder for the archives alone."
                     )
                 ),

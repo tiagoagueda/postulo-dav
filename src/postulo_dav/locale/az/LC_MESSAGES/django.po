@@ -479,11 +479,11 @@ msgid "The folder is full: the server has no room for the file."
 msgstr ""
 
 #: src/postulo_dav/store.py
-msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
 msgstr ""
 
 #: src/postulo_dav/backup.py
-msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
+msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
 msgstr ""
 
 #: src/postulo_dav/dav.py

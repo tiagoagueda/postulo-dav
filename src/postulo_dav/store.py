@@ -143,7 +143,7 @@ class DavStore:
                 help=str(
                     _(
                         "The folder's full address, which has to exist. On Nextcloud: "
-                        "https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. "
+                        "https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. "
                         "Postulo makes the folders below it as it needs them and never writes "
                         "outside it."
                     )
