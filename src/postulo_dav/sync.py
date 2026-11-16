@@ -258,6 +258,45 @@ def card_additions(card: text.Card, current: text.Card, changes: dict[str, str])
     return lines + text.address_lines(missing, current.version or "4.0")
 
 
+def company_card(company: Company, owner, uid: str = "", ours: bool = False) -> text.Card:
+    """The card for ``company`` as ``owner`` sees it: name, website, numbers and addresses.
+
+    ``ours`` is a card Postulo wrote (``KIND:org``): its ``NOTE`` is the person's own note on
+    the company, written one way. A card made elsewhere never carries it (#8, #10).
+    """
+    rows = numbers_for(company, owner)
+    first = next((r.number for r in rows if r.is_primary), rows[0].number if rows else "")
+    return text.Card(
+        uid=uid,
+        name=company.name,
+        org=company.name,
+        url=company.website,
+        phone=first,
+        more_phones=tuple(r.number for r in rows if r.number != first),
+        addresses=tuple(
+            VCardAddress(
+                street=row.street,
+                postcode=row.postcode,
+                municipality=row.municipality,
+                region=row.region,
+                country=row.country,
+                kind=row.kind if row.kind in _ADDRESS_KINDS else "",
+                primary=row.is_primary,
+            )
+            for row in addresses_for(company, owner)
+        ),
+        note=company.note_for(owner) if ours else "",
+    )
+
+
+def company_hash(card: text.Card) -> str:
+    """What a push of a company's card is a function of: the name and the website, as before
+    a company had numbers, addresses and notes to send, and all of it when it has some."""
+    if not (card.phone or card.more_phones or card.addresses or card.note):
+        return digest(f"{card.name}\n{card.url}")
+    return digest(card.digest_source())
+
+
 def digest(source: str) -> str:
     return hashlib.sha256(source.encode("utf-8")).hexdigest()
 
@@ -2384,12 +2423,15 @@ class DavSync:
             )
 
     def _sync_company_cards(self, run: Run, book, remote: dict[str, str]) -> None:
-        """Keep each company a person paired with a card in step: name and website (#8).
+        """Keep each company a person paired with a card in step (#8, #10).
 
-        Both ways, as for a contact; the card is patched and never rebuilt, and its ``NOTE``
-        is not exchanged. The company's other details wait for what the core gives a company
-        (postulo/postulo#329). Nothing is made here: a card becomes a company's twin only by
-        being paired, and a pairing leaves unpaired links alone.
+        Name and website both ways, as for a contact; numbers and postal addresses the card
+        lacks are added to it, and the ones it has that the company lacks are added to the
+        company, neither ever removing one. The card is patched and never rebuilt. A card
+        Postulo wrote (``KIND:org``) also carries the company's own note, one way; a card made
+        elsewhere never has its ``NOTE`` exchanged. Nothing is made for a company unless
+        companies are switched on: a card becomes a company's twin by being paired, and a
+        pairing leaves unpaired links alone.
         """
         server, connection, report, canon = run.server, run.connection, run.report, run.canon
         now, read_only = run.now, run.read_only
@@ -2400,7 +2442,7 @@ class DavSync:
         def make(company) -> None:
             uid = f"company-{company.pk}-{run.owner.pk}@postulo"
             href = urljoin(book.href, f"{uuid.uuid4()}.vcf")
-            card = text.Card(uid=uid, name=company.name, org=company.name, url=company.website)
+            card = company_card(company, run.owner, uid, ours=True)
             etag = server.put(
                 href,
                 text.card_to_text(card, prodid=PRODID, rev=now, version=run.vcard, org=True),
@@ -2412,7 +2454,7 @@ class DavSync:
                 remote_href=canon(href),
                 uid=uid,
                 etag=etag,
-                local_hash=digest(f"{company.name}\n{company.website}"),
+                local_hash=company_hash(card),
                 last_synced_at=now,
             )
             remote[canon(href)] = etag
@@ -2441,8 +2483,9 @@ class DavSync:
                     % {"name": company.name}
                 )
                 return
-            card = text.Card(name=company.name, org=company.name, url=company.website)
-            source = digest(f"{company.name}\n{company.website}")
+            ours = bool(COMPANY_CARD_UID.match(link.uid or ""))
+            card = company_card(company, run.owner, link.uid or "", ours=ours)
+            source = company_hash(card)
             local_changed = link.local_hash != source
             resource = None
             if remote[href] != link.etag:
@@ -2475,8 +2518,20 @@ class DavSync:
                             link.save(update_fields=["etag", "updated_at"])
                             return
                         company.refresh_from_db()
+                    # What the card has that the company lacks: numbers and addresses.
+                    held_back: list[str] = []
+                    numbers = tuple(n for n in (incoming.phone, *incoming.more_phones) if n)
+                    add_rows(
+                        company,
+                        replace(incoming, more_phones=numbers, more_urls=()),
+                        run.owner,
+                        held_back,
+                    )
+                    report.notes.extend(held_back)
                     link.etag = resource.etag
-                    link.local_hash = digest(f"{company.name}\n{company.website}")
+                    link.local_hash = company_hash(
+                        company_card(company, run.owner, link.uid or "", ours=ours)
+                    )
                     link.last_synced_at = now
                     link.save()
                     if not same:
@@ -2484,16 +2539,28 @@ class DavSync:
                     return
                 link.etag = resource.etag
             if local_changed:
-                ours = bool(COMPANY_CARD_UID.match(link.uid or ""))
                 if read_only or (ours and not run.send_companies):
                     report.skipped += 1
                     run.unsent += 0 if read_only else 1
                     return
                 resource = resource or server.get(link.remote_href)
-                changes = card_changes(card, text.text_to_card(resource.text))
+                current = text.text_to_card(resource.text)
+                # Only what a company has: its name, website and first number (never a blank
+                # that would take the title or the email the phone keeps), and, for a card
+                # Postulo wrote, its note.
+                changes = {
+                    name: value
+                    for name, value in card_changes(card, current).items()
+                    if name in ("FN", "ORG", "URL") or (name == "TEL" and value)
+                }
+                if ours and card.note != current.note:
+                    changes["NOTE"] = card.note
+                additions = card_additions(card, current, changes)
                 etag = resource.etag
-                if changes:
-                    patched = text.patch_card(resource.text, link.uid, changes, rev=now)
+                if changes or additions:
+                    patched = text.patch_card(
+                        resource.text, link.uid, changes, rev=now, add=additions
+                    )
                     if patched is None:
                         raise DavError(_("The card could not be read, so it was not changed."))
                     try:
@@ -2573,6 +2640,21 @@ class DavSync:
             email=person.email,
             phone=number,
             url=next((link_row.url for link_row in person.links), ""),
+            # The primary address only: what the person's own details put first, as a
+            # document prints the location (#10).
+            addresses=tuple(
+                VCardAddress(
+                    street=row.street,
+                    postcode=row.postcode,
+                    municipality=row.municipality,
+                    region=row.region,
+                    country=row.country,
+                    kind=row.kind if row.kind in _ADDRESS_KINDS else "",
+                    primary=True,
+                )
+                for row in person.addresses
+                if row.is_primary
+            ),
         )
         source = digest(card.digest_source())
         names = (person.given_name, person.family_name)

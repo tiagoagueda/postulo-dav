@@ -450,6 +450,7 @@ def patch_card(
         "EMAIL": "EMAIL;TYPE=work:{}",
         "TEL": "TEL;TYPE=work,voice:{}",
         "URL": "URL:{}",
+        "NOTE": "NOTE:{}",
     }
     for name, template in added.items():
         if name == "ORG":

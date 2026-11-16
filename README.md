@@ -37,8 +37,8 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 | Task list | Used only while no collection is chosen above, and blank by default: **no task list is kept unless one is named or chosen**. A name or an address; a name that is not there is made by the first sync (as *postulo-tasks*, for tasks only), never in read-only mode, never by *Test* and never when it is an address. A server that keeps no tasks gets a note in the report and the rest of the run goes on. |
 | Tasks about applications | Off by default; needs a task list. On, each application also has up to two tasks of Postulo's own in it (see below). |
 | Send contacts | *All of them* (the default, and what every connection did before) or *None*. Cards already in the address book stay, nothing more is sent to them, and the run says how many were left. |
-| Send companies | Off by default. On, each company you own gets a card of its own: `KIND:org` in a vCard 4 book, `X-ABShowAs:COMPANY` (Apple's property, untried here) in a book whose `supported-address-data` lists no 4.0. Name and website travel, both ways; the notes do not. A company deleted here takes the card Postulo wrote with it; switching this off leaves the cards. |
-| Send my own card | Off by default. Writes your name, sign-in address, headline, primary number and first link to a new card Postulo makes in the chosen book, one way: a change on the phone is written over and never reaches your profile. |
+| Send companies | Off by default. On, each company you own gets a card of its own: `KIND:org` in a vCard 4 book, `X-ABShowAs:COMPANY` (Apple's property, untried here) in a book whose `supported-address-data` lists no 4.0. Name, website, numbers and postal addresses travel both ways (what one side has and the other lacks is added, nothing is removed); your own note on the company goes out one way as the card's `NOTE`, and is never read back. A company has no email to send. A company deleted here takes the card Postulo wrote with it; switching this off leaves the cards and sends nothing more. Departments are the `ORG` unit on their contacts' cards (see below), not cards of their own. |
+| Send my own card | Off by default. Writes your name, sign-in address, headline, primary number, first link and primary address to a new card Postulo makes in the chosen book, one way: a change on the phone is written over and never reaches your profile. Pair a card of your own instead (the *Pairing* page, *you*) and only the properties Postulo owns are patched, and never blanked. |
 | Read only | Contacts, interviews and reminders still come in; nothing goes out — not even a new address book or task list. |
 | Run | Every 15 minutes to once a day. The scheduler honours it; *Sync now* runs at once. |
 
@@ -150,8 +150,9 @@ are replaced, numbers, web addresses and postal addresses it lacks are added, an
 version, `KIND`, photo, birthday, other addresses and numbers, `X-` properties and
 parameters such as `LANGUAGE` stay as written. Its `NOTE` is not exchanged either way: your
 notes are private and gather conflict records. Deleting the contact unpairs the card and
-leaves it; only a card Postulo wrote is deleted. A company paired with a card keeps name and
-website in step both ways. **Your own card**, once paired and with *Send my own card* on, is
+leaves it; only a card Postulo wrote is deleted. A company paired with a card keeps name,
+website, numbers and addresses in step both ways, never blanking a property the card has
+and the company lacks. **Your own card**, once paired and with *Send my own card* on, is
 written one way: your name, sign-in address, headline, first number and first link replace
 the card's, only to give a property a value (a blank here never blanks the phone's), and
 nothing on it is ever read back into your profile, so a phone cannot change your sign-in
