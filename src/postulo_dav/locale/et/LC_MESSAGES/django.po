@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"PO-Revision-Date: 2026-11-16 10:08+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Estonian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/et/>\n"
 "Language: et\n"
@@ -479,11 +479,11 @@ msgstr "Kaust on täis: serveris pole failile ruumi."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Kausta täielik aadress, mis peab olemas olema. Nextcloudis: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo loob selle all olevad kaustad vajaduse korral ja ei kirjuta kunagi sellest väljapoole."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Kausta täielik aadress, mis peab olemas olema. Nextcloudis: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Kasutage kausta ainult arhiivide jaoks."
 
 #: src/postulo_dav/dav.py
 #, python-format

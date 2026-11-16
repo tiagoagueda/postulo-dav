@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Swedish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sv/>\n"
 "Language: sv\n"
@@ -480,11 +480,11 @@ msgstr "Mappen är full: servern har inte plats för filen."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Mappens fullständiga adress, som måste finnas redan. På Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo skapar mapparna under den efter behov och skriver aldrig utanför den."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Mappens fullständiga adress, som måste finnas redan. På Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Använd en mapp enbart för arkiven."
 
 #: src/postulo_dav/dav.py
 #, python-format

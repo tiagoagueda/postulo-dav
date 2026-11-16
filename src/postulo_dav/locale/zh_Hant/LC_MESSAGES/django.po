@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -479,11 +479,11 @@ msgstr "資料夾已滿：伺服器沒有空間存放該檔案。"
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "資料夾的完整位址，該資料夾必須已經存在。在 Nextcloud 上：https://cloud.example.org/remote.php/dav/files/USER/FOLDER/。Postulo 會依需要在其下建立資料夾，絕不會寫入其外。"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "資料夾的完整位址，該資料夾必須已經存在。在 Nextcloud 上：https://cloud.example.org/remote.php/dav/files/USER/FOLDER/。請將資料夾僅用於封存。"
 
 #: src/postulo_dav/dav.py
 #, python-format

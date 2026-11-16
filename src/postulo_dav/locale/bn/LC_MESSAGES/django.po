@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Bengali <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/bn/>\n"
 "Language: bn\n"
@@ -481,12 +481,14 @@ msgid "The folder is full: the server has no room for the file."
 msgstr "ফোল্ডার ভরে গেছে: সার্ভারে ফাইলটির জন্য জায়গা নেই।"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "ফোল্ডারের সম্পূর্ণ ঠিকানা, যেটি আগে থেকেই থাকতে হবে। Nextcloud-এ: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo এর নিচের ফোল্ডারগুলো প্রয়োজনমতো তৈরি করে এবং এর বাইরে কখনও লেখে না।"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "ফোল্ডারের সম্পূর্ণ ঠিকানা, যেটি আগে থেকেই থাকতে হবে। Nextcloud-এ: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. শুধু আর্কাইভের জন্য একটি ফোল্ডার ব্যবহার করুন।"
 
 #: src/postulo_dav/dav.py
 #, python-format
