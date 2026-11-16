@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Slovak <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sk/>\n"
 "Language: sk\n"
@@ -484,11 +484,11 @@ msgstr "Priečinok je plný: server nemá miesto pre súbor."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Úplná adresa priečinka, ktorý už musí existovať. V Nextcloude: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo v ňom podľa potreby vytvára priečinky a nikdy nezapisuje mimo neho."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Úplná adresa priečinka, ktorý už musí existovať. V Nextcloude: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Používajte priečinok iba na archívy."
 
 #: src/postulo_dav/dav.py
 #, python-format

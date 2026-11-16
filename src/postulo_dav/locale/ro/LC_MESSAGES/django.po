@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Romanian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ro/>\n"
 "Language: ro\n"
@@ -484,11 +484,11 @@ msgstr "Dosarul este plin: serverul nu mai are loc pentru fișier."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Adresa completă a dosarului, care trebuie să existe deja. În Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo creează dosarele de sub el după nevoie și nu scrie niciodată în afara lui."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Adresa completă a dosarului, care trebuie să existe deja. În Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Folosiți un dosar doar pentru arhive."
 
 #: src/postulo_dav/dav.py
 #, python-format

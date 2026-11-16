@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:08+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Latvian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/lv/>\n"
 "Language: lv\n"
@@ -489,11 +489,11 @@ msgstr "Mape ir pilna: serverim nav vietas failam."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Mapes pilnā adrese; mapei jau ir jāpastāv. Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo izveido mapes zem tās pēc vajadzības un nekad neraksta ārpus tās."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Mapes pilnā adrese; mapei jau ir jāpastāv. Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Izmantojiet mapi tikai arhīviem."
 
 #: src/postulo_dav/dav.py
 #, python-format

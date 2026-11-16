@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 10:09+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Polish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/pl/>\n"
 "Language: pl\n"
@@ -483,11 +483,11 @@ msgstr "Folder jest pełny: serwer nie ma miejsca na plik."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Pełny adres folderu, który musi już istnieć. W Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo tworzy poniżej niego foldery w miarę potrzeby i nigdy nie zapisuje poza nim."
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Pełny adres folderu, który musi już istnieć. W Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Używaj folderu tylko do archiwów."
 
 #: src/postulo_dav/dav.py
 #, python-format

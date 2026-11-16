@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"PO-Revision-Date: 2026-11-16 10:08+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Irish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ga/>\n"
 "Language: ga\n"
@@ -505,12 +505,14 @@ msgid "The folder is full: the server has no room for the file."
 msgstr "Tá an fillteán lán: níl spás ag an bhfreastalaí don chomhad."
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Seoladh iomlán an fhillteáin, ar gá dó a bheith ann. Ar Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Cruthaíonn Postulo na fillteáin faoina bhun de réir mar is gá agus ní scríobhann sé lasmuigh de choíche."
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Seoladh iomlán an fhillteáin, ar gá dó a bheith ann. Ar Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Úsáid fillteán do na cartlanna amháin."
 
 #: src/postulo_dav/dav.py
 #, python-format
