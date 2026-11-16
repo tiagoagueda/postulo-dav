@@ -82,12 +82,14 @@ from postulo.plugins.api import (
     SyncReport,
     TestResult,
     WriteRefused,
+    calendar_items,
     calendar_status,
     change_reminder,
     check_destination,
     complete_reminder,
     create_contact,
     create_reminder,
+    day_lines,
     event_lines,
     get_or_create_company,
     get_or_create_department,
@@ -158,6 +160,13 @@ COMPANY_CARD_UID = re.compile(r"^company-\d+-\d+@postulo$")
 POSTULO_UID = re.compile(r"@postulo$")
 #: How far ahead the events offered for pairing reach.
 PAIRING_AHEAD = dt.timedelta(days=365)
+#: The address of a whole day Postulo wrote to the calendar (#11): ``day-<uuid>.ics``. Nothing
+#: else is ever taken for one, so an event a person made is never rewritten or deleted as one.
+WHOLE_DAY_HREF = re.compile(r"/day-[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.ics$")
+WHOLE_DAY_KINDS = ("deadline", "closing", "answer")
+#: How far the whole days reach: the interviews' window back, and a year from there (the most
+#: the core's `calendar_items` answers for).
+WHOLE_DAY_SPAN = dt.timedelta(days=365)
 #: How many tasks of the list are read to offer for pairing.
 PAIRING_TASKS = 200
 
@@ -270,6 +279,11 @@ class Run:
     #: Whether interviews go to a calendar this run: an interview's reminder is then its
     #: event's alarm already, and gets no task of its own (#12).
     events_on: bool = True
+    #: Whether deadlines, closing dates and answer dates go to the calendar as all-day events
+    #: (#11), and what the interview half already listed of the calendar, so it is not listed
+    #: twice.
+    whole_days: bool = False
+    listing: dict[str, str] | None = None
 
     @property
     def owner(self):
@@ -873,6 +887,22 @@ class DavSync:
                         "apply, which ticking sends to you as a suggestion, and one to hear "
                         "back, which closes when the application ends. Reminders about an "
                         "application sit under its open task."
+                    )
+                ),
+            ),
+            FieldSpec(
+                "whole_days",
+                str(_("Deadlines and dates")),
+                type="boolean",
+                required=False,
+                default=False,
+                help=str(
+                    _(
+                        "Also write the whole days of the Calendar page (application "
+                        "deadlines, closing dates of listings and dates an offer must be "
+                        "answered by) to the calendar as all-day events, one way: a change "
+                        "made on the phone is written over. Needs the instance to know its own "
+                        "address."
                     )
                 ),
             ),
@@ -1675,6 +1705,7 @@ class DavSync:
                 send_companies=bool(config.get("send_companies")),
                 send_own_card=bool(config.get("send_own_card")),
                 milestones=bool(config.get("milestone_tasks")),
+                whole_days=bool(config.get("whole_days")),
             )
             try:
                 chosen = self._resolve(server, config, report.notes)
@@ -1716,6 +1747,8 @@ class DavSync:
                             )
                             continue
                     half(run, collection)
+                    if kind == CALENDAR and run.whole_days:
+                        self._sync_whole_days(run, collection)
                 except AuthenticationRefused as error:
                     errors.append(str(error))
                     break  # the other half would be refused the same way
@@ -2371,7 +2404,7 @@ class DavSync:
     def _sync_interviews(self, run: Run, calendar) -> None:
         server, connection, report = run.server, run.connection, run.report
         owner, now, read_only, canon = run.owner, run.now, run.read_only, run.canon
-        remote = server.etags(calendar.href)
+        remote = run.listing = server.etags(calendar.href)
         self._make_interviews(run, calendar, remote)
         links = {link.object_id: link for link in SyncLink.of_model(connection, Interview)}
         held = run.held(links, calendar)
@@ -2413,7 +2446,11 @@ class DavSync:
         # GET each (#45): those no link claims when they are wanted, and the twins whose
         # ETag moved. In read-only mode the foreign events are still read on every run, as
         # nothing is ever pushed to settle `wanted`, but as a REPORT per fifty.
-        unclaimed = [h for h in remote if h not in linked()] if wanted else []
+        unclaimed = (
+            [h for h in remote if h not in linked() and not WHOLE_DAY_HREF.search(h)]
+            if wanted
+            else []
+        )
         moved = [
             canon(link.remote_href)
             for pk, link in links.items()
@@ -2710,7 +2747,9 @@ class DavSync:
                 link.delete()
 
         claimed = linked()
-        foreign = [href for href in remote if href not in claimed]
+        foreign = [
+            href for href in remote if href not in claimed and not WHOLE_DAY_HREF.search(href)
+        ]
         if foreign:
             report.skipped += len(foreign)
             report.notes.append(
@@ -3237,6 +3276,84 @@ class DavSync:
                 )
                 % {"count": left}
             )
+
+    def _whole_day_text(self, entry) -> str:
+        """The calendar document for one whole day, as the core writes its lines (#11)."""
+        return text.render(
+            ["BEGIN:VCALENDAR", "VERSION:2.0", f"PRODID:{PRODID}", "CALSCALE:GREGORIAN"]
+            + day_lines(entry)
+            + ["END:VCALENDAR"]
+        )
+
+    @staticmethod
+    def _stable(document: str) -> list[str]:
+        """The document's lines without the two that change at every writing."""
+        return [
+            line
+            for line in text.unfold(document)
+            if not line.upper().startswith(("DTSTAMP", "LAST-MODIFIED"))
+        ]
+
+    def _sync_whole_days(self, run: Run, calendar) -> None:
+        """Write the whole days of the Calendar page as all-day events, one way (#11).
+
+        Deadlines, closing dates and answer dates have no record of their own to pair with,
+        so there is no link and nothing is pulled: each is written to ``day-<uuid>.ics`` under
+        the name the core gives it, rewritten when it differs from what the core says now
+        (a change on the phone is written over), and one that no longer exists here is
+        deleted, with ``If-Match``. Only addresses of that form are ever touched. Nothing is
+        written in read-only mode, and nothing without the instance's public address, for
+        which the core gives no whole days (the report says so).
+        """
+        if run.read_only:
+            return
+        server, report, now = run.server, run.report, run.now
+        first = timezone.localdate(now) - HISTORY
+        found = calendar_items(run.owner, first, first + WHOLE_DAY_SPAN, kinds=WHOLE_DAY_KINDS)
+        if found.withheld:
+            report.notes.append(str(found.withheld))
+        wanted: dict[str, tuple[str, str]] = {}
+        for item in found:
+            if item.entry is None or len(item.entry.uid) > UID_LENGTH:
+                continue
+            href = canon_day = run.canon(
+                urljoin(calendar.href, f"day-{item.entry.uid.split('@')[0]}.ics")
+            )
+            wanted[canon_day] = (href, self._whole_day_text(item.entry))
+        remote = run.listing if run.listing is not None else server.etags(calendar.href)
+        ours = {href: etag for href, etag in remote.items() if WHOLE_DAY_HREF.search(href)}
+        if found.withheld and not wanted:
+            return  # the core gave none: whatever is there is not taken for stale
+        known = server.multiget(calendar.href, [h for h in wanted if h in ours], CALENDAR)
+        for key, (href, document) in wanted.items():
+
+            def write(key=key, href=href, document=document) -> None:
+                if key not in ours:
+                    server.put(href, document, "text/calendar; charset=utf-8")
+                else:
+                    current = known.get(key) or server.get(href)
+                    if self._stable(current.text) == self._stable(document):
+                        return
+                    server.put(href, document, "text/calendar; charset=utf-8", etag=current.etag)
+                report.pushed += 1
+
+            try:
+                write()
+            except Conflict:
+                report.skipped += 1
+                report.notes.append(str(EVENT_KEPT))
+            except TOLERATED as error:
+                run.skip(_tail(href), error)
+        for key, etag in ours.items():
+            if key in wanted:
+                continue
+            try:
+                server.delete(key, etag=etag)
+                report.removed += 1
+            except Conflict:
+                report.skipped += 1
+            except TOLERATED as error:
+                run.skip(_tail(key), error)
 
     def _cancel_task(self, run: Run, link) -> None:
         """Mark a task somebody else made as cancelled, once its reminder is deleted here."""

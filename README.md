@@ -35,6 +35,7 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 | Collections | Press *Look on the server*, then choose one address book, one calendar and one task list from the list, each *Read only* or *Read and write*. They are kept by their address, so renaming one on the server changes nothing. A share the account may not write (it must hold `bind` and `write-content`; `write-properties` alone is what Nextcloud grants on a read-only share) offers only *Read only*; a server that does not say is offered writing, with a note. One of each kind per connection: add another connection for a second. A task list is a calendar the server says takes tasks (`VTODO`) and not events, which is how a phone tells one: a calendar that takes both is a calendar here, and cannot hold the tasks. |
 | Address book, Calendar | Used only while no collection is chosen above, so a connection made before that keeps working. Both default to *Postulo*: a name or an address; made by the first sync if they are not there, never in read-only mode and never when it is an address. The whole collection syncs, and a name two collections share is refused. |
 | Task list | Used only while no collection is chosen above, and blank by default: **no task list is kept unless one is named or chosen**. A name or an address; a name that is not there is made by the first sync (as *postulo-tasks*, for tasks only), never in read-only mode, never by *Test* and never when it is an address. A server that keeps no tasks gets a note in the report and the rest of the run goes on. |
+| Deadlines and dates | Off by default. On, application deadlines, listing closing dates and offer answer-by dates are written to the calendar as all-day events, one way (see *Whole days* below). |
 | Tasks about applications | Off by default; needs a task list. On, each application also has up to two tasks of Postulo's own in it (see below). |
 | Send contacts | *All of them* (the default, and what every connection did before) or *None*. Cards already in the address book stay, nothing more is sent to them, and the run says how many were left. |
 | Send companies | Off by default. On, each company you own gets a card of its own: `KIND:org` in a vCard 4 book, `X-ABShowAs:COMPANY` (Apple's property, untried here) in a book whose `supported-address-data` lists no 4.0. Name and website travel, both ways; the notes do not. A company deleted here takes the card Postulo wrote with it; switching this off leaves the cards. |
@@ -126,7 +127,23 @@ page asks for one; change it on the interview), and an interview deleted here is
 while the event stays paired with the application, so unpair the application to stop that.
 Events that belong to no application (an appointment with the employment office) cannot be
 paired yet: the core's Pairing page has no record kind for an appointment. Whole-day events
-(deadlines, closing dates) are not written to the calendar.
+that are on the Calendar page are written to the calendar by a switch of their own, below.
+
+**Whole days (#11).** With *Deadlines and dates* on (off by default), the whole days of the
+Calendar page go to the chosen calendar as all-day events (`TRANSP:TRANSPARENT`, so a month
+of deadlines does not make you look busy): the deadline of each application, the closing
+date of each listing and the date an offer must be answered by, from ninety days ago and a
+year on. They come from the core's own reading of the page (`calendar_items`), under the
+names it gives them, so they are the same events the feed writes. It is one way, and no
+record is paired with them: each is written to `day-<uuid>.ics`, written again when it
+differs from what Postulo says now (a change made on the phone is written over), drawn
+`CANCELLED` once it is over (an application already sent, a listing already decided), and
+deleted, with `If-Match`, once it no longer exists here or leaves the window. Only an
+address of that form is ever rewritten or deleted, so an event you made is never touched.
+Nothing is written in read-only mode. The core leaves the whole days out when the instance
+has no public address (`POSTULO_PUBLIC_URL`), because their names are made from it; the run
+says so and deletes nothing. They are never offered for pairing. Reminders are not whole
+days: they are tasks, above.
 
 **Pairing a card made elsewhere with a contact or a company.** On the connection's *Pairing*
 page a person finds a card of the chosen address book (one `addressbook-query` on its name,
