@@ -57,7 +57,7 @@ msgstr "Baineadh %(kind)s den fhéilire ar ghléas eile; coinníodh anseo é."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "Ní ceann de na cúltacaí a choinníonn an ceann scríbe seo é %(name)s, mar sin níor scriosadh é."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -79,7 +79,7 @@ msgstr "Athraíodh teagmhálaí a scriosadh anseo ar an bhfón ón sioncronú de
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Tá comhad eile darb ainm %(name)s sa fhillteán cheana, agus níor forscríobhadh é."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -120,11 +120,11 @@ msgstr "Leabhair seoltaí"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "seoltaí"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Gach rud sa fhillteán, le hainmneacha tuairisciúla"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -136,8 +136,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "Coinnigh dhá thasc freisin do gach iarratas sa liosta tascanna: ceann chun iarratas a dhéanamh, a sheolann moladh chugat nuair a chuireann tú tic leis, agus ceann chun freagra a fháil, a dhúnann nuair a chríochnaíonn an t-iarratas. Suíonn meabhrúcháin faoi iarratas faoina thasc oscailte."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Scríobh freisin laethanta iomlána leathanach an Fhéilire (spriocdhátaí iarratais, dátaí dúnta fógraí agus dátaí a gcaithfear freagra a thabhairt ar thairiscint roimhe) sa fhéilire mar imeachtaí lae iomláin, in aon treo amháin: forscríobhtar athrú a dhéantar ar an bhfón. Éilíonn sé go mbeadh a sheoladh féin ar eolas ag an ásc."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -162,7 +163,7 @@ msgstr "Déan iarratas ar %(role)s ag %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "De réir cuideachta agus róil, gach ceann ina fhillteán féin"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -208,11 +209,11 @@ msgstr "Bailiúcháin"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Spriocdhátaí agus dátaí"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Seoladh an fhillteáin"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -241,7 +242,7 @@ msgstr "Faigh freagra ó %(company)s faoi %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Conas a eagraítear na comhaid"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -298,7 +299,7 @@ msgstr "Níl aon cheann de na bailiúcháin roghnaithe ar an bhfreastalaí."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "uimhreacha"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -360,12 +361,14 @@ msgid "Server address"
 msgstr "Seoladh an fhreastalaí"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Stóráilte criptithe. Osclaíonn sé fillteán de chúltacaí gach cuntais, agus is trí scriosadh a bhaintear na cinn sheanda: úsáid cuntas nach sroicheann ach an fillteán seo, mar fho-chuntas Hetzner Storage Box nó cuntas a rinneadh do chúltacaí, agus rud ar bith eile ní."
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Stóráilte criptithe. Ní féidir le formhór na bhfreastalaithe pasfhocal a theorannú d’fhillteán amháin; is féidir le comhroinnt phoiblí Nextcloud a cheadaíonn uaslódálacha, nó le fo-chuntas Hetzner Storage Box."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -426,7 +429,7 @@ msgstr "Caithfidh an seoladh tosú le https:// — mar shampla %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Níl an cúltaca sa fhillteán tar éis an uaslódála."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -465,41 +468,41 @@ msgstr "Cruthóidh an chéad sioncronú a bhfuil in easnamh."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Níorbh fhéidir an fillteán %(path)s a chruthú: níl an fillteán os a chionn ann."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Níl an fillteán %(path)s ar an bhfreastalaí. Cruthaigh ansin ar dtús é: ní chruthaíonn Postulo an fillteán ina gcoinnítear na cúltacaí."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Níl an fillteán %(path)s ar an bhfreastalaí. Cruthaigh ansin ar dtús é: ní chruthaíonn Postulo ach na fillteáin faoina bhun."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Tá an fillteán %(path)s ann, agus %(count)d mír ann."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Tá an fillteán %(path)s ann, agus %(count)d cúltaca de chuid Postulo ann."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Tá spás san fhillteán do %(free)s agus teastaíonn %(needed)s ón gcúltaca, mar sin níor seoladh tada."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Tá %(found)d bheart de sa fhillteán agus tá an cúltaca %(size)d: gan deimhniú."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Tá an fillteán lán: níl spás ag an bhfreastalaí don chomhad."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -531,7 +534,7 @@ msgstr "Ní ainmníonn an freastalaí baile leabhar seoltaí."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Ní insíonn an freastalaí cé chomh mór is atá an comhad, mar sin ní féidir leis é a dheimhniú."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -555,7 +558,7 @@ msgstr "D’atreoraigh an freastalaí %(path)s an iomarca uaireanta."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "D’athsheol an freastalaí uaslódáil, rud nach leantar."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -613,7 +616,7 @@ msgstr "Baineadh an tasc “%(name)s” den liosta tascanna; ní dhéantar arís
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Chuaigh an t-am don uaslódáil seo in éag."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -628,7 +631,7 @@ msgstr "Níorbh fhéidir am an taisc “%(name)s” a úsáid (%(why)s), mar sin
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Tá spás ann do %(size)s eile."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -638,7 +641,7 @@ msgstr "Tá an bailiúchán seo léamh amháin anseo, mar sin níor seoladh %(me
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Tá an iomarca comhad leis an ainm %(name)s sa fhillteán sin cheana."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -661,11 +664,11 @@ msgstr "Ainm úsáideora"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "seoltaí gréasáin"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "Fillteán WebDAV"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -772,19 +775,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "Fágadh “%(name)s” ar lár: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "“%(name)s”: níor tógadh ón gcárta: %(what)s, ionas nach gcaillfear aon rud atá stóráilte anseo."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: níor tógadh uimhir, seoladh ná seoladh gréasáin ar an gcárta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: níor tógadh an ríomhphost ar an gcárta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

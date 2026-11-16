@@ -51,7 +51,7 @@ msgstr "%(kind)s eemaldati kalendrist teises seadmes; siin alles jäetud."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s ei ole üks varukoopiatest, mida see sihtkoht hoiab, seega seda ei kustutatud."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Siin kustutatud kontakti oli pärast viimast sünkroonimist telefonis mu
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Kaustas on juba teine fail nimega %(name)s ja seda ei kirjutatud üle."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -108,11 +108,11 @@ msgstr "Aadressiraamatud"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "aadressid"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Kõik kaustas, kirjeldavate nimedega"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -124,7 +124,7 @@ msgstr "Hoia ülesandeloendis iga kandideerimise kohta ka kaks ülesannet: üks 
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Kirjuta kalendrisse ka lehe Kalender terved päevad (kandideerimistähtajad, kuulutuste sulgemiskuupäevad ja kuupäevad, milleks tuleb pakkumisele vastata) terve päeva sündmustena, ühes suunas: telefonis tehtud muudatus kirjutatakse üle. Eeldab, et Postulo teab oma aadressi."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -149,7 +149,7 @@ msgstr "Kandideeri ametikohale %(role)s ettevõttes %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Ettevõtte ja rolli järgi, igaüks oma kaustas"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -195,11 +195,11 @@ msgstr "Kogumid"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Tähtajad ja kuupäevad"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Kausta aadress"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -228,7 +228,7 @@ msgstr "Oota vastust ettevõttelt %(company)s ametikoha %(role)s kohta"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Kuidas failid on paigutatud"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -283,7 +283,7 @@ msgstr "Ükski valitud kogumitest pole serveris."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "numbrid"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -345,11 +345,11 @@ msgstr "Serveri aadress"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Salvestatakse krüptituna. See avab kausta kõigi kontode varukoopiatega ja vanu eemaldatakse kustutamise teel: kasutage kontot, mis ulatub ainult selle kaustani, näiteks Hetzner Storage Boxi alamkontot või varukoopiate jaoks loodud kontot, ja mitte midagi muud."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Salvestatakse krüptituna. Enamik servereid ei saa parooli ühe kaustaga piirata; üleslaadimist lubav Nextcloudi avalik jagamine või Hetzner Storage Boxi alamkonto saab."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -405,7 +405,7 @@ msgstr "Aadress peab algama https:// – näiteks %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Varukoopiat pole pärast üleslaadimist kaustas."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -441,41 +441,41 @@ msgstr "Esimene sünkroonimine loob puuduva."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Kausta %(path)s ei saanud luua: selle kohal olevat kausta pole."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Kausta %(path)s serveris pole. Looge see seal kõigepealt: Postulo ei loo kausta, kus varukoopiaid hoitakse."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Kausta %(path)s serveris pole. Looge see seal kõigepealt: Postulo loob ainult selle all olevad kaustad."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Kaust %(path)s on olemas ja selles on %(count)d üksust."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Kaust %(path)s on olemas ja selles on %(count)d Postulo varukoopiat."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Kaustas on ruumi %(free)s jaoks ja varukoopia vajab %(needed)s, seega midagi ei saadetud."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Kaustas on sellest %(found)d baiti ja varukoopia on %(size)d: pole kinnitatud."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Kaust on täis: serveris pole failile ruumi."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -507,7 +507,7 @@ msgstr "Server ei nimeta aadressiraamatute kodukausta."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Server ei ütle, kui suur fail on, seega ei saa seda kinnitada."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -530,7 +530,7 @@ msgstr "Server suunas aadressi %(path)s ümber liiga palju kordi."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Server suunas üleslaadimise ümber, mida ei järgita."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -584,7 +584,7 @@ msgstr "Ülesanne „%(name)s“ eemaldati ülesandeloendist; seda ei tehta uues
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Selle üleslaadimise aeg sai otsa."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -599,7 +599,7 @@ msgstr "Ülesande „%(name)s“ aega ei saanud kasutada (%(why)s), seega meelde
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Ruumi on veel %(size)s jaoks."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -609,7 +609,7 @@ msgstr "See kogum on siin ainult lugemiseks, seega %(method)s-päringut ei saade
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Selles kaustas on juba liiga palju faile nimega %(name)s."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
@@ -629,11 +629,11 @@ msgstr "Kasutajanimi"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "veebiaadressid"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV-i kaust"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -737,17 +737,17 @@ msgstr "„%(name)s“ jäeti vahele: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "„%(name)s“: kaardil olevat ei võetud üle: %(what)s, et midagi siin hoitavast ei läheks kaotsi."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: kaardil olevat numbrit, aadressi või veebiaadressi ei võetud üle: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: kaardil olevat e-posti ei võetud üle: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

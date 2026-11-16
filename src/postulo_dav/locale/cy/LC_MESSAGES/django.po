@@ -55,7 +55,7 @@ msgstr "Tynnwyd %(kind)s o'r calendr ar ddyfais arall; fe'i cadwyd yma."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "Nid yw %(name)s yn un o’r copïau wrth gefn y mae’r cyrchfan hwn yn eu cadw, felly ni chafodd ei ddileu."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -76,7 +76,7 @@ msgstr "Roedd cyswllt a ddilëwyd yma wedi'i newid ar y ffôn ers y cysoni diwet
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Mae ffeil wahanol o’r enw %(name)s eisoes yn y ffolder, ac ni chafodd ei throsysgrifo."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -113,11 +113,11 @@ msgstr "Llyfrau cyfeiriadau"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "cyfeiriadau"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Y cyfan yn y ffolder, gydag enwau disgrifiadol"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -129,8 +129,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "Cadw dwy dasg hefyd ar gyfer pob cais yn y rhestr dasgau: un i ymgeisio, y mae ei thicio yn anfon awgrym atoch, ac un i glywed yn ôl, sy'n cau pan ddaw'r cais i ben. Mae nodiadau atgoffa am gais o dan ei dasg agored."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Ysgrifennwch hefyd ddiwrnodau cyfan tudalen Calendr (dyddiadau cau ceisiadau, dyddiadau cau hysbysebion a’r dyddiadau y mae’n rhaid ateb cynnig erbyn) i’r calendr fel digwyddiadau diwrnod cyfan, un ffordd: caiff newid a wneir ar y ffôn ei drosysgrifo. Mae angen i’r gosodiad wybod ei gyfeiriad ei hun."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -155,7 +156,7 @@ msgstr "Ymgeisio am %(role)s yn %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Yn ôl cwmni a rôl, pob un yn ei ffolder ei hun"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -201,11 +202,11 @@ msgstr "Casgliadau"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Dyddiadau cau a dyddiadau"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Cyfeiriad y ffolder"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -234,7 +235,7 @@ msgstr "Clywed yn ôl gan %(company)s am %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Sut mae ffeiliau’n cael eu trefnu"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -290,7 +291,7 @@ msgstr "Nid yw'r un o'r casgliadau a ddewiswyd ar y gweinydd."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "rhifau"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -352,12 +353,14 @@ msgid "Server address"
 msgstr "Cyfeiriad y gweinydd"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Wedi’i storio wedi’i amgryptio. Mae’n agor ffolder o gopïau wrth gefn pob cyfrif, a dileu yw’r ffordd y caiff yr hen rai eu tynnu: defnyddiwch gyfrif sy’n cyrraedd y ffolder hon yn unig, fel is-gyfrif Hetzner Storage Box neu gyfrif a wnaed ar gyfer copïau wrth gefn, a dim byd arall."
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Wedi’i storio wedi’i amgryptio. Ni all y rhan fwyaf o weinyddion gyfyngu cyfrinair i un ffolder; gall rhannu cyhoeddus Nextcloud sy’n caniatáu uwchlwytho, neu is-gyfrif Hetzner Storage Box, wneud hynny."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -413,7 +416,7 @@ msgstr "Rhaid i'r cyfeiriad ddechrau gyda https:// — er enghraifft %(example)s
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Nid yw’r copi wrth gefn yn y ffolder ar ôl yr uwchlwytho."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -449,41 +452,41 @@ msgstr "Bydd y cysoni cyntaf yn creu'r hyn sydd ar goll."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Methwyd creu’r ffolder %(path)s: nid yw’r ffolder uwch ei phen yno."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Nid yw’r ffolder %(path)s ar y gweinydd. Crëwch hi yno yn gyntaf: nid yw Postulo’n creu’r ffolder y cedwir y copïau wrth gefn ynddi."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Nid yw’r ffolder %(path)s ar y gweinydd. Crëwch hi yno yn gyntaf: nid yw Postulo ond yn creu’r ffolderi oddi tani."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Mae’r ffolder %(path)s yno, gyda %(count)d eitem ynddi."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Mae’r ffolder %(path)s yno, gyda %(count)d o gopïau wrth gefn Postulo ynddi."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Mae lle yn y ffolder ar gyfer %(free)s ac mae angen %(needed)s ar y copi wrth gefn, felly ni anfonwyd dim."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Mae’r ffolder yn dal %(found)d beit ohono ac mae’r copi wrth gefn yn %(size)d: heb ei gadarnhau."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Mae’r ffolder yn llawn: nid oes lle gan y gweinydd i’r ffeil."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -513,7 +516,7 @@ msgstr "Nid yw'r gweinydd yn enwi cartref llyfr cyfeiriadau."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Nid yw’r gweinydd yn dweud pa mor fawr yw’r ffeil, felly ni all gadarnhau."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -536,7 +539,7 @@ msgstr "Ailgyfeiriodd y gweinydd %(path)s ormod o weithiau."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Ailgyfeiriodd y gweinydd uwchlwythiad, ac nid yw hynny’n cael ei ddilyn."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -590,7 +593,7 @@ msgstr "Tynnwyd y dasg “%(name)s” o'r rhestr dasgau; ni chaiff ei gwneud eto
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Daeth yr amser ar gyfer yr uwchlwythiad hwn i ben."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -605,7 +608,7 @@ msgstr "Ni ellid defnyddio amser y dasg “%(name)s” (%(why)s), felly ni symud
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Mae lle ar gyfer %(size)s yn rhagor."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -615,7 +618,7 @@ msgstr "Mae'r casgliad hwn yn darllen yn unig yma, felly ni anfonwyd %(method)s.
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Mae gormod o ffeiliau eisoes â’r enw %(name)s yn y ffolder honno."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -638,11 +641,11 @@ msgstr "Enw defnyddiwr"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "cyfeiriadau gwe"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "Ffolder WebDAV"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -747,19 +750,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "Cafodd “%(name)s” ei hepgor: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "“%(name)s”: ni chymerwyd y canlynol ar y cerdyn: %(what)s, fel na chollir dim o’r hyn a gedwir yma."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: ni chymerwyd rhif, cyfeiriad na chyfeiriad gwe ar y cerdyn: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: ni chymerwyd yr e-bost ar y cerdyn: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

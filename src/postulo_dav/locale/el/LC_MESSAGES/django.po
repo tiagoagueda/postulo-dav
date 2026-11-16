@@ -51,7 +51,7 @@ msgstr "%(kind)s: αφαιρέθηκε από το ημερολόγιο σε ά�
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "Το %(name)s δεν είναι ένα από τα αντίγραφα ασφαλείας που διατηρεί αυτός ο προορισμός, γι’ αυτό δεν διαγράφηκε."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Μια επαφή που διαγράφηκε εδώ είχε αλλάξ
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Στον φάκελο υπάρχει ήδη άλλο αρχείο με το όνομα %(name)s και δεν αντικαταστάθηκε."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -108,11 +108,11 @@ msgstr "Βιβλία διευθύνσεων"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "διευθύνσεις"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Όλα στον φάκελο, με περιγραφικά ονόματα"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -124,7 +124,7 @@ msgstr "Διατήρηση και δύο εργασιών για κάθε αίτ
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Εγγραφή στο ημερολόγιο και των ολόκληρων ημερών της σελίδας Ημερολόγιο (προθεσμίες αιτήσεων, ημερομηνίες λήξης αγγελιών και ημερομηνίες έως τις οποίες πρέπει να απαντηθεί μια προσφορά) ως εκδηλώσεις ολόκληρης ημέρας, μόνο προς μία κατεύθυνση: μια αλλαγή που γίνεται στο τηλέφωνο αντικαθίσταται. Απαιτεί η εγκατάσταση να γνωρίζει τη δική της διεύθυνση."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -149,7 +149,7 @@ msgstr "Αίτηση για %(role)s στην εταιρεία %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Ανά εταιρεία και ρόλο, καθένα στον δικό του φάκελο"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -195,11 +195,11 @@ msgstr "Συλλογές"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Προθεσμίες και ημερομηνίες"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Διεύθυνση φακέλου"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -228,7 +228,7 @@ msgstr "Ανταπόκριση από την εταιρεία %(company)s για
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Πώς οργανώνονται τα αρχεία"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -283,7 +283,7 @@ msgstr "Καμία από τις επιλεγμένες συλλογές δεν 
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "αριθμοί"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -345,11 +345,11 @@ msgstr "Διεύθυνση διακομιστή"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Αποθηκεύεται κρυπτογραφημένο. Ανοίγει έναν φάκελο με τα αντίγραφα ασφαλείας όλων των λογαριασμών και η διαγραφή είναι ο τρόπος με τον οποίο αφαιρούνται τα παλιά: χρησιμοποιήστε λογαριασμό που φτάνει μόνο σε αυτόν τον φάκελο, όπως έναν υπολογαριασμό Hetzner Storage Box ή έναν λογαριασμό φτιαγμένο για αντίγραφα ασφαλείας, και τίποτα άλλο."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Αποθηκεύεται κρυπτογραφημένο. Οι περισσότεροι διακομιστές δεν μπορούν να περιορίσουν έναν κωδικό πρόσβασης σε έναν φάκελο· ένα δημόσιο κοινόχρηστο Nextcloud που επιτρέπει μεταφορτώσεις ή ένας υπολογαριασμός Hetzner Storage Box μπορεί."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -405,7 +405,7 @@ msgstr "Η διεύθυνση πρέπει να αρχίζει με https:// —
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Το αντίγραφο ασφαλείας δεν βρίσκεται στον φάκελο μετά τη μεταφόρτωση."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -441,41 +441,41 @@ msgstr "Ο πρώτος συγχρονισμός θα δημιουργήσει �
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Ο φάκελος %(path)s δεν μπόρεσε να δημιουργηθεί: ο φάκελος από πάνω του δεν υπάρχει."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Ο φάκελος %(path)s δεν υπάρχει στον διακομιστή. Δημιουργήστε τον πρώτα εκεί: το Postulo δεν δημιουργεί τον φάκελο όπου φυλάσσονται τα αντίγραφα ασφαλείας."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Ο φάκελος %(path)s δεν υπάρχει στον διακομιστή. Δημιουργήστε τον πρώτα εκεί: το Postulo δημιουργεί μόνο τους φακέλους κάτω από αυτόν."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Ο φάκελος %(path)s υπάρχει, με %(count)d στοιχεία μέσα του."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Ο φάκελος %(path)s υπάρχει, με %(count)d αντίγραφα ασφαλείας του Postulo μέσα του."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Ο φάκελος έχει χώρο για %(free)s και το αντίγραφο ασφαλείας χρειάζεται %(needed)s, γι’ αυτό δεν στάλθηκε τίποτα."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Ο φάκελος περιέχει %(found)d byte από αυτό και το αντίγραφο ασφαλείας είναι %(size)d: δεν επιβεβαιώθηκε."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Ο φάκελος είναι γεμάτος: ο διακομιστής δεν έχει χώρο για το αρχείο."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -505,7 +505,7 @@ msgstr "Ο διακομιστής δεν δηλώνει αρχικό φάκελ�
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Ο διακομιστής δεν λέει πόσο μεγάλο είναι το αρχείο, γι’ αυτό δεν μπορεί να το επιβεβαιώσει."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -528,7 +528,7 @@ msgstr "Ο διακομιστής ανακατεύθυνε το %(path)s πάρ�
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Ο διακομιστής ανακατεύθυνε μια μεταφόρτωση, κάτι που δεν ακολουθείται."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -582,7 +582,7 @@ msgstr "Η εργασία «%(name)s» αφαιρέθηκε από τη λίστ
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Ο χρόνος για αυτή τη μεταφόρτωση έληξε."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -597,7 +597,7 @@ msgstr "Η ώρα της εργασίας «%(name)s» δεν μπόρεσε ν�
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Υπάρχει χώρος για ακόμη %(size)s."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -607,7 +607,7 @@ msgstr "Αυτή η συλλογή είναι εδώ μόνο για ανάγν�
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Πάρα πολλά αρχεία έχουν ήδη το όνομα %(name)s σε αυτόν τον φάκελο."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
@@ -627,11 +627,11 @@ msgstr "Όνομα χρήστη"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "διευθύνσεις ιστού"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "Φάκελος WebDAV"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -735,17 +735,17 @@ msgstr "Το «%(name)s» παραλείφθηκε: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "«%(name)s»: δεν λήφθηκαν από την κάρτα: %(what)s, ώστε να μη χαθεί τίποτα από όσα φυλάσσονται εδώ."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: ένας αριθμός, μια διεύθυνση ή μια διεύθυνση ιστού στην κάρτα δεν λήφθηκε: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: το email στην κάρτα δεν λήφθηκε: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

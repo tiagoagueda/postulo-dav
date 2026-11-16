@@ -53,7 +53,7 @@ msgstr "%(kind)s: noņemts no kalendāra citā ierīcē; šeit paturēts."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s nav neviens no dublējumiem, ko glabā šis galamērķis, tāpēc tas netika dzēsts."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -74,7 +74,7 @@ msgstr "Šeit dzēstā kontaktpersona kopš pēdējās sinhronizācijas tika mai
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Mapē jau ir cits fails ar nosaukumu %(name)s, un tas netika pārrakstīts."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -111,11 +111,11 @@ msgstr "Adrešu grāmatas"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "adreses"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Viss mapē, ar aprakstošiem nosaukumiem"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -127,8 +127,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "Glabāt arī divus uzdevumus katram pieteikumam uzdevumu sarakstā: vienu pieteikšanās veikšanai, kura atzīmēšana jums nosūta ieteikumu, un vienu atbildes gaidīšanai, kas aizveras, kad pieteikums beidzas. Atgādinājumi par pieteikumu atrodas zem tā atvērtā uzdevuma."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Ierakstīt kalendārā arī Kalendāra lapas veselās dienas (pieteikumu termiņus, sludinājumu slēgšanas datumus un datumus, līdz kuriem jāatbild uz piedāvājumu) kā visas dienas notikumus, vienā virzienā: tālrunī izdarītas izmaiņas tiek pārrakstītas. Nepieciešams, lai instance zinātu savu adresi."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -153,7 +154,7 @@ msgstr "Pieteikties uz %(role)s uzņēmumā %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Pēc uzņēmuma un amata, katrs savā mapē"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -200,11 +201,11 @@ msgstr "Kolekcijas"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Termiņi un datumi"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Mapes adrese"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -233,7 +234,7 @@ msgstr "Sagaidīt atbildi no %(company)s par %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Kā faili tiek sakārtoti"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -289,7 +290,7 @@ msgstr "Neviena no izvēlētajām kolekcijām nav serverī."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "numuri"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -351,12 +352,14 @@ msgid "Server address"
 msgstr "Servera adrese"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Glabā šifrētu. Tā atver mapi ar visu kontu dublējumiem, un dzēšana ir veids, kā vecos noņem: izmantojiet tādu, kas sasniedz tikai šo mapi, piemēram, Hetzner Storage Box apakškontu vai dublējumiem izveidotu kontu, un neko citu."
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Glabā šifrētu. Lielākā daļa serveru paroli nevar ierobežot ar vienu mapi; var Nextcloud publiska koplietošana, kas atļauj augšupielādes, vai Hetzner Storage Box apakškonts."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -412,7 +415,7 @@ msgstr "Adresei jāsākas ar https:// — piemēram, %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Pēc augšupielādes dublējuma mapē nav."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -448,41 +451,41 @@ msgstr "Pirmā sinhronizācija izveidos to, kas trūkst."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Mapi %(path)s nevarēja izveidot: virs tās esošās mapes nav."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Mapes %(path)s serverī nav. Vispirms izveidojiet to tur: Postulo neizveido mapi, kurā glabā dublējumus."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Mapes %(path)s serverī nav. Vispirms izveidojiet to tur: Postulo izveido tikai zem tās esošās mapes."
 
 #: src/postulo_dav/store.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Mape %(path)s ir, un tajā ir vienumi: %(count)d."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Mape %(path)s ir, un tajā ir Postulo dublējumi: %(count)d."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Mapē ir vieta %(free)s, bet dublējumam vajag %(needed)s, tāpēc nekas netika nosūtīts."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Mapē ir %(found)d baiti no tā, bet dublējums ir %(size)d: nav apstiprināts."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Mape ir pilna: serverim nav vietas failam."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -512,7 +515,7 @@ msgstr "Serveris nenorāda adrešu grāmatu mājvietu."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Serveris neziņo faila izmēru, tāpēc nevar apstiprināt."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -535,7 +538,7 @@ msgstr "Serveris pāradresēja %(path)s pārāk daudz reižu."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Serveris novirzīja augšupielādi, un novirzīšanai netiek sekots."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -590,7 +593,7 @@ msgstr "Uzdevums “%(name)s” tika noņemts no uzdevumu saraksta; tas netiek i
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Šīs augšupielādes laiks beidzās."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -605,7 +608,7 @@ msgstr "Uzdevuma “%(name)s” laiku neizdevās izmantot (%(why)s), tāpēc atg
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Ir vieta vēl %(size)s."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -615,7 +618,7 @@ msgstr "Šī kolekcija šeit ir tikai lasāma, tāpēc %(method)s pieprasījums 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Pārāk daudziem failiem šajā mapē jau ir nosaukums %(name)s."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -638,11 +641,11 @@ msgstr "Lietotājvārds"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "tīmekļa adreses"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV mape"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -747,19 +750,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "“%(name)s” tika izlaists: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "“%(name)s”: kartītē esošie %(what)s netika paņemti, lai nekas, kas šeit glabājas, netiktu zaudēts."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: kartītē esošais numurs, adrese vai tīmekļa adrese netika paņemta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: kartītē esošais e-pasts netika paņemts: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

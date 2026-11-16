@@ -51,7 +51,7 @@ msgstr "%(kind)s: quitouse do calendario noutro dispositivo; consérvase aquí."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s non é unha das copias de seguranza que garda este destino, así que non se eliminou."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Un contacto eliminado aquí cambiárase no teléfono desde a última sin
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Xa hai outro ficheiro chamado %(name)s no cartafol, e non se sobrescribiu."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -108,11 +108,11 @@ msgstr "Axendas de enderezos"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "enderezos"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Todo no cartafol, con nomes descritivos"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -124,7 +124,7 @@ msgstr "Manter ademais dúas tarefas por cada candidatura na lista de tarefas: u
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Escribir tamén os días completos da páxina Calendario (prazos de solicitude, datas de peche dos anuncios e datas ata as que hai que responder a unha oferta) no calendario como eventos de todo o día, nun só sentido: un cambio feito no teléfono sobrescríbese. Require que a instancia coñeza o seu propio enderezo."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -149,7 +149,7 @@ msgstr "Candidatarse a %(role)s en %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Por empresa e posto, cada un no seu propio cartafol"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -195,11 +195,11 @@ msgstr "Coleccións"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Prazos e datas"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Enderezo do cartafol"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -228,7 +228,7 @@ msgstr "Esperar resposta de %(company)s sobre %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Como se organizan os ficheiros"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -283,7 +283,7 @@ msgstr "Ningunha das coleccións escollidas está no servidor."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "números"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -345,11 +345,11 @@ msgstr "Enderezo do servidor"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Gárdase cifrado. Abre un cartafol coas copias de seguranza de todas as contas, e borrar é a forma de quitar as antigas: usa unha conta que só chegue a este cartafol, como unha subconta de Hetzner Storage Box ou unha conta creada para as copias de seguranza, e nada máis."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Gárdase cifrado. A maioría dos servidores non poden limitar un contrasinal a un cartafol; un recurso compartido público de Nextcloud que permita cargas, ou unha subconta de Hetzner Storage Box, si poden."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -405,7 +405,7 @@ msgstr "O enderezo debe comezar por https:// — por exemplo, %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "A copia de seguranza non está no cartafol despois da carga."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -441,41 +441,41 @@ msgstr "A primeira sincronización creará o que falte."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Non se puido crear o cartafol %(path)s: o cartafol superior non existe."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "O cartafol %(path)s non existe no servidor. Créao primeiro alí: Postulo non crea o cartafol no que se gardan as copias de seguranza."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "O cartafol %(path)s non existe no servidor. Créao primeiro alí: Postulo só crea os cartafoles que hai debaixo."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "O cartafol %(path)s existe e contén %(count)d elementos."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "O cartafol %(path)s existe e contén %(count)d copias de seguranza de Postulo."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "O cartafol ten espazo para %(free)s e a copia de seguranza necesita %(needed)s, así que non se enviou nada."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "O cartafol contén %(found)d bytes dela e a copia de seguranza ten %(size)d: sen confirmar."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "O cartafol está cheo: o servidor non ten espazo para o ficheiro."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/USER/FOLDER/. Postulo makes the folders below it as it needs them and never writes outside it."
@@ -505,7 +505,7 @@ msgstr "O servidor non indica ningún espazo de cadernos de enderezos."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "O servidor non indica o tamaño do ficheiro, así que non pode confirmalo."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -528,7 +528,7 @@ msgstr "O servidor redirixiu %(path)s demasiadas veces."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "O servidor redirixiu unha carga, e iso non se segue."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -582,7 +582,7 @@ msgstr "A tarefa “%(name)s” quitouse da lista de tarefas; non se volve crear
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Esgotouse o tempo desta carga."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -597,7 +597,7 @@ msgstr "Non se puido usar a hora da tarefa “%(name)s” (%(why)s), polo que no
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Hai espazo para %(size)s máis."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -607,7 +607,7 @@ msgstr "Esta colección é só de lectura aquí, polo que non se enviou unha sol
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Xa hai demasiados ficheiros co nome %(name)s nese cartafol."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
@@ -627,11 +627,11 @@ msgstr "Nome de usuario"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "enderezos web"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "Cartafol WebDAV"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -735,17 +735,17 @@ msgstr "Omitiuse «%(name)s»: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "«%(name)s»: non se tomaron da tarxeta: %(what)s, para que non se perda nada do que se garda aquí."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: non se tomou un número, un enderezo ou un enderezo web da tarxeta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: non se tomou o correo electrónico da tarxeta: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
