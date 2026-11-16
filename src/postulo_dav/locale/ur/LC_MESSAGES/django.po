@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 08:51+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Urdu <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ur/>\n"
 "Language: ur\n"
@@ -49,9 +49,9 @@ msgid "%(kind)s removed from the calendar on another device; kept here."
 msgstr "%(kind)s کو کسی دوسرے آلے پر کیلنڈر سے ہٹا دیا گیا؛ یہاں رکھا گیا ہے۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s ان بیک اپس میں سے نہیں جو یہ منزل رکھتی ہے، اس لیے اسے حذف نہیں کیا گیا۔"
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,9 +72,9 @@ msgid "A contact deleted here had been changed on the phone since the last sync.
 msgstr "یہاں حذف کیا گیا ایک رابطہ آخری سنک کے بعد فون پر تبدیل کیا جا چکا تھا۔ کارڈ ایڈریس بک میں چھوڑ دیا گیا، اور اگلے رن میں رابطے کے طور پر واپس آ جائے گا۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "فولڈر میں پہلے ہی ایک اور فائل کا نام %(name)s ہے، اور اسے اوور رائٹ نہیں کیا گیا۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -115,11 +115,12 @@ msgstr "ایڈریس بکس"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "پتے"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "سب کچھ فولڈر میں، وضاحتی ناموں کے ساتھ"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -131,8 +132,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "کاموں کی فہرست میں ہر درخواست کے لیے دو کام بھی رکھیں: ایک درخواست دینے کے لیے، جس پر نشان لگانے سے آپ کو ایک تجویز ملتی ہے، اور ایک جواب سننے کے لیے، جو درخواست ختم ہونے پر بند ہو جاتا ہے۔ درخواست کے بارے میں یاد دہانیاں اس کے کھلے کام کے نیچے رہتی ہیں۔"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "کیلنڈر کے صفحے کے پورے دن (درخواستوں کی آخری تاریخیں، اشتہارات کے بند ہونے کی تاریخیں اور وہ تاریخیں جن تک کسی پیشکش کا جواب دینا ہے) بھی کیلنڈر میں پورے دن کے واقعات کے طور پر لکھیں، ایک طرفہ: فون پر کی گئی تبدیلی اوور رائٹ ہو جاتی ہے۔ اس کے لیے ضروری ہے کہ انسٹینس اپنا پتہ جانتا ہو۔"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -156,8 +158,9 @@ msgid "Apply to %(role)s at %(company)s"
 msgstr "%(company)s میں %(role)s کے لیے درخواست دیں"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "کمپنی اور کردار کے لحاظ سے، ہر ایک اپنے فولڈر میں"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -203,11 +206,11 @@ msgstr "مجموعے"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "آخری تاریخیں اور تاریخیں"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "فولڈر کا پتہ"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -235,8 +238,9 @@ msgid "Hear back from %(company)s about %(role)s"
 msgstr "%(role)s کے بارے میں %(company)s سے جواب حاصل کریں"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "How files are arranged"
-msgstr ""
+msgstr "فائلیں کیسے ترتیب دی جاتی ہیں"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -294,7 +298,7 @@ msgstr "منتخب مجموعوں میں سے کوئی بھی سرور پر مو
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "نمبر"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -360,12 +364,14 @@ msgid "Server address"
 msgstr "سرور کا پتہ"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "خفیہ شدہ محفوظ ہے۔ یہ تمام اکاؤنٹس کے بیک اپس والا فولڈر کھولتا ہے، اور حذف کرنا ہی پرانوں کو ہٹانے کا طریقہ ہے: ایسا اکاؤنٹ استعمال کریں جو صرف اس فولڈر تک پہنچے، جیسے Hetzner Storage Box کا ذیلی اکاؤنٹ یا بیک اپس کے لیے بنایا گیا اکاؤنٹ، اور کچھ نہیں۔"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "خفیہ شدہ محفوظ ہے۔ زیادہ تر سرور پاس ورڈ کو ایک فولڈر تک محدود نہیں کر سکتے؛ اپ لوڈ کی اجازت دینے والا Nextcloud کا عوامی اشتراک یا Hetzner Storage Box کا ذیلی اکاؤنٹ کر سکتا ہے۔"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -425,8 +431,9 @@ msgid "The address must start with https:// — for example %(example)s."
 msgstr "پتہ https:// سے شروع ہونا چاہیے — مثلاً %(example)s۔"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "اپ لوڈ کے بعد بیک اپ فولڈر میں نہیں ہے۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -463,51 +470,53 @@ msgid "The first sync will make what is missing."
 msgstr "پہلا سنک جو کچھ موجود نہیں وہ بنا دے گا۔"
 
 #: src/postulo_dav/files.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "فولڈر %(path)s نہیں بنایا جا سکا: اس کے اوپر کا فولڈر موجود نہیں۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "فولڈر %(path)s سرور پر موجود نہیں۔ پہلے اسے وہاں بنائیں: Postulo وہ فولڈر نہیں بناتا جس میں بیک اپس رکھے جاتے ہیں۔"
 
 #: src/postulo_dav/store.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "فولڈر %(path)s سرور پر موجود نہیں۔ پہلے اسے وہاں بنائیں: Postulo صرف اس کے نیچے کے فولڈر بناتا ہے۔"
 
 #: src/postulo_dav/store.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "فولڈر %(path)s موجود ہے، اس میں %(count)d آئٹمز ہیں۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "فولڈر %(path)s موجود ہے، اس میں Postulo کے %(count)d بیک اپس ہیں۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "فولڈر میں %(free)s کی جگہ ہے اور بیک اپ کو %(needed)s درکار ہے، اس لیے کچھ نہیں بھیجا گیا۔"
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "فولڈر میں اس کے %(found)d بائٹس ہیں اور بیک اپ %(size)d ہے: تصدیق نہیں ہوئی۔"
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "فولڈر بھرا ہوا ہے: سرور کے پاس فائل کے لیے جگہ نہیں۔"
 
 #: src/postulo_dav/store.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "فولڈر کا مکمل پتہ، جس کا موجود ہونا ضروری ہے۔ Nextcloud پر: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/۔ Postulo اس کے نیچے ضرورت کے مطابق فولڈر بناتا ہے اور کبھی اس کے باہر نہیں لکھتا۔</folder></user>"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "فولڈر کا مکمل پتہ، جس کا موجود ہونا ضروری ہے۔ Nextcloud پر: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/۔ فولڈر صرف آرکائیوز کے لیے استعمال کریں۔</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -528,8 +537,9 @@ msgid "The server does not name an address book home."
 msgstr "سرور کسی ایڈریس بک ہوم کا نام نہیں بتاتا۔"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "سرور نہیں بتاتا کہ فائل کتنی بڑی ہے، اس لیے تصدیق نہیں کر سکتا۔"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -552,8 +562,9 @@ msgid "The server redirected %(path)s too many times."
 msgstr "سرور نے %(path)s کو بہت زیادہ بار ری ڈائریکٹ کیا۔"
 
 #: src/postulo_dav/files.py
+#, fuzzy
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "سرور نے ایک اپ لوڈ کو ری ڈائریکٹ کیا، اور ری ڈائریکٹ کی پیروی نہیں کی جاتی۔"
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -610,7 +621,7 @@ msgstr "کام “%(name)s” کاموں کی فہرست سے ہٹا دیا گی
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "اس اپ لوڈ کا وقت ختم ہو گیا۔"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -623,9 +634,9 @@ msgid "The time of the task “%(name)s” could not be used (%(why)s), so the r
 msgstr "کام “%(name)s” کا وقت استعمال نہیں ہو سکا (%(why)s)، اس لیے یاد دہانی منتقل نہیں ہوئی۔"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
-#, python-format
+#, fuzzy, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "مزید %(size)s کی جگہ ہے۔"
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -633,9 +644,9 @@ msgid "This collection is read only here, so a %(method)s was not sent."
 msgstr "یہ مجموعہ یہاں صرف پڑھنے کے لیے ہے، اس لیے %(method)s درخواست نہیں بھیجی گئی۔"
 
 #: src/postulo_dav/store.py
-#, python-format
+#, fuzzy, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "اس فولڈر میں بہت سی فائلوں کا نام پہلے ہی %(name)s ہے۔"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -658,11 +669,11 @@ msgstr "صارف نام"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "ویب پتے"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV فولڈر"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -770,19 +781,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "“%(name)s” چھوڑ دیا گیا: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "“%(name)s”: کارڈ پر موجود %(what)s نہیں لیے گئے، تاکہ یہاں رکھی گئی کوئی چیز ضائع نہ ہو۔"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: کارڈ پر موجود ایک نمبر، پتہ یا ویب پتہ نہیں لیا گیا: %(why)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: کارڈ پر موجود ای میل نہیں لی گئی: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

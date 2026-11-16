@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"PO-Revision-Date: 2026-11-16 08:49+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Arabic <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/ar/>\n"
 "Language: ar\n"
@@ -59,7 +59,7 @@ msgstr "حُذف %(kind)s من التقويم على جهاز آخر؛ ويُح�
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s ليس من النسخ الاحتياطية التي تحتفظ بها هذه الوجهة، لذا لم يُحذف."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -80,7 +80,7 @@ msgstr "جهة اتصال حُذفت هنا كانت قد عُدّلت على ا
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "يوجد في المجلد ملف آخر يحمل الاسم %(name)s، ولم يُستبدل."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -116,11 +116,11 @@ msgstr "دفاتر العناوين"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "العناوين"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "الكل في المجلد نفسه، بأسماء وصفية"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -133,7 +133,7 @@ msgstr "الاحتفاظ أيضًا بمهمتين لكل طلب توظيف في
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "اكتب أيضًا الأيام الكاملة من صفحة التقويم (المواعيد النهائية للتقديم، وتواريخ إغلاق الإعلانات، والتواريخ التي يجب الرد على العرض قبلها) في التقويم كأحداث تستغرق اليوم كاملًا، في اتجاه واحد: أي تغيير يُجرى على الهاتف يُستبدل به ما يُكتب هنا. يتطلب أن يعرف المثيل عنوانه الخاص."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -158,7 +158,7 @@ msgstr "التقديم على وظيفة %(role)s في %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "حسب الشركة والوظيفة، كلٌّ في مجلد خاص به"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -204,11 +204,11 @@ msgstr "المجموعات"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "المواعيد النهائية والتواريخ"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "عنوان المجلد"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -237,7 +237,7 @@ msgstr "انتظار رد %(company)s بشأن %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "كيفية ترتيب الملفات"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -292,7 +292,7 @@ msgstr "لا توجد أي من المجموعات المختارة على ال�
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "الأرقام"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -355,11 +355,11 @@ msgstr "عنوان الخادم"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "يُخزَّن مشفّرًا. يفتح مجلدًا يضم النسخ الاحتياطية لكل الحسابات، والحذف هو طريقة إزالة القديمة منها: استخدم حسابًا لا يصل إلا إلى هذا المجلد، مثل حساب فرعي في Hetzner Storage Box أو حساب مخصص للنسخ الاحتياطية، ولا شيء غير ذلك."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "يُخزَّن مشفّرًا. لا تستطيع معظم الخوادم حصر كلمة المرور في مجلد واحد؛ أما المشاركة العامة في Nextcloud التي تسمح بالرفع، أو حساب فرعي في Hetzner Storage Box، فتستطيع."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -415,7 +415,7 @@ msgstr "يجب أن يبدأ العنوان بالبادئة https:// — مثل
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "النسخة الاحتياطية ليست في المجلد بعد الرفع."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -451,49 +451,49 @@ msgstr "ستُنشئ أول مزامنة ما هو ناقص."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "تعذّر إنشاء المجلد %(path)s: المجلد الذي يعلوه غير موجود."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "المجلد %(path)s غير موجود على الخادم. أنشئه هناك أولًا: لا ينشئ Postulo المجلد الذي تُحفظ فيه النسخ الاحتياطية."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "المجلد %(path)s غير موجود على الخادم. أنشئه هناك أولًا: لا ينشئ Postulo إلا المجلدات الواقعة تحته."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "المجلد %(path)s موجود، وفيه %(count)d من العناصر."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "المجلد %(path)s موجود، وفيه %(count)d من النسخ الاحتياطية الخاصة بـ Postulo."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "يتسع المجلد لـ %(free)s وتحتاج النسخة الاحتياطية إلى %(needed)s، لذا لم يُرسَل شيء."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "يحتوي المجلد على %(found)d بايت منها وحجم النسخة الاحتياطية %(size)d: لم يتم التأكد."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "المجلد ممتلئ: لا مساحة في الخادم للملف."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "العنوان الكامل للمجلد، ويجب أن يكون موجودًا. في Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. ينشئ Postulo المجلدات الواقعة تحته عند الحاجة ولا يكتب خارجه أبدًا.</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "العنوان الكامل للمجلد، ويجب أن يكون موجودًا. في Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. استخدم مجلدًا للأرشيفات وحدها.</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -515,7 +515,7 @@ msgstr "لا يحدّد الخادم المجلد الرئيسي لدفاتر ا
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "لا يذكر الخادم حجم الملف، لذا لا يمكنه التأكد."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -538,7 +538,7 @@ msgstr "أعاد الخادم توجيه %(path)s مرات كثيرة جدًا."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "أعاد الخادم توجيه عملية رفع، ولا يُتَّبع ذلك."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -592,7 +592,7 @@ msgstr "أُزيلت المهمة «%(name)s» من قائمة المهام؛ و
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "انتهت المهلة المخصصة لهذا الرفع."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -607,7 +607,7 @@ msgstr "تعذر استخدام موعد المهمة «%(name)s» (%(why)s)، �
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "تتسع المساحة لـ %(size)s أخرى."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -617,7 +617,7 @@ msgstr "هذه المجموعة للقراءة فقط هنا، لذلك لم ي�
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "هناك ملفات كثيرة جدًا تحمل الاسم %(name)s في ذلك المجلد."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -639,11 +639,11 @@ msgstr "اسم المستخدم"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "عناوين الويب"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "مجلد WebDAV"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -747,17 +747,17 @@ msgstr "تم تخطي «%(name)s»: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "«%(name)s»: لم تُؤخذ %(what)s الموجودة على البطاقة، حتى لا يضيع شيء مما هو محفوظ هنا."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: لم يُؤخذ رقم أو عنوان أو عنوان ويب على البطاقة: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "«%(name)s»: لم يُؤخذ البريد الإلكتروني على البطاقة: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

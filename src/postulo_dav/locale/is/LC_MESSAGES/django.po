@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"PO-Revision-Date: 2026-11-16 08:50+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Icelandic <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/is/>\n"
 "Language: is\n"
@@ -51,7 +51,7 @@ msgstr "%(kind)s: fjarlægt úr dagatalinu á öðru tæki; geymt hér."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s er ekki eitt af þeim öryggisafritum sem þessi áfangastaður geymir og var því ekki eytt."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Tengilið sem var eytt hér hafði verið breytt í símanum frá síðu
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Önnur skrá heitir nú þegar %(name)s í möppunni og henni var ekki skrifað yfir."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -109,11 +109,11 @@ msgstr "Tengiliðaskrár"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "heimilisföng"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Allt í möppunni, með lýsandi heitum"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -125,8 +125,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "Haltu líka tvö verkefni fyrir hverja umsókn í verkefnalistanum: eitt til að sækja um, sem þegar það er hakað við sendir þér tillögu, og eitt til að bíða svars, sem lokast þegar umsókninni lýkur. Áminningar um umsókn eru undir opna verkefni hennar."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Skrifa einnig heila daga af dagatalssíðunni (umsóknarfresti, lokadaga auglýsinga og dagsetningar sem svara þarf tilboði fyrir) í dagatalið sem heilsdagsviðburði, í aðra áttina: breyting sem gerð er í símanum er skrifuð yfir. Krefst þess að tilvikið þekki eigið vistfang."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -151,7 +152,7 @@ msgstr "Sækja um %(role)s hjá %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Eftir fyrirtæki og hlutverki, hvort í sinni möppu"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -197,11 +198,11 @@ msgstr "Söfn"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Frestir og dagsetningar"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Slóð möppu"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -230,7 +231,7 @@ msgstr "Fá svar frá %(company)s um %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Hvernig skrám er raðað"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -286,7 +287,7 @@ msgstr "Ekkert valinna safna er á netþjóninum."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "númer"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -348,12 +349,13 @@ msgid "Server address"
 msgstr "Vistfang þjóns"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Geymt dulkóðað. Það opnar möppu með öryggisafritum allra reikninga og eyðing er leiðin til að fjarlægja gömul afrit: notaðu aðgang sem nær aðeins til þessarar möppu, til dæmis undirreikning í Hetzner Storage Box eða reikning sem er gerður fyrir öryggisafrit, og ekkert annað."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Geymt dulkóðað. Flestir netþjónar geta ekki takmarkað lykilorð við eina möppu; opinber Nextcloud-hlutdeild sem leyfir innsendingar eða undirreikningur í Hetzner Storage Box getur það."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -409,7 +411,7 @@ msgstr "Vistfangið verður að byrja á https:// — til dæmis %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Öryggisafritið er ekki í möppunni eftir innsendinguna."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -445,49 +447,49 @@ msgstr "Fyrsta samstillingin býr til það sem vantar."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Ekki var hægt að búa til möppuna %(path)s: mappan fyrir ofan hana er ekki til."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Mappan %(path)s er ekki til á netþjóninum. Búðu hana til þar fyrst: Postulo býr ekki til möppuna sem öryggisafritin eru geymd í."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Mappan %(path)s er ekki til á netþjóninum. Búðu hana til þar fyrst: Postulo býr aðeins til möppurnar fyrir neðan hana."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Mappan %(path)s er til og í henni eru %(count)d atriði."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Mappan %(path)s er til og í henni eru %(count)d öryggisafrit frá Postulo."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Mappan hefur pláss fyrir %(free)s og öryggisafritið þarf %(needed)s, svo engu var sent."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Mappan geymir %(found)d bæti af því og öryggisafritið er %(size)d: ekki staðfest."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Mappan er full: netþjóninn vantar pláss fyrir skrána."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Fullt vistfang möppunnar, sem þarf að vera til. Í Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo býr til möppurnar fyrir neðan hana eftir þörfum og skrifar aldrei utan hennar.</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Fullt vistfang möppunnar, sem þarf að vera til. Í Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Notaðu möppu eingöngu fyrir skjalasöfnin.</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -509,7 +511,7 @@ msgstr "Netþjónninn tilgreinir ekkert heimasvæði tengiliðaskráa."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Netþjónninn gefur ekki upp stærð skrárinnar og getur því ekki staðfest hana."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -532,7 +534,7 @@ msgstr "Netþjónninn áframsendi %(path)s of oft."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Netþjónninn áframsendi innsendingu og því er ekki fylgt."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -587,7 +589,7 @@ msgstr "Verkefnið „%(name)s“ var fjarlægt úr verkefnalistanum; það er e
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Tíminn fyrir þessa innsendingu rann út."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -602,7 +604,7 @@ msgstr "Ekki var hægt að nota tíma verkefnisins „%(name)s“ (%(why)s) og �
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Það er pláss fyrir %(size)s í viðbót."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -612,7 +614,7 @@ msgstr "Þetta safn er skrifvarið hér og því var %(method)s-beiðni ekki sen
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Of margar skrár heita nú þegar %(name)s í þeirri möppu."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -635,11 +637,11 @@ msgstr "Notandanafn"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "vefslóðir"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV-mappa"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -746,17 +748,17 @@ msgstr "„%(name)s“ var sleppt: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "„%(name)s“: %(what)s á kortinu voru ekki tekin með, svo að ekkert sem er geymt hér glatist."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: númer, heimilisfang eða vefslóð á kortinu var ekki tekið með: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: netfangið á kortinu var ekki tekið með: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

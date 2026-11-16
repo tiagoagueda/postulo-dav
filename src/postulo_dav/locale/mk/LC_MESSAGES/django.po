@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 08:50+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Macedonian <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/mk/>\n"
 "Language: mk\n"
@@ -51,7 +51,7 @@ msgstr "Ставката „%(kind)s“ е отстранета од кален�
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s не е една од резервните копии што ги чува ова одредиште, па не беше избришана."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Контакт избришан тука беше променет на 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Друга датотека веќе се вика %(name)s во папката и не беше пребришана."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -109,11 +109,11 @@ msgstr "Адресари"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "адреси"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Сè во папката, со описни имиња"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -125,8 +125,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "Чувајте и две задачи за секоја пријава во списокот со задачи: една за аплицирање, чие штиклирање ви испраќа предлог, и една за добивање одговор, која се затвора кога пријавата ќе заврши. Потсетниците за пријавата стојат под нејзината отворена задача."
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Запишувај ги во календарот и целите денови од страницата Календар (рокови за пријави, датуми на затворање на огласи и датуми до кои мора да се одговори на понуда) како настани за цел ден, во една насока: промената направена на телефонот се пребришува. Бара инстанцата да ја знае својата адреса."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -151,7 +152,7 @@ msgstr "Аплицирај за %(role)s во %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "По компанија и улога, секоја во своја папка"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -197,11 +198,11 @@ msgstr "Колекции"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Рокови и датуми"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Адреса на папката"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -230,7 +231,7 @@ msgstr "Добиј одговор од %(company)s за %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Како се подредени датотеките"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -286,7 +287,7 @@ msgstr "Ниту една од избраните колекции не е на 
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "броеви"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -348,12 +349,13 @@ msgid "Server address"
 msgstr "Адреса на серверот"
 
 #: src/postulo_dav/backup.py
+#, fuzzy
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Се чува шифрирано. Отвора папка со резервните копии на сите сметки, а бришењето е начинот на кој се отстрануваат старите: користете такво што стигнува само до оваа папка, како подсметка на Hetzner Storage Box или сметка направена за резервни копии, и ништо друго."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Се чува шифрирано. Повеќето сервери не можат да ја ограничат лозинката на една папка; може јавно споделување на Nextcloud што дозволува прикачување или подсметка на Hetzner Storage Box."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -409,7 +411,7 @@ msgstr "Адресата мора да почнува со https:// — на п�
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Резервната копија ја нема во папката по прикачувањето."
 
 #: src/postulo_dav/sync.py
 #, fuzzy, python-format
@@ -445,49 +447,49 @@ msgstr "Првата синхронизација ќе го создаде он�
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Папката %(path)s не можеше да се создаде: папката над неа не постои."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Папката %(path)s не постои на серверот. Прво направете ја таму: Postulo не ја создава папката во која се чуваат резервните копии."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Папката %(path)s не постои на серверот. Прво направете ја таму: Postulo ги создава само папките под неа."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Папката %(path)s постои и во неа има %(count)d ставки."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Папката %(path)s постои и во неа има %(count)d резервни копии на Postulo."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Папката има простор за %(free)s, а резервната копија бара %(needed)s, па ништо не беше испратено."
 
 #: src/postulo_dav/backup.py
-#, python-format
+#, fuzzy, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Папката содржи %(found)d бајти од неа, а резервната копија е %(size)d: не е потврдено."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Папката е полна: серверот нема простор за датотеката."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Целосната адреса на папката, која мора да постои. На Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo ги создава папките под неа по потреба и никогаш не пишува надвор од неа.</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Целосната адреса на папката, која мора да постои. На Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Користете папка само за архивите.</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -509,7 +511,7 @@ msgstr "Серверот не наведува домашна локација �
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Серверот не кажува колку е голема датотеката, па не може да потврди."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -532,7 +534,7 @@ msgstr "Серверот ја пренасочи патеката %(path)s пр�
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Серверот го пренасочи прикачувањето, а пренасочувањето не се следи."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -587,7 +589,7 @@ msgstr "Задачата „%(name)s“ беше отстранета од сп�
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Времето за ова прикачување истече."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -602,7 +604,7 @@ msgstr "Времето на задачата „%(name)s“ не можеше д
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Има простор за уште %(size)s."
 
 #: src/postulo_dav/dav.py
 #, fuzzy, python-format
@@ -612,7 +614,7 @@ msgstr "Оваа колекција е тука само за читање, па
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Премногу датотеки веќе се викаат %(name)s во таа папка."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -635,11 +637,11 @@ msgstr "Корисничко име"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "веб-адреси"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV папка"
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -744,19 +746,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "Прескокнато „%(name)s“: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "„%(name)s“: %(what)s на картичката не беа преземени, за да не се изгуби ништо од она што е чувано овде."
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: број, адреса или веб-адреса на картичката не беше преземена: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "„%(name)s“: е-поштата на картичката не беше преземена: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

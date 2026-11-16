@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:45+0000\n"
+"PO-Revision-Date: 2026-11-16 08:50+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Basque <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/eu/>\n"
 "Language: eu\n"
@@ -51,7 +51,7 @@ msgstr "%(kind)s beste gailu batean kendu da egutegitik; hemen gorde da."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s ez da helmuga honek gordetzen dituen babeskopietako bat, beraz ez da ezabatu."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "Hemen ezabatutako kontaktu bat telefonoan aldatu zen azken sinkronizazio
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "Karpetan badago jada %(name)s izeneko beste fitxategi bat, eta ez da gainidatzi."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -108,11 +108,11 @@ msgstr "Helbide-liburuak"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "helbideak"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Dena karpetan, izen deskribatzaileekin"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -125,7 +125,7 @@ msgstr "Gorde, gainera, bi zeregin hautagaitza bakoitzeko zeregin-zerrendan: bat
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Idatzi, gainera, Egutegia orrialdeko egun osoak (eskaera-epemugak, iragarkien itxiera-datak eta eskaintza bati erantzun behar zaion datak) egutegian egun osoko gertaera gisa, norabide bakarrean: telefonoan egindako aldaketa gainidatzi egiten da. Instantziak bere helbidea ezagutu behar du."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -150,7 +150,7 @@ msgstr "Eskatu %(role)s lanpostua %(company)s enpresan"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Enpresaren eta lanpostuaren arabera, bakoitza bere karpetan"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -196,11 +196,11 @@ msgstr "Bildumak"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Epemugak eta datak"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Karpetaren helbidea"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -229,7 +229,7 @@ msgstr "Jaso erantzuna %(company)s enpresarengandik %(role)s lanpostuari buruz"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Fitxategiak nola antolatzen diren"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -284,7 +284,7 @@ msgstr "Hautatutako bildumetako bat ere ez dago zerbitzarian."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "zenbakiak"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -347,11 +347,11 @@ msgstr "Zerbitzariaren helbidea"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Zifratuta gordetzen da. Kontu guztien babeskopien karpeta bat irekitzen du, eta ezabatuz kentzen dira zaharrak: erabili karpeta honetara bakarrik iristen den kontu bat, adibidez Hetzner Storage Box-eko azpikontu bat edo babeskopietarako sortutako kontu bat, eta ezer gehiago ez."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Zifratuta gordetzen da. Zerbitzari gehienek ezin dute pasahitz bat karpeta batera mugatu; igotzeak onartzen dituen Nextcloud-en partekatze publiko batek edo Hetzner Storage Box-eko azpikontu batek bai."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -407,7 +407,7 @@ msgstr "Helbideak https:// aurrizkiarekin hasi behar du; adibidez, %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Babeskopia ez dago karpetan igo ondoren."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -443,49 +443,49 @@ msgstr "Lehen sinkronizazioak falta dena sortuko du."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "%(path)s karpeta ezin izan da sortu: gainean dagoen karpeta ez dago."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "%(path)s karpeta ez dago zerbitzarian. Sortu lehenik han: Postulok ez du babeskopiak gordetzen diren karpeta sortzen."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "%(path)s karpeta ez dago zerbitzarian. Sortu lehenik han: Postulok azpian dauden karpetak soilik sortzen ditu."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "%(path)s karpeta badago, eta %(count)d elementu ditu."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "%(path)s karpeta badago, eta Postuloren %(count)d babeskopia ditu."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Karpetan %(free)s-rako lekua dago eta babeskopiak %(needed)s behar ditu, beraz ez da ezer bidali."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Karpetak horren %(found)d byte ditu eta babeskopiak %(size)d: ez da berretsi."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Karpeta beteta dago: zerbitzariak ez du fitxategirako lekurik."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Karpetaren helbide osoa, existitu behar duena. Nextcloud-en: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulok azpiko karpetak behar dituenean sortzen ditu eta ez du inoiz kanpoan idazten.</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Karpetaren helbide osoa, existitu behar duena. Nextcloud-en: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Erabili karpeta bat artxiboetarako soilik.</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -507,7 +507,7 @@ msgstr "Zerbitzariak ez du helbide-liburuen kokalekurik adierazten."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Zerbitzariak ez du esaten fitxategia zenbat den handia, beraz ezin du berretsi."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -530,7 +530,7 @@ msgstr "Zerbitzariak gehiegitan birbideratu du %(path)s bidea."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Zerbitzariak igoera bat birbideratu du, eta hori ez da jarraitzen."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -584,7 +584,7 @@ msgstr "“%(name)s” zeregina zeregin-zerrendatik kendu zen; ez da berriz sort
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Igoera honen denbora amaitu da."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -599,7 +599,7 @@ msgstr "“%(name)s” zereginaren ordua ezin izan da erabili (%(why)s); beraz, 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "%(size)s gehiagorako lekua dago."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -609,7 +609,7 @@ msgstr "Bilduma hau irakurtzeko soilik da hemen; beraz, %(method)s eskaera ez da
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "Fitxategi gehiegik dute dagoeneko %(name)s izena karpeta horretan."
 
 #: src/postulo_dav/sync.py
 #, fuzzy
@@ -632,11 +632,11 @@ msgstr "Erabiltzaile-izena"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "web helbideak"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV karpeta"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -740,17 +740,17 @@ msgstr "«%(name)s» saltatu egin da: %(reason)s"
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "“%(name)s”: txarteleko %(what)s ez dira hartu, hemen gordetakoa ez galtzeko."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: txarteleko zenbaki, helbide edo web helbide bat ez da hartu: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "“%(name)s”: txarteleko posta elektronikoa ez da hartu: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

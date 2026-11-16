@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 08:51+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -49,7 +49,7 @@ msgstr "%(kind)s 已在另一部裝置上從行事曆移除；此處仍保留。
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s 不是此目的地所保存的備份之一，因此未被刪除。"
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -70,7 +70,7 @@ msgstr "此處刪除的一位聯絡人，在上次同步後已在手機上變更
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "資料夾中已有另一個名為 %(name)s 的檔案，未被覆寫。"
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -106,11 +106,11 @@ msgstr "通訊錄"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "地址"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "全部放在資料夾中，使用描述性名稱"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -121,8 +121,9 @@ msgid "Also keep two tasks for each application in the task list: one to apply, 
 msgstr "同時在工作清單中為每份應徵保留兩項工作：一項用於投遞，勾選後會向你傳送一則建議；一項用於等待回覆，應徵結束時關閉。有關某份應徵的提醒位於其未完成的工作之下。"
 
 #: src/postulo_dav/sync.py
+#, fuzzy
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "同時將行事曆頁面中的整天日期（申請截止日期、職缺截止日期，以及必須回覆錄取通知的日期）以全天事件寫入行事曆，單向同步：在手機上所做的變更會被覆寫。需要執行個體知道自己的位址。"
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -147,7 +148,7 @@ msgstr "向 %(company)s 應徵 %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "依公司和職位，各自放在自己的資料夾中"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -193,11 +194,11 @@ msgstr "集合"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "截止日期與日期"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "資料夾位址"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -226,7 +227,7 @@ msgstr "等待 %(company)s 就 %(role)s 回覆"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "檔案的排列方式"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -281,7 +282,7 @@ msgstr "所選的集合都不在伺服器上。"
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "號碼"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -344,11 +345,11 @@ msgstr "伺服器網址"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "已加密儲存。它可開啟存放所有帳號備份的資料夾，而刪除是清理舊備份的方式：請使用只能存取此資料夾的帳號，例如 Hetzner Storage Box 子帳號或專為備份建立的帳號，不要使用其他帳號。"
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "已加密儲存。大多數伺服器無法將密碼限制在單一資料夾；允許上傳的 Nextcloud 公開分享或 Hetzner Storage Box 子帳號可以做到。"
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -404,7 +405,7 @@ msgstr "網址必須以 https:// 開頭，例如 %(example)s。"
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "上傳後，備份不在資料夾中。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -440,49 +441,49 @@ msgstr "首次同步時會建立缺少的項目。"
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "無法建立資料夾 %(path)s：其上層資料夾不存在。"
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "伺服器上沒有資料夾 %(path)s。請先在伺服器上建立它：Postulo 不會建立存放備份的資料夾。"
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "伺服器上沒有資料夾 %(path)s。請先在伺服器上建立它：Postulo 只會建立其下的資料夾。"
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "資料夾 %(path)s 存在，其中有 %(count)d 個項目。"
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "資料夾 %(path)s 存在，其中有 %(count)d 個 Postulo 備份。"
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "資料夾可容納 %(free)s，而備份需要 %(needed)s，因此未傳送任何內容。"
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "資料夾中只有該備份的 %(found)d 位元組，而備份為 %(size)d 位元組：未確認。"
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "資料夾已滿：伺服器沒有空間存放該檔案。"
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "資料夾的完整位址，必須已存在。在 Nextcloud 上：https://cloud.example.org/remote.php/dav/files/<user>/<folder>/。Postulo 會視需要在其下建立資料夾，絕不會寫到它之外。</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "資料夾的完整位址，必須已存在。在 Nextcloud 上：https://cloud.example.org/remote.php/dav/files/<user>/<folder>/。請僅將該資料夾用於封存檔。</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -504,7 +505,7 @@ msgstr "伺服器未指定通訊錄主目錄。"
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "伺服器沒有說明檔案有多大，因此無法確認。"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -527,7 +528,7 @@ msgstr "伺服器將 %(path)s 重新導向太多次。"
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "伺服器重新導向了上傳，而重新導向不會被跟隨。"
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -581,7 +582,7 @@ msgstr "工作「%(name)s」已從工作清單中移除；不會重新建立。"
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "此次上傳已逾時。"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -596,7 +597,7 @@ msgstr "無法使用工作「%(name)s」的時間（%(why)s），因此未移動
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "還有 %(size)s 的空間。"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -606,7 +607,7 @@ msgstr "此集合在此處為唯讀，因此未傳送 %(method)s 請求。"
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "該資料夾中已有太多檔案名為 %(name)s。"
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
@@ -626,11 +627,11 @@ msgstr "使用者名稱"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "網址"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV 資料夾"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -732,19 +733,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "已略過「%(name)s」：%(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "「%(name)s」：名片上的%(what)s未被採用，以免此處儲存的內容遺失。"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "「%(name)s」：名片上的一個號碼、地址或網址未被採用：%(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "「%(name)s」：名片上的電子郵件未被採用：%(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format

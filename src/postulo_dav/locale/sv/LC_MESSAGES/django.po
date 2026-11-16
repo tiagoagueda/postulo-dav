@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: postulo-dav\n"
-"PO-Revision-Date: 2026-11-15 21:46+0000\n"
+"PO-Revision-Date: 2026-11-16 08:50+0000\n"
 "Last-Translator: Tiago Águeda <tiago.agueda@tiagoagueda.com>\n"
 "Language-Team: Swedish <https://translate.tiagoagueda.com/projects/postulo/plugin-dav/sv/>\n"
 "Language: sv\n"
@@ -51,7 +51,7 @@ msgstr "%(kind)s togs bort från kalendern på en annan enhet; behålls här."
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "%(name)s is not one of the backups this destination keeps, so it was not deleted."
-msgstr ""
+msgstr "%(name)s är inte en av de säkerhetskopior som det här målet förvarar, så den raderades inte."
 
 #: src/postulo_dav/sync.py
 msgid "(no company)"
@@ -72,7 +72,7 @@ msgstr "En kontakt som raderades här hade ändrats på telefonen sedan den sena
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "A different file is already called %(name)s in the folder, and it was not overwritten."
-msgstr ""
+msgstr "En annan fil heter redan %(name)s i mappen och skrevs inte över."
 
 #: src/postulo_dav/sync.py
 msgid "A reminder changed on both sides at once; next run decides."
@@ -108,11 +108,11 @@ msgstr "Adressböcker"
 
 #: src/postulo_dav/sync.py
 msgid "addresses"
-msgstr ""
+msgstr "adresser"
 
 #: src/postulo_dav/store.py
 msgid "All in the folder, with descriptive names"
-msgstr ""
+msgstr "Allt i mappen, med beskrivande namn"
 
 #: src/postulo_dav/sync.py
 msgid "All of them"
@@ -124,7 +124,7 @@ msgstr "Behåll också två uppgifter för varje ansökan i uppgiftslistan: en f
 
 #: src/postulo_dav/sync.py
 msgid "Also write the whole days of the Calendar page (application deadlines, closing dates of listings and dates an offer must be answered by) to the calendar as all-day events, one way: a change made on the phone is written over. Needs the instance to know its own address."
-msgstr ""
+msgstr "Skriv också de hela dagarna på kalendersidan (ansökningsfrister, sista dagar för annonser och datum då ett erbjudande måste besvaras) till kalendern som heldagshändelser, enkelriktat: en ändring som görs på telefonen skrivs över. Kräver att instansen känner till sin egen adress."
 
 #: src/postulo_dav/sync.py
 msgid "An app password where the server offers one. Stored encrypted."
@@ -149,7 +149,7 @@ msgstr "Ansök som %(role)s hos %(company)s"
 
 #: src/postulo_dav/store.py
 msgid "By company and role, each in its own folder"
-msgstr ""
+msgstr "Efter företag och roll, var och en i sin egen mapp"
 
 #: src/postulo_dav/sync.py
 msgid "calendar"
@@ -195,11 +195,11 @@ msgstr "Samlingar"
 
 #: src/postulo_dav/sync.py
 msgid "Deadlines and dates"
-msgstr ""
+msgstr "Frister och datum"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "Folder address"
-msgstr ""
+msgstr "Mappadress"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -228,7 +228,7 @@ msgstr "Få svar från %(company)s om %(role)s"
 
 #: src/postulo_dav/store.py
 msgid "How files are arranged"
-msgstr ""
+msgstr "Hur filerna ordnas"
 
 #: src/postulo_dav/sync.py
 msgid "it could not be saved here"
@@ -283,7 +283,7 @@ msgstr "Ingen av de valda samlingarna finns på servern."
 
 #: src/postulo_dav/sync.py
 msgid "numbers"
-msgstr ""
+msgstr "nummer"
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -346,11 +346,11 @@ msgstr "Serveradress"
 
 #: src/postulo_dav/backup.py
 msgid "Stored encrypted. It opens a folder of every account's backups, and deleting is how old ones are removed: use one that reaches only this folder, such as a Hetzner Storage Box sub-account or an account made for backups, and nothing else."
-msgstr ""
+msgstr "Lagras krypterat. Den öppnar en mapp med alla kontons säkerhetskopior, och radering är sättet att ta bort gamla: använd en som bara når den här mappen, som ett underkonto i en Hetzner Storage Box eller ett konto skapat för säkerhetskopior, och inget annat."
 
 #: src/postulo_dav/store.py
 msgid "Stored encrypted. Most servers cannot narrow a password to one folder; a Nextcloud public share that allows uploads, or a Hetzner Storage Box sub-account, can."
-msgstr ""
+msgstr "Lagras krypterat. De flesta servrar kan inte begränsa ett lösenord till en mapp; en offentlig Nextcloud-delning som tillåter uppladdningar, eller ett underkonto i en Hetzner Storage Box, kan det."
 
 #: src/postulo_dav/sync.py
 msgid "task list"
@@ -406,7 +406,7 @@ msgstr "Adressen måste börja med https:// – till exempel %(example)s."
 
 #: src/postulo_dav/backup.py
 msgid "The backup is not in the folder after the upload."
-msgstr ""
+msgstr "Säkerhetskopian finns inte i mappen efter uppladdningen."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -442,49 +442,49 @@ msgstr "Den första synkroniseringen skapar det som saknas."
 #: src/postulo_dav/files.py
 #, python-format
 msgid "The folder %(path)s could not be made: the folder above it is not there."
-msgstr ""
+msgstr "Mappen %(path)s kunde inte skapas: mappen ovanför finns inte."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo does not make the folder the backups are kept in."
-msgstr ""
+msgstr "Mappen %(path)s finns inte på servern. Skapa den där först: Postulo skapar inte mappen som säkerhetskopiorna förvaras i."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is not there on the server. Make it there first: Postulo makes only the folders below it."
-msgstr ""
+msgstr "Mappen %(path)s finns inte på servern. Skapa den där först: Postulo skapar bara mapparna under den."
 
 #: src/postulo_dav/store.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d items in it."
-msgstr ""
+msgstr "Mappen %(path)s finns och innehåller %(count)d objekt."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder %(path)s is there, with %(count)d of Postulo's backups in it."
-msgstr ""
+msgstr "Mappen %(path)s finns och innehåller %(count)d av Postulos säkerhetskopior."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder has room for %(free)s and the backup needs %(needed)s, so nothing was sent."
-msgstr ""
+msgstr "Mappen har plats för %(free)s och säkerhetskopian behöver %(needed)s, så inget skickades."
 
 #: src/postulo_dav/backup.py
 #, python-format
 msgid "The folder holds %(found)d bytes of it and the backup is %(size)d: not confirmed."
-msgstr ""
+msgstr "Mappen innehåller %(found)d byte av den och säkerhetskopian är %(size)d: inte bekräftad."
 
 #: src/postulo_dav/files.py
 msgid "The folder is full: the server has no room for the file."
-msgstr ""
+msgstr "Mappen är full: servern har inte plats för filen."
 
 #: src/postulo_dav/store.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo makes the folders below it as it needs them and never writes outside it."
-msgstr ""
+msgstr "Mappens fullständiga adress, som måste finnas. På Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Postulo skapar mapparna under den efter behov och skriver aldrig utanför den.</folder></user>"
 
 #: src/postulo_dav/backup.py
 msgid "The folder's full address, which has to exist. On Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Use a folder for the archives alone."
-msgstr ""
+msgstr "Mappens fullständiga adress, som måste finnas. På Nextcloud: https://cloud.example.org/remote.php/dav/files/<user>/<folder>/. Använd en mapp enbart för arkiven.</folder></user>"
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -506,7 +506,7 @@ msgstr "Servern anger ingen adressboksrot."
 
 #: src/postulo_dav/backup.py
 msgid "The server does not say how big the file is, so it cannot confirm."
-msgstr ""
+msgstr "Servern anger inte hur stor filen är, så den kan inte bekräfta."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -529,7 +529,7 @@ msgstr "Servern omdirigerade %(path)s för många gånger."
 
 #: src/postulo_dav/files.py
 msgid "The server redirected an upload, which is not followed."
-msgstr ""
+msgstr "Servern omdirigerade en uppladdning, och omdirigeringen följs inte."
 
 #: src/postulo_dav/dav.py
 msgid "The server refused the user name or password."
@@ -583,7 +583,7 @@ msgstr "Uppgiften ”%(name)s” togs bort från uppgiftslistan; den skapas inte
 
 #: src/postulo_dav/backup.py
 msgid "The time for this upload ran out."
-msgstr ""
+msgstr "Tiden för den här uppladdningen gick ut."
 
 #: src/postulo_dav/sync.py
 #, python-format
@@ -598,7 +598,7 @@ msgstr "Tiden för uppgiften ”%(name)s” kunde inte användas (%(why)s), så 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 #, python-format
 msgid "There is room for %(size)s more."
-msgstr ""
+msgstr "Det finns plats för %(size)s till."
 
 #: src/postulo_dav/dav.py
 #, python-format
@@ -608,7 +608,7 @@ msgstr "Den här samlingen är skrivskyddad här, så en %(method)s skickades in
 #: src/postulo_dav/store.py
 #, python-format
 msgid "Too many files already have the name %(name)s in that folder."
-msgstr ""
+msgstr "För många filer heter redan %(name)s i den mappen."
 
 #: src/postulo_dav/sync.py
 msgid "Used only while no collection is chosen below. A name or an address of a calendar; one that is not there is made by the first sync, unless read only is on. The whole calendar syncs, and a name two calendars share is refused."
@@ -628,11 +628,11 @@ msgstr "Användarnamn"
 
 #: src/postulo_dav/sync.py
 msgid "web addresses"
-msgstr ""
+msgstr "webbadresser"
 
 #: src/postulo_dav/backup.py src/postulo_dav/store.py
 msgid "WebDAV folder"
-msgstr ""
+msgstr "WebDAV-mapp"
 
 #: src/postulo_dav/sync.py
 msgid "Which contacts get a card in the address book. Cards already there stay, and nothing more is sent to them while this is off."
@@ -734,19 +734,19 @@ msgid "“%(name)s” was skipped: %(reason)s"
 msgstr "”%(name)s” hoppades över: %(reason)s"
 
 #: src/postulo_dav/sync.py
-#, python-format
+#, fuzzy, python-format
 msgid "“%(name)s”: %(what)s on the card were not taken, so that none kept here is lost."
-msgstr ""
+msgstr "”%(name)s”: %(what)s på kortet togs inte med, så att inget av det som förvaras här går förlorat."
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: a number, address or web address on the card was not taken: %(why)s"
-msgstr ""
+msgstr "”%(name)s”: ett nummer, en adress eller en webbadress på kortet togs inte med: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
 msgid "“%(name)s”: the email on the card was not taken: %(why)s"
-msgstr ""
+msgstr "”%(name)s”: e-postadressen på kortet togs inte med: %(why)s"
 
 #: src/postulo_dav/sync.py
 #, python-format
