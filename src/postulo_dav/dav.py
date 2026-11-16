@@ -273,6 +273,11 @@ class Server:
         #: the end, and the mode it may be used in (#13). Nothing is chosen until
         #: :meth:`allow` says so, and a request outside what is chosen is not sent.
         self.scopes: dict[str, str] = {}
+        #: What discovery found in this run, so that the two halves of one sync ask once: the
+        #: principal each starting address gave (``None`` for one that did not answer), and
+        #: the homes of each principal. A server lives for one run, so nothing here is kept.
+        self._principals: dict[str, str | None] = {}
+        self._home_sets: dict[str, ElementTree] = {}
 
     # ------------------------------------------------------------- plumbing
 
@@ -428,23 +433,30 @@ class Server:
         (#28).
         """
         for start in ("", f"/.well-known/{well_known}", "/"):
-            try:
-                tree = self.propfind(start, _PRINCIPAL, "0", discovery=True)
-            except AuthenticationRefused:
-                raise
-            except DavError:
-                continue
-            for href in tree.iter(f"{{{DAV}}}current-user-principal"):
-                inner = href.find(f"{{{DAV}}}href")
-                if inner is not None and inner.text:
-                    return self.absolute(inner.text.strip())
+            if start not in self._principals:
+                self._principals[start] = None
+                try:
+                    tree = self.propfind(start, _PRINCIPAL, "0", discovery=True)
+                except AuthenticationRefused:
+                    raise
+                except DavError:
+                    continue
+                for href in tree.iter(f"{{{DAV}}}current-user-principal"):
+                    inner = href.find(f"{{{DAV}}}href")
+                    if inner is not None and inner.text:
+                        self._principals[start] = inner.text.strip()
+                        break
+            if self._principals[start]:
+                return self.absolute(self._principals[start])
         raise DavError(
             _("The server does not say where the %(kind)s account is.") % {"kind": well_known}
         )
 
     def homes(self, principal: str, kind: str) -> list[str]:
         """Every home set the principal names for ``kind``, first the server's first."""
-        tree = self.propfind(principal, _HOMES, "0", discovery=True)
+        if principal not in self._home_sets:
+            self._home_sets[principal] = self.propfind(principal, _HOMES, "0", discovery=True)
+        tree = self._home_sets[principal]
         tag = (
             f"{{{CARD}}}addressbook-home-set"
             if kind == ADDRESSBOOK

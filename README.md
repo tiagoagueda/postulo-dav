@@ -182,7 +182,8 @@ an address in a listing, a redirect or a principal that names another host is no
 and nothing outside the chosen collection is read or written: one guard holds every request,
 a redirect hop included, to the collections you chose and to the verbs their mode allows
 (only finding the account and its collections, and making a requested collection, are
-exempt). A collection that vanished from the server is reported, never made again. A record
+exempt). A run finds the account and its homes once, whichever halves need them, and a connection that
+chose its collections by address looks up nothing but those. A collection that vanished from the server is reported, never made again. A record
 paired with something outside the choice is left alone and counted. The modes are Postulo's
 word, not the server's lock: an app password cannot be narrowed to one collection on
 Nextcloud, Fastmail or iCloud. For real confinement use an account that receives only the
