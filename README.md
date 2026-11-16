@@ -192,6 +192,48 @@ destroyed by a deletion on this side: it stays where it is and the run says so. 
 behind that way comes back as a contact on the next run; an event left behind is simply one
 more event that is not Postulo's.
 
+### Documents and backups: files in a WebDAV folder
+
+The same package carries two more plugins, for plain files in one folder rather than for
+address books and calendars. Neither syncs anything: each puts files into a folder you made,
+under its address as the full URL (on Nextcloud,
+`https://cloud.example.org/remote.php/dav/files/<user>/<folder>/`), over `https://` only. The
+folder must exist; Postulo makes what is below it for documents and never makes the folder
+itself.
+
+**The store, *WebDAV folder* (#5), one person's copies.** Under **Settings → Connections**,
+choose *WebDAV folder*. Each document you hand over, sent with an application and not a PDF
+exported on its own, is **copied** to the folder; Postulo's own file stays the one that counts,
+and deleting the document here leaves the copy there. Files are arranged *by company* (the
+default: `<company>/<role>/<day> <filename>`, dated by when it was sent, else when it was
+made, and `<kind>/` for one without an application) or *flat* (`<day> <company> - <role> -
+<kind> - <filename>` in the folder). Each part is made safe for a path. A file is **never
+overwritten**: if the name is taken by a different file, it gets a number, and if the file is
+there already, byte for byte, a retry after a lost reply is counted as sent. A full folder is
+reported and tried again; a refused password switches the connection off, with the reason.
+
+**The backup destination, *WebDAV folder* (#6), the instance's off-site copy.** Chosen by staff
+under *Server settings → Backups*, not by a person. Each verified backup, already encrypted by
+Postulo to your age recipient, is uploaded under its own name, never over a file. The free
+space (`quota-available-bytes`) is asked first, so a folder without room receives nothing and
+says how much is needed. On Nextcloud, an archive over 100 MiB goes up in chunks (upload
+v2) and is moved into place; elsewhere it is one `PUT`. Neither has been tried against a real
+Nextcloud. It counts as sent when the file in the folder shows the archive's size. Keeping the
+newest *N* works through the folder's listing: only files named
+`postulo-backup-<stamp>.tar.gz.age` are listed, only one of them is ever deleted, and each
+delete carries `If-Match` with the ETag the file has at that moment. Anything else in the
+folder is left alone. Postulo sends what the core hands it: it encrypts nothing itself.
+
+**Both are held to their folder**, and a listing that names an address elsewhere is not
+followed. A password that can reach only that folder keeps the promise at the server, which
+this cannot: a Nextcloud app password cannot be narrowed to a folder (it can only lose file
+access altogether) and a Fastmail one only by protocol. What can: for the store, WebDAV access
+to a Nextcloud public share that allows uploads (the share token as the user name; an
+administrator has to allow it), or a Hetzner Storage Box sub-account, which reaches only its
+own sub-directory. For the backups, one of those, or a Nextcloud account made for them and
+used for nothing else: the password opens a folder of everybody's data, and it can delete
+every off-site archive. Neither was tried against a real server.
+
 ## Translations
 
 French, European Portuguese and Brazilian Portuguese ship with the package, in
