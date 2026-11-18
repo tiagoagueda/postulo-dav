@@ -92,6 +92,12 @@ class FakeDav:
         self.queries: list[str] = []
         #: A server that refuses to make a task list (a calendar for ``VTODO``).
         self.refuse_tasks = False
+        #: A server that writes its own addresses in full, as ``https://host:443/…`` (#70):
+        #: what goes before the path of every address a multistatus names. Empty, and they
+        #: are paths, as most servers write them.
+        self.authority = ""
+        #: The homes the principal names. A server with calendars only names one (#70).
+        self.homes: tuple[str, ...] = (ADDRESSBOOK, CALENDAR)
 
     @staticmethod
     def _collection_props(meta: dict) -> str:
@@ -136,6 +142,9 @@ class FakeDav:
                 response.text,
             )
             response = httpx.Response(207, content=body.encode(), headers=response.headers)
+        if self.authority and response.status_code == 207:
+            body = response.text.replace("<d:href>/", f"<d:href>{self.authority}/")
+            response = httpx.Response(207, content=body.encode(), headers=response.headers)
         return response
 
     @staticmethod
@@ -170,14 +179,12 @@ class FakeDav:
                     ]
                 )
             if path == "/dav/principals/ana/":
+                homes = {
+                    ADDRESSBOOK: "<c:addressbook-home-set><d:href>/dav/addressbooks/ana/</d:href></c:addressbook-home-set>",  # noqa: E501
+                    CALENDAR: "<cal:calendar-home-set><d:href>/dav/calendars/ana/</d:href></cal:calendar-home-set>",  # noqa: E501
+                }
                 return _multistatus(
-                    [
-                        (
-                            "/dav/principals/ana/",
-                            "<c:addressbook-home-set><d:href>/dav/addressbooks/ana/</d:href></c:addressbook-home-set>"
-                            "<cal:calendar-home-set><d:href>/dav/calendars/ana/</d:href></cal:calendar-home-set>",
-                        )
-                    ]
+                    [("/dav/principals/ana/", "".join(homes[kind] for kind in self.homes))]
                 )
             if path in ("/dav/addressbooks/ana/", "/dav/calendars/ana/") and depth == "1":
                 rows = [(path, "<d:resourcetype><d:collection/></d:resourcetype>")]
@@ -1766,6 +1773,105 @@ def test_a_redirect_to_another_host_is_not_followed(server, connection):
     report = sync(connection)
     assert report.error, "discovery fails rather than going there"
     assert "evil.example" not in server.hosts
+
+
+# ------------------------------------------------ a default port is the same host (#70)
+
+WITH_PORT = "https://cloud.example.org:443"
+
+
+@pytest.fixture
+def ported(server):
+    """A server that writes every address of its own in full, default port included."""
+    server.authority = WITH_PORT
+    server.well_known_location = f"{WITH_PORT}/dav/"
+    return server
+
+
+def test_a_server_that_writes_its_default_port_is_found_and_synced(
+    ported, connection, recruiter, application
+):
+    schedule_interview(application, kind="phone", starts_at=next_week())
+    found = DavSync().discover(CONFIG)["collections"]
+    assert {option.value for option in found} == {f"{BASE}{CONTACTS}", f"{BASE}{PERSONAL}"}
+    result = DavSync().test(CONFIG)
+    assert result.ok, result.message
+    report = sync(connection)
+    assert report.error == "" and report.pushed == 2, report.summary()
+    assert len(cards(ported)) == 1 and len(events(ported)) == 1
+    # What is kept carries no port: it is the same address whoever wrote it.
+    kept = [link.remote_href for link in SyncLink.objects.filter(connection=connection)]
+    assert len(kept) == 2 and all(href.startswith(f"{BASE}/dav/") for href in kept), kept
+    assert sync(connection).summary() == "nothing to do"
+    assert set(ported.hosts) == {"cloud.example.org"}
+
+
+def test_a_collection_chosen_under_the_port_is_the_one_without_it(made, connection, recruiter):
+    made.authority = WITH_PORT
+    full = choose_hrefs(connection, {f"{WITH_PORT}{BOOK}": "readwrite"})
+    report = DavSync().sync(connection, full)
+    assert report.error == "" and report.pushed == 1, report.summary()
+    assert SyncLink.for_record(connection, recruiter).remote_href.startswith(f"{BASE}{BOOK}")
+    assert DavSync().sync(connection, full).summary() == "nothing to do"
+
+
+def test_the_canonical_address_carries_no_default_port(server):
+    with httpx.Client(transport=httpx.MockTransport(server.handler)) as client:
+        for typed in (BASE, WITH_PORT, f"{WITH_PORT}/dav/"):
+            dav = Server(typed, "ana", "app-pw", client=client)
+            one = f"{BASE}{BOOK}a%40b.vcf"
+            assert dav.canonical(f"{WITH_PORT}{BOOK}a@b.vcf") == one
+            assert dav.canonical(f"{BASE}{BOOK}a%40b.vcf") == one
+            assert dav.canonical(f"{BOOK}a@b.vcf") == one
+            assert dav.absolute(f"{WITH_PORT}{BOOK}?x=1") == f"{BASE}{BOOK}?x=1"
+        plain = Server("http://nas.local:80/dav", "ana", "app-pw", client=client)
+        assert plain.canonical("/dav/x") == "http://nas.local/dav/x"
+        # A port that is not the scheme's own is part of the address, and stays.
+        other = Server("https://cloud.example.org:8443", "ana", "app-pw", client=client)
+        assert other.canonical("/dav/x") == "https://cloud.example.org:8443/dav/x"
+        with pytest.raises(dav_module.DavError):
+            other.absolute(f"{WITH_PORT}/dav/x")
+
+
+def test_an_address_typed_with_its_default_port_syncs_and_keeps_none(
+    made, connection, recruiter, company
+):
+    connection.config = {**connection.config, "url": WITH_PORT}
+    connection.save()
+    # Two links from before: one kept under the address as it was typed, one elsewhere.
+    under = f"{WITH_PORT}{BOOK}"
+    SyncLink.bind(connection, company, collection=under, uid="org-1", slot="was")
+    SyncLink.bind(connection, company, collection="https://other.example/book/", uid="org-2")
+    report = sync(connection)
+    assert report.error == "" and report.pushed == 1, report.summary()
+    assert SyncLink.for_record(connection, recruiter).remote_href.startswith(f"{BASE}{BOOK}")
+    # The collection is compared as text by Postulo, so it is rewritten; another server's is not.
+    assert SyncLink.for_record(connection, company, slot="was").collection == f"{BASE}{BOOK}"
+    assert SyncLink.for_record(connection, company).collection == "https://other.example/book/"
+    assert sync(connection).summary() == "nothing to do"
+
+
+def test_another_port_is_still_another_host(made, connection):
+    server = made
+    server.foreign_hrefs = [
+        f"https://cloud.example.org:8443{BOOK}a.vcf",
+        f"http://cloud.example.org:443{BOOK}b.vcf",
+        f"https://evil.example:443{BOOK}c.vcf",
+        f"https://cloud.example.org:port{BOOK}d.vcf",
+        f"https://cloud.example.org:99999{BOOK}e.vcf",
+    ]
+    report = sync(connection)
+    assert report.error == "", report.error
+    assert set(server.hosts) == {"cloud.example.org"}
+    assert not [p for _m, p in server.log if p.endswith(".vcf")], server.log
+    assert Contact.objects.count() == 0
+
+
+def test_a_redirect_to_another_port_is_not_followed(server, connection):
+    server.well_known_location = "https://cloud.example.org:8443/dav/"
+    report = sync(connection)
+    assert report.error, "discovery fails rather than going there"
+    assert ("PROPFIND", "/dav/") not in server.log
 
 
 def test_the_client_is_held_to_a_total_and_follows_no_redirect_itself(monkeypatch):

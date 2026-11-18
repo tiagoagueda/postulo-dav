@@ -131,6 +131,7 @@ from .dav import (
     AuthenticationRefused,
     Conflict,
     DavError,
+    NoHome,
     Server,
 )
 
@@ -345,6 +346,30 @@ def drop_twin(server: Server, link, report: SyncReport, kept: str) -> bool:
         report.notes.append(str(kept))
         return False
     return True
+
+
+def respell(server: Server, connection) -> None:
+    """Rewrite the collections kept with a default port, where the person typed one (#70).
+
+    An address typed as ``https://host:443`` had every address kept with that port, and
+    :meth:`Server.canonical` now writes none. A link's own address is read through
+    ``canonical`` wherever it is compared, so it needs nothing. Its ``collection`` is compared
+    as text by Postulo itself (one item, one record; the *Pairing* page), so it is rewritten
+    here, on the first run after. A row that cannot take the new spelling, because another
+    already holds that item under it, is left as it is. No request is made.
+    """
+    if not server.respelled:
+        return
+    kept = SyncLink.objects.filter(
+        connection=connection, collection__startswith=f"{server.respelled}/"
+    )
+    for link in kept:
+        try:
+            with transaction.atomic():
+                link.collection = server.canonical(link.collection)
+                link.save(update_fields=["collection"])
+        except (DavError, DatabaseError):
+            continue
 
 
 @dataclass
@@ -1296,6 +1321,8 @@ class DavSync:
         """Sign in and look. *Test* reads: it never makes a collection (#2)."""
         read_only = bool(config.get("read_only"))
         notes: list[str] = []
+        found: dict[str, dav.Collection | None] = {}
+        homeless: list[str] = []
         try:
             client, server = dav.connect(config)
             with client:
@@ -1303,14 +1330,20 @@ class DavSync:
                 if chosen is not None:
                     return self._tested_choice(chosen, notes)
                 kinds = [ADDRESSBOOK, CALENDAR] + ([TASKS] if self._name(config, TASKS) else [])
-                found = {
-                    kind: self._collection(server, config, kind, create=False) for kind in kinds
-                }
+                for kind in kinds:
+                    try:
+                        found[kind] = self._collection(server, config, kind, create=False)
+                    except NoHome as error:
+                        # Calendars only, or contacts only (#70): the kind the server does
+                        # have is looked for all the same, and the other is said.
+                        homeless.append(str(error))
         except DavError as error:
             # Already a sentence for the person, in their language: no class name in front.
             return TestResult(False, str(error))
         except Exception as error:  # noqa: BLE001 - the sentence is the point
             return TestResult(False, f"{type(error).__name__}: {error}")
+        if homeless:
+            return self._tested_partly(config, found, homeless)
         missing = [kind for kind, collection in found.items() if collection is None]
         if not missing:
             message = str(
@@ -1339,6 +1372,30 @@ class DavSync:
         if any(not _is_href(self._name(config, kind)) for kind in missing):
             sentences.append(str(READ_ONLY_TAIL if read_only else FIRST_SYNC_TAIL))
         return TestResult(not read_only, " ".join(sentences))
+
+    def _tested_partly(self, config: dict, found: dict, homeless: list[str]) -> TestResult:
+        """What *Test* says of a server that names no home for one kind of collection (#70).
+
+        The kind it does have is found or missing as ever, and the sentence about the other
+        follows. With no home of either kind nothing was looked for, and the first refusal
+        is the answer, as it always was.
+        """
+        if not found:
+            return TestResult(False, homeless[0])
+        read_only = bool(config.get("read_only"))
+        how = _("read only") if read_only else _("read and write")
+        missing = [kind for kind, collection in found.items() if collection is None]
+        sentences = [
+            self._missing_sentence(config, kind)
+            if collection is None
+            else str(_("Found the %(what)s “%(name)s” (%(how)s)."))
+            % {"what": _what(kind), "name": collection.name or _tail(collection.href), "how": how}
+            for kind, collection in found.items()
+        ]
+        if any(not _is_href(self._name(config, kind)) for kind in missing):
+            sentences.append(str(READ_ONLY_TAIL if read_only else FIRST_SYNC_TAIL))
+        ok = not (missing and read_only)
+        return TestResult(ok, " ".join([*sentences, *dict.fromkeys(homeless)]))
 
     def _tested_choice(self, chosen: dict, notes: list[str]) -> TestResult:
         sentences = []
@@ -1510,11 +1567,21 @@ class DavSync:
             CALENDAR: str(_("Calendars")),
             TASKS: str(_("Task lists")),
         }
+        homeless: list[NoHome] = []
         client, server = dav.connect(config)
         with client:
             for home_kind in (ADDRESSBOOK, CALENDAR):
-                principal = server.principal("carddav" if home_kind == ADDRESSBOOK else "caldav")
-                for home in server.homes(principal, home_kind):
+                try:
+                    principal = server.principal(
+                        "carddav" if home_kind == ADDRESSBOOK else "caldav"
+                    )
+                    homes = server.homes(principal, home_kind)
+                except NoHome as error:
+                    # A server with calendars only, or contacts only (#70): what it does
+                    # have is still offered. With neither, the refusal below is the answer.
+                    homeless.append(error)
+                    continue
+                for home in homes:
                     for collection in server.collections(home):
                         # A calendar that takes events is a calendar, one that takes tasks and
                         # not events is a task list (#12), and neither is the other.
@@ -1542,6 +1609,8 @@ class DavSync:
                                 note=note,
                             ),
                         )
+        if len(homeless) == 2:
+            raise homeless[0]
         return {"collections": list(options.values())}
 
     # ------------------------------------------------------------ pairing
@@ -1976,8 +2045,13 @@ class DavSync:
         report = SyncReport()
         read_only = bool(config.get("read_only"))
         errors: list[str] = []
+        #: What the server said where it names no home for a kind of collection, and whether
+        #: any kind had one (#70).
+        homeless: list[str] = []
+        reached = False
         client, server = dav.connect(config)
         with client:
+            respell(server, connection)
             run = Run(
                 server,
                 connection,
@@ -2019,6 +2093,7 @@ class DavSync:
                         # In read-only mode a missing collection is reported, not made:
                         # half a sync still runs, and the person is told which half did not.
                         collection = self._collection(server, config, kind, create=not read_only)
+                        reached = True
                         run.read_only = read_only
                         if collection is None:
                             tail = (
@@ -2042,6 +2117,8 @@ class DavSync:
                             _("Reminders were not synced: the task list could not be used. %(why)s")
                             % {"why": error}
                         )
+                    elif isinstance(error, NoHome):
+                        homeless.append(str(error))
                     else:
                         errors.append(str(error))
                 except httpx.HTTPError as error:
@@ -2050,6 +2127,11 @@ class DavSync:
                 except Exception as error:
                     logger.exception("The %s half of a DAV sync failed", kind)
                     errors.append(f"{type(error).__name__}: {error}")
+        # A server with calendars only, or contacts only, is not a connection that fails: the
+        # kind it has was synced, and the other is a note, where an error on every run put the
+        # connection on the failing wait although half of it worked. With no home of either
+        # kind there was nothing to sync, and that is the error it always was (#70).
+        (report.notes if reached else errors).extend(dict.fromkeys(homeless))
         if errors:
             report.error = " ".join(dict.fromkeys(errors))
         return report

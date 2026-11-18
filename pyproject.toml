@@ -1,7 +1,7 @@
 [project]
 name = "postulo-dav"
 version = "0.5.0"
-description = "Contacts and companies in a CardDAV address book, interviews, reminders and dates in a CalDAV calendar and task list, in both directions, and documents and backups in a WebDAV folder: Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud and any server that speaks the standards."
+description = "Contacts and companies in a CardDAV address book, interviews, reminders and dates in a CalDAV calendar and task list, in both directions, and documents and backups in a WebDAV folder, on a server that speaks the standards on one host and takes a password: Nextcloud, Radicale, Baïkal, SOGo."
 readme = "README.md"
 requires-python = ">=3.12.4"
 license = "AGPL-3.0-or-later"

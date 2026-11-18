@@ -1,8 +1,8 @@
 # postulo-dav
 
 **Company contacts in a CardDAV address book and interviews in a CalDAV calendar, in both
-directions — on Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud and any server that
-speaks the standards.**
+directions — on a server that speaks the standards on one host and takes a password:
+Nextcloud, Radicale, Baïkal, SOGo. *[Tried with](#tried-with)* says what was really tried.**
 
 What you want on the phone is the recruiters and the interviews. What you do not want is
 your family imported into a job tracker. So this plugin for
@@ -46,6 +46,31 @@ Under **Settings → Connections → Add a connection**, choose *CardDAV and Cal
 Press *Test*: it signs in and says which collections it found, by name and address, and in
 what mode. It makes neither — the first sync does that. Then subscribe the phone
 to the *Postulo* address book and calendar the way you would to any other.
+
+**A server with calendars only, or contacts only (#70).** *Look on the server* offers what the
+server has, and a connection that chose only a calendar syncs only that. A connection that
+names its collections instead syncs the kind the server has and says, as a note on each run,
+that the server names no home for the other: a note, not an error, so the connection is not
+taken for one that is failing. A server that names neither is an error, as it was.
+
+## Tried with
+
+The tests run against a DAV server that lives in memory. **No real server has been tried**, of
+any kind. A row is filled in when somebody has run a connection against that server and says
+so.
+
+| Server | Version | Date | What was tried |
+| --- | --- | --- | --- |
+| Nextcloud | | | untried |
+| Radicale | | | untried |
+| Baïkal | | | untried |
+| SOGo | | | untried |
+| Fastmail | | | untried. It documents one server for calendars and another for contacts, so a connection would reach one of the two; an app password is needed |
+| Apple iCloud | | | untried, and not expected to work: iCloud is reported to keep an account's calendars on another host than `caldav.icloud.com`, and the password goes only to the host typed (#13) |
+| Google Calendar | | | cannot work: Google's CalDAV takes OAuth only, and this plugin signs in with a password |
+
+Microsoft 365, Outlook.com and Proton have no CalDAV. What each provider would need is compared
+on the wiki's [Calendars and other services](https://source.tiagoagueda.com/postulo/postulo/wiki/Calendars-and-other-services).
 
 ## What travels
 
@@ -200,8 +225,11 @@ everything twice. A server that lists its addresses with escaped characters (Rad
 writes `%40` for `@`) is read the same as one that does not.
 
 **What the server may send.** The password goes only to the host in the address you typed:
-an address in a listing, a redirect or a principal that names another host is not followed,
-and nothing outside the chosen collection is read or written: one guard holds every request,
+an address in a listing, a redirect or a principal that names another host, another scheme or
+another port is not followed. A default port is the same host whether it is written or not
+(#70): a server that writes its own addresses as `https://host:443/…` is followed, and what is
+kept of an address carries no default port, so both spellings are one address. Nothing outside
+the chosen collection is read or written: one guard holds every request,
 a redirect hop included, to the collections you chose and to the verbs their mode allows
 (only finding the account and its collections, and making a requested collection, are
 exempt). A run finds the account and its homes once, whichever halves need them, and a connection that

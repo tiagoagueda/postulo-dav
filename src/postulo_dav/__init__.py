@@ -2,10 +2,13 @@
 
 One connection — a server, a username, an app password — and Postulo keeps the
 recruiters you talk to in an address book called *Postulo* and the interviews you have
-coming in a calendar called *Postulo*, on whatever server speaks the standards:
-Nextcloud, Radicale, Baïkal, SOGo, Fastmail, iCloud. Only those two collections are in
-scope, ever: a personal address book holds hundreds of people with nothing to do with a
-job hunt, and "sync everything" would import a family into a job tracker.
+coming in a calendar called *Postulo*, on a server that speaks the standards on one host
+and takes a password: Nextcloud, Radicale, Baïkal, SOGo. The README's *Tried with* says
+what was really tried; a provider that keeps its collections on another host than the one
+typed (iCloud, Fastmail's two servers) is not followed there (#13). Only those two
+collections are in scope, ever: a personal address book holds hundreds of people with
+nothing to do with a job hunt, and "sync everything" would import a family into a job
+tracker.
 
 Changes travel both ways. What is edited here is pushed on the next run; what is edited
 on the phone is pulled. When both sides changed, the later change wins and the losing

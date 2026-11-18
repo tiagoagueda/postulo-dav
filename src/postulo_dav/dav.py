@@ -17,9 +17,10 @@ destination policy, timeouts and user agent apply; a server on the LAN needs the
 operator's ``POSTULO_CONNECTIONS_ALLOW_PRIVATE``. Three more rules are this module's own,
 because the server is somebody else's and so is whatever it writes into a collection:
 
-* an address the server names is followed only on the host the person typed (#13, #33);
+* an address the server names is followed only on the host the person typed (#13, #33),
+  which a default port written out (``https://host:443/``) still is (#70);
 * an answer is read to a size and a deadline, never whole (#33);
-* two spellings of one address are one address (#19).
+* two spellings of one address are one address (#19), with or without that port (#70).
 """
 
 from __future__ import annotations
@@ -63,6 +64,8 @@ MAX_REDIRECTS = 5
 #: read. A batch whose answer is over the limit is asked again in two halves (#45).
 MULTIGET_BATCH = 50
 MULTIGET_LIMIT = 4 * 1024 * 1024
+#: The port a scheme means when an address writes none (RFC 9110 §4.2.1 and §4.2.2).
+DEFAULT_PORTS = {"https": 443, "http": 80}
 
 _PRINCIPAL = (
     '<?xml version="1.0" encoding="utf-8"?>'
@@ -165,6 +168,14 @@ class TooLarge(DavError):
     """The answer was over its size limit, or too slow, and was not read."""
 
 
+class NoHome(DavError):
+    """The server names no account, or no home, for one kind of collection (#70).
+
+    A server with calendars only, or with contacts only, is a server: the kind it has is
+    still offered and synced. With neither there is nothing to use, and that stays an error.
+    """
+
+
 #: What each mode lets a request be (#13). Reading includes the listing and the multiget
 #: REPORT, which only read; the two writes are the only verbs that change a resource.
 READ, READ_WRITE = "read", "readwrite"
@@ -265,6 +276,19 @@ def _text(response: httpx.Response, body: bytes) -> str:
         return body.decode("utf-8", errors="replace")
 
 
+def _origin(parts) -> tuple[str, str, int | None]:
+    """The scheme, host and port an address is on, the scheme's own port filled in (#70).
+
+    ``https://host/`` and ``https://host:443/`` are one origin (RFC 9110 §4.2.3), and a
+    server may write its own addresses either way. Compared as written, the second was
+    another host, and the server's own answer was refused. Any other port is another origin,
+    as it always was. Raises ``ValueError`` for a port that is no number.
+    """
+    scheme = parts.scheme.lower()
+    port = parts.port if parts.port is not None else DEFAULT_PORTS.get(scheme)
+    return scheme, (parts.hostname or "").lower(), port
+
+
 class Server:
     """One DAV server, one account."""
 
@@ -273,7 +297,16 @@ class Server:
         self.client = client
         self.auth = httpx.BasicAuth(username, password)
         parts = urlsplit(self.base)
-        self.origin = (parts.scheme.lower(), (parts.hostname or "").lower(), parts.port)
+        self.origin = _origin(parts)
+        #: How every address on this server is spelled before its path: the scheme and the
+        #: host as they were typed, and no default port, whoever wrote one (#70).
+        #: ``respelled`` is the spelling with that port, where the person typed it, which is
+        #: what a link written before then is kept under; empty otherwise.
+        netloc, self.respelled = parts.netloc, ""
+        if parts.port is not None and parts.port == DEFAULT_PORTS.get(self.origin[0]):
+            self.respelled = f"{parts.scheme}://{netloc}"
+            netloc = netloc.rsplit(":", 1)[0]
+        self.root = f"{parts.scheme}://{netloc}" if netloc else ""
         #: The collections this connection is held to, as the path of each with a slash at
         #: the end, and the mode it may be used in (#13). Nothing is chosen until
         #: :meth:`allow` says so, and a request outside what is chosen is not sent.
@@ -293,19 +326,31 @@ class Server:
         principal, a home, an entry in a listing, a redirect) is followed only where the
         person pointed this connection: the same scheme, host and port. A server, or
         whoever can write to a collection it serves, that names another host gets none of
-        the password (#13, #33).
+        the password (#13, #33). A default port is the same port whether it is written or
+        not (#70), and what comes back is spelled the one way, :attr:`root` and then the
+        rest, so that an address the server wrote with ``:443`` is the address it is without.
+        An address that cannot be read at all (a port that is no number) is not followed
+        either, and is nobody's host.
         """
-        url = urljoin(self.base, href)
-        parts = urlsplit(url)
-        if (parts.scheme.lower(), (parts.hostname or "").lower(), parts.port) != self.origin:
+        try:
+            parts = urlsplit(urljoin(self.base, href))
+            same, host = _origin(parts) == self.origin, parts.hostname or ""
+        except ValueError:
+            same, host = False, ""
+        if not same:
             raise DavError(
                 _(
                     "The server pointed to an address outside its own (%(host)s); it was not "
                     "followed."
                 )
-                % {"host": parts.hostname or ""}
+                % {"host": host}
             )
-        return url
+        rest = parts.path
+        if parts.query:
+            rest += f"?{parts.query}"
+        if parts.fragment:
+            rest += f"#{parts.fragment}"
+        return f"{self.root}{rest}"
 
     def canonical(self, href: str) -> str:
         """One spelling of an address, so that two spellings of one resource compare equal.
@@ -314,10 +359,11 @@ class Server:
         ``%40`` for the ``@`` of an interview's UID) where the address was stored as it was
         written. The path is decoded and encoded again with one fixed set of characters left
         alone, and the query and fragment, which no resource here has, are dropped (#19).
+        It carries no default port (#70): what is kept in a link's ``collection`` and
+        ``remote_href`` is the same text whichever way the server, or the person, wrote it.
         """
-        parts = urlsplit(self.absolute(href))
-        path = quote(unquote(parts.path), safe="/")
-        return f"{parts.scheme}://{parts.netloc}{path}"
+        path = quote(unquote(urlsplit(self.absolute(href)).path), safe="/")
+        return f"{self.root}{path}"
 
     def _root(self, href: str) -> str:
         path = quote(unquote(urlsplit(self.absolute(href)).path), safe="/")
@@ -453,7 +499,7 @@ class Server:
                         break
             if self._principals[start]:
                 return self.absolute(self._principals[start])
-        raise DavError(
+        raise NoHome(
             _("The server does not say where the %(kind)s account is.") % {"kind": well_known}
         )
 
@@ -499,8 +545,8 @@ class Server:
         if found:
             return found
         if kind == ADDRESSBOOK:
-            raise DavError(_("The server does not name an address book home."))
-        raise DavError(_("The server does not name a calendar home."))
+            raise NoHome(_("The server does not name an address book home."))
+        raise NoHome(_("The server does not name a calendar home."))
 
     def home(self, principal: str, kind: str) -> str:
         return self.homes(principal, kind)[0]
